@@ -1,0 +1,274 @@
+﻿<!doctype html>
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><html lang="en" class="no-js"> <![endif]-->
+<html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!-- Basic -->
+    <title>@ViewBag.Title</title>
+
+    <!-- Define Charset -->
+    <meta charset="utf-8">
+    <!-- Responsive Metatag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Page Description and Author -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/Content/images/apcrshr.ico">
+
+    <!-- Responsive Metatag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Page Description and Author -->
+    <meta name="description" content="html">
+    <meta name="author" content="DesignTEAM">
+
+
+    <!-- Bootstrap CSS  -->
+    <link rel="stylesheet" href="~/Content/css/bootstrap.css" type="text/css" media="screen">
+
+    <!-- Revolution Banner CSS -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/settings.css" media="screen" />
+
+    <!-- Vella CSS Styles  -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/style.css" media="screen">
+
+    <!-- Responsive CSS Styles  -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/responsive.css" media="screen">
+
+    <!-- Css3 Transitions Styles  -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/animate.css" media="screen">
+
+    <!-- Color CSS Styles  -->
+    @Styles.Render("~/bundles/css/colors")
+
+    <!-- Fontello Icons CSS Styles  -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/fontello.css" media="screen">
+    <!--[if IE 7]><link rel="stylesheet" href="~/Content/css/fontello-ie7.css"><![endif]-->
+    <!-- Vella JS  -->
+    <script type="text/javascript" src="~/Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.migrate.js"></script>
+    <script type="text/javascript" src="~/Scripts/modernizrr.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="~/Scripts/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/nivo-lightbox.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.isotope.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.appear.js"></script>
+    <script type="text/javascript" src="~/Scripts/count-to.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.textillate.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.lettering.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.easypiechart.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.nicescroll.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.parallax.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.themepunch.plugins.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.themepunch.revolution.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/script.js"></script>
+    <!--[if IE 8]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+</head>
+<body>
+    <!-- Container -->
+    <div id="container">
+
+        <!-- Start Header -->
+        @Html.Partial("_NatigationBarPartialPage")
+        <!-- End Header -->
+
+        <!-- Start Page Banner -->
+        <div class="page-banner no-subtitle">
+            <div class="container">
+                <div class="row">
+                    <img src="~/Content/images/banner.jpg" style="width:100%"/>
+                </div>
+            </div>
+        </div>
+        <!-- End Page Banner -->
+
+        <!-- Start Content -->
+        <div id="content">
+            <div class="container">
+                <div class="row sidebar-page">
+
+
+                    <!-- Start left Sidebar -->
+                    <div class="col-md-3 sidebar left-sidebar">
+
+                        <!-- Search Widget -->
+                        <div class="widget widget-search">
+                            <form action="#">
+                                <input type="search" placeholder="Enter Keywords..." />
+                                <button class="search-btn" type="submit"><i class="icon-search-1"></i></button>
+                            </form>
+                        </div>
+
+                        <!-- Categories Widget -->
+                        <a class="elemadded responsive-link" href="#">Menu</a>
+                        <div class="widget widget-navbar navbar-vertical">
+                            <ul class="main-menu">
+                                <li class="drop">
+                                    <a class="active" href="#"><i class="fa fa-home"></i>Home</a>
+                                </li>
+                                <li class="drop">
+                                    <a href="#"><i class="fa fa-cog"></i>About</a>
+                                    <ul class="drop-down">
+                                        <li><a href="#">Background</a></li>
+                                        <li><a href="#">Theme and Objectives</a></li>
+                                        <li><a href="#">Venue of the Conference</a></li>
+                                        <li><a href="#">Committee</a></li>
+                                        <li><a href="#">Past Declarations</a></li>
+                                        <li><a href="#">VPHA</a></li>
+                                    </ul>
+                                </li>
+                                <li class="drop">
+                                    <a href="#"><i class="fa fa-cog"></i>Program</a>
+                                    <ul class="drop-down">
+                                        <li><a href="#">Main Conference</a></li>
+                                        <li><a href="#">Youth Conference</a></li>
+                                        <li><a href="#">Satellite Sessions </a></li>
+                                    </ul>
+                                </li>
+                                <li class="drop">
+                                    <a href="#"><i class="fa fa-cog"></i>Registration</a>
+                                    <ul class="drop-down">
+                                        <li><a href="#">Registration Guidelines</a></li>
+                                        <li><a href="#">Registration Form</a></li>
+                                    </ul>
+                                </li>
+                                <li class="drop">
+                                    <a href="#"><i class="fa fa-cog"></i>Abstract Submission</a>
+                                    <ul class="drop-down">
+                                        <li><a href="#">Abstract Submission Guidelines</a></li>
+                                        <li><a href="#">Abstract Submission Form</a></li>
+                                    </ul>
+                                </li>
+                                <li class="drop">
+                                    <a href="#"><i class="fa fa-cog"></i>Scholarship</a>
+                                    <ul class="drop-down">
+                                        <li><a href="#">Main Conference</a></li>
+                                        <li><a href="#">Youth Conference</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#"><i class="fa fa-user"></i>Sponsor</a></li>
+                                <li><a href="#"><i class="fa fa-user"></i>Exhibition</a></li>
+                                <li><a href="#"><i class="fa fa-user"></i>Instructions</a></li>
+                                <li><a href="#"><i class="fa fa-user"></i>Location</a></li>
+                                <li class="drop">
+                                    <a href="#"><i class="fa fa-cog"></i>Travel and Accommodation</a>
+                                    <ul class="drop-down">
+                                        <li><a href="#">Travel</a></li>
+                                        <li><a href="#">Accommodation</a></li>
+                                        <li><a href="#">Visa application</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#"><i class="fa fa-user"></i>Contact</a></li>
+                                <li class="drop">
+                                    <a href="#"><i class="fa fa-cog"></i>Conference Data</a>
+                                    <ul class="drop-down">
+                                        <li><a href="#">Conference Declaration</a></li>
+                                        <li><a href="#">Presentations</a></li>
+                                        <li><a href="#">Photo</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- End left Sidebar -->
+
+                    <!-- Page Content -->
+                    <div class="col-md-9 page-content">
+
+                        @RenderBody()
+
+                    </div>
+                    <!-- End Page Content-->
+
+                </div>
+            </div>
+        </div>
+        <!-- End Content -->
+
+        <!-- Start Footer -->
+        @Html.Partial("_FooterPartialPage")
+        <!-- End Footer -->
+
+    </div>
+    <!-- End Container -->
+    <!-- Go To Top Link -->
+    <a href="#" class="back-to-top"><i class="icon-up-open-1"></i></a>
+
+    <div id="loader">
+        <div class="spinner">
+            <div class="dot1"></div>
+            <div class="dot2"></div>
+        </div>
+    </div>
+
+    <!-- Style Switcher -->
+    <div class="switcher-box">
+        <a href="#" class="open-switcher show-switcher"><i class="icon-cog-1"></i></a>
+        <h4>Style Switcher</h4>
+        <span>12 Predefined Color Skins</span>
+        <ul class="colors-list">
+            <li><a onclick="setActiveStyleSheet('blue'); return false;" title="Blue" class="blue"></a></li>
+            <li><a onclick="setActiveStyleSheet('sky-blue'); return false;" title="Sky Blue" class="sky-blue"></a></li>
+            <li><a onclick="setActiveStyleSheet('cyan'); return false;" title="Cyan" class="cyan"></a></li>
+            <li><a onclick="setActiveStyleSheet('jade'); return false;" title="Jade" class="jade"></a></li>
+            <li><a onclick="setActiveStyleSheet('green'); return false;" title="Green" class="green"></a></li>
+            <li><a onclick="setActiveStyleSheet('purple'); return false;" title="Purple" class="purple"></a></li>
+            <li><a onclick="setActiveStyleSheet('pink'); return false;" title="Pink" class="pink"></a></li>
+            <li><a onclick="setActiveStyleSheet('red'); return false;" title="Red" class="red"></a></li>
+            <li><a onclick="setActiveStyleSheet('orange'); return false;" title="Orange" class="orange"></a></li>
+            <li><a onclick="setActiveStyleSheet('yellow'); return false;" title="Yellow" class="yellow"></a></li>
+            <li><a onclick="setActiveStyleSheet('peach'); return false;" title="Peach" class="peach"></a></li>
+            <li><a onclick="setActiveStyleSheet('beige'); return false;" title="Biege" class="beige"></a></li>
+        </ul>
+        <span>Top Bar Color</span>
+        <select id="topbar-style" class="topbar-style">
+            <option value="1">Light (Default)</option>
+            <option value="2">Dark</option>
+            <option value="3">Color</option>
+        </select>
+        <span>Layout Style</span>
+        <select id="layout-style" class="layout-style">
+            <option value="1">Wide</option>
+            <option value="2">Boxed</option>
+        </select>
+        <span>Patterns for Boxed Version</span>
+        <ul class="bg-list">
+            <li><a href="#" class="bg1"></a></li>
+            <li><a href="#" class="bg2"></a></li>
+            <li><a href="#" class="bg3"></a></li>
+            <li><a href="#" class="bg4"></a></li>
+            <li><a href="#" class="bg5"></a></li>
+            <li><a href="#" class="bg6"></a></li>
+            <li><a href="#" class="bg7"></a></li>
+            <li><a href="#" class="bg8"></a></li>
+            <li><a href="#" class="bg9"></a></li>
+            <li><a href="#" class="bg10"></a></li>
+            <li><a href="#" class="bg11"></a></li>
+            <li><a href="#" class="bg12"></a></li>
+            <li><a href="#" class="bg13"></a></li>
+            <li><a href="#" class="bg14"></a></li>
+        </ul>
+    </div>
+
+    <!-- Histats.com  START (hidden counter)-->
+    <script type="text/javascript">document.write(unescape("%3Cscript src=%27http://s10.histats.com/js15.js%27 type=%27text/javascript%27%3E%3C/script%3E"));</script>
+    <a href="../../../www.histats.com/index.html" target="_blank" title="">
+        <script type="text/javascript">
+        try {
+            Histats.start(1, 2633271, 4, 0, 0, 0, "");
+            Histats.track_hits();
+        } catch (err) { };
+        </script>
+    </a>
+    <noscript><a href="../../../www.histats.com/index.html" target="_blank"><img src="../../../sstatic1.histats.com/0266b.gif?2633271&amp;101" alt="" border="0"></a></noscript>
+    <!-- Histats.com  END  -->
+
+</body>
+</html>

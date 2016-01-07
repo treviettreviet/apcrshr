@@ -1,0 +1,120 @@
+﻿<!doctype html>
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><html lang="en" class="no-js"> <![endif]-->
+<html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><
+<head>
+
+    <!-- Basic -->
+    <title>@ViewBag.Title</title>
+
+    <!-- Define Charset -->
+    <meta charset="utf-8">
+    <!-- Responsive Metatag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Page Description and Author -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/Content/images/apcrshr.ico">
+
+    <!-- Responsive Metatag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Page Description and Author -->
+    <meta name="description" content="html">
+    <meta name="author" content="DesignTEAM">
+
+
+    <!-- Bootstrap CSS  -->
+    <link rel="stylesheet" href="~/Content/css/bootstrap.css" type="text/css" media="screen">
+
+    <!-- Revolution Banner CSS -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/settings.css" media="screen" />
+
+    <!-- Vella CSS Styles  -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/style.css" media="screen">
+
+    <!-- Responsive CSS Styles  -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/responsive.css" media="screen">
+
+    <!-- Css3 Transitions Styles  -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/animate.css" media="screen">
+
+    <!-- Color CSS Styles  -->
+    @Styles.Render("~/bundles/css/colors")
+
+    <!-- Fontello Icons CSS Styles  -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/fontello.css" media="screen">
+    <!--[if IE 7]><link rel="stylesheet" href="~/Content/css/fontello-ie7.css"><![endif]-->
+    <!-- Vella JS  -->
+    <script type="text/javascript" src="~/Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.migrate.js"></script>
+    <script type="text/javascript" src="~/Scripts/modernizrr.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="~/Scripts/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/nivo-lightbox.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.isotope.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.appear.js"></script>
+    <script type="text/javascript" src="~/Scripts/count-to.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.textillate.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.lettering.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.easypiechart.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.nicescroll.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.parallax.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.themepunch.plugins.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.themepunch.revolution.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/script.js"></script>
+    <!--[if IE 8]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+</head>
+<body>
+    <!-- Container -->
+    <div id="container">
+
+        <!-- Start Header -->
+        @Html.Partial("_NatigationBarPartialPage")
+        <!-- End Header -->
+
+        <!-- Start Page Banner -->
+        <div class="page-banner no-subtitle">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2>@ViewBag.Title</h2>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="breadcrumbs">
+                            <li><a href="/">Home</a></li>
+                            <li>@ViewBag.Title</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Page Banner -->
+
+        <!-- Start Content -->
+        @RenderBody()
+        <!-- End content -->
+
+        <!-- Start Footer -->
+        @Html.Partial("_FooterPartialPage")
+        <!-- End Footer -->
+
+    </div>
+    <!-- End Container -->
+    <!-- Go To Top Link -->
+    <a href="#" class="back-to-top"><i class="icon-up-open-1"></i></a>
+
+    <div id="loader">
+        <div class="spinner">
+            <div class="dot1"></div>
+            <div class="dot2"></div>
+        </div>
+    </div>
+
+</body>
+</html>
