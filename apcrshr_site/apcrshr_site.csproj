@@ -329,6 +329,7 @@
     <Content Include="Content\upload\donnor\fedex.jpg" />
     <Content Include="Content\upload\donnor\lg.jpg" />
     <Content Include="Content\upload\donnor\tostitos.jpg" />
+    <Content Include="Content\upload\images\bussniss-pic.jpg" />
     <Content Include="Content\upload\images\delegate_img_program.gif" />
     <Content Include="Content\upload\images\gallery_halong.jpg" />
     <Content Include="Content\upload\images\gallery_halong_1_full.jpg" />

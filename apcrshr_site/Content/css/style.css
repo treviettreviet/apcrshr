@@ -1353,6 +1353,15 @@ input[type="submit"] {
 	width: 42px;
 	color: #fff;
 	font-size: 1.4em;
+    z-index: 9999;
+    position: absolute;
+    border: 3px solid #eee;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -o-border-radius: 2px;
+    margin-top: 3px;
+    margin-left: 3px;
 }
 
 .latest-posts-classic .post-title {
@@ -3662,6 +3671,7 @@ ul.post-meta li, ul.post-meta li a {
 
 .sidebar a {
 	color: #000;
+    font-family: 'Arial', sans-serif;
 }
 
 .sidebar .widget {
@@ -3759,6 +3769,11 @@ ul.post-meta li, ul.post-meta li a {
 	margin: 0;
 	padding: 0;
 	border: none;
+}
+
+.sidebar .widget-popular-posts .widget-thumb-icon {
+	float: left;
+	margin-right: 8px;
 }
 
 .sidebar .widget-popular-posts .widget-thumb {
