@@ -203,7 +203,8 @@ input[type="submit"] {
 }
 
 #content {
-	padding: 50px 0;
+    padding: 20px 0px 50px 0px;
+	/*padding: 50px 0;*/
 }
 
 #content.full-sections {
@@ -284,7 +285,8 @@ input[type="submit"] {
 }
 
 #container {
-    background-color: #fff;
+    /*background-color: #fff;*/
+    background-image: url("../images/patterns/3.png");
 }
 
 .boxed-page {
@@ -537,6 +539,10 @@ ul.social-list li a.vimeo:hover {
 
 ul.social-list li a.skype:hover {
 	background-color: #36C4F3
+}
+
+ul.social-list li a.youtube:hover {
+	background-color: #EF5656
 }
 
 ul.social-list li a i {
@@ -814,8 +820,8 @@ ul.social-list li:last-child a i {
 
 .page-banner {
     /*padding: 30px 0;*/
-    background: #f6f6f6;
-	border-bottom: 1px solid #eee;
+    /*background: #f6f6f6;
+	border-bottom: 1px solid #eee;*/
 }
 
 .page-banner h2 {
@@ -1308,8 +1314,14 @@ input[type="submit"] {
 
 /*************** Latest News ***************/
 
+.latest-posts-classic {
+	background: #fff;
+    padding: 20px;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.25);
+}
+
 .latest-posts-classic .post-row {
-	margin-bottom: 20px;
+	margin-bottom: 35px;
 }
 
 .latest-posts-classic .left-meta-post {
@@ -3227,6 +3239,9 @@ ul.icons-list li i {
     margin-bottom: 40px;
 	padding-bottom: 40px;
 	border-bottom: 1px solid #eee;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.25);
 }
 
 .blog-post .post-head {
@@ -3681,6 +3696,14 @@ ul.post-meta li, ul.post-meta li a {
 
 .sidebar .widget ul {
 	margin: 0;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.25);
+}
+
+.widget-search{
+    background: #fff;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.25);
 }
 
 .widget-search input[type="search"] {
@@ -3736,7 +3759,7 @@ ul.post-meta li, ul.post-meta li a {
 	display: block;
 	width: 50px;
 	height: 3px;
-	background-color: #ddd;
+	background-color: #00afd1;
 	margin: 0;
 }
 
@@ -3812,6 +3835,12 @@ ul.post-meta li, ul.post-meta li a {
 	font-size: 12px;
 }
 
+.sidebar .tagcloud{
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.25);
+}
+
 .sidebar .tagcloud a {
     display: inline-block;
     color: #888;
@@ -3883,7 +3912,7 @@ footer a:hover {
 	display: block;
 	width: 50px;
 	height: 3px;
-	background-color: #333;
+	background-color: #FFF;
 	margin: 0;
 }
 
@@ -3949,6 +3978,10 @@ footer a:hover {
 
 .social-widget ul.social-icons li a.skype:hover i {
 	background-color: #36C4F3
+}
+
+.social-widget ul.social-icons li a.youtube:hover i {
+	background-color: #E474AF
 }
 
 .contact-widget {
@@ -4459,6 +4492,9 @@ ul.footer-nav li a:hover {
 	position: relative;
 	width: 100%;
 	-ms-touch-action: pan-y;
+    padding: 5px;
+    background: #fff;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.25);
 }
 .owl-carousel .owl-wrapper{
 	display: none;
@@ -5118,6 +5154,10 @@ a.elemadded {
 a.elemadded:hover {
   opacity: 0.7;
 }
+.widget-navbar{
+    background: #fff;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.25);
+}
 .widget-navbar .main-menu {
   margin: 0;
   padding: 0;
@@ -5229,3 +5269,16 @@ a.elemadded:hover {
   transform: rotateX(-90deg);
 }
 
+/*Shadown*/
+.bottom_shadow {
+    background-image: url('../images/slide_shadow.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: bottom center;
+    width: 100%;
+    /*position: absolute;*/
+    left: 0;
+    bottom: -28px;
+    z-index: -1;
+    height: 30px;
+}

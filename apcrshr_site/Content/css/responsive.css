@@ -1,5 +1,18 @@
 @media (max-width: 1200px) {
 	
+    .bottom_shadow {
+        background-image: url('../images/slide_shadow.png');
+        background-repeat: no-repeat;
+        background-size: 100%;
+        background-position: bottom center;
+        width: 100%;
+        /* position: absolute; */
+        left: 0;
+        bottom: -28px;
+        z-index: -1;
+        height: 24px;
+    }
+
 	.navbar-default .navbar-toggle, .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
 		background: #fff;
 		padding: 8px 5px 6px 5px;
@@ -36,6 +49,19 @@
 
 @media (max-width: 991px) {
 	
+    .bottom_shadow {
+        background-image: url('../images/slide_shadow.png');
+        background-repeat: no-repeat;
+        background-size: 100%;
+        background-position: bottom center;
+        width: 100%;
+        /* position: absolute; */
+        left: 0;
+        bottom: -28px;
+        z-index: -1;
+        height: 19px;
+    }
+
 	.boxed-page, .boxed-page header {
 		width: 100%;
 	}
@@ -241,6 +267,19 @@
 
 @media (max-width: 768px) {
   
+    .bottom_shadow {
+        background-image: url('../images/slide_shadow.png');
+        background-repeat: no-repeat;
+        background-size: 100%;
+        background-position: bottom center;
+        width: 100%;
+        /* position: absolute; */
+        left: 0;
+        bottom: -28px;
+        z-index: -1;
+        height: 11px;
+    }
+
 	.tp-leftarrow,
 	.tp-rightarrow {
 		display: none!important;
@@ -284,6 +323,19 @@
 }
 @media only screen and (max-width: 479px) { 
   
+    .bottom_shadow {
+        background-image: url('../images/slide_shadow.png');
+        background-repeat: no-repeat;
+        background-size: 100%;
+        background-position: bottom center;
+        width: 100%;
+        /* position: absolute; */
+        left: 0;
+        bottom: -28px;
+        z-index: -1;
+        height: 6px;
+    }
+
     .top-bar  {
 		text-align: center;
 	}
@@ -352,6 +404,10 @@
 		color: #36C4F3
 	}
 	
+    ul.social-list li a.youtube:hover {
+		color: #E474AF;
+	}
+
 	.navbar-default .navbar-toggle {
 		margin-top: 15px;
 		outline: none;

@@ -915,11 +915,11 @@ pre code {
 
 @media (min-width: 768px) {
   .container {
-    max-width: 850px;
-    /*padding-right: 15px;
+    /*max-width: 850px;*/
+    padding-right: 15px;
     padding-left: 15px;
     margin-right: auto;
-    margin-left: auto;*/
+    margin-left: auto;
   }
   .col-sm-1,
   .col-sm-2,
@@ -1073,11 +1073,11 @@ pre code {
 
 @media (min-width: 992px) {
   .container {
-    max-width: 1070px;
-    /*padding-right: 15px;
-    padding-left: 15px;
+    /*max-width: 1070px;*/
+    padding-right: 30px;
+    padding-left: 30px;
     margin-right: auto;
-    margin-left: auto;*/
+    margin-left: auto;
   }
   .col-md-1,
   .col-md-2,
@@ -1240,11 +1240,11 @@ pre code {
 
 @media (min-width: 1200px) {
   .container {
-    max-width: 1270px;
-    /*padding-right: 15px;
-    padding-left: 15px;
+    /*max-width: 1270px;*/
+    padding-right: 30px;
+    padding-left: 30px;
     margin-right: auto;
-    margin-left: auto;*/
+    margin-left: auto;
   }
   .col-lg-1,
   .col-lg-2,

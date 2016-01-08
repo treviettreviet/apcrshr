@@ -170,7 +170,7 @@ $(document).ready(function($) {
 	function start() {
 		percentTime = 0;
 		isPause = false;
-		tick = setInterval(interval, 10);
+		//tick = setInterval(interval, 10);
     };
  
     function interval() {
