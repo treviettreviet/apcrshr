@@ -10,14 +10,25 @@ namespace apcrshr_site.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
+            ViewBag.CurrentNode = "Home";
             return View();
         }
 
         public ActionResult ProgramMainConference()
         {
             ViewBag.CurrentNode = "Program";
+            return View();
+        }
+
+        public ActionResult AboutBackground()
+        {
+            ViewBag.CurrentNode = "About";
+            return View();
+        }
+
+        public ActionResult AboutThemeObjective()
+        {
+            ViewBag.CurrentNode = "About";
             return View();
         }
 

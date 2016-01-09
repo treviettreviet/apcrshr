@@ -1,12 +1,12 @@
 ﻿<ul class="main-menu" style="padding: 0px;">
     <li class="drop">
-        <a class="active" href="/"><i class="fa fa-home"></i>Home</a>
+        <a class='@(ViewBag.CurrentNode == "Home" ? "active" : "")' href="/"><i class="fa fa-home"></i>Home</a>
     </li>
     <li class="drop">
-        <a href="#"><i class="fa fa-cog"></i>About <i class="icon-right-small"></i></a>
+        <a class='@(ViewBag.CurrentNode == "About" ? "active" : "")' href="#"><i class="fa fa-cog"></i>About <i class="icon-right-small"></i></a>
         <ul class="drop-down">
-            <li><a href="#">Background</a></li>
-            <li><a href="#">Theme and Objectives</a></li>
+            <li><a href='@Url.Action("AboutBackground", "Home")'>Background</a></li>
+            <li><a href='@Url.Action("AboutThemeObjective", "Home")'>Theme and Objectives</a></li>
             <li><a href="#">Venue of the Conference</a></li>
             <li><a href="#">Committee</a></li>
             <li><a href="#">Past Declarations</a></li>
@@ -14,7 +14,7 @@
         </ul>
     </li>
     <li class="drop">
-        <a href="#"><i class="fa fa-cog"></i>Program <i class="icon-right-small"></i></a>
+        <a class='@(ViewBag.CurrentNode == "Program" ? "active" : "")' href="#"><i class="fa fa-cog"></i>Program <i class="icon-right-small"></i></a>
         <ul class="drop-down">
             <li><a href='@Url.Action("ProgramMainConference", "Home")'>Main Conference</a></li>
             <li><a href="#">Youth Conference</a></li>
