@@ -5166,6 +5166,10 @@ a.elemadded:hover {
   display: block;
   position: relative;
 }
+.widget-navbar .main-menu > li i{
+    position: absolute;
+    right: 0px;
+}
 .widget-navbar .main-menu > li a {
   display: inline-block;
   text-decoration: none;
