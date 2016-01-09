@@ -50,16 +50,7 @@
 @media (max-width: 991px) {
 	
     .bottom_shadow {
-        background-image: url('../images/slide_shadow.png');
-        background-repeat: no-repeat;
-        background-size: 100%;
-        background-position: bottom center;
-        width: 100%;
-        /* position: absolute; */
-        left: 0;
-        bottom: -28px;
-        z-index: -1;
-        height: 19px;
+        margin-top: -8px;
     }
 
 	.boxed-page, .boxed-page header {
@@ -268,16 +259,7 @@
 @media (max-width: 768px) {
   
     .bottom_shadow {
-        background-image: url('../images/slide_shadow.png');
-        background-repeat: no-repeat;
-        background-size: 100%;
-        background-position: bottom center;
-        width: 100%;
-        /* position: absolute; */
-        left: 0;
-        bottom: -28px;
-        z-index: -1;
-        height: 11px;
+        margin-top: -12px;
     }
 
 	.tp-leftarrow,
@@ -324,16 +306,7 @@
 @media only screen and (max-width: 479px) { 
   
     .bottom_shadow {
-        background-image: url('../images/slide_shadow.png');
-        background-repeat: no-repeat;
-        background-size: 100%;
-        background-position: bottom center;
-        width: 100%;
-        /* position: absolute; */
-        left: 0;
-        bottom: -28px;
-        z-index: -1;
-        height: 6px;
+        margin-top: -18px;
     }
 
     .top-bar  {
