@@ -32,5 +32,15 @@ namespace apcrshr_site.Controllers
             return View();
         }
 
+        public ActionResult NewsGalerry()
+        {
+            return View();
+        }
+
+        public ActionResult NewsText()
+        {
+            return View();
+        }
+
     }
 }

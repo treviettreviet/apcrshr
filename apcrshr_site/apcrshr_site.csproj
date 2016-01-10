@@ -489,6 +489,8 @@
     <Content Include="Views\Shared\_PartialLeftMenu.cshtml" />
     <Content Include="Views\Home\AboutBackground.cshtml" />
     <Content Include="Views\Home\AboutThemeObjective.cshtml" />
+    <Content Include="Views\Home\NewsGalerry.cshtml" />
+    <Content Include="Views\Home\NewsText.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

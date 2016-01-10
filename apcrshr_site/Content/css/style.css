@@ -3304,6 +3304,10 @@ ul.icons-list li i {
 	position: relative;
 }
 
+.blog-post .post-content-nopadding {
+	position: relative;
+}
+
 .blog-post .post-type {
 	position: absolute;
 	left: 0;
@@ -3781,6 +3785,29 @@ ul.post-meta li, ul.post-meta li a {
 .widget-categories ul li a:hover {
 	padding-left: 8px;
 }
+
+
+
+.sidebar .widget-social ul li a {
+    overflow: hidden;
+	padding: 8px 0;
+    text-decoration: none;
+    display: block;
+	border-bottom: 1px solid #eee;
+    transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+}
+
+.sidebar .widget-social ul li:first-child a {
+	padding-top: 0;
+}
+
+.sidebar .widget-social ul li a:hover {
+	padding-left: 8px;
+}
+
 
 .sidebar .widget-popular-posts li {
 	margin-bottom: 12px;
@@ -5285,4 +5312,77 @@ a.elemadded:hover {
     bottom: -28px;
     z-index: -1;
     height: 30px;
+}
+
+/*Content post share*/
+.post-share-contet {
+	margin-bottom: 10px;
+}
+
+.post-share-contet span {
+	margin-right: 4px;
+	font-size: 13px;
+	color: #888;
+}
+
+.post-share-contet a {
+	display: inline-block;
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-o-border-radius: 2px;
+	transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-webkit-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+}
+
+.post-share-contet a.facebook {
+	background-color: #507CBE;
+}
+
+.post-share-contet a.facebook:hover {
+	background-color: #3E68A8;
+}
+
+.post-share-contet a.twitter {
+	background-color: #63CDF1;
+}
+
+.post-share-contet a.twitter:hover {
+	background-color: #36BFED;
+}
+
+.post-share-contet a.gplus {
+	background-color: #F16261;
+}
+
+.post-share-contet a.gplus:hover {
+	background-color: #EF4545;
+}
+
+.post-share-contet a.linkedin {
+	background-color: #90CADD;
+}
+
+.post-share-contet a.linkedin:hover {
+	background-color: #72BBD3;
+}
+
+.post-share-contet a.youtube:hover {
+    background-color: #F90100;
+}
+
+.post-share-contet a.youtube {
+    background-color: #DA3D3D;
+}
+
+.post-share-contet a i {
+	width: 32px;
+	height: 32px;
+	line-height: 32px;
+	text-align: center;
+	display: block;
+	color: #fff;
+	font-size: 1em;
 }
