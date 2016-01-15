@@ -39,11 +39,13 @@ $(document).ready(function($) {
 	
 	$("html").niceScroll({
 		scrollspeed: 70,
-		mousescrollstep: 38,
+		mousescrollstep: 150,
 		cursorwidth: 8,
 		cursorborder: 0,
 		cursorcolor: '#333',
-		autohidemode: false,
+		autohidemode: true,
+		smoothscroll: false,
+		touchbehavior: true,
 		zindex: 999999999,
 		horizrailenabled: false,
 		cursorborderradius: 0,
