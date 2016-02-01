@@ -222,6 +222,7 @@
     <Content Include="Content\images\apcrshr.ico" />
     <Content Include="Content\images\avatar.png" />
     <Content Include="Content\images\banner.jpg" />
+    <Content Include="Content\images\banner.png" />
     <Content Include="Content\images\browser-section.jpg" />
     <Content Include="Content\images\c1.png" />
     <Content Include="Content\images\c2.png" />
@@ -262,6 +263,7 @@
     <Content Include="Content\images\patterns\7.png" />
     <Content Include="Content\images\patterns\8.png" />
     <Content Include="Content\images\patterns\9.png" />
+    <Content Include="Content\images\patterns\body_background.png" />
     <Content Include="Content\images\slide_shadow.png" />
     <Content Include="Content\images\team-section.jpg" />
     <Content Include="Content\images\testimonials-bg.jpg" />
@@ -491,6 +493,7 @@
     <Content Include="Views\Home\AboutThemeObjective.cshtml" />
     <Content Include="Views\Home\NewsGalerry.cshtml" />
     <Content Include="Views\Home\NewsText.cshtml" />
+    <Content Include="Views\Shared\_PartialRightWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -49,6 +49,10 @@
 
 @media (max-width: 991px) {
 	
+    .page-banner .login-button {
+        bottom: 5px;
+    }
+
     .bottom_shadow {
         margin-top: -8px;
     }
