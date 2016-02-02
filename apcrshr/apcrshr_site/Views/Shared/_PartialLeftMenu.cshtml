@@ -1,0 +1,66 @@
+﻿<ul class="main-menu" style="padding: 0px;">
+    <li class="drop">
+        <a class='@(ViewBag.CurrentNode == "Home" ? "active" : "")' href="/"><i class="fa fa-home"></i>Home</a>
+    </li>
+    <li class="drop">
+        <a class='@(ViewBag.CurrentNode == "About" ? "active" : "")' href="#"><i class="fa fa-cog"></i>About <i class="icon-right-small"></i></a>
+        <ul class="drop-down">
+            <li><a href='@Url.Action("AboutBackground", "Home")'>Background</a></li>
+            <li><a href='@Url.Action("AboutThemeObjective", "Home")'>Theme and Objectives</a></li>
+            <li><a href="#">Venue of the Conference</a></li>
+            <li><a href="#">Committee</a></li>
+            <li><a href="#">Past Declarations</a></li>
+            <li><a href="#">VPHA</a></li>
+        </ul>
+    </li>
+    <li class="drop">
+        <a class='@(ViewBag.CurrentNode == "Program" ? "active" : "")' href="#"><i class="fa fa-cog"></i>Program <i class="icon-right-small"></i></a>
+        <ul class="drop-down">
+            <li><a href='@Url.Action("ProgramMainConference", "Home")'>Main Conference</a></li>
+            <li><a href="#">Youth Conference</a></li>
+            <li><a href="#">Satellite Sessions </a></li>
+        </ul>
+    </li>
+    <li class="drop">
+        <a href="#"><i class="fa fa-cog"></i>Registration <i class="icon-right-small"></i></a>
+        <ul class="drop-down">
+            <li><a href="#">Registration Guidelines</a></li>
+            <li><a href="#">Registration Form</a></li>
+        </ul>
+    </li>
+    <li class="drop">
+        <a href="#"><i class="fa fa-cog"></i>Abstract Submission <i class="icon-right-small"></i></a>
+        <ul class="drop-down">
+            <li><a href="#">Abstract Submission Guidelines</a></li>
+            <li><a href="#">Abstract Submission Form</a></li>
+        </ul>
+    </li>
+    <li class="drop">
+        <a href="#"><i class="fa fa-cog"></i>Scholarship <i class="icon-right-small"></i></a>
+        <ul class="drop-down">
+            <li><a href="#">Main Conference</a></li>
+            <li><a href="#">Youth Conference</a></li>
+        </ul>
+    </li>
+    <li><a href="#"><i class="fa fa-user"></i>Sponsor</a></li>
+    <li><a href="#"><i class="fa fa-user"></i>Exhibition</a></li>
+    <li><a href="#"><i class="fa fa-user"></i>Instructions</a></li>
+    <li><a href="#"><i class="fa fa-user"></i>Location</a></li>
+    <li class="drop">
+        <a href="#"><i class="fa fa-cog"></i>Travel and Accommodation <i class="icon-right-small"></i></a>
+        <ul class="drop-down">
+            <li><a href="#">Travel</a></li>
+            <li><a href="#">Accommodation</a></li>
+            <li><a href="#">Visa application</a></li>
+        </ul>
+    </li>
+    <li><a href="#"><i class="fa fa-user"></i>Contact</a></li>
+    <li class="drop">
+        <a href="#"><i class="fa fa-cog"></i>Conference Data <i class="icon-right-small"></i></a>
+        <ul class="drop-down">
+            <li><a href="#">Conference Declaration</a></li>
+            <li><a href="#">Presentations</a></li>
+            <li><a href="#">Photo</a></li>
+        </ul>
+    </li>
+</ul>
