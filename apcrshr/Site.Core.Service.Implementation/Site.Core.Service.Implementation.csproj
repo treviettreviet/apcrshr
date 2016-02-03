@@ -49,9 +49,11 @@
     <Compile Include="Convertor\IConvertor.cs" />
     <Compile Include="HomeService.cs" />
     <Compile Include="ModelMapper\MapperUtil.cs" />
+    <Compile Include="NewsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AdminResource.Designer.cs" />
     <Compile Include="Resources\AdminResource.en-US.Designer.cs" />
+    <Compile Include="SubscriberService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Site.Core.DataModel\Site.Core.DataModel.csproj">

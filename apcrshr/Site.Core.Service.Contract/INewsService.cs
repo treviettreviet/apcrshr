@@ -69,27 +69,6 @@ namespace Site.Core.Service.Contract
         InsertResponse CreateNews(NewsModel news);
 
         /// <summary>
-        /// Get new by category URL
-        /// </summary>
-        /// <param name="actionURL"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="pageIndex"></param>
-        /// <param name="language"></param>
-        /// <returns></returns>
-        FindAllItemReponse<NewsModel> GetNewsByCategory(string actionURL, int pageSize, int pageIndex, string language);
-
-        /// <summary>
-        /// Get all related news by date
-        /// </summary>
-        /// <param name="category"></param>
-        /// <param name="date"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="pageIndex"></param>
-        /// <param name="language"></param>
-        /// <returns></returns>
-        FindAllItemReponse<NewsModel> GetRelatedNews(string category, DateTime date, int pageSize, int pageIndex, string language);
-
-        /// <summary>
         /// Get news by ID
         /// </summary>
         /// <param name="newsID"></param>
