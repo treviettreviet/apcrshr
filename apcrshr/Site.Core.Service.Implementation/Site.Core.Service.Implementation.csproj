@@ -54,6 +54,7 @@
     <Compile Include="Resources\AdminResource.Designer.cs" />
     <Compile Include="Resources\AdminResource.en-US.Designer.cs" />
     <Compile Include="SubscriberService.cs" />
+    <Compile Include="UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Site.Core.DataModel\Site.Core.DataModel.csproj">

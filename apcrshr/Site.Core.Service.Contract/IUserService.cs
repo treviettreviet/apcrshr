@@ -81,14 +81,6 @@ namespace Site.Core.Service.Contract
         BaseResponse Logout(string sessionID);
 
         /// <summary>
-        /// Get User with paging
-        /// </summary>
-        /// <param name="pageSize"></param>
-        /// <param name="pageIndex"></param>
-        /// <returns></returns>
-        FindAllItemReponse<UserModel> GetUsers(int pageSize, int pageIndex);
-
-        /// <summary>
         /// Check User in system before create new User
         /// </summary>
         /// <param name="username"></param>

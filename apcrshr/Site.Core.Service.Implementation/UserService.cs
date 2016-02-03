@@ -18,387 +18,319 @@ namespace Site.Core.Service.Implementation
         public static readonly int TIME_OUT_MINUTES = 30;
         public static readonly string DEFAULT_LANGUAGE = "VN";
 
-        public GetUserResponse FindUserByID(string id)
+        public FindItemReponse<UserModel> FindUserByID(string id)
         {
-            using (IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository())
+            try
             {
-                try
+                IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
+                User user = userRepository.FindByID(id);
+                var _user = Mapper.Map<User, UserModel>(user);
+                return new FindItemReponse<UserModel>
                 {
-                    User user = userRepository.FindByID(id);
-                    var _user = Mapper.Map<User, UserModel>(user);
-                    return new GetUserResponse
-                    {
-                        User = _user,
-                        ErrorCode = (int)ErrorCode.None,
-                        Message = string.Empty
-                    };
-                }
-                catch (Exception ex)
+                    Item = _user,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindItemReponse<UserModel>
                 {
-                    return new GetUserResponse
-                    {
-                        ErrorCode = (int)ErrorCode.Error,
-                        Message = ex.Message
-                    };
-                }
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
             }
         }
 
         public BaseResponse DeleteUser(string id)
         {
-            using (IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository())
+            try
             {
-                try
+                IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
+                userRepository.Delete(id);
+                return new BaseResponse
                 {
-                    userRepository.Delete(id);
-                    return new BaseResponse
-                    {
-                        ErrorCode = (int)ErrorCode.None,
-                        Message = Resources.AdminResource.msg_delete_success
-                    };
-                }
-                catch (Exception ex)
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = Resources.AdminResource.msg_delete_success
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse
                 {
-                    return new BaseResponse
-                    {
-                        ErrorCode = (int)ErrorCode.Error,
-                        Message = ex.Message
-                    };
-                }
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
             }
         }
 
         public BaseResponse UpdateUser(UserModel user)
         {
-            using (IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository())
+            try
             {
-                try
+                IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
+                User _user = Mapper.Map<UserModel, User>(user);
+                userRepository.Update(_user);
+                return new BaseResponse
                 {
-                    User _user = Mapper.Map<UserModel, User>(user);
-                    userRepository.Update(_user);
-                    return new BaseResponse
-                    {
-                        ErrorCode = (int)ErrorCode.None,
-                        Message = Resources.AdminResource.msg_update_success
-                    };
-                }
-                catch (Exception ex)
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = Resources.AdminResource.msg_update_success
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse
                 {
-                    return new BaseResponse
-                    {
-                        ErrorCode = (int)ErrorCode.Error,
-                        Message = ex.Message
-                    };
-                }
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
             }
         }
 
-        public GetAllUserResponse GetUsers()
+        public FindAllItemReponse<UserModel> GetUsers()
         {
-            using (IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository())
+            try
             {
-                try
+                IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
+                IList<User> users = userRepository.FindAll();
+                var _user = users.Select(u => Mapper.Map<User, UserModel>(u)).ToList();
+                return new FindAllItemReponse<UserModel>
                 {
-                    IList<User> users = userRepository.FindAll();
-                    var _user = users.Select(u => Mapper.Map<User, UserModel>(u)).ToList();
-                    return new GetAllUserResponse
-                    {
-                        Users = _user,
-                        ErrorCode = (int)ErrorCode.None,
-                        Message = string.Empty
-                    };
-                }
-                catch (Exception ex)
+                    Items = _user,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindAllItemReponse<UserModel>
                 {
-                    return new GetAllUserResponse
-                    {
-                        ErrorCode = (int)ErrorCode.Error,
-                        Message = ex.Message
-                    };
-                }
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
             }
         }
 
-        public BaseResponse CreateUser(UserModel user)
+        public InsertResponse CreateUser(UserModel user)
         {
-            using (IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository())
+            try
             {
-                try
+                IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
+                object id = userRepository.Insert(Mapper.Map<UserModel, User>(user));
+                return new InsertResponse
                 {
-                    userRepository.Insert(Mapper.Map<UserModel, User>(user));
-                    return new BaseResponse
-                    {
-                        ErrorCode = (int)ErrorCode.None,
-                        Message = Resources.AdminResource.msg_create_success
-                    };
-                }
-                catch (Exception ex)
+                    InsertID = id.ToString(),
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = Resources.AdminResource.msg_create_success
+                };
+            }
+            catch (Exception ex)
+            {
+                return new InsertResponse
                 {
-                    return new BaseResponse
-                    {
-                        ErrorCode = (int)ErrorCode.Error,
-                        Message = ex.Message
-                    };
-                }
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
             }
         }
 
         public UserLoginResponse Login(string username, string password)
         {
-            using (IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository())
+            try
             {
-                using (IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository())
+                IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
+                User user = userRepository.Login(username, password);
+
+                if (user != null)
                 {
+                    IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository();
                     try
                     {
-                        User user = userRepository.Login(username, password);
-
-                        if (user != null)
-                        {
-                            try
-                            {
-                                userSessionRepository.DeleteByUserID(user.UserID);
-                            }
-                            catch (Exception)
-                            {
-                            }
-
-                            int timeOut = TIME_OUT_MINUTES * 60 * 1000;
-
-                            UserSession userSession = new UserSession
-                            {
-                                CreatedDate = DateTime.Now,
-                                UserID = user.UserID,
-                                SessionId = Guid.NewGuid().ToString(),
-                                UpdatedDate = DateTime.Now
-                            };
-
-                            object sessionID = userSessionRepository.Insert(userSession);
-
-                            return new UserLoginResponse
-                            {
-                                ErrorCode = (int)ErrorCode.None,
-                                Message = string.Empty,
-                                SessionId = userSession.SessionId,
-                                UserId = user.UserID,
-                                UserName = user.LastName
-                            };
-                        }
-                        else
-                        {
-                            return new UserLoginResponse
-                            {
-                                ErrorCode = (int)ErrorCode.Error,
-                                Message = Resources.AdminResource.msg_login_fail
-                            };
-                        }
+                        userSessionRepository.DeleteByUserID(user.UserID);
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        return new UserLoginResponse
-                        {
-                            ErrorCode = (int)ErrorCode.Error,
-                            Message = ex.Message
-                        };
                     }
+
+                    int timeOut = TIME_OUT_MINUTES * 60 * 1000;
+
+                    UserSession userSession = new UserSession
+                    {
+                        CreatedDate = DateTime.Now,
+                        UserID = user.UserID,
+                        SessionID = Guid.NewGuid().ToString(),
+                        UpdatedDate = DateTime.Now
+                    };
+
+                    object sessionID = userSessionRepository.Insert(userSession);
+
+                    return new UserLoginResponse
+                    {
+                        ErrorCode = (int)ErrorCode.None,
+                        Message = string.Empty,
+                        SessionId = userSession.SessionID,
+                        UserId = user.UserID,
+                        UserName = user.LastName
+                    };
                 }
+                else
+                {
+                    return new UserLoginResponse
+                    {
+                        ErrorCode = (int)ErrorCode.Error,
+                        Message = Resources.AdminResource.msg_login_fail
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new UserLoginResponse
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
             }
         }
 
         public BaseResponse Logout(string sessionID)
         {
-            using (IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository())
+            try
             {
-                try
+                IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository();
+                userSessionRepository.Delete(sessionID);
+                return new BaseResponse
                 {
-                    userSessionRepository.Delete(sessionID);
-                    return new BaseResponse
-                    {
-                        ErrorCode = (int)ErrorCode.None,
-                        Message = string.Empty
-                    };
-                }
-                catch (Exception ex)
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse
                 {
-                    return new BaseResponse
-                    {
-                        ErrorCode = (int)ErrorCode.Error,
-                        Message = ex.Message
-                    };
-                }
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
             }
         }
 
-        public GetAllUserResponse GetUsersExceptMe(string userID)
+        public FindAllItemReponse<UserModel> GetUsersExceptMe(string userID)
         {
-            using (IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository())
+            try
             {
-                try
+                IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
+                IList<User> users = userRepository.GetUserExceptMe(userID);
+                var _user = users.Select(u => Mapper.Map<User, UserModel>(u)).ToList();
+                return new FindAllItemReponse<UserModel>
                 {
-                    IList<User> users = userRepository.GetUserExceptMe(userID);
-                    var _user = users.Select(u => Mapper.Map<User, UserModel>(u)).ToList();
-                    return new GetAllUserResponse
-                    {
-                        Users = _user,
-                        ErrorCode = (int)ErrorCode.None,
-                        Message = string.Empty
-                    };
-                }
-                catch (Exception ex)
+                    Items = _user,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindAllItemReponse<UserModel>
                 {
-                    return new GetAllUserResponse
-                    {
-                        ErrorCode = (int)ErrorCode.Error,
-                        Message = ex.Message
-                    };
-                }
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
             }
         }
 
-        public GetAllUserResponse GetUsers(int pageSize, int pageIndex)
+        public FindItemReponse<UserModel> FindUserByEmail(string email)
         {
-            using (IUserRepository usersRepositoty = RepositoryClassFactory.GetInstance().GetUserRepository())
+            try
             {
-                try
+                IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
+                User user = userRepository.FindByEmail(email);
+                var _user = Mapper.Map<User, UserModel>(user);
+                return new FindItemReponse<UserModel>
                 {
-                    var result = usersRepositoty.FindAll(pageSize, pageIndex);
-                    var _user = result.Item2.Select(u => Mapper.Map<User, UserModel>(u)).ToList();
-                    return new GetAllUserResponse
-                    {
-                        Count = result.Item1,
-                        Users = _user,
-                        ErrorCode = (int)ErrorCode.None,
-                        Message = string.Empty
-                    };
-                }
-                catch (Exception e)
+                    Item = _user,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindItemReponse<UserModel>
                 {
-                    return new GetAllUserResponse
-                    {
-                        ErrorCode = (int)ErrorCode.None,
-                        Message = e.Message
-                    };
-                }
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
             }
         }
 
-        public GetUserResponse FindUserByEmail(string email)
+        public FindItemReponse<UserModel> FindUserByUserName(string username)
         {
-            using (IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository())
+            try
             {
-                try
+                IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
+                User user = userRepository.FindByUserName(username);
+                var _user = Mapper.Map<User, UserModel>(user);
+                return new FindItemReponse<UserModel>
                 {
-                    User user = userRepository.FindByEmail(email);
-                    var _user = Mapper.Map<User, UserModel>(user);
-                    return new GetUserResponse
-                    {
-                        User = _user,
-                        ErrorCode = (int)ErrorCode.None,
-                        Message = string.Empty
-                    };
-                }
-                catch (Exception ex)
+                    Item = _user,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindItemReponse<UserModel>
                 {
-                    return new GetUserResponse
-                    {
-                        ErrorCode = (int)ErrorCode.Error,
-                        Message = ex.Message
-                    };
-                }
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
             }
         }
 
-        public GetUserResponse FindUserByUserName(string username)
+        public FindItemReponse<UserModel> CheckUsername(string username)
         {
-            using (IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository())
+            try
             {
-                try
+                IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
+                User user = userRepository.FindByUserName(username);
+                var _user = Mapper.Map<User, UserModel>(user);
+                return new FindItemReponse<UserModel>
                 {
-                    User user = userRepository.FindByUserName(username);
-                    var _user = Mapper.Map<User, UserModel>(user);
-                    return new GetUserResponse
-                    {
-                        User = _user,
-                        ErrorCode = (int)ErrorCode.None,
-                        Message = string.Empty
-                    };
-                }
-                catch (Exception ex)
+                    Item = _user,
+                    ErrorCode = (int)ErrorCode.Redirect,
+                    Message = Resources.AdminResource.msg_username_exists
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindItemReponse<UserModel>
                 {
-                    return new GetUserResponse
-                    {
-                        ErrorCode = (int)ErrorCode.Error,
-                        Message = ex.Message
-                    };
-                }
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
             }
         }
 
-        public GetUserResponse CheckUsername(string username)
+        public FindItemReponse<UserModel> CheckEmail(string email)
         {
-            using (IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository())
+            try
             {
-                try
+                IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
+                User user = userRepository.FindByEmail(email);
+                var _user = Mapper.Map<User, UserModel>(user);
+                return new FindItemReponse<UserModel>
                 {
-                    User user = userRepository.FindByUserName(username);
-                    var _user = Mapper.Map<User, UserModel>(user);
-                    if (_user == null)
-                    {
-                        return new GetUserResponse
-                        {
-                            ErrorCode = (int)ErrorCode.None,
-                            Message = string.Empty
-                        };
-                    }
-                    return new GetUserResponse
-                    {
-                        User = _user,
-                        ErrorCode = (int)ErrorCode.Redirect,
-                        Message = Resources.AdminResource.msg_username_exists
-                    };
-                }
-                catch (Exception ex)
-                {
-                    return new GetUserResponse
-                    {
-                        ErrorCode = (int)ErrorCode.Error,
-                        Message = ex.Message
-                    };
-                }
+                    Item = _user,
+                    ErrorCode = (int)ErrorCode.Redirect,
+                    Message = Resources.AdminResource.msg_email_exists
+                };
             }
-        }
-
-        public GetUserResponse CheckEmail(string email)
-        {
-            using (IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository())
+            catch (Exception ex)
             {
-                try
+                return new FindItemReponse<UserModel>
                 {
-                    User user = userRepository.FindByEmail(email);
-                    var _user = Mapper.Map<User, UserModel>(user);
-                    if (_user == null)
-                    {
-                        return new GetUserResponse
-                        {
-                            ErrorCode = (int)ErrorCode.None,
-                            Message = string.Empty
-                        };
-                    }
-                    return new GetUserResponse
-                    {
-                        User = _user,
-                        ErrorCode = (int)ErrorCode.Redirect,
-                        Message = Resources.AdminResource.msg_email_exists
-                    };
-                }
-                catch (Exception ex)
-                {
-                    return new GetUserResponse
-                    {
-                        ErrorCode = (int)ErrorCode.Error,
-                        Message = ex.Message
-                    };
-                }
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
             }
         }
     }
