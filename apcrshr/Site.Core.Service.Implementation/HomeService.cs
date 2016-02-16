@@ -10,6 +10,7 @@ using Site.Core.Repository;
 using Site.Core.DataModel.Model;
 using AutoMapper;
 using Site.Core.DataModel.Enum;
+using Site.Core.Service.Implementation.ModelMapper;
 
 namespace Site.Core.Service.Implementation
 {
@@ -23,7 +24,7 @@ namespace Site.Core.Service.Implementation
             {
                 INewsRepository newsRepository = RepositoryClassFactory.GetInstance().GetNewsRepository();
                 IList<News> news = newsRepository.FindTop(top, language);
-                var _news = news.Select(n => Mapper.Map<News, NewsModel>(n)).ToList();
+                var _news = news.Select(n => MapperUtil.CreateMapper().Mapper.Map<News, NewsModel>(n)).ToList();
                 return new FindAllItemReponse<NewsModel>
                 {
                     Items = _news,
@@ -73,7 +74,7 @@ namespace Site.Core.Service.Implementation
                     return new SearchResultResponse()
                     {
                         ErrorCode = (int)ErrorCode.Error,
-                        Message = string.Format(Resources.AdminResource.text_searchNotFound, keyword.Substring(1, keyword.Length - 2))
+                        Message = string.Format(Resources.Resource.text_searchNotFound, keyword.Substring(1, keyword.Length - 2))
                     };
                 }
 

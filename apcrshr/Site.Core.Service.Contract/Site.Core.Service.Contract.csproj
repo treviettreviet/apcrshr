@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="IAdminService.cs" />
     <Compile Include="IHomeService.cs" />
+    <Compile Include="IMenuCategoryService.cs" />
     <Compile Include="INewsService.cs" />
     <Compile Include="ISubscriberService.cs" />
     <Compile Include="IUserService.cs" />

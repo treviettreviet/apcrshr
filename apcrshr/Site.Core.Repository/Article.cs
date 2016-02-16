@@ -22,7 +22,7 @@ namespace Site.Core.Repository
         public System.DateTime CreatedDate { get; set; }
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public string LanguageID { get; set; }
+        public string Language { get; set; }
         public string MenuID { get; set; }
     }
 }

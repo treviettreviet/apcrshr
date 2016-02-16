@@ -48,10 +48,15 @@
     <Compile Include="Convertor\ConvertBase.cs" />
     <Compile Include="Convertor\IConvertor.cs" />
     <Compile Include="HomeService.cs" />
+    <Compile Include="MenuCategoryService.cs" />
     <Compile Include="ModelMapper\MapperUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\AdminResource.Designer.cs" />
-    <Compile Include="Resources\AdminResource.en-US.Designer.cs" />
+    <Compile Include="Resources\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Site.Core.DataModel\Site.Core.DataModel.csproj">
@@ -71,8 +76,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\AdminResource.en-US.resx" />
-    <EmbeddedResource Include="Resources\AdminResource.resx" />
+    <EmbeddedResource Include="Resources\Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

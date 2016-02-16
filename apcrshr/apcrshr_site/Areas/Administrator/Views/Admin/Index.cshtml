@@ -1,0 +1,341 @@
+﻿@using apcrshr_site.Helper
+@model IList<Site.Core.DataModel.Model.AdminModel>
+@{
+    ViewBag.Title = "Quản Trị Viên";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<!--Menu-->
+<div class="row">
+    <div class="col-sm-6">
+        <div class="box box-color box-bordered">
+            <div class="box-title">
+                <h3>
+                    <i class="fa fa-bar-chart-o"></i>
+                    Danh Mục
+                </h3>
+                <div class="actions">
+                    <a href="#" class="btn btn-mini content-refresh">
+                        <i class="fa fa-refresh"></i>
+                    </a>
+                    <a href="#" class="btn btn-mini content-remove">
+                        <i class="fa fa-times"></i>
+                    </a>
+                    <a href="#" class="btn btn-mini content-slideUp">
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="box-content">
+                <div class="statistic-big">
+                    <div class="top">
+                        <div class="left">
+                            <span class="title">Thư mục</span>
+                        </div>
+                        <div class="right">
+                            <span>Thêm bài viết</span>
+                            <a href="#" class="btn" rel="tooltip" title="" data-original-title="Thêm bài viết">
+                                <i class="fa fa-plus-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bottom">
+
+                        <!--Begin menu-->
+
+                        @if (ViewBag.MenuCategories != null)
+                        {
+                            IList<Site.Core.DataModel.Model.MenuModel> menus = (IList<Site.Core.DataModel.Model.MenuModel>)ViewBag.MenuCategories;
+                            @Html.TreeMenu(menus);
+                        }
+
+                        <!--
+                        <ul id="browser" class="filetree">
+                            <li>
+                                <span class="folder">Folder 1</span>
+                                <ul>
+                                    <li><span class="file">Item 1.1</span></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="folder">Folder 2</span>
+                                <ul>
+                                    <li>
+                                        <span class="folder">Subfolder 2.1</span>
+                                        <ul id="folder21">
+                                            <li><span class="file">File 2.1.1</span></li>
+                                            <li><span class="file">File 2.1.2</span></li>
+                                        </ul>
+                                    </li>
+                                    <li><span class="file">File 2.2</span></li>
+                                </ul>
+                            </li>
+                            <li class="closed">
+                                <span class="folder">Folder 3 (closed at start)</span>
+                                <ul>
+                                    <li><span class="file">File 3.1</span></li>
+                                </ul>
+                            </li>
+                            <li><span class="file">File 4</span></li>
+                        </ul>
+                        -->
+
+                        <!--End menu-->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="box box-color lightred box-bordered">
+            <div class="box-title">
+                <h3>
+                    <i class="fa fa-bar-chart-o"></i>
+                    Thêm Mới Danh Mục
+                </h3>
+                <div class="actions">
+                    <a href="#" class="btn btn-mini content-remove">
+                        <i class="fa fa-times"></i>
+                    </a>
+                    <a href="#" class="btn btn-mini content-slideUp">
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="box-content">
+                <div class="statistic-big">
+                    <div class="bottom">
+                        <form action="#" method="POST" class="form-horizontal">
+                            <div class="form-group">
+                                <label for="txtMenuParent" class="control-label col-sm-2">Menu</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="txtMenuParent" id="txtMenuParent" placeholder="/" readonly class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtMenuLevel" class="control-label col-sm-2"></label>
+                                <div class="col-sm-10">
+                                    <input type="checkbox" name="txtMenuLevel" id="txtMenuLevel" value="Thư mục gốc">
+                                    <label class='inline' for="txtMenuLevel">Thư mục gốc</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtMenuCategoryTitle" class="control-label col-sm-2">Tiêu Đề</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="txtMenuCategoryTitle" id="txtMenuCategoryTitle" placeholder="Tên danh mục (Menu)" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="textfield" class="control-label col-sm-2">Ngôn Ngữ</label>
+                                <div class="col-sm-10">
+                                    <div class="check-demo-col">
+                                        <div class="check-line">
+                                            <input type="radio" name="Language" id="Language" class='icheck-me' data-skin="square" data-color="blue" value="EN" checked>
+                                            <label class='inline' for="Language">English</label>
+                                        </div>
+                                        <div class="check-line">
+                                            <input type="radio" name="Language" id="Language" class='icheck-me' data-skin="square" data-color="blue" value="VN">
+                                            <label class='inline' for="Language">Tiếng Việt</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-primary" onclick="saveCategoryMenu()">Save changes</button>
+                                <button type="button" class="btn">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Admin-->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box box-color box-bordered">
+            <br />
+            <a href='@Url.Action("AddNewAdmin", "Admin")' class="btn btn-blue">Thêm Mới</a>
+            <div class="box-title">
+                <h3>
+                    <i class="fa fa-th-list"></i>Danh Sách Quản Trị Viên
+                </h3>
+            </div>
+            <div class="box-content nopadding">
+                <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
+                       data-column_filter_types="null,text,text,text,daterange,text,null,null,null"
+                       data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
+                    <thead>
+                        <tr>
+                            <th class='with-checkbox'>
+                                <input type="checkbox" name="check_all" class="dataTable-checkall">
+                            </th>
+                            <th>Họ</th>
+                            <th>Tên</th>
+                            <th>Email</th>
+                            <th class='hidden-1024'>Ngày Sinh</th>
+                            <th>Số Điện Thoại</th>
+                            <th>Trạng Thái</th>
+                            <th>Tên Đăng Nhập</th>
+                            <th class='hidden-480'>Tùy Chọn</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            <tr id="@Model[i].AdminID">
+                                <td class="with-checkbox">
+                                    <input type="checkbox" name="check" value="@Model[i].AdminID">
+                                </td>
+                                <td>@Model[i].FirstName</td>
+                                <td>@Model[i].LastName</td>
+                                <td>@Model[i].Email</td>
+                                <td class='hidden-1024'>@Model[i].BirthDate.ToShortDateString()</td>
+                                <td>@Model[i].Phone</td>
+                                <td>@(Model[i].Locked ? "Đã Khóa" : "Đã Kích Hoạt")</td>
+                                <td>@Model[i].UserName</td>
+                                <td class='hidden-480'>
+                                    <a href='@Url.Action("UpdateAdmin", "Admin", new { adminID = Model[i].AdminID })' class="btn" rel="tooltip" title="Sửa">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteAdmin('@Model[i].AdminID')">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $("#txtMenuLevel").change(function () {
+        if (this.checked) {
+            $("#txtMenuParent").val("/");
+        } else {
+            var file = $('#browser span.file.selected').html();
+            var folder = $('#browser span.folder.selected').html();
+            if (file != null && file != "") {
+                $("#txtMenuParent").val(file);
+            }
+            if (folder != null && folder != "") {
+                $("#txtMenuParent").val(folder);
+            }
+        }
+    });
+
+    function saveCategoryMenu() {
+        $.blockUI({ message: $('#spinner') });
+        var formData = new FormData();
+        formData.append("Title", $("#txtMenuCategoryTitle").val());
+        formData.append("DisplayOrder", $("#txtMenuDisplayOrder").val());
+        formData.append("Language", $("#Language").val());
+        formData.append("parentTitle", $("#txtMenuParent").val());
+        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CreateCategoryMenu", "Admin")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.errorcode == 0) {
+                    $.unblockUI();
+                    bootbox.alert(response.message, function () {
+                        bootbox.hideAll();
+                    });
+                } else {
+                    $.unblockUI();
+                    alert(response.message);
+                }
+            },
+            error: function (error) {
+                $.unblockUI();
+                alert(error);
+            }
+        });
+    }
+
+    function deleteAdmin(adminID) {
+        bootbox.confirm("Bạn có chắc chắn muốn xóa bản ghi này?", function (result) {
+            if (result) {
+                $.ajax({
+                    type: 'GET',
+                    contentType: 'application/json',
+                    url: '@Url.Action("DeleteAdmin", "Admin")',
+                    data: { adminID: adminID },
+                    success: function (data) {
+                        if (data.ErrorCode == 0) {
+                            $('#' + adminID + '').remove();
+                            bootbox.hideAll();
+                        } else {
+                            bootbox.alert(data.Message, function () {
+                                bootbox.hideAll();
+                            });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        bootbox.hideAll();
+                    }
+                });
+                return true;
+            } else {
+                bootbox.hideAll();
+                return false;
+            }
+        });
+    }
+
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#browser").treeview();
+
+        /*$("#add").click(function () {
+            var branches = $("<li><span class='folder'>New Sublist</span><ul>" +
+                "<li><span class='file'>Item1</span></li>" +
+                "<li><span class='file'>Item2</span></li></ul></li>").appendTo("#browser");
+            $("#browser").treeview({
+                add: branches
+            });
+            branches = $("<li class='closed'><span class='folder'>New Sublist</span><ul><li><span class='file'>Item1</span></li><li><span class='file'>Item2</span></li></ul></li>").prependTo("#folder21");
+            $("#browser").treeview({
+                add: branches
+            });
+        });*/
+
+        $('#browser span.file').bind('click', function () {
+            //clear all clicked items if any
+            $('.selected').removeClass('selected');
+            //set this clicked
+            $(this).addClass('selected');
+            $("#txtMenuParent").val($(this).html());
+        });
+        $('#browser span.folder').bind('click', function () {
+            //clear all clicked items if any
+            $('.selected').removeClass('selected');
+            //set this clicked
+            $(this).addClass('selected');
+            $("#txtMenuParent").val($(this).html());
+        });
+        $("#browser").bind("contextmenu", function (event) {
+            if ($(event.target).is("li") || $(event.target).parents("li").length) {
+                $("#browser").treeview({
+                    remove: $(event.target).parents("li").filter(":first")
+                });
+                return false;
+            }
+        });
+    })
+
+</script>

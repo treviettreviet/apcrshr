@@ -47,5 +47,10 @@ namespace Site.Core.Repository
         {
             return new SubscriberRepository();
         }
+
+        public IMenuRepository GetMenuRepository()
+        {
+            return new MenuRepository();
+        }
     }
 }

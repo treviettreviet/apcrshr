@@ -14,11 +14,19 @@ namespace Site.Core.Repository
     
     public partial class Menu
     {
+        public Menu()
+        {
+            this.Menu1 = new HashSet<Menu>();
+        }
+    
         public string MenuID { get; set; }
         public string Title { get; set; }
         public string ActionURL { get; set; }
-        public int DisplayOrder { get; set; }
         public string Language { get; set; }
         public string ParentID { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+    
+        public virtual ICollection<Menu> Menu1 { get; set; }
+        public virtual Menu Menu2 { get; set; }
     }
 }

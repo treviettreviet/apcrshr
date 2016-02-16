@@ -13,19 +13,50 @@ namespace Site.Core.Service.Implementation.ModelMapper
     {
         private static MapperUtil Instance;
 
+        private static IMapper mapper;
+
+        public IMapper Mapper
+        {
+            get
+            {
+                if (mapper != null)
+                {
+                    return mapper;
+                }
+                else
+                {
+                    Create();
+                    return mapper;
+                }
+            }
+        }
+
         private MapperUtil()
         {
-            //View model mapper
-            Mapper.CreateMap<AdminModel, Admin>();
-            Mapper.CreateMap<NewsModel, News>();
-            Mapper.CreateMap<UserModel, User>();
-            Mapper.CreateMap<SubscriberModel, Subscriber>();
+            Create();
+        }
 
-            //Entity model mapper
-            Mapper.CreateMap<Admin, AdminModel>();
-            Mapper.CreateMap<News, NewsModel>();
-            Mapper.CreateMap<User, UserModel>();
-            Mapper.CreateMap<Subscriber, SubscriberModel>();
+        private static void Create()
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                //View model mapper
+                cfg.CreateMap<AdminModel, Admin>();
+                cfg.CreateMap<NewsModel, News>();
+                cfg.CreateMap<UserModel, User>();
+                cfg.CreateMap<SubscriberModel, Subscriber>();
+                cfg.CreateMap<MenuModel, Menu>();
+
+                //Entity model mapper
+                cfg.CreateMap<Admin, AdminModel>();
+                cfg.CreateMap<News, NewsModel>();
+                cfg.CreateMap<User, UserModel>();
+                cfg.CreateMap<Subscriber, SubscriberModel>();
+                cfg.CreateMap<Menu, MenuModel>()
+                    .ForMember(m => m.SubMenus, c => c.MapFrom(m => m.Menu1)); ;
+            });
+
+            mapper = config.CreateMapper();
         }
 
         public static MapperUtil CreateMapper()
@@ -35,14 +66,6 @@ namespace Site.Core.Service.Implementation.ModelMapper
                 Instance = new MapperUtil();
             }
             return Instance;
-        }
-    }
-
-    public class PartResolver<V, T> : ValueResolver<V, T>
-    {
-        protected override T ResolveCore(V source)
-        {
-            return Mapper.Map<T>(source);
         }
     }
 }

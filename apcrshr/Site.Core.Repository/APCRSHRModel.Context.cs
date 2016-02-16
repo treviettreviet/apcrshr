@@ -30,7 +30,6 @@ namespace Site.Core.Repository
         public DbSet<ConferenceData> ConferenceDatas { get; set; }
         public DbSet<DownloadCode> DownloadCodes { get; set; }
         public DbSet<ImportantDeadline> ImportantDeadlines { get; set; }
-        public DbSet<Language> Languages { get; set; }
         public DbSet<MailingAddress> MailingAddresses { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<News> News { get; set; }

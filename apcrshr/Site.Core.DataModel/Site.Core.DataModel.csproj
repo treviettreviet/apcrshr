@@ -47,6 +47,7 @@
     <Compile Include="Enum\ErrorCode.cs" />
     <Compile Include="Enum\Language.cs" />
     <Compile Include="Model\AdminModel.cs" />
+    <Compile Include="Model\MenuModel.cs" />
     <Compile Include="Model\NewsModel.cs" />
     <Compile Include="Model\SearchModel.cs" />
     <Compile Include="Model\SubscriberModel.cs" />

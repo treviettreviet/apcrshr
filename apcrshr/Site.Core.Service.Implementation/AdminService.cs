@@ -5,6 +5,7 @@ using Site.Core.DataModel.Response;
 using Site.Core.Repository;
 using Site.Core.Repository.Repository;
 using Site.Core.Service.Contract;
+using Site.Core.Service.Implementation.ModelMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace Site.Core.Service.Implementation
             {
                 IAdminRepository adminRepository = RepositoryClassFactory.GetInstance().GetAdminRepository();
                 Admin admin = adminRepository.FindByID(id);
-                var _admin = Mapper.Map<Admin, AdminModel>(admin);
+                var _admin = MapperUtil.CreateMapper().Mapper.Map<Admin, AdminModel>(admin);
                 return new FindItemReponse<AdminModel>
                 {
                     Item = _admin,
@@ -51,7 +52,7 @@ namespace Site.Core.Service.Implementation
                 return new BaseResponse
                 {
                     ErrorCode = (int)ErrorCode.None,
-                    Message = Resources.AdminResource.msg_delete_success
+                    Message = Resources.Resource.msg_delete_success
                 };
             }
             catch (Exception ex)
@@ -69,12 +70,12 @@ namespace Site.Core.Service.Implementation
             try
             {
                 IAdminRepository adminRepository = RepositoryClassFactory.GetInstance().GetAdminRepository();
-                Admin _admin = Mapper.Map<AdminModel, Admin>(admin);
+                Admin _admin = MapperUtil.CreateMapper().Mapper.Map<AdminModel, Admin>(admin);
                 adminRepository.Update(_admin);
                 return new BaseResponse
                 {
                     ErrorCode = (int)ErrorCode.None,
-                    Message = Resources.AdminResource.msg_update_success
+                    Message = Resources.Resource.msg_update_success
                 };
             }
             catch (Exception ex)
@@ -93,7 +94,7 @@ namespace Site.Core.Service.Implementation
             {
                 IAdminRepository adminRepository = RepositoryClassFactory.GetInstance().GetAdminRepository();
                 IList<Admin> admins = adminRepository.FindAll();
-                var _admin = admins.Select(n => Mapper.Map<Admin, AdminModel>(n)).ToList();
+                var _admin = admins.Select(n => MapperUtil.CreateMapper().Mapper.Map<Admin, AdminModel>(n)).ToList();
                 return new FindAllItemReponse<AdminModel>
                 {
                     Items = _admin,
@@ -117,20 +118,20 @@ namespace Site.Core.Service.Implementation
             {
                 IAdminRepository adminRepository = RepositoryClassFactory.GetInstance().GetAdminRepository();
                 Admin _admin = adminRepository.FindByUserName(admin.UserName);
-                if (admin != null)
+                if (_admin != null)
                 {
                     return new InsertResponse
                     {
                         ErrorCode = (int)ErrorCode.Error,
-                        Message = Resources.AdminResource.msg_username_exists
+                        Message = Resources.Resource.msg_username_exists
                     };
                 }
-                object id = adminRepository.Insert(Mapper.Map<AdminModel, Admin>(admin));
+                object id = adminRepository.Insert(MapperUtil.CreateMapper().Mapper.Map<AdminModel, Admin>(admin));
                 return new InsertResponse
                 {
                     InsertID = id.ToString(),
                     ErrorCode = (int)ErrorCode.None,
-                    Message = Resources.AdminResource.msg_create_success
+                    Message = Resources.Resource.msg_create_success
                 };
             }
             catch (Exception ex)
@@ -156,7 +157,7 @@ namespace Site.Core.Service.Implementation
                         return new AdminLoginResponse
                         {
                             ErrorCode = (int)ErrorCode.Error,
-                            Message = Resources.AdminResource.msg_account_locked
+                            Message = Resources.Resource.msg_account_locked
                         };
                     }
                 }
@@ -201,7 +202,7 @@ namespace Site.Core.Service.Implementation
                     return new AdminLoginResponse
                     {
                         ErrorCode = (int)ErrorCode.Error,
-                        Message = Resources.AdminResource.msg_login_fail
+                        Message = Resources.Resource.msg_login_fail
                     };
                 }
             }
@@ -244,7 +245,7 @@ namespace Site.Core.Service.Implementation
             {
                 IAdminRepository adminRepository = RepositoryClassFactory.GetInstance().GetAdminRepository();
                 IList<Admin> admins = adminRepository.GetAdminsExceptMe(adminID);
-                var _admin = admins.Select(n => Mapper.Map<Admin, AdminModel>(n)).ToList();
+                var _admin = admins.Select(n => MapperUtil.CreateMapper().Mapper.Map<Admin, AdminModel>(n)).ToList();
                 return new FindAllItemReponse<AdminModel>
                 {
                     Items = _admin,

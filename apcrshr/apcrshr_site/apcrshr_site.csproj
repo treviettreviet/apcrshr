@@ -181,15 +181,279 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Administrator\AdministratorAreaRegistration.cs" />
+    <Compile Include="Areas\Administrator\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\AdminHomeController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\AdminUserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+    <Compile Include="Filters\SessionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\CultureHelper.cs" />
+    <Compile Include="Helper\DataHelper.cs" />
+    <Compile Include="Helper\HtmlExtension.cs" />
+    <Compile Include="Helper\SessionUtil.cs" />
+    <Compile Include="Helper\TokenHtmlExtension.cs" />
+    <Compile Include="Helper\UrlSlugger.cs" />
+    <Compile Include="Helper\UserHelper.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\AdminResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AdminResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Administrator\css\bootstrap.min.css" />
+    <Content Include="Areas\Administrator\css\plugins\chosen\chosen.css" />
+    <Content Include="Areas\Administrator\css\plugins\colorbox\colorbox.css" />
+    <Content Include="Areas\Administrator\css\plugins\colorpicker\colorpicker.css" />
+    <Content Include="Areas\Administrator\css\plugins\datatable\TableTools.css" />
+    <Content Include="Areas\Administrator\css\plugins\datepicker\datepicker.css" />
+    <Content Include="Areas\Administrator\css\plugins\daterangepicker\daterangepicker.css" />
+    <Content Include="Areas\Administrator\css\plugins\easy-pie-chart\jquery.easy-pie-chart.css" />
+    <Content Include="Areas\Administrator\css\plugins\elfinder\elfinder.min.css" />
+    <Content Include="Areas\Administrator\css\plugins\elfinder\theme.css" />
+    <Content Include="Areas\Administrator\css\plugins\fullcalendar\fullcalendar.css" />
+    <Content Include="Areas\Administrator\css\plugins\fullcalendar\fullcalendar.print.css" />
+    <Content Include="Areas\Administrator\css\plugins\gmap\gmap3-menu.css" />
+    <Content Include="Areas\Administrator\css\plugins\gritter\jquery.gritter.css" />
+    <Content Include="Areas\Administrator\css\plugins\icheck\all.css" />
+    <Content Include="Areas\Administrator\css\plugins\icheck\flat\_all.css" />
+    <Content Include="Areas\Administrator\css\plugins\icheck\futurico\futurico.css" />
+    <Content Include="Areas\Administrator\css\plugins\icheck\line\_all.css" />
+    <Content Include="Areas\Administrator\css\plugins\icheck\minimal\_all.css" />
+    <Content Include="Areas\Administrator\css\plugins\icheck\polaris\polaris.css" />
+    <Content Include="Areas\Administrator\css\plugins\icheck\square\blue.png" />
+    <Content Include="Areas\Administrator\css\plugins\icheck\square\_all.css" />
+    <Content Include="Areas\Administrator\css\plugins\images\jquery-te.png" />
+    <Content Include="Areas\Administrator\css\plugins\jquery-te\jquery-te-1.4.0.css" />
+    <Content Include="Areas\Administrator\css\plugins\jquery-ui\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Areas\Administrator\css\plugins\jquery-ui\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Areas\Administrator\css\plugins\jquery-ui\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Areas\Administrator\css\plugins\jquery-ui\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Areas\Administrator\css\plugins\jquery-ui\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Areas\Administrator\css\plugins\jquery-ui\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Areas\Administrator\css\plugins\jquery-ui\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Areas\Administrator\css\plugins\jquery-ui\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Areas\Administrator\css\plugins\jquery-ui\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Areas\Administrator\css\plugins\jquery-ui\images\ui-icons_222222_256x240.png" />
+    <Content Include="Areas\Administrator\css\plugins\jquery-ui\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="Areas\Administrator\css\plugins\jquery-ui\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Areas\Administrator\css\plugins\jquery-ui\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Areas\Administrator\css\plugins\jquery-ui\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Areas\Administrator\css\plugins\jquery-ui\jquery-ui.min.css" />
+    <Content Include="Areas\Administrator\css\plugins\jquery-ui\smoothness\jquery-ui.html" />
+    <Content Include="Areas\Administrator\css\plugins\jquery-ui\smoothness\jquery.ui.theme.html" />
+    <Content Include="Areas\Administrator\css\plugins\line-control\editor.css" />
+    <Content Include="Areas\Administrator\css\plugins\multiselect\multi-select.css" />
+    <Content Include="Areas\Administrator\css\plugins\pageguide\pageguide.css" />
+    <Content Include="Areas\Administrator\css\plugins\plupload\jquery.plupload.queue.css" />
+    <Content Include="Areas\Administrator\css\plugins\select2\select2.css" />
+    <Content Include="Areas\Administrator\css\plugins\tagsinput\jquery.tagsinput.css" />
+    <Content Include="Areas\Administrator\css\plugins\timepicker\bootstrap-timepicker.min.css" />
+    <Content Include="Areas\Administrator\css\plugins\tree-view\jquery.treeview.css" />
+    <Content Include="Areas\Administrator\css\plugins\xeditable\bootstrap-editable.css" />
+    <Content Include="Areas\Administrator\css\style.css" />
+    <Content Include="Areas\Administrator\css\themes.css" />
+    <Content Include="Areas\Administrator\font\fontawesome-webfont78ce.svg" />
+    <Content Include="Areas\Administrator\font\glyphicons-halflings-regular.svg" />
+    <Content Include="Areas\Administrator\font\glyphicons-regular.svg" />
+    <Content Include="Areas\Administrator\img\apple-touch-icon-precomposed.png" />
+    <Content Include="Areas\Administrator\img\collapsed-group.jpg" />
+    <Content Include="Areas\Administrator\img\demo\1.jpg" />
+    <Content Include="Areas\Administrator\img\demo\10.jpg" />
+    <Content Include="Areas\Administrator\img\demo\10_dyn.jpg" />
+    <Content Include="Areas\Administrator\img\demo\11.jpg" />
+    <Content Include="Areas\Administrator\img\demo\12.jpg" />
+    <Content Include="Areas\Administrator\img\demo\13.jpg" />
+    <Content Include="Areas\Administrator\img\demo\14.jpg" />
+    <Content Include="Areas\Administrator\img\demo\15.jpg" />
+    <Content Include="Areas\Administrator\img\demo\1_dyn.jpg" />
+    <Content Include="Areas\Administrator\img\demo\2.jpg" />
+    <Content Include="Areas\Administrator\img\demo\2_dyn.jpg" />
+    <Content Include="Areas\Administrator\img\demo\3.jpg" />
+    <Content Include="Areas\Administrator\img\demo\3_dyn.jpg" />
+    <Content Include="Areas\Administrator\img\demo\4.jpg" />
+    <Content Include="Areas\Administrator\img\demo\4_dyn.jpg" />
+    <Content Include="Areas\Administrator\img\demo\5.jpg" />
+    <Content Include="Areas\Administrator\img\demo\5_dyn.jpg" />
+    <Content Include="Areas\Administrator\img\demo\6.jpg" />
+    <Content Include="Areas\Administrator\img\demo\6_dyn.jpg" />
+    <Content Include="Areas\Administrator\img\demo\7.jpg" />
+    <Content Include="Areas\Administrator\img\demo\7_dyn.jpg" />
+    <Content Include="Areas\Administrator\img\demo\8.jpg" />
+    <Content Include="Areas\Administrator\img\demo\8_dyn.jpg" />
+    <Content Include="Areas\Administrator\img\demo\9.jpg" />
+    <Content Include="Areas\Administrator\img\demo\9_dyn.jpg" />
+    <Content Include="Areas\Administrator\img\demo\big\1.jpg" />
+    <Content Include="Areas\Administrator\img\demo\big\10.jpg" />
+    <Content Include="Areas\Administrator\img\demo\big\11.jpg" />
+    <Content Include="Areas\Administrator\img\demo\big\12.jpg" />
+    <Content Include="Areas\Administrator\img\demo\big\13.jpg" />
+    <Content Include="Areas\Administrator\img\demo\big\14.jpg" />
+    <Content Include="Areas\Administrator\img\demo\big\15.jpg" />
+    <Content Include="Areas\Administrator\img\demo\big\2.jpg" />
+    <Content Include="Areas\Administrator\img\demo\big\3.jpg" />
+    <Content Include="Areas\Administrator\img\demo\big\4.jpg" />
+    <Content Include="Areas\Administrator\img\demo\big\5.jpg" />
+    <Content Include="Areas\Administrator\img\demo\big\6.jpg" />
+    <Content Include="Areas\Administrator\img\demo\big\7.jpg" />
+    <Content Include="Areas\Administrator\img\demo\big\8.jpg" />
+    <Content Include="Areas\Administrator\img\demo\big\9.jpg" />
+    <Content Include="Areas\Administrator\img\demo\big\blog-1.jpg" />
+    <Content Include="Areas\Administrator\img\demo\big\blog-2.jpg" />
+    <Content Include="Areas\Administrator\img\demo\big\blog-3.jpg" />
+    <Content Include="Areas\Administrator\img\demo\big\blog-4.jpg" />
+    <Content Include="Areas\Administrator\img\demo\directd.png" />
+    <Content Include="Areas\Administrator\img\demo\flags\br.gif" />
+    <Content Include="Areas\Administrator\img\demo\flags\de.gif" />
+    <Content Include="Areas\Administrator\img\demo\flags\es.gif" />
+    <Content Include="Areas\Administrator\img\demo\flags\fr.gif" />
+    <Content Include="Areas\Administrator\img\demo\flags\us.gif" />
+    <Content Include="Areas\Administrator\img\demo\locked.jpg" />
+    <Content Include="Areas\Administrator\img\demo\mastercard.png" />
+    <Content Include="Areas\Administrator\img\demo\paypal.png" />
+    <Content Include="Areas\Administrator\img\demo\shop\1.jpg" />
+    <Content Include="Areas\Administrator\img\demo\shop\2.jpg" />
+    <Content Include="Areas\Administrator\img\demo\shop\3.jpg" />
+    <Content Include="Areas\Administrator\img\demo\shop\4.jpg" />
+    <Content Include="Areas\Administrator\img\demo\shop\6.jpg" />
+    <Content Include="Areas\Administrator\img\demo\shop\7.jpg" />
+    <Content Include="Areas\Administrator\img\demo\shop\8.jpg" />
+    <Content Include="Areas\Administrator\img\demo\user-1.jpg" />
+    <Content Include="Areas\Administrator\img\demo\user-2.jpg" />
+    <Content Include="Areas\Administrator\img\demo\user-3.jpg" />
+    <Content Include="Areas\Administrator\img\demo\user-4.jpg" />
+    <Content Include="Areas\Administrator\img\demo\user-5.jpg" />
+    <Content Include="Areas\Administrator\img\demo\user-6.jpg" />
+    <Content Include="Areas\Administrator\img\demo\user-avatar.jpg" />
+    <Content Include="Areas\Administrator\img\demo\user157.png" />
+    <Content Include="Areas\Administrator\img\demo\visa.png" />
+    <Content Include="Areas\Administrator\img\expanded-group.jpg" />
+    <Content Include="Areas\Administrator\img\favicon.ico" />
+    <Content Include="Areas\Administrator\img\loading.gif" />
+    <Content Include="Areas\Administrator\img\logo%402x.png" />
+    <Content Include="Areas\Administrator\img\logo-big.png" />
+    <Content Include="Areas\Administrator\img\logo.png" />
+    <Content Include="Areas\Administrator\img\plugins\chosen\chosen-sprite%402x.png" />
+    <Content Include="Areas\Administrator\img\plugins\chosen\chosen-sprite.png" />
+    <Content Include="Areas\Administrator\img\plugins\pageguide\pageguide_arrow.png" />
+    <Content Include="Areas\Administrator\img\plugins\select2\select2-spinner.gif" />
+    <Content Include="Areas\Administrator\img\plugins\select2\select2.png" />
+    <Content Include="Areas\Administrator\img\plugins\select2\select2x2.png" />
+    <Content Include="Areas\Administrator\img\plugins\tree-view\images\ajax-loader.gif" />
+    <Content Include="Areas\Administrator\img\plugins\tree-view\images\file.gif" />
+    <Content Include="Areas\Administrator\img\plugins\tree-view\images\folder-closed.gif" />
+    <Content Include="Areas\Administrator\img\plugins\tree-view\images\folder.gif" />
+    <Content Include="Areas\Administrator\img\plugins\tree-view\images\minus.gif" />
+    <Content Include="Areas\Administrator\img\plugins\tree-view\images\plus.gif" />
+    <Content Include="Areas\Administrator\img\plugins\tree-view\images\treeview-black-line.gif" />
+    <Content Include="Areas\Administrator\img\plugins\tree-view\images\treeview-black.gif" />
+    <Content Include="Areas\Administrator\img\plugins\tree-view\images\treeview-default-line.gif" />
+    <Content Include="Areas\Administrator\img\plugins\tree-view\images\treeview-default.gif" />
+    <Content Include="Areas\Administrator\img\plugins\tree-view\images\treeview-famfamfam-line.gif" />
+    <Content Include="Areas\Administrator\img\plugins\tree-view\images\treeview-famfamfam.gif" />
+    <Content Include="Areas\Administrator\img\plugins\tree-view\images\treeview-gray-line.gif" />
+    <Content Include="Areas\Administrator\img\plugins\tree-view\images\treeview-gray.gif" />
+    <Content Include="Areas\Administrator\img\plugins\tree-view\images\treeview-red-line.gif" />
+    <Content Include="Areas\Administrator\img\plugins\tree-view\images\treeview-red.gif" />
+    <Content Include="Areas\Administrator\img\sorting-asc.png" />
+    <Content Include="Areas\Administrator\img\sorting-desc.png" />
+    <Content Include="Areas\Administrator\img\sorting.png" />
+    <Content Include="Areas\Administrator\img\spinner.gif" />
+    <Content Include="Areas\Administrator\js\application.min.js" />
+    <Content Include="Areas\Administrator\js\AppUtil.js" />
+    <Content Include="Areas\Administrator\js\bootstrap.min.js" />
+    <Content Include="Areas\Administrator\js\clipboard.min.js" />
+    <Content Include="Areas\Administrator\js\demonstration.min.js" />
+    <Content Include="Areas\Administrator\js\eakroko.js" />
+    <Content Include="Areas\Administrator\js\eakroko.min.js" />
+    <Content Include="Areas\Administrator\js\jquery.blockUI.js" />
+    <Content Include="Areas\Administrator\js\jquery.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\bootbox\jquery.bootbox.js" />
+    <Content Include="Areas\Administrator\js\plugins\chosen\chosen.jquery.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\ckeditor\ckeditor.js" />
+    <Content Include="Areas\Administrator\js\plugins\colorbox\jquery.colorbox-min.js" />
+    <Content Include="Areas\Administrator\js\plugins\colorpicker\bootstrap-colorpicker.js" />
+    <Content Include="Areas\Administrator\js\plugins\complexify\jquery.complexify-banlist.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\complexify\jquery.complexify.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\datatables\extensions\dataTables.colReorder.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\datatables\extensions\dataTables.colVis.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\datatables\extensions\dataTables.fixedColumns.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\datatables\extensions\dataTables.fixedHeader.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\datatables\extensions\dataTables.scroller.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\datatables\extensions\dataTables.tableTools.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\datatables\jquery.dataTables.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\datepicker\bootstrap-datepicker.js" />
+    <Content Include="Areas\Administrator\js\plugins\daterangepicker\daterangepicker.js" />
+    <Content Include="Areas\Administrator\js\plugins\daterangepicker\moment.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\easy-pie-chart\jquery.easy-pie-chart.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\elfinder\elfinder.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\fileupload\bootstrap-fileupload.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\flot\jquery.flot.bar.order.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\flot\jquery.flot.js" />
+    <Content Include="Areas\Administrator\js\plugins\flot\jquery.flot.JUMlib.js" />
+    <Content Include="Areas\Administrator\js\plugins\flot\jquery.flot.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\flot\jquery.flot.pie.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\flot\jquery.flot.resize.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\flot\jquery.flot.spider.js" />
+    <Content Include="Areas\Administrator\js\plugins\flot\jquery.flot.stack.js" />
+    <Content Include="Areas\Administrator\js\plugins\form\jquery.form.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\fullcalendar\fullcalendar.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\fullcalendar\moment.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\gmap\gmap3-menu.js" />
+    <Content Include="Areas\Administrator\js\plugins\gmap\gmap3.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\gritter\jquery.gritter.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\icheck\jquery.icheck.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\imagesLoaded\jquery.imagesloaded.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\jquery-te\jquery-te-1.4.0.js" />
+    <Content Include="Areas\Administrator\js\plugins\jquery-ui\jquery-ui.js" />
+    <Content Include="Areas\Administrator\js\plugins\jquery-ui\jquery.ui.core.min.html" />
+    <Content Include="Areas\Administrator\js\plugins\jquery-ui\jquery.ui.mouse.min.html" />
+    <Content Include="Areas\Administrator\js\plugins\jquery-ui\jquery.ui.resizable.min.html" />
+    <Content Include="Areas\Administrator\js\plugins\jquery-ui\jquery.ui.sortable.min.html" />
+    <Content Include="Areas\Administrator\js\plugins\jquery-ui\jquery.ui.widget.min.html" />
+    <Content Include="Areas\Administrator\js\plugins\line-control\editor.js" />
+    <Content Include="Areas\Administrator\js\plugins\maskedinput\jquery.maskedinput.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\masonry\jquery.masonry.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\mockjax\jquery.mockjax.js" />
+    <Content Include="Areas\Administrator\js\plugins\momentjs\jquery.moment.js" />
+    <Content Include="Areas\Administrator\js\plugins\momentjs\jquery.moment.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\momentjs\moment-range.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\multiselect\jquery.multi-select.js" />
+    <Content Include="Areas\Administrator\js\plugins\nicescroll\jquery.nicescroll.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\pageguide\jquery.pageguide.js" />
+    <Content Include="Areas\Administrator\js\plugins\plupload\jquery.plupload.queue\jquery.plupload.queue.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\plupload\plupload.full.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\select2\select2.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\slimscroll\jquery.slimscroll.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\sparklines\jquery.sparklines.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\tagsinput\jquery.tagsinput.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\timepicker\bootstrap-timepicker.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\touch-punch\jquery.touch-punch.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\touchwipe\touchwipe.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\tree-view\jquery.treeview.async.js" />
+    <Content Include="Areas\Administrator\js\plugins\tree-view\jquery.treeview.edit.js" />
+    <Content Include="Areas\Administrator\js\plugins\tree-view\jquery.treeview.js" />
+    <Content Include="Areas\Administrator\js\plugins\tree-view\jquery.treeview.sortable.js" />
+    <Content Include="Areas\Administrator\js\plugins\validation\additional-methods.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\validation\jquery.validate.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\vmap\jquery.vmap.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\vmap\jquery.vmap.sampledata.js" />
+    <Content Include="Areas\Administrator\js\plugins\vmap\jquery.vmap.world.js" />
+    <Content Include="Areas\Administrator\js\plugins\wizard\jquery.form.wizard.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\xeditable\address.js" />
+    <Content Include="Areas\Administrator\js\plugins\xeditable\bootstrap-editable.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\xeditable\demo.js" />
     <Content Include="Content\css\animate.css" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\colors\beige.css" />
@@ -390,6 +654,31 @@
     <Content Include="Content\libraries\bootstrap\assets\fonts\bootstrap\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\libraries\bootstrap\assets\fonts\bootstrap\glyphicons-halflings-regulard41d.eot" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Areas\Administrator\Views\Web.config" />
+    <Content Include="Areas\Administrator\font\fontawesome-webfont78ce.eot" />
+    <Content Include="Areas\Administrator\font\fontawesome-webfont78ce.ttf" />
+    <Content Include="Areas\Administrator\font\fontawesome-webfont78ce.woff" />
+    <Content Include="Areas\Administrator\font\fontawesome-webfontd41d.eot" />
+    <Content Include="Areas\Administrator\font\glyphicons-halflings-regular.eot" />
+    <Content Include="Areas\Administrator\font\glyphicons-halflings-regular.ttf" />
+    <Content Include="Areas\Administrator\font\glyphicons-halflings-regular.woff" />
+    <Content Include="Areas\Administrator\font\glyphicons-halflings-regulard41d.eot" />
+    <Content Include="Areas\Administrator\font\glyphicons-regular.eot" />
+    <Content Include="Areas\Administrator\font\glyphicons-regular.ttf" />
+    <Content Include="Areas\Administrator\font\glyphicons-regular.woff" />
+    <Content Include="Areas\Administrator\font\glyphicons-regulard41d.eot" />
+    <Content Include="Areas\Administrator\Views\AdminHome\Login.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdminUser\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdminUser\UpdateUser.cshtml" />
+    <Content Include="Areas\Administrator\Views\Admin\AddNewAdmin.cshtml" />
+    <Content Include="Areas\Administrator\Views\Admin\AdminList.cshtml" />
+    <Content Include="Areas\Administrator\Views\Admin\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\Admin\UpdateAdmin.cshtml" />
+    <Content Include="Areas\Administrator\Views\Admin\UpdateProfile.cshtml" />
+    <Content Include="Areas\Administrator\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Administrator\Views\Shared\_LayoutLoginPage.cshtml" />
+    <Content Include="Areas\Administrator\Views\Shared\_LeftMenuPartialPage.cshtml" />
+    <Content Include="Areas\Administrator\Views\Shared\_NavigationPartialPage.cshtml" />
     <None Include="Properties\PublishProfiles\apcrshr.hvtec.vn - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
@@ -497,14 +786,23 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Administrator\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Site.Core.Common.Ultil\Site.Core.Common.Ultil.csproj">
+      <Project>{930cede8-c490-460c-9ca4-47b84bfe0ff7}</Project>
+      <Name>Site.Core.Common.Ultil</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Site.Core.DataModel\Site.Core.DataModel.csproj">
       <Project>{32a0cabd-78f7-48a0-a7e2-8d8ef36743f5}</Project>
       <Name>Site.Core.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Site.Core.Repository\Site.Core.Repository.csproj">
+      <Project>{f800b0e4-539f-4d5a-9157-1a267558e903}</Project>
+      <Name>Site.Core.Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\Site.Core.Service.Contract\Site.Core.Service.Contract.csproj">
       <Project>{69424523-0025-41a7-85bc-248307b52457}</Project>
@@ -514,6 +812,16 @@
       <Project>{a1ccb1f4-88c8-4184-aecb-f77fccced34b}</Project>
       <Name>Site.Core.Service.Implementation</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AdminResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AdminResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

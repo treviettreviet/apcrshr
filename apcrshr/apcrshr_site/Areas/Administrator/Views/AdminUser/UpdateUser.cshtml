@@ -1,0 +1,72 @@
+﻿@model Site.Core.DataModel.Model.UserModel
+@{
+    ViewBag.Title = "Cập Nhật Người Dùng";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box box-bordered box-color">
+            <div class="box-title">
+                <h3>
+                    <i class="fa fa-edit"></i>Cập Nhập Người Dùng
+                </h3>
+            </div>
+            <div class="box-content nopadding">
+                @using (Html.BeginForm("SaveUpdateUser", "AdminUser", FormMethod.Post, new { @class = "form-horizontal form-bordered" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.UserID)
+                    <div class="form-group">
+                        <label for="FirstName" class="control-label col-sm-2">Họ</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(m => m.FirstName)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="LastName" class="control-label col-sm-2">Tên</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(m => m.LastName)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="UserName" class="control-label col-sm-2">Tên Đăng Nhập</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(m => m.UserName)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Email" class="control-label col-sm-2">Email</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(m => m.Email)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Locked" class="control-label col-sm-2">Trạng Thái</label>
+                        <div class="col-sm-10">
+                            <div class="check-demo-col">
+                                <div class="check-line">
+                                    <input type="radio" name="Locked" id="Locked" class='icheck-me' data-skin="square" data-color="blue" value="false" @(Model.Locked ? "" : "checked")>
+                                    <label class='inline' for="Locked">Kích Hoạt</label>
+                                </div>
+                                <div class="check-line">
+                                    <input type="radio" name="Locked" id="Locked" class='icheck-me' data-skin="square" data-color="blue" value="true" @(Model.Locked ? "checked" : "")>
+                                    <label class='inline' for="Locked">Khóa</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary">Lưu Thông Tin</button>
+                        <button type="reset" class="btn">Reset</button>
+                        <a href='@Url.Action("Index")' class="btn btn-info">Hủy Bỏ</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

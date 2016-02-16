@@ -1,0 +1,100 @@
+﻿@model IList<Site.Core.DataModel.Model.UserModel>
+@{
+    ViewBag.Title = "Danh Sách Người Dùng";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <!--Alert-->
+        @if (TempData["Message"] != null)
+        {
+            Site.Core.DataModel.Response.BaseResponse responseMsg = (Site.Core.DataModel.Response.BaseResponse)TempData["Message"];
+            <br />
+            <div class="alert @(responseMsg.ErrorCode == (int)Site.Core.DataModel.Enum.ErrorCode.None ? " alert-info" : " alert-danger")"><a class="close" data-dismiss="alert" href="#">×</a><strong></strong> @responseMsg.Message</div>
+        }
+        
+        <div class="box box-color box-bordered">
+            <br />
+            <div class="box-title">
+                <h3>
+                    <i class="fa fa-th-list"></i>Danh Sách Người Dùng
+                </h3>
+            </div>
+            <div class="box-content nopadding">
+                <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
+                       data-column_filter_types="null,text,text,text,text,text,null"
+                       data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
+                    <thead>
+                        <tr>
+                            <th class='with-checkbox'>
+                                <input type="checkbox" name="check_all" class="dataTable-checkall">
+                            </th>
+                            <th>Họ</th>
+                            <th>Tên</th>
+                            <th>Email</th>
+                            <th>Trạng Thái</th>
+                            <th>Tên Đăng Nhập</th>
+                            <th class='hidden-480'>Tùy Chọn</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            <tr id="@Model[i].UserID">
+                                <td class="with-checkbox">
+                                    <input type="checkbox" name="check" value="@Model[i].UserID">
+                                </td>
+                                <td>@Model[i].FirstName</td>
+                                <td>@Model[i].LastName</td>
+                                <td>@Model[i].Email</td>
+                                <td>@(Model[i].Locked ? "Đã Khóa" : "Đã Kích Hoạt")</td>
+                                <td>@Model[i].UserName</td>
+                                <td class='hidden-480'>
+                                    <a href='@Url.Action("UpdateUser", "AdminUser", new { userId = Model[i].UserID })' class="btn" rel="tooltip" title="Sửa">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteUser('@Model[i].UserID')">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function deleteUser(userID) {
+        bootbox.confirm("Bạn có chắc chắn muốn xóa bản ghi này?", function (result) {
+            if (result) {
+                $.ajax({
+                    type: 'GET',
+                    contentType: 'application/json',
+                    url: '@Url.Action("DeleteUser", "AdminUser")',
+                    data: { userID: userID },
+                    success: function (data) {
+                        if (data.ErrorCode == 0) {
+                            $('#' + userID + '').remove();
+                            bootbox.hideAll();
+                        } else {
+                            bootbox.lert(data.Message, function () {
+                                bootbox.hideAll();
+                            });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        bootbox.hideAll();
+                    }
+                });
+                return true;
+            } else {
+                bootbox.hideAll();
+                return false;
+            }
+        });
+    }
+
+</script>
