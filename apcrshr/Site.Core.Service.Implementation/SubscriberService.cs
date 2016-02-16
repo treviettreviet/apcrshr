@@ -16,156 +16,144 @@ namespace Site.Core.Service.Implementation
 {
     public class SubscriberService : ISubscriberService
     {
-        public CreateSubscriberResponse CreateSubscriber(SubscriberModel subscriber)
+        public InsertResponse CreateSubscriber(SubscriberModel subscriber)
         {
-            using (ISubscriberRepository subscriberRepository = RepositoryClassFactory.GetInstance().GetSubscriberRepository())
+            try
             {
-                try
+                ISubscriberRepository subscriberRepository = RepositoryClassFactory.GetInstance().GetSubscriberRepository();
+                var _sub = Mapper.Map<SubscriberModel, Subscriber>(subscriber);
+                object id = subscriberRepository.Insert(_sub);
+                return new InsertResponse
                 {
-                    var _sub = Mapper.Map<SubscriberModel, Subscriber>(subscriber);
-                    object id = subscriberRepository.Insert(_sub);
-                    return new CreateSubscriberResponse
-                    {
-                        SubscriberID = _sub.SubscriberID,
-                        ErrorCode = (int)ErrorCode.None,
-                        Message = AdminResource.msg_create_success
-                    };
-                }
-                catch (Exception ex)
+                    InsertID = _sub.SubscriberID,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = AdminResource.msg_create_success
+                };
+            }
+            catch (Exception ex)
+            {
+                return new InsertResponse
                 {
-                    return new CreateSubscriberResponse
-                    {
-                        ErrorCode = (int)ErrorCode.Error,
-                        Message = ex.Message
-                    };
-                }
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
             }
         }
 
         public BaseResponse DeleteSubscriber(string id)
         {
-            using (ISubscriberRepository subscriberRepository = RepositoryClassFactory.GetInstance().GetSubscriberRepository())
+            try
             {
-                try
+                ISubscriberRepository subscriberRepository = RepositoryClassFactory.GetInstance().GetSubscriberRepository();
+                subscriberRepository.Delete(id);
+                return new BaseResponse
                 {
-                    subscriberRepository.Delete(id);
-                    return new BaseResponse
-                    {
-                        ErrorCode = (int)ErrorCode.None,
-                        Message = Resources.AdminResource.msg_delete_success
-                    };
-                }
-                catch (Exception ex)
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = Resources.AdminResource.msg_delete_success
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse
                 {
-                    return new BaseResponse
-                    {
-                        ErrorCode = (int)ErrorCode.Error,
-                        Message = ex.Message
-                    };
-                }
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
             }
         }
 
         public BaseResponse UpdateSubscriber(SubscriberModel subscriber)
         {
-            using (ISubscriberRepository subscriberRepository = RepositoryClassFactory.GetInstance().GetSubscriberRepository())
+            try
             {
-                try
+                ISubscriberRepository subscriberRepository = RepositoryClassFactory.GetInstance().GetSubscriberRepository();
+                var _sub = Mapper.Map<SubscriberModel, Subscriber>(subscriber);
+                subscriberRepository.Update(_sub);
+                return new BaseResponse
                 {
-                    var _sub = Mapper.Map<SubscriberModel, Subscriber>(subscriber);
-                    subscriberRepository.Update(_sub);
-                    return new BaseResponse
-                    {
-                        ErrorCode = (int)ErrorCode.None,
-                        Message = Resources.AdminResource.msg_update_success
-                    };
-                }
-                catch (Exception ex)
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = Resources.AdminResource.msg_update_success
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse
                 {
-                    return new BaseResponse
-                    {
-                        ErrorCode = (int)ErrorCode.Error,
-                        Message = ex.Message
-                    };
-                }
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
             }
         }
 
-        public GetAllSubscribersResponse GetSubscribers()
+        public FindAllItemReponse<SubscriberModel> GetSubscribers()
         {
-            using (ISubscriberRepository subscriberRepository = RepositoryClassFactory.GetInstance().GetSubscriberRepository())
+            try
             {
-                try
+                ISubscriberRepository subscriberRepository = RepositoryClassFactory.GetInstance().GetSubscriberRepository();
+                IList<Subscriber> result = subscriberRepository.FindAll();
+                var _subs = result.Select(m => Mapper.Map<Subscriber, SubscriberModel>(m)).ToList();
+                return new FindAllItemReponse<SubscriberModel>
                 {
-                    IList<Subscriber> result = subscriberRepository.FindAll();
-                    var _subs = result.Select(m => Mapper.Map<Subscriber, SubscriberModel>(m)).ToList();
-                    return new GetAllSubscribersResponse
-                    {
-                        Subscribers = _subs,
-                        ErrorCode = (int)ErrorCode.None,
-                        Message = string.Empty
-                    };
-                }
-                catch (Exception ex)
+                    Items = _subs,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindAllItemReponse<SubscriberModel>
                 {
-                    return new GetAllSubscribersResponse
-                    {
-                        ErrorCode = (int)ErrorCode.Error,
-                        Message = ex.Message
-                    };
-                }
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
             }
         }
 
-        public GetSubscriberResponse FindSubscriberByID(string id)
+        public FindItemReponse<SubscriberModel> FindSubscriberByID(string id)
         {
-            using (ISubscriberRepository subscriberRepository = RepositoryClassFactory.GetInstance().GetSubscriberRepository())
+            try
             {
-                try
+                ISubscriberRepository subscriberRepository = RepositoryClassFactory.GetInstance().GetSubscriberRepository();
+                Subscriber sub = subscriberRepository.FindByID(id);
+                var _sub = Mapper.Map<Subscriber, SubscriberModel>(sub);
+                return new FindItemReponse<SubscriberModel>
                 {
-                    Subscriber sub = subscriberRepository.FindByID(id);
-                    var _sub = Mapper.Map<Subscriber, SubscriberModel>(sub);
-                    return new GetSubscriberResponse
-                    {
-                        Subscriber = _sub,
-                        ErrorCode = (int)ErrorCode.None,
-                        Message = string.Empty
-                    };
-                }
-                catch (Exception ex)
+                    Item = _sub,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindItemReponse<SubscriberModel>
                 {
-                    return new GetSubscriberResponse
-                    {
-                        ErrorCode = (int)ErrorCode.Error,
-                        Message = ex.Message
-                    };
-                }
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
             }
         }
-        
-        public GetSubscriberResponse FindSubscriberByEmail(string email)
+
+        public FindItemReponse<SubscriberModel> FindSubscriberByEmail(string email)
         {
-            using (ISubscriberRepository subscriberRepository = RepositoryClassFactory.GetInstance().GetSubscriberRepository())
+            try
             {
-                try
+                ISubscriberRepository subscriberRepository = RepositoryClassFactory.GetInstance().GetSubscriberRepository();
+                Subscriber sub = subscriberRepository.FindByEmail(email);
+                var _sub = Mapper.Map<Subscriber, SubscriberModel>(sub);
+                return new FindItemReponse<SubscriberModel>
                 {
-                    Subscriber sub = subscriberRepository.FindByEmail(email);
-                    var _sub = Mapper.Map<Subscriber, SubscriberModel>(sub);
-                    return new GetSubscriberResponse
-                    {
-                        Subscriber = _sub,
-                        ErrorCode = (int)ErrorCode.None,
-                        Message = string.Empty
-                    };
-                }
-                catch (Exception ex)
+                    Item = _sub,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindItemReponse<SubscriberModel>
                 {
-                    return new GetSubscriberResponse
-                    {
-                        ErrorCode = (int)ErrorCode.Error,
-                        Message = ex.Message
-                    };
-                }
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
             }
         }
     }
