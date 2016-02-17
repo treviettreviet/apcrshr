@@ -49,37 +49,6 @@
                             @Html.TreeMenu(menus);
                         }
 
-                        <!--
-                        <ul id="browser" class="filetree">
-                            <li>
-                                <span class="folder">Folder 1</span>
-                                <ul>
-                                    <li><span class="file">Item 1.1</span></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <span class="folder">Folder 2</span>
-                                <ul>
-                                    <li>
-                                        <span class="folder">Subfolder 2.1</span>
-                                        <ul id="folder21">
-                                            <li><span class="file">File 2.1.1</span></li>
-                                            <li><span class="file">File 2.1.2</span></li>
-                                        </ul>
-                                    </li>
-                                    <li><span class="file">File 2.2</span></li>
-                                </ul>
-                            </li>
-                            <li class="closed">
-                                <span class="folder">Folder 3 (closed at start)</span>
-                                <ul>
-                                    <li><span class="file">File 3.1</span></li>
-                                </ul>
-                            </li>
-                            <li><span class="file">File 4</span></li>
-                        </ul>
-                        -->
-
                         <!--End menu-->
 
                     </div>
@@ -154,67 +123,6 @@
     </div>
 </div>
 
-<!--Admin-->
-<div class="row">
-    <div class="col-sm-12">
-        <div class="box box-color box-bordered">
-            <br />
-            <a href='@Url.Action("AddNewAdmin", "Admin")' class="btn btn-blue">Thêm Mới</a>
-            <div class="box-title">
-                <h3>
-                    <i class="fa fa-th-list"></i>Danh Sách Quản Trị Viên
-                </h3>
-            </div>
-            <div class="box-content nopadding">
-                <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
-                       data-column_filter_types="null,text,text,text,daterange,text,null,null,null"
-                       data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
-                    <thead>
-                        <tr>
-                            <th class='with-checkbox'>
-                                <input type="checkbox" name="check_all" class="dataTable-checkall">
-                            </th>
-                            <th>Họ</th>
-                            <th>Tên</th>
-                            <th>Email</th>
-                            <th class='hidden-1024'>Ngày Sinh</th>
-                            <th>Số Điện Thoại</th>
-                            <th>Trạng Thái</th>
-                            <th>Tên Đăng Nhập</th>
-                            <th class='hidden-480'>Tùy Chọn</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (int i = 0; i < Model.Count; i++)
-                        {
-                            <tr id="@Model[i].AdminID">
-                                <td class="with-checkbox">
-                                    <input type="checkbox" name="check" value="@Model[i].AdminID">
-                                </td>
-                                <td>@Model[i].FirstName</td>
-                                <td>@Model[i].LastName</td>
-                                <td>@Model[i].Email</td>
-                                <td class='hidden-1024'>@Model[i].BirthDate.ToShortDateString()</td>
-                                <td>@Model[i].Phone</td>
-                                <td>@(Model[i].Locked ? "Đã Khóa" : "Đã Kích Hoạt")</td>
-                                <td>@Model[i].UserName</td>
-                                <td class='hidden-480'>
-                                    <a href='@Url.Action("UpdateAdmin", "Admin", new { adminID = Model[i].AdminID })' class="btn" rel="tooltip" title="Sửa">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteAdmin('@Model[i].AdminID')">
-                                        <i class="fa fa-times"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script type="text/javascript">
 
     //Disabled article
@@ -268,54 +176,11 @@
         });
     }
 
-    function deleteAdmin(adminID) {
-        bootbox.confirm("Bạn có chắc chắn muốn xóa bản ghi này?", function (result) {
-            if (result) {
-                $.ajax({
-                    type: 'GET',
-                    contentType: 'application/json',
-                    url: '@Url.Action("DeleteAdmin", "Admin")',
-                    data: { adminID: adminID },
-                    success: function (data) {
-                        if (data.ErrorCode == 0) {
-                            $('#' + adminID + '').remove();
-                            bootbox.hideAll();
-                        } else {
-                            bootbox.alert(data.Message, function () {
-                                bootbox.hideAll();
-                            });
-                        }
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        bootbox.hideAll();
-                    }
-                });
-                return true;
-            } else {
-                bootbox.hideAll();
-                return false;
-            }
-        });
-    }
-
 </script>
 
 <script type="text/javascript">
     $(function () {
         $("#browser").treeview();
-
-        /*$("#add").click(function () {
-            var branches = $("<li><span class='folder'>New Sublist</span><ul>" +
-                "<li><span class='file'>Item1</span></li>" +
-                "<li><span class='file'>Item2</span></li></ul></li>").appendTo("#browser");
-            $("#browser").treeview({
-                add: branches
-            });
-            branches = $("<li class='closed'><span class='folder'>New Sublist</span><ul><li><span class='file'>Item1</span></li><li><span class='file'>Item2</span></li></ul></li>").prependTo("#folder21");
-            $("#browser").treeview({
-                add: branches
-            });
-        });*/
 
         $('#browser span.file').bind('click', function () {
             //clear all clicked items if any
@@ -326,6 +191,7 @@
 
             //Enable article
             $("#lnkCreateArticle").removeAttr("disabled");
+            $("#lnkCreateArticle").attr("href", "Article/CreateArticle?menuTitle=" + $(this).html());
         });
         $('#browser span.folder').bind('click', function () {
             //clear all clicked items if any

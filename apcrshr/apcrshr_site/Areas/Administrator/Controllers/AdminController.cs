@@ -173,7 +173,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
             InsertResponse response = _menuCategoryService.CreateMenu(menu);
 
-            return Json(new { errorcode = response.ErrorCode, message = response.Message }, JsonRequestBehavior.AllowGet);
+            return Json(new { errorcode = response.ErrorCode, message = response.Message, title = menu.Title }, JsonRequestBehavior.AllowGet);
         }
 
     }
