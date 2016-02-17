@@ -34,7 +34,7 @@
                         </div>
                         <div class="right">
                             <span>Thêm bài viết</span>
-                            <a href="#" class="btn" rel="tooltip" title="" data-original-title="Thêm bài viết">
+                            <a href='@Url.Action("CreateArticle", "Article")' id="lnkCreateArticle" class="btn" rel="tooltip" title="" data-original-title="Thêm bài viết">
                                 <i class="fa fa-plus-circle"></i>
                             </a>
                         </div>
@@ -217,6 +217,9 @@
 
 <script type="text/javascript">
 
+    //Disabled article
+    $("#lnkCreateArticle").attr("disabled", "disabled");
+
     $("#txtMenuLevel").change(function () {
         if (this.checked) {
             $("#txtMenuParent").val("/");
@@ -320,6 +323,9 @@
             //set this clicked
             $(this).addClass('selected');
             $("#txtMenuParent").val($(this).html());
+
+            //Enable article
+            $("#lnkCreateArticle").removeAttr("disabled");
         });
         $('#browser span.folder').bind('click', function () {
             //clear all clicked items if any
@@ -327,6 +333,9 @@
             //set this clicked
             $(this).addClass('selected');
             $("#txtMenuParent").val($(this).html());
+
+            //Disabled article
+            $("#lnkCreateArticle").attr("disabled", "disabled");
         });
         $("#browser").bind("contextmenu", function (event) {
             if ($(event.target).is("li") || $(event.target).parents("li").length) {

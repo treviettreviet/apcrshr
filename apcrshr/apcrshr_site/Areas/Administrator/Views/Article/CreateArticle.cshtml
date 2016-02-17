@@ -1,0 +1,87 @@
+﻿@model Site.Core.DataModel.Model.ArticleModel
+@{
+    ViewBag.Title = "Viết Bài";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Custom file upload -->
+<script src="~/Areas/Administrator/js/plugins/fileupload/bootstrap-fileupload.min.js"></script>
+<script src="~/Areas/Administrator/js/plugins/mockjax/jquery.mockjax.js"></script>
+<div class="row">
+    <div class="col-sm-12">
+
+        <!--Alert-->
+        @if (ViewBag.Message != null)
+        {
+            Site.Core.DataModel.Response.InsertResponse responseMsg = (Site.Core.DataModel.Response.InsertResponse)ViewBag.Message;
+            <br />
+            <div class="alert @(responseMsg.ErrorCode == (int)Site.Core.DataModel.Enum.ErrorCode.None ? " alert-info" : " alert-danger")"><a class="close" data-dismiss="alert" href="#">×</a><strong></strong> @responseMsg.Message</div>
+        }
+
+        <div class="box box-bordered box-color">
+            <div class="box-title">
+                <h3>
+                    <i class="fa fa-edit"></i>Viết bài
+                </h3>
+            </div>
+            <div class="box-content nopadding">
+                @using (Html.BeginForm("SaveArticle", "Article", FormMethod.Post, new { @class = "form-horizontal form-bordered", @id = "frmSaveArticle", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Tiêu Đề</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(Model => Model.Title, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(Model => Model.Title)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Tóm Tắt Nội Dung</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(Model => Model.ShortContent, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(Model => Model.ShortContent)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Mô Tả</label>
+                        <div class="col-sm-10">
+                            @Html.TextAreaFor(Model => Model.Contents, new { @id = "Contents", @class = "form-control" })
+                            @Html.ValidationMessageFor(Model => Model.Contents)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Ngôn Ngữ</label>
+                        <div class="col-sm-10">
+                            <div class="check-demo-col">
+                                <div class="check-line">
+                                    <input type="radio" name="Language" id="Language" class='icheck-me' data-skin="square" data-color="blue" value="EN" checked>
+                                    <label class='inline' for="Language">English</label>
+                                </div>
+                                <div class="check-line">
+                                    <input type="radio" name="Language" id="Language" class='icheck-me' data-skin="square" data-color="blue" value="VN">
+                                    <label class='inline' for="Language">Tiếng Việt</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions col-sm-offset-2 col-sm-10">
+                        <button type="button" id="btnSaveNews" onclick="submitForm()" class="btn btn-primary">Lưu Thông Tin</button>
+                        <button type="reset" class="btn">Reset</button>
+                        <a href='@Url.Action("Index")' class="btn btn-info">Hủy Bỏ</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#Contents").Editor({ name: "Editor-Contents" });
+    });
+
+    function submitForm() {
+        $("#Contents").val($("#Editor-Contents").html());
+        $("form#frmSaveNews").submit();
+    }
+</script>

@@ -185,6 +185,7 @@
     <Compile Include="Areas\Administrator\Controllers\AdminController.cs" />
     <Compile Include="Areas\Administrator\Controllers\AdminHomeController.cs" />
     <Compile Include="Areas\Administrator\Controllers\AdminUserController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\ArticleController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Filters\SessionFilter.cs" />
@@ -679,6 +680,8 @@
     <Content Include="Areas\Administrator\Views\Shared\_LayoutLoginPage.cshtml" />
     <Content Include="Areas\Administrator\Views\Shared\_LeftMenuPartialPage.cshtml" />
     <Content Include="Areas\Administrator\Views\Shared\_NavigationPartialPage.cshtml" />
+    <Content Include="Areas\Administrator\Views\Article\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\Article\CreateArticle.cshtml" />
     <None Include="Properties\PublishProfiles\apcrshr.hvtec.vn - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
