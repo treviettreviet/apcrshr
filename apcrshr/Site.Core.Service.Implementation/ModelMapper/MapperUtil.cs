@@ -54,7 +54,8 @@ namespace Site.Core.Service.Implementation.ModelMapper
                 cfg.CreateMap<User, UserModel>();
                 cfg.CreateMap<Subscriber, SubscriberModel>();
                 cfg.CreateMap<Menu, MenuModel>()
-                    .ForMember(m => m.SubMenus, c => c.MapFrom(m => m.Menu1));
+                    .ForMember(m => m.SubMenus, c => c.MapFrom(m => m.Menu1))
+                    .ForMember(m => m.Parent, c => c.MapFrom(m => m.Menu2));
                 cfg.CreateMap<Article, ArticleModel>();
             });
 

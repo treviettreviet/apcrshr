@@ -32,7 +32,7 @@ namespace apcrshr_site.Helper
                 }
                 else
                 {
-                    return "VN";
+                    return "EN";
                 }
             }
             set

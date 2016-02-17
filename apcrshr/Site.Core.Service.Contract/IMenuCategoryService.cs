@@ -36,5 +36,12 @@ namespace Site.Core.Service.Contract
         /// <param name="title"></param>
         /// <returns></returns>
         FindItemReponse<MenuModel> FindByTitle(string title);
+
+        /// <summary>
+        /// Find by action url
+        /// </summary>
+        /// <param name="actionURL"></param>
+        /// <returns></returns>
+        FindItemReponse<MenuModel> FindByActionURL(string actionURL);
     }
 }

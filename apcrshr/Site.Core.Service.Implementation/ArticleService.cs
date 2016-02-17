@@ -205,5 +205,31 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindAllItemReponse<ArticleModel> GetArticles(int pageSize, int pageIndex, string language, string menuID)
+        {
+            try
+            {
+                IArticleRepository articleRepository = RepositoryClassFactory.GetInstance().GetArticleRepository();
+                var result = articleRepository.FindAll(pageSize, pageIndex, language, menuID);
+                var _news = result.Item2.Select(n => MapperUtil.CreateMapper().Mapper.Map<Article, ArticleModel>(n)).ToList();
+                return new FindAllItemReponse<ArticleModel>
+                {
+                    Count = result.Item1,
+                    Items = _news,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindAllItemReponse<ArticleModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }

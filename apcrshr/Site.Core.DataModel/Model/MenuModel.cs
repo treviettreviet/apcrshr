@@ -15,5 +15,6 @@ namespace Site.Core.DataModel.Model
         public string ParentID { get; set; }
         public DateTime CreatedDate { get; set; }
         public IList<MenuModel> SubMenus { get; set; }
+        public MenuModel Parent { get; set; }
     }
 }

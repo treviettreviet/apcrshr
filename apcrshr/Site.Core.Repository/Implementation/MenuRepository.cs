@@ -86,5 +86,11 @@ namespace Site.Core.Repository.Implementation
             APCRSHREntities context = new APCRSHREntities();
             return context.Menus.Where(a => a.Title.Equals(title)).SingleOrDefault();
         }
+
+        public Menu FindByActionURL(string actionURL)
+        {
+            APCRSHREntities context = new APCRSHREntities();
+            return context.Menus.Where(a => a.ActionURL.Equals(actionURL)).SingleOrDefault();
+        }
     }
 }

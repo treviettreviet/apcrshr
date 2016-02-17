@@ -186,6 +186,8 @@
     <Compile Include="Areas\Administrator\Controllers\AdminHomeController.cs" />
     <Compile Include="Areas\Administrator\Controllers\AdminUserController.cs" />
     <Compile Include="Areas\Administrator\Controllers\ArticleController.cs" />
+    <Compile Include="Constants\Constants.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Filters\SessionFilter.cs" />
@@ -752,28 +754,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\AbtractMainConference.cshtml" />
-    <Content Include="Views\Home\AbtractYouthConference.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Delegate.cshtml" />
-    <Content Include="Views\Home\Donnor.cshtml" />
-    <Content Include="Views\Home\ExMainConference.cshtml" />
-    <Content Include="Views\Home\ExYouthConference.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Instruction.cshtml" />
-    <Content Include="Views\Home\International.cshtml" />
-    <Content Include="Views\Home\National.cshtml" />
     <Content Include="Views\Home\News.cshtml" />
-    <Content Include="Views\Home\PreRelatedConference.cshtml" />
-    <Content Include="Views\Home\PresentationData.cshtml" />
-    <Content Include="Views\Home\PreYouthConference.cshtml" />
-    <Content Include="Views\Home\ProgramFieldVisit.cshtml" />
-    <Content Include="Views\Home\ProgramMainConference.cshtml" />
-    <Content Include="Views\Home\RegistrationMainConference.cshtml" />
-    <Content Include="Views\Home\RegistrationRelatedConference.cshtml" />
-    <Content Include="Views\Home\RegistrationYouthConference.cshtml" />
-    <Content Include="Views\Home\ScientificAdvisory.cshtml" />
-    <Content Include="Views\Home\Travel.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_FooterPartialPage.cshtml" />
     <Content Include="Views\Shared\_FullWidthLayoutPage.cshtml" />
@@ -786,6 +768,7 @@
     <Content Include="Views\Home\NewsGalerry.cshtml" />
     <Content Include="Views\Home\NewsText.cshtml" />
     <Content Include="Views\Shared\_PartialRightWidget.cshtml" />
+    <Content Include="Views\Home\ArticleView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

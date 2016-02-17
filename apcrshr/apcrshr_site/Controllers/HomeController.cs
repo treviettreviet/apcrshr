@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Site.Core.DataModel.Model;
+using Site.Core.DataModel.Response;
+using Site.Core.Service.Contract;
+using Site.Core.Service.Implementation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,41 +10,39 @@ using System.Web.Mvc;
 
 namespace apcrshr_site.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
+        private IArticleService _articleService;
+        public HomeController()
+        {
+            this._articleService = new ArticleService();
+        }
+
+        [HttpGet]
         public ActionResult Index()
         {
             ViewBag.CurrentNode = "Home";
             return View();
         }
 
-        public ActionResult ProgramMainConference()
+        [HttpGet]
+        public ActionResult ArticleView(string ActionURL, int pageIndex = 1)
         {
-            ViewBag.CurrentNode = "Program";
+            FindItemReponse<MenuModel> response = _menuCategoryService.FindByActionURL(ActionURL);
+            if (response.Item != null)
+            {
+                ViewBag.Title = response.Item.Title;
+
+                if (response.Item.Parent != null)
+                {
+                    ViewBag.CurrentNode = response.Item.Parent.ActionURL;
+                }
+
+                //Find article
+                FindAllItemReponse<ArticleModel> articleResponse = _articleService.GetArticles(Constants.Constants.PAGE_SIZE, pageIndex, culture, response.Item.MenuID);
+                return View(articleResponse.Items);
+            }
             return View();
         }
-
-        public ActionResult AboutBackground()
-        {
-            ViewBag.CurrentNode = "About";
-            return View();
-        }
-
-        public ActionResult AboutThemeObjective()
-        {
-            ViewBag.CurrentNode = "About";
-            return View();
-        }
-
-        public ActionResult NewsGalerry()
-        {
-            return View();
-        }
-
-        public ActionResult NewsText()
-        {
-            return View();
-        }
-
     }
 }

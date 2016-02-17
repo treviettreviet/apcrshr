@@ -62,6 +62,13 @@ namespace Site.Core.Service.Contract
         FindAllItemReponse<ArticleModel> GetArticles(int pageSize, int pageIndex, string language);
 
         /// <summary>
+        /// Find all articles by menu ID
+        /// </summary>
+        /// <param name="menuID"></param>
+        /// <returns></returns>
+        FindAllItemReponse<ArticleModel> GetArticles(int pageSize, int pageIndex, string language, string menuID);
+
+        /// <summary>
         /// Create new article
         /// </summary>
         /// <param name="article"></param>

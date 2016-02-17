@@ -120,5 +120,29 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindItemReponse<MenuModel> FindByActionURL(string actionURL)
+        {
+            try
+            {
+                IMenuRepository menuRepository = RepositoryClassFactory.GetInstance().GetMenuRepository();
+                Menu _menu = menuRepository.FindByActionURL(actionURL);
+                return new FindItemReponse<MenuModel>
+                {
+                    Item = MapperUtil.CreateMapper().Mapper.Map<Menu, MenuModel>(_menu),
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = Resources.Resource.msg_create_success
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindItemReponse<MenuModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }
