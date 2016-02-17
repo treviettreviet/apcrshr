@@ -52,5 +52,10 @@ namespace Site.Core.Repository
         {
             return new MenuRepository();
         }
+
+        public IArticleRepository GetArticleRepository()
+        {
+            return new ArticleRepository();
+        }
     }
 }

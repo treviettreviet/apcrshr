@@ -1,5 +1,5 @@
 ﻿@using apcrshr_site.Helper
-@model IList<Site.Core.DataModel.Model.AdminModel>
+@model IList<Site.Core.DataModel.Model.MenuModel>
 @{
     ViewBag.Title = "Quản Trị Viên";
     Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
@@ -43,10 +43,9 @@
 
                         <!--Begin menu-->
 
-                        @if (ViewBag.MenuCategories != null)
+                        @if (Model != null)
                         {
-                            IList<Site.Core.DataModel.Model.MenuModel> menus = (IList<Site.Core.DataModel.Model.MenuModel>)ViewBag.MenuCategories;
-                            @Html.TreeMenu(menus);
+                            @Html.TreeMenu(Model);
                         }
 
                         <!--End menu-->
@@ -101,19 +100,19 @@
                                 <div class="col-sm-10">
                                     <div class="check-demo-col">
                                         <div class="check-line">
-                                            <input type="radio" name="Language" id="Language" class='icheck-me' data-skin="square" data-color="blue" value="EN" checked>
+                                            <input type="radio" name="Language" id="Language-EN" class='icheck-me' data-skin="square" data-color="blue" value="EN" checked>
                                             <label class='inline' for="Language">English</label>
                                         </div>
                                         <div class="check-line">
-                                            <input type="radio" name="Language" id="Language" class='icheck-me' data-skin="square" data-color="blue" value="VN">
+                                            <input type="radio" name="Language" id="Language-VN" class='icheck-me' data-skin="square" data-color="blue" value="VN">
                                             <label class='inline' for="Language">Tiếng Việt</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-actions">
-                                <button type="button" class="btn btn-primary" onclick="saveCategoryMenu()">Save changes</button>
-                                <button type="button" class="btn">Cancel</button>
+                                <button type="button" class="btn btn-primary" onclick="saveCategoryMenu()">Lưu Thông Tin</button>
+                                <button type="button" onclick="resertForm()" class="btn">Khởi tạo lại</button>
                             </div>
                         </form>
                     </div>
@@ -144,11 +143,18 @@
     });
 
     function saveCategoryMenu() {
+
+        if (!validateForm()) {
+            bootbox.alert("Cần phải nhập dữ liệu những trường bắt buộc.", function () {
+                bootbox.hideAll();
+            });
+            return false;
+        }
+
         $.blockUI({ message: $('#spinner') });
         var formData = new FormData();
         formData.append("Title", $("#txtMenuCategoryTitle").val());
-        formData.append("DisplayOrder", $("#txtMenuDisplayOrder").val());
-        formData.append("Language", $("#Language").val());
+        formData.append("Language", $("input[name=Language]:checked").val());
         formData.append("parentTitle", $("#txtMenuParent").val());
         formData.append(@Html.AntiForgeryTokenForAjaxPost());
         $.ajax({
@@ -159,23 +165,33 @@
             contentType: false,
             processData: false,
             success: function (response) {
+                $.unblockUI();
+                bootbox.alert(response.message, function () {
+                    bootbox.hideAll();
+                });
                 if (response.errorcode == 0) {
-                    $.unblockUI();
-                    bootbox.alert(response.message, function () {
-                        bootbox.hideAll();
-                    });
-                } else {
-                    $.unblockUI();
-                    alert(response.message);
+                    resertForm();
                 }
             },
             error: function (error) {
                 $.unblockUI();
-                alert(error);
+                bootbox.alert(error, function () {
+                    bootbox.hideAll();
+                });
             }
         });
     }
+    function validateForm() {
+        if ($("#txtMenuCategoryTitle").val() == null || $("#txtMenuCategoryTitle").val() == "") {
+            $("#txtMenuCategoryTitle").focus();
+            return false;
+        }
+        return true;
+    }
 
+    function resertForm() {
+        $("#txtMenuCategoryTitle").val("");
+    }
 </script>
 
 <script type="text/javascript">

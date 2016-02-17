@@ -42,16 +42,9 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository();
             UserSession userSession = userSessionRepository.FindByID(sessionId);
 
-            FindAllItemReponse<AdminModel> response = _adminService.GetAdminsExceptMe(userSession.UserID);
-            if (response.Items == null)
-            {
-                response.Items = new List<AdminModel>();
-            }
-
             FindAllItemReponse<MenuModel> menuReponse = _menuCategoryService.FindAllMenus();
-            ViewBag.MenuCategories = menuReponse.Items;
 
-            return View(response.Items);
+            return View(menuReponse.Items);
         }
 
         public ActionResult Logout()

@@ -46,6 +46,7 @@ namespace Site.Core.Service.Implementation.ModelMapper
                 cfg.CreateMap<UserModel, User>();
                 cfg.CreateMap<SubscriberModel, Subscriber>();
                 cfg.CreateMap<MenuModel, Menu>();
+                cfg.CreateMap<ArticleModel, Article>();
 
                 //Entity model mapper
                 cfg.CreateMap<Admin, AdminModel>();
@@ -53,7 +54,8 @@ namespace Site.Core.Service.Implementation.ModelMapper
                 cfg.CreateMap<User, UserModel>();
                 cfg.CreateMap<Subscriber, SubscriberModel>();
                 cfg.CreateMap<Menu, MenuModel>()
-                    .ForMember(m => m.SubMenus, c => c.MapFrom(m => m.Menu1)); ;
+                    .ForMember(m => m.SubMenus, c => c.MapFrom(m => m.Menu1));
+                cfg.CreateMap<Article, ArticleModel>();
             });
 
             mapper = config.CreateMapper();

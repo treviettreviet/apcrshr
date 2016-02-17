@@ -59,5 +59,23 @@ namespace apcrshr_site.Resources {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Danh mục &quot;{0}&quot; không tồn tại..
+        /// </summary>
+        internal static string msg_menuCategoryNotFound {
+            get {
+                return ResourceManager.GetString("msg_menuCategoryNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hết thời gian phiên làm việc..
+        /// </summary>
+        internal static string msg_sessionInvalid {
+            get {
+                return ResourceManager.GetString("msg_sessionInvalid", resourceCulture);
+            }
+        }
     }
 }

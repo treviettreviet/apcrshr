@@ -34,9 +34,10 @@ namespace apcrshr_site.Helper
 
                 if (m.SubMenus != null && m.SubMenus.Count > 0)
                 {
+                    IList<MenuModel> list = m.SubMenus.OrderBy(s => s.CreatedDate).ToList();
                     builder.Append("<span class='folder'>" + m.Title + "</span>");
                     builder.Append("<ul>");
-                    foreach (MenuModel sub in m.SubMenus)
+                    foreach (MenuModel sub in list)
                     {
                         builder.Append("<li><span class='file'>" + sub.Title + "</span></li>");
                     }

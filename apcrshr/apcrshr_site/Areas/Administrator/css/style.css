@@ -9376,3 +9376,7 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+
+.validation-span-required{
+    color: #ff0000; font-weight:bold;
+}

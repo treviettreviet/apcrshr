@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAdminService.cs" />
+    <Compile Include="IArticleService.cs" />
     <Compile Include="IHomeService.cs" />
     <Compile Include="IMenuCategoryService.cs" />
     <Compile Include="INewsService.cs" />
