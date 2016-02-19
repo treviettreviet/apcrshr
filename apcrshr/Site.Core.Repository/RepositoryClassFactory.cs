@@ -57,5 +57,10 @@ namespace Site.Core.Repository
         {
             return new ArticleRepository();
         }
+
+        public IUploadRepository GetUploadRepository()
+        {
+            return new UploadRepository();
+        }
     }
 }

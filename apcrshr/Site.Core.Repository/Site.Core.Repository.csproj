@@ -79,6 +79,7 @@
     <Compile Include="Implementation\MenuRepository.cs" />
     <Compile Include="Implementation\NewsRepository.cs" />
     <Compile Include="Implementation\SubscriberRepository.cs" />
+    <Compile Include="Implementation\UploadRepository.cs" />
     <Compile Include="Implementation\UserRepository.cs" />
     <Compile Include="Implementation\UserSessionRepository.cs" />
     <Compile Include="ImportantDeadline.cs">
@@ -104,9 +105,16 @@
     <Compile Include="Repository\INewsRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\ISubscriberRepository.cs" />
+    <Compile Include="Repository\IUploadRepository.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Repository\IUserSessionRepository.cs" />
+    <Compile Include="Slider.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subscriber.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Upload.cs">
       <DependentUpon>APCRSHRModel.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">

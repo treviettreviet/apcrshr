@@ -27,7 +27,7 @@ namespace Site.Core.Service.Implementation
                 {
                     InsertID = _sub.SubscriberID,
                     ErrorCode = (int)ErrorCode.None,
-                    Message = AdminResource.msg_create_success
+                    Message = Resource.msg_create_success
                 };
             }
             catch (Exception ex)
@@ -49,7 +49,7 @@ namespace Site.Core.Service.Implementation
                 return new BaseResponse
                 {
                     ErrorCode = (int)ErrorCode.None,
-                    Message = Resources.AdminResource.msg_delete_success
+                    Message = Resources.Resource.msg_delete_success
                 };
             }
             catch (Exception ex)
@@ -72,7 +72,7 @@ namespace Site.Core.Service.Implementation
                 return new BaseResponse
                 {
                     ErrorCode = (int)ErrorCode.None,
-                    Message = Resources.AdminResource.msg_update_success
+                    Message = Resources.Resource.msg_update_success
                 };
             }
             catch (Exception ex)
