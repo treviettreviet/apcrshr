@@ -7,6 +7,6 @@ namespace apcrshr_site.Constants
 {
     public class Constants
     {
-        public static readonly int PAGE_SIZE = 15;
+        public static readonly int PAGE_SIZE = 3;
     }
 }

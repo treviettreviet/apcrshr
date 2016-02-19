@@ -40,9 +40,9 @@ namespace apcrshr_site.Controllers
 
                 //Find article
                 FindAllItemReponse<ArticleModel> articleResponse = _articleService.GetArticles(Constants.Constants.PAGE_SIZE, pageIndex, culture, response.Item.MenuID);
-                return View(articleResponse.Items);
+                return View(articleResponse);
             }
-            return View();
+            return View(new FindAllItemReponse<ArticleModel>());
         }
     }
 }
