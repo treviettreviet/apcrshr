@@ -22,5 +22,6 @@ namespace Site.Core.Repository
         public System.DateTime CreatedDate { get; set; }
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public string FilePath { get; set; }
     }
 }

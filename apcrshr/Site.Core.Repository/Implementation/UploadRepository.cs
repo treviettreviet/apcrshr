@@ -31,6 +31,7 @@ namespace Site.Core.Repository.Implementation
                     upload.UpdatedBy = item.UpdatedBy;
                     upload.UpdatedDate = DateTime.Now;
                     upload.UploadURL = item.UploadURL;
+                    upload.FilePath = item.FilePath;
 
                     context.SaveChanges();
                 }

@@ -181,6 +181,7 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="FilePath" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -548,6 +549,7 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="FilePath" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -761,6 +763,7 @@
           <EntitySetMapping Name="Uploads">
             <EntityTypeMapping TypeName="APCRSHRModel.Upload">
               <MappingFragment StoreEntitySet="Upload">
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />

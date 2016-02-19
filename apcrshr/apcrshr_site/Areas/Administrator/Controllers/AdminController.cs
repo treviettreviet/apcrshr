@@ -24,11 +24,13 @@ namespace apcrshr_site.Areas.Administrator.Controllers
     {
         private IAdminService _adminService;
         private IMenuCategoryService _menuCategoryService;
+        private IUploadService _uploadService;
 
         public AdminController()
         {
             this._adminService = new AdminService();
             this._menuCategoryService = new MenuCategoryService();
+            this._uploadService = new UploadService();
         }
 
         [SessionFilter]
@@ -169,5 +171,89 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             return Json(new { errorcode = response.ErrorCode, message = response.Message, title = menu.Title }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult UploadFiles(HttpPostedFileBase file)
+        {
+            var sessionId = this.Session["SessionID"].ToString();
+            IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository();
+            UserSession userSession = userSessionRepository.FindByID(sessionId);
+
+            if (userSession == null)
+            {
+                return Json(new { errorCode = (int)ErrorCode.Redirect, message = Resources.AdminResource.msg_sessionInvalid }, JsonRequestBehavior.AllowGet);
+            }
+
+            InsertResponse response = new InsertResponse();
+
+            string url = string.Empty;
+            string msg = string.Empty;
+            int errorcode = 0;
+
+            if (file != null)
+            {
+                try
+                {
+                    //Create folder
+                    try
+                    {
+                        if (!System.IO.File.Exists(Server.MapPath("~/Content/upload/files/")))
+                        {
+                            Directory.CreateDirectory(Server.MapPath("~/Content/upload/files/"));
+                        }
+                    }
+                    catch (Exception) {}
+
+                    string filename = file.FileName.Substring(0, file.FileName.LastIndexOf("."));
+                    filename = string.Format("{0}-{1}", filename, UrlSlugger.Get8Digits()).Replace(" ", "_");
+                    string extension = file.FileName.Substring(file.FileName.LastIndexOf("."));
+                    file.SaveAs(Server.MapPath("~/Content/upload/files/" + filename + extension));
+                    url = string.Format("{0}://{1}:{2}/{3}", Request.Url.Scheme, Request.Url.Host, Request.Url.Port, "Content/upload/files/" + filename + extension);
+
+                    UploadModel upload = new UploadModel();
+                    upload.UploadID = Guid.NewGuid().ToString();
+                    upload.CreatedBy = userSession.UserID;
+                    upload.CreatedDate = DateTime.Now;
+                    upload.Title = filename;
+                    upload.UploadURL = url;
+                    upload.FilePath = "/Content/upload/files/" + filename + extension;
+
+                    response = _uploadService.CreateUpload(upload);
+                }
+                catch (Exception ex)
+                {
+                    msg = ex.Message;
+                    errorcode = (int)ErrorCode.Error;
+                }
+            }
+
+            return Json(new { errorcode = errorcode, message = msg, url = url }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult ShowUploads()
+        {
+            FindAllItemReponse<UploadModel> response = _uploadService.GetUploads();
+            return Json(new { errorcode = response.ErrorCode, message = response.Message, data = response.Items }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult DeleteUpload(string uploadID)
+        {
+            FindItemReponse<UploadModel> uploadResponse = _uploadService.GetUploadByID(uploadID);
+            if (uploadResponse.Item != null)
+            {
+                try
+                {
+                    if (System.IO.File.Exists(Server.MapPath(uploadResponse.Item.FilePath)))
+                    {
+                        System.IO.File.Delete(Server.MapPath(uploadResponse.Item.FilePath));
+                    }
+                }
+                catch (Exception) { }
+            }
+            BaseResponse response = _uploadService.DeleteUpload(uploadID);
+            return Json(new { errorcode = response.ErrorCode, message = response.Message }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

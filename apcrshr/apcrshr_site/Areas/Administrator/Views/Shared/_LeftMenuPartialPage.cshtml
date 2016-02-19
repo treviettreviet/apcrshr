@@ -15,5 +15,222 @@
             
         </ul>
     </div>
+    <div class="subnav">
+        <div class="subnav-title">
+            <a href="#" class='toggle-subnav'>
+                <i class="fa fa-angle-down"></i>
+                <span>Tiện Ích</span>
+            </a>
+        </div>
+        <ul class="subnav-menu">
+            <li>
+                <a href='#' onclick="uploadFile();">Tải File Lên Server</a>
+            </li>
+            <li>
+                <a href='#' onclick="showUploads();">Danh sách files</a>
+            </li>
+        </ul>
+    </div>
 
 </div>
+<script type="text/javascript">
+    var uploadDialog = [
+            '<div class="fileinput fileinput-new" data-provides="fileinput">',
+                '<div class="fileinput-preview thumbnail" data-trigger="fileinput" ></div>',
+                '<div>',
+                    '<span class="btn btn-default btn-file">',
+                        '<span class="fileinput-new">Chọn file</span>',
+                        '<span class="fileinput-exists">Thay Đổi</span>',
+                        '<input type="file" name="imageFile" id="imageFile" data-filesize="1048576" data-filesize-error="Kích Cỡ Lớn Nhất: 10MB">',
+                    '</span>',
+                    '<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Xóa Bỏ</a>',
+                '</div>',
+            '</div>'
+    ].join("\n");
+
+    function uploadFile() {
+        bootbox.dialog({
+            message: uploadDialog,
+            title: "Tải file lên",
+            buttons: {
+                success: {
+                    label: "Tải lên",
+                    className: "btn-primary",
+                    callback: function (e) {
+                        e.preventDefault();
+                        if ($('#imageFile').get(0).files.length === 0) {
+                            alert("Hãy chọn file!");
+                        } else {
+                            uploadImage($('#imageFile').get(0).files[0]);
+                            $.blockUI({ message: $('#spinner') });
+                        }
+                    }
+                },
+                danger: {
+                    label: "Hủy bỏ",
+                    className: "btn-danger",
+                    callback: function () {
+                        bootbox.hideAll();
+                    }
+                }
+            }
+        });
+    }
+
+    function uploadImage(file) {
+        var formData = new FormData();
+        formData.append("file", file);
+        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("UploadFiles", "Admin")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.errorcode == 0) {
+                    $.unblockUI();
+                    bootbox.prompt({
+                        title: "Đường dẫn file đã tải lên",
+                        value: response.url,
+                        callback: function (result) {
+                            if (result === null) {
+                                clipboard.copy(result);
+                                bootbox.hideAll();
+                            } else {
+                                bootbox.hideAll();
+                            }
+                        }
+                    });
+                } else {
+                    $.unblockUI();
+                    bootbox.alert(response.message, function () {
+                        bootbox.hideAll();
+                    });
+                    //Timeout
+                    if (response.errorCode == 2) {
+                        window.location = "/Administrator/AdminHome/Login";
+                    }
+                }
+            },
+            error: function (error) {
+                $.unblockUI();
+                bootbox.alert(error, function () {
+                    bootbox.hideAll();
+                });
+            }
+        });
+    }
+
+    var uploadListDialogs = [
+        '<div class="box box-color box-bordered">',
+            '<div class="box-title">',
+                '<h3>',
+                    '<i class="fa fa-th-list"></i>Danh Sách file đã tải lên',
+                '</h3>',
+            '</div>',
+            '<div class="box-content nopadding">',
+                '<table id="tableUploads" class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"',
+                    'data-column_filter_types="text,text,text,null"',
+                    'data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">',
+                    '<thead>',
+                        '<tr>',
+                            '<th>Tiêu đề</th>',
+                            '<th>URL</th>',
+                            '<th class="hidden-480">Tùy Chọn</th>',
+                        '</tr>',
+                    '</thead>',
+                    '<tbody>',
+                    //Body
+                    '</tbody>',
+                '</table>',
+            '</div>',
+        '</div>',
+    ].join("\n");
+
+    function showUploads() {
+        $.blockUI({ message: $('#spinner') });
+        $.ajax({
+            type: 'GET',
+            contentType: 'application/json',
+            url: '@Url.Action("ShowUploads", "Admin")',
+            data: { },
+            success: function (response) {
+                if (response.errorcode == 0) {
+                    $.unblockUI();
+                    bootbox.dialog({
+                        message: uploadListDialogs,
+                        title: "Danh sách file",
+                        buttons: {
+                            danger: {
+                                label: "Đóng",
+                                className: "btn-danger",
+                                callback: function () {
+                                    bootbox.hideAll();
+                                }
+                            }
+                        }
+                    });
+                    displayUploads(response.data);
+                } else {
+                    $.unblockUI();
+                    bootbox.alert(response.message, function () {
+                        bootbox.hideAll();
+                    });
+                }
+            },
+            error: function (error) {
+                $.unblockUI();
+                bootbox.alert(error, function () {
+                    bootbox.hideAll();
+                });
+            }
+        });
+    }
+
+    function displayUploads(data) {
+        if (data != null) {
+            for (var i = 0; i < data.length; i++) {
+                var title = data[i].Title;
+                var row = [
+                    '<tr id=' + data[i].UploadID + '>',
+                        '<td>' + data[i].Title + '</td>',
+                        '<td>' + data[i].UploadURL + '</td>',
+                        '<td class="hidden-480">',
+                            '<a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteUpload(\'' + data[i].UploadID + '\')">',
+                                '<i class="fa fa-times"></i>',
+                            '</a>',
+                        '</td>',
+                    '</tr>',
+                            ].join("\n");
+                $("#tableUploads > tbody").append(row);
+            }
+        }
+    }
+
+    function deleteUpload(uploadID) {
+        bootbox.confirm("Bạn có chắc chắn muốn xóa bản ghi này?", function (result) {
+            if (result) {
+                $.ajax({
+                    type: 'GET',
+                    contentType: 'application/json',
+                    url: '@Url.Action("DeleteUpload", "Admin")',
+                    data: { uploadID: uploadID },
+                    success: function (data) {
+                        bootbox.alert(data.message, function () {
+                            bootbox.hideAll();
+                        });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        bootbox.hideAll();
+                    }
+                });
+                return true;
+            } else {
+                bootbox.hideAll();
+                return false;
+            }
+        });
+    }
+</script>
