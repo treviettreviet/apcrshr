@@ -159,7 +159,7 @@
             success: function (response) {
                 if (response.errorcode == 0) {
                     $.unblockUI();
-                    bootbox.dialog({
+                    /*bootbox.dialog({
                         message: uploadListDialogs,
                         title: "Danh sách file",
                         buttons: {
@@ -171,6 +171,13 @@
                                 }
                             }
                         }
+                    });*/
+                    //jQuery dialog
+                    $(uploadListDialogs).dialog({
+                        modal: true,        
+                        height: 400,
+                        width: 800,
+                        title: 'Danh sách file'
                     });
                     displayUploads(response.data);
                 } else {
@@ -221,6 +228,8 @@
                         bootbox.alert(data.message, function () {
                             bootbox.hideAll();
                         });
+                        $('#' + uploadID + '').remove();
+                        $('table#tableUploads tr#' + uploadID + '').remove();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         bootbox.hideAll();

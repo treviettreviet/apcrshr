@@ -73,7 +73,7 @@ namespace Site.Core.Repository.Implementation
         {
             using (APCRSHREntities context = new APCRSHREntities())
             {
-                return context.Uploads.ToList();
+                return context.Uploads.OrderByDescending(u => u.CreatedDate).ToList();
             }
         }
     }

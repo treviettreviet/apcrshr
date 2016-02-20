@@ -28,6 +28,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         public AdminController()
         {
+            ViewBag.CurrentNode = "Home";
             this._adminService = new AdminService();
             this._menuCategoryService = new MenuCategoryService();
             this._uploadService = new UploadService();
