@@ -76,6 +76,7 @@
     </Compile>
     <Compile Include="Implementation\AdminRepository.cs" />
     <Compile Include="Implementation\ArticleRepository.cs" />
+    <Compile Include="Implementation\ImportantDeadlineRepository.cs" />
     <Compile Include="Implementation\MenuRepository.cs" />
     <Compile Include="Implementation\NewsRepository.cs" />
     <Compile Include="Implementation\SubscriberRepository.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="RepositoryClassFactory.cs" />
     <Compile Include="Repository\IAdminRepository.cs" />
     <Compile Include="Repository\IArticleRepository.cs" />
+    <Compile Include="Repository\IImportantDeadlineRepository.cs" />
     <Compile Include="Repository\IMenuRepository.cs" />
     <Compile Include="Repository\INewsRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />

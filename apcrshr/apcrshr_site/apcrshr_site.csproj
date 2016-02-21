@@ -184,6 +184,7 @@
     <Compile Include="Areas\Administrator\AdministratorAreaRegistration.cs" />
     <Compile Include="Areas\Administrator\Controllers\AdminController.cs" />
     <Compile Include="Areas\Administrator\Controllers\AdminHomeController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\AdminImportantDeadlineController.cs" />
     <Compile Include="Areas\Administrator\Controllers\AdminUserController.cs" />
     <Compile Include="Areas\Administrator\Controllers\ArticleController.cs" />
     <Compile Include="Constants\Constants.cs" />
@@ -684,6 +685,9 @@
     <Content Include="Areas\Administrator\Views\Shared\_NavigationPartialPage.cshtml" />
     <Content Include="Areas\Administrator\Views\Article\Index.cshtml" />
     <Content Include="Areas\Administrator\Views\Article\CreateArticle.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdminImportantDeadline\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdminImportantDeadline\AddNewImportantDeadline.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdminImportantDeadline\UpdateImportantDeadline.cshtml" />
     <None Include="Properties\PublishProfiles\apcrshr.hvtec.vn - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
@@ -729,7 +733,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\script.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -752,7 +758,9 @@
     <Content Include="Images\orderedList8.png" />
     <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\News.cshtml" />

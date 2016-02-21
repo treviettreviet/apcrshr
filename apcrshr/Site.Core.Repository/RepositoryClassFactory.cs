@@ -57,5 +57,10 @@ namespace Site.Core.Repository
         {
             return new ArticleRepository();
         }
+
+        public IImportantDeadlineRepository GetImportantDeadlineRepository()
+        {
+            return new ImportantDeadlineRepository();
+        }
     }
 }
