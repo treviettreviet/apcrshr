@@ -15,7 +15,7 @@
                     <span>Tin Tức</span>
                 </a>
             </li>
-            <li>
+            <li class='@(ViewBag.CurrentNode == "AdminMember" ? "active" : "")'>
                 <a href="@Url.Action("Index","AdminUser")">
                     <span>Thành Viên</span>
 

@@ -22,7 +22,7 @@ namespace apcrshr_site.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resource {
+    public class Resource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace apcrshr_site.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("apcrshr_site.Resources.Resource", typeof(Resource).Assembly);
@@ -51,7 +51,7 @@ namespace apcrshr_site.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace apcrshr_site.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Next.
         /// </summary>
-        internal static string button_next {
+        public static string button_next {
             get {
                 return ResourceManager.GetString("button_next", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace apcrshr_site.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Previous.
         /// </summary>
-        internal static string button_previous {
+        public static string button_previous {
             get {
                 return ResourceManager.GetString("button_previous", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace apcrshr_site.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Current page:.
         /// </summary>
-        internal static string text_currentPage {
+        public static string text_currentPage {
             get {
                 return ResourceManager.GetString("text_currentPage", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace apcrshr_site.Resources {
         /// <summary>
         ///   Looks up a localized string similar to of.
         /// </summary>
-        internal static string text_of {
+        public static string text_of {
             get {
                 return ResourceManager.GetString("text_of", resourceCulture);
             }
@@ -99,9 +99,27 @@ namespace apcrshr_site.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Page.
         /// </summary>
-        internal static string text_page {
+        public static string text_page {
             get {
                 return ResourceManager.GetString("text_page", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to News Details.
+        /// </summary>
+        public static string title_newDetail {
+            get {
+                return ResourceManager.GetString("title_newDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Related News.
+        /// </summary>
+        public static string title_relatedNews {
+            get {
+                return ResourceManager.GetString("title_relatedNews", resourceCulture);
             }
         }
     }

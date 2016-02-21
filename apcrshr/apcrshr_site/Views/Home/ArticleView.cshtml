@@ -17,6 +17,7 @@
                 <div class="post-content-nopadding">
                     <h2><a href="#">@Model.Items[0].Title</a></h2>
                     @Html.Raw(Model.Items[0].Contents)
+                    <br />
                     <ul class="post-meta">
                         <li>@Model.Items[0].CreatedDate.ToString("dddd, d MMMM, yyyy", new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.Name))</li>
                         <li><a href="#">Posted by</a>, <a href="#">ACPRSHR</a></li>

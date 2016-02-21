@@ -192,6 +192,75 @@
     function resertForm() {
         $("#txtMenuCategoryTitle").val("");
     }
+
+    function updateMenu(id, title) {
+        bootbox.prompt({
+            title: "Cập nhập danh mục",
+            value: $("#" + id).html(),
+            callback: function (result) {
+                if (result != null && result != "") {
+                    $.blockUI({ message: $('#spinner') });
+                    var formData = new FormData();
+                    formData.append("MenuID", id);
+                    formData.append("Title", result);
+                    formData.append(@Html.AntiForgeryTokenForAjaxPost());
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("UpdateCategoryMenu", "Admin")',
+                        data: formData,
+                        dataType: 'json',
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            $.unblockUI();
+                            bootbox.alert(response.message, function () {
+                                bootbox.hideAll();
+                            });
+                            if (response.errorcode == 0) {
+                                $("#" + id).html(response.title);
+                            }
+                        },
+                        error: function (error) {
+                            $.unblockUI();
+                            bootbox.alert(error, function () {
+                                bootbox.hideAll();
+                            });
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    function deleteMenu(id) {
+        bootbox.confirm("Bạn có chắc chắn muốn xóa bản ghi này?", function (result) {
+            if (result) {
+                $.ajax({
+                    type: 'GET',
+                    contentType: 'application/json',
+                    url: '@Url.Action("DeleteMenu", "Admin")',
+                    data: { menuID: id },
+                    success: function (data) {
+                        if (data.errorCode == 0) {
+                            $('#' + id + '').parent().remove();
+                            bootbox.hideAll();
+                        } else {
+                            bootbox.alert(data.message, function () {
+                                bootbox.hideAll();
+                            });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        bootbox.hideAll();
+                    }
+                });
+                return true;
+            } else {
+                bootbox.hideAll();
+                return false;
+            }
+        });
+    }
 </script>
 
 <script type="text/javascript">

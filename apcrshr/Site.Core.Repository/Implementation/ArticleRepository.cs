@@ -117,5 +117,13 @@ namespace Site.Core.Repository.Implementation
                 return Tuple.Create<int, IList<Article>>(count, articles);
             }
         }
+
+        public IList<Article> FindByMenuID(string menuID)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Articles.Where(a => a.MenuID.Equals(menuID)).ToList();
+            }
+        }
     }
 }

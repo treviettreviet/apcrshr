@@ -31,6 +31,27 @@ namespace Site.Core.Service.Contract
         InsertResponse CreateMenu(MenuModel menu);
 
         /// <summary>
+        /// Update menu
+        /// </summary>
+        /// <param name="menu"></param>
+        /// <returns></returns>
+        BaseResponse UpdateMenu(MenuModel menu);
+
+        /// <summary>
+        /// Delete menu
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        BaseResponse DeleteMenu(string id);
+
+        /// <summary>
+        /// Find by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        FindItemReponse<MenuModel>  FindByID(string id);
+
+        /// <summary>
         /// Find menu by title
         /// </summary>
         /// <param name="title"></param>

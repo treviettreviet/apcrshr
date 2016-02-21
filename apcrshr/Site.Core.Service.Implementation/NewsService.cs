@@ -256,5 +256,32 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindAllItemReponse<NewsModel> GetRelatedNews(DateTime date, int pageSize, int pageIndex, string language)
+        {
+            try
+            {
+                INewsRepository newsRepository = RepositoryClassFactory.GetInstance().GetNewsRepository();
+
+                var result = newsRepository.FindAllRelated(date, pageSize, pageIndex, language);
+                var _news = result.Item2.Select(n => MapperUtil.CreateMapper().Mapper.Map<News, NewsModel>(n)).ToList();
+                return new FindAllItemReponse<NewsModel>
+                {
+                    Count = result.Item1,
+                    Items = _news,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindAllItemReponse<NewsModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }

@@ -110,5 +110,66 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             BaseResponse response = _newsService.DeleteNews(newsID);
             return Json(new { ErrorCode = response.ErrorCode, Message = response.Message }, JsonRequestBehavior.AllowGet);
         }
+
+        [SessionFilter]
+        [HttpGet]
+        public ActionResult UpdateNews(string newsID)
+        {
+            FindItemReponse<NewsModel> response = _newsService.GetNewsByID(newsID);
+            return View(response.Item);
+        }
+
+        [SessionFilter]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult SaveUpdateNews(NewsModel news, HttpPostedFileBase imageFile)
+        {
+            var sessionId = this.Session["SessionID"].ToString();
+            IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository();
+            UserSession userSession = userSessionRepository.FindByID(sessionId);
+
+            if (userSession == null)
+            {
+                return Json(new { errorCode = (int)ErrorCode.Redirect, message = Resources.AdminResource.msg_sessionInvalid }, JsonRequestBehavior.AllowGet);
+            }
+
+            news.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(news.Title), UrlSlugger.Get8Digits());
+            news.UpdatedBy = userSession.UserID;
+            BaseResponse response = _newsService.UpdateNews(news);
+
+            if (response.ErrorCode == (int)ErrorCode.None)
+            {
+                //Image
+                if (imageFile != null)
+                {
+                    //Create folder
+                    try
+                    {
+                        if (!System.IO.File.Exists(Server.MapPath("~/Content/upload/images/news/")))
+                        {
+                            Directory.CreateDirectory(Server.MapPath("~/Content/upload/images/news/"));
+                        }
+                    }
+                    catch (Exception) { }
+
+                    if (!string.IsNullOrEmpty(news.ThumbnailURL))
+                    {
+                        if (System.IO.File.Exists(Server.MapPath(news.ThumbnailURL)))
+                        {
+                            System.IO.File.Delete(Server.MapPath(news.ThumbnailURL));
+                        }
+                    }
+
+                    string extension = imageFile.FileName.Substring(imageFile.FileName.LastIndexOf("."));
+                    string filename = imageFile.FileName.Substring(0, imageFile.FileName.LastIndexOf(".")).Replace(" ", "-");
+                    filename = string.Format("{0}-{1}", filename, UrlSlugger.Get8Digits());
+                    imageFile.SaveAs(Server.MapPath("~/Content/upload/images/news/" + filename + extension));
+
+                    news.ThumbnailURL = "/Content/upload/images/news/" + filename + extension;
+                    _newsService.UpdateNews(news);
+                }
+            }
+            return Json(new { errorCode = response.ErrorCode, message = response.Message }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

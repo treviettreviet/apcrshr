@@ -95,7 +95,7 @@
                         title: "Đường dẫn file đã tải lên",
                         value: response.url,
                         callback: function (result) {
-                            if (result === null) {
+                            if (result != null) {
                                 clipboard.copy(result);
                                 bootbox.hideAll();
                             } else {

@@ -62,6 +62,17 @@ namespace Site.Core.Service.Contract
         FindAllItemReponse<NewsModel> GetNews(int pageSize, int pageIndex, string language);
 
         /// <summary>
+        /// Get all related news by date
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="date"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="language"></param>
+        /// <returns></returns>
+        FindAllItemReponse<NewsModel> GetRelatedNews(DateTime date, int pageSize, int pageIndex, string language);
+
+        /// <summary>
         /// Create news
         /// </summary>
         /// <param name="news"></param>

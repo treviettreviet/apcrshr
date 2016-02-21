@@ -77,5 +77,14 @@ namespace apcrshr_site.Resources {
                 return ResourceManager.GetString("msg_sessionInvalid", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Không thể xóa &quot;{0}&quot; có chứa bài viết..
+        /// </summary>
+        internal static string msg_unableToDelete {
+            get {
+                return ResourceManager.GetString("msg_unableToDelete", resourceCulture);
+            }
+        }
     }
 }

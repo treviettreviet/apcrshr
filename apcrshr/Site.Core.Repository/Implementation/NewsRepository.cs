@@ -132,12 +132,12 @@ namespace Site.Core.Repository.Implementation
             }
         }
 
-        public Tuple<int, IList<News>> FindAllRelated(string menuID, DateTime date, int pageSize, int pageIndex, string language)
+        public Tuple<int, IList<News>> FindAllRelated(DateTime date, int pageSize, int pageIndex, string language)
         {
             using (APCRSHREntities context = new APCRSHREntities())
             {
-                var news = context.News.OrderByDescending(n => n.CreatedDate).Where(n => n.Language.Equals(language) && n.MenuID.Equals(menuID) && n.CreatedDate < date).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
-                var count = context.News.OrderByDescending(n => n.CreatedDate).Where(n => n.Language.Equals(language) && n.MenuID.Equals(menuID) && n.CreatedDate < date).Count();
+                var news = context.News.OrderByDescending(n => n.CreatedDate).Where(n => n.Language.Equals(language) && n.CreatedDate < date).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+                var count = context.News.OrderByDescending(n => n.CreatedDate).Where(n => n.Language.Equals(language) && n.CreatedDate < date).Count();
                 return Tuple.Create<int, IList<News>>(count, news);
             }
         }
