@@ -141,6 +141,20 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="Slider">
+          <Key>
+            <PropertyRef Name="SliderID" />
+          </Key>
+          <Property Name="SliderID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="URL" Type="nvarchar" MaxLength="200" />
+          <Property Name="ImageURL" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="Language" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Subscriber">
           <Key>
             <PropertyRef Name="SubscriberID" />
@@ -154,6 +168,20 @@
           <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="Address" Type="nvarchar" MaxLength="200" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Upload">
+          <Key>
+            <PropertyRef Name="UploadID" />
+          </Key>
+          <Property Name="UploadID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="UploadURL" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="FilePath" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -227,7 +255,9 @@
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="News" EntityType="Self.News" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OfficeAddress" EntityType="Self.OfficeAddress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Slider" EntityType="Self.Slider" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Subscriber" EntityType="Self.Subscriber" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Upload" EntityType="Self.Upload" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserSession" EntityType="Self.UserSession" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_MailingAddress_User" Association="Self.FK_MailingAddress_User">
@@ -478,6 +508,8 @@
             <End Role="Menu" EntitySet="Menus" />
             <End Role="Menu1" EntitySet="Menus" />
           </AssociationSet>
+          <EntitySet Name="Sliders" EntityType="APCRSHRModel.Slider" />
+          <EntitySet Name="Uploads" EntityType="APCRSHRModel.Upload" />
         </EntityContainer>
         <Association Name="FK_Menu_Menu">
           <End Type="APCRSHRModel.Menu" Role="Menu" Multiplicity="0..1" />
@@ -491,6 +523,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Slider">
+          <Key>
+            <PropertyRef Name="SliderID" />
+          </Key>
+          <Property Name="SliderID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="URL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ImageURL" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Language" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Upload">
+          <Key>
+            <PropertyRef Name="UploadID" />
+          </Key>
+          <Property Name="UploadID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="UploadURL" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="FilePath" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -682,6 +742,36 @@
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sliders">
+            <EntityTypeMapping TypeName="APCRSHRModel.Slider">
+              <MappingFragment StoreEntitySet="Slider">
+                <ScalarProperty Name="Language" ColumnName="Language" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="SliderID" ColumnName="SliderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Uploads">
+            <EntityTypeMapping TypeName="APCRSHRModel.Upload">
+              <MappingFragment StoreEntitySet="Upload">
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UploadURL" ColumnName="UploadURL" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="UploadID" ColumnName="UploadID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

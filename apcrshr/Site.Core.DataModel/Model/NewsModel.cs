@@ -11,12 +11,9 @@ namespace Site.Core.DataModel.Model
     public class NewsModel
     {
         public string NewsID { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Site.Core.DataModel.Resources.Resources), ErrorMessageResourceName = "Field_Required")]
         public string Title { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Site.Core.DataModel.Resources.Resources), ErrorMessageResourceName = "Field_Required")]
         [AllowHtml]
         public string Contents { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Site.Core.DataModel.Resources.Resources), ErrorMessageResourceName = "Field_Required")]
         public string ShortContent { get; set; }
         public string ActionURL { get; set; }
         public string CreatedBy { get; set; }

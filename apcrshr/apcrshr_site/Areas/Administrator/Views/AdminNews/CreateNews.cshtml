@@ -1,5 +1,5 @@
 ﻿@using apcrshr_site.Helper
-@model Site.Core.DataModel.Model.ArticleModel
+@model Site.Core.DataModel.Model.NewsModel
 @{
     ViewBag.Title = "Viết Bài";
     Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
@@ -22,7 +22,7 @@
                 </h3>
             </div>
             <div class="box-content nopadding">
-                @using (Html.BeginForm("SaveArticle", "Article", FormMethod.Post, new { @class = "form-horizontal form-bordered", @id = "frmSaveArticle", enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("SaveNews", "AdminNews", FormMethod.Post, new { @class = "form-horizontal form-bordered", @id = "frmSaveNews", enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
                     <div class="form-group">
@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="textfield" class="control-label col-sm-2">Tóm Tắt Nội Dung</label>
+                        <label for="textfield" class="control-label col-sm-2">Tóm Tắt Nội Dung <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-10">
                             @Html.TextBoxFor(Model => Model.ShortContent, new { @id = "ShortContent", @class = "form-control" })
                             @Html.ValidationMessageFor(Model => Model.ShortContent)
@@ -44,6 +44,25 @@
                         <div class="col-sm-10">
                             @Html.TextAreaFor(Model => Model.Contents, new { @id = "Contents", @class = "form-control" })
                             @Html.ValidationMessageFor(Model => Model.Contents)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="file" class="control-label col-sm-2">
+                            Ảnh
+                            <small>Kích Cỡ Lớn Nhất: 10MB</small>
+                        </label>
+                        <div class="col-sm-10">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                                <div>
+                                    <span class="btn btn-default btn-file">
+                                        <span class="fileinput-new">Chọn Ảnh</span>
+                                        <span class="fileinput-exists">Thay Đổi</span>
+                                        <input type="file" name="imageFile" id="imageFile" data-filesize="1048576" data-filesize-error="Kích Cỡ Lớn Nhất: 10MB">
+                                    </span>
+                                    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Xóa Bỏ</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -78,11 +97,14 @@
     });
 
     function submitForm() {
-        //$("#Contents").val($("#Editor-Contents").html());
-        //$("form#frmSaveNews").submit();
-
         if (!validateForm()) {
             bootbox.alert("Cần phải nhập dữ liệu những trường bắt buộc.", function () {
+                bootbox.hideAll();
+            });
+            return false;
+        }
+        if (!validateImages()) {
+            bootbox.alert("Hãy chọn file!", function () {
                 bootbox.hideAll();
             });
             return false;
@@ -94,11 +116,11 @@
         formData.append("ShortContent", $("#ShortContent").val());
         formData.append("Contents", $("#Editor-Contents").html());
         formData.append("Language", $("input[name=Language]:checked").val());
-        formData.append("menuTitle", appUtil.utility.getURLParameter("menuTitle"));
+        formData.append("imageFile", $('#imageFile').get(0).files[0]);
         formData.append(@Html.AntiForgeryTokenForAjaxPost());
         $.ajax({
             type: "POST",
-            url: '@Url.Action("SaveArticle", "Article")',
+            url: '@Url.Action("SaveNews", "AdminNews")',
             data: formData,
             dataType: 'json',
             contentType: false,
@@ -130,8 +152,19 @@
             $("#Title").focus();
             return false;
         }
+        if ($("#ShortContent").val() == null || $("#ShortContent").val() == "") {
+            $("#ShortContent").focus();
+            return false;
+        }
         if ($("#Editor-Contents").html() == null || $("#Editor-Contents").html() == "") {
             $("#Editor-Contents").focus();
+            return false;
+        }
+        return true;
+    }
+
+    function validateImages() {
+        if ($('#imageFile').get(0).files.length === 0) {
             return false;
         }
         return true;
@@ -141,6 +174,7 @@
         $("#Title").val("");
         $("#ShortContent").val("");
         $("#Editor-Contents").html("");
+        $("#imageFile").closest('form').trigger('reset');
     }
 
     function setControlCss(control) {

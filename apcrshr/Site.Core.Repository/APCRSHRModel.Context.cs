@@ -37,5 +37,7 @@ namespace Site.Core.Repository
         public DbSet<Subscriber> Subscribers { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserSession> UserSessions { get; set; }
+        public DbSet<Slider> Sliders { get; set; }
+        public DbSet<Upload> Uploads { get; set; }
     }
 }

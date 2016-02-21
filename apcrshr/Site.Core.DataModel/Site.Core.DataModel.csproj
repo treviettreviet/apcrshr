@@ -53,6 +53,7 @@
     <Compile Include="Model\NewsModel.cs" />
     <Compile Include="Model\SearchModel.cs" />
     <Compile Include="Model\SubscriberModel.cs" />
+    <Compile Include="Model\UploadModel.cs" />
     <Compile Include="Model\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Resources.Designer.cs" />
