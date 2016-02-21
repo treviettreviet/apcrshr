@@ -49,6 +49,7 @@
     <Compile Include="Convertor\ConvertBase.cs" />
     <Compile Include="Convertor\IConvertor.cs" />
     <Compile Include="HomeService.cs" />
+    <Compile Include="ImportantDeadlineService.cs" />
     <Compile Include="MenuCategoryService.cs" />
     <Compile Include="ModelMapper\MapperUtil.cs" />
     <Compile Include="NewsService.cs" />
