@@ -5,6 +5,7 @@ using Site.Core.DataModel.Response;
 using Site.Core.Repository;
 using Site.Core.Repository.Repository;
 using Site.Core.Service.Contract;
+using Site.Core.Service.Implementation.ModelMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace Site.Core.Service.Implementation
             {
                 IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
                 User user = userRepository.FindByID(id);
-                var _user = Mapper.Map<User, UserModel>(user);
+                var _user = MapperUtil.CreateMapper().Mapper.Map<User, UserModel>(user);
                 return new FindItemReponse<UserModel>
                 {
                     Item = _user,
@@ -69,7 +70,7 @@ namespace Site.Core.Service.Implementation
             try
             {
                 IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
-                User _user = Mapper.Map<UserModel, User>(user);
+                User _user = MapperUtil.CreateMapper().Mapper.Map<UserModel, User>(user);
                 userRepository.Update(_user);
                 return new BaseResponse
                 {
@@ -93,7 +94,7 @@ namespace Site.Core.Service.Implementation
             {
                 IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
                 IList<User> users = userRepository.FindAll();
-                var _user = users.Select(u => Mapper.Map<User, UserModel>(u)).ToList();
+                var _user = users.Select(u => MapperUtil.CreateMapper().Mapper.Map<User, UserModel>(u)).ToList();
                 return new FindAllItemReponse<UserModel>
                 {
                     Items = _user,
@@ -116,7 +117,7 @@ namespace Site.Core.Service.Implementation
             try
             {
                 IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
-                object id = userRepository.Insert(Mapper.Map<UserModel, User>(user));
+                object id = userRepository.Insert(MapperUtil.CreateMapper().Mapper.Map<UserModel, User>(user));
                 return new InsertResponse
                 {
                     InsertID = id.ToString(),
@@ -220,7 +221,7 @@ namespace Site.Core.Service.Implementation
             {
                 IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
                 IList<User> users = userRepository.GetUserExceptMe(userID);
-                var _user = users.Select(u => Mapper.Map<User, UserModel>(u)).ToList();
+                var _user = users.Select(u => MapperUtil.CreateMapper().Mapper.Map<User, UserModel>(u)).ToList();
                 return new FindAllItemReponse<UserModel>
                 {
                     Items = _user,
@@ -244,7 +245,7 @@ namespace Site.Core.Service.Implementation
             {
                 IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
                 User user = userRepository.FindByEmail(email);
-                var _user = Mapper.Map<User, UserModel>(user);
+                var _user = MapperUtil.CreateMapper().Mapper.Map<User, UserModel>(user);
                 return new FindItemReponse<UserModel>
                 {
                     Item = _user,
@@ -268,7 +269,7 @@ namespace Site.Core.Service.Implementation
             {
                 IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
                 User user = userRepository.FindByUserName(username);
-                var _user = Mapper.Map<User, UserModel>(user);
+                var _user = MapperUtil.CreateMapper().Mapper.Map<User, UserModel>(user);
                 return new FindItemReponse<UserModel>
                 {
                     Item = _user,
@@ -292,7 +293,7 @@ namespace Site.Core.Service.Implementation
             {
                 IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
                 User user = userRepository.FindByUserName(username);
-                var _user = Mapper.Map<User, UserModel>(user);
+                var _user = MapperUtil.CreateMapper().Mapper.Map<User, UserModel>(user);
                 return new FindItemReponse<UserModel>
                 {
                     Item = _user,
@@ -316,7 +317,7 @@ namespace Site.Core.Service.Implementation
             {
                 IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
                 User user = userRepository.FindByEmail(email);
-                var _user = Mapper.Map<User, UserModel>(user);
+                var _user = MapperUtil.CreateMapper().Mapper.Map<User, UserModel>(user);
                 return new FindItemReponse<UserModel>
                 {
                     Item = _user,
