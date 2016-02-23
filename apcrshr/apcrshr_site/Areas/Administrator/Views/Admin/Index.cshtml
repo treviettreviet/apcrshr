@@ -75,11 +75,13 @@
             <div class="box-content">
                 <div class="statistic-big">
                     <div class="bottom">
-                        <form action="#" method="POST" class="form-horizontal">
+                        @using (Html.BeginForm("CreateCategoryMenu", "Admin", FormMethod.Post, new { @class = "form-horizontal" }))
+                        {
+                            @Html.AntiForgeryToken()
                             <div class="form-group">
                                 <label for="txtMenuParent" class="control-label col-sm-2">Menu</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="txtMenuParent" id="txtMenuParent" placeholder="/" readonly class="form-control">
+                                    <input type="text" name="parentTitle" id="txtMenuParent" placeholder="/" readonly class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -92,7 +94,8 @@
                             <div class="form-group">
                                 <label for="txtMenuCategoryTitle" class="control-label col-sm-2">Tiêu Đề <span class="validation-span-required">(*)</span></label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="txtMenuCategoryTitle" id="txtMenuCategoryTitle" placeholder="Tên danh mục (Menu)" class="form-control">
+                                    <input type="text" name="Title" id="txtMenuCategoryTitle" placeholder="Tên danh mục (Menu)" class="form-control">
+                                    @Html.ValidationMessage("Title")
                                 </div>
                             </div>
                             <div class="form-group">
@@ -111,10 +114,11 @@
                                 </div>
                             </div>
                             <div class="form-actions">
-                                <button type="button" class="btn btn-primary" onclick="saveCategoryMenu()">Lưu Thông Tin</button>
+                                <!--onclick="saveCategoryMenu()"-->
+                                <button type="submit" class="btn btn-primary" >Lưu Thông Tin</button>
                                 <button type="button" onclick="resertForm()" class="btn">Khởi tạo lại</button>
                             </div>
-                        </form>
+                        }
                     </div>
                 </div>
             </div>
@@ -142,7 +146,7 @@
         }
     });
 
-    function saveCategoryMenu() {
+    /*function saveCategoryMenu() {
 
         if (!validateForm()) {
             bootbox.alert("Cần phải nhập dữ liệu những trường bắt buộc.", function () {
@@ -156,10 +160,10 @@
         formData.append("Title", $("#txtMenuCategoryTitle").val());
         formData.append("Language", $("input[name=Language]:checked").val());
         formData.append("parentTitle", $("#txtMenuParent").val());
-        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+        formData.append(Html.AntiForgeryTokenForAjaxPost());
         $.ajax({
             type: "POST",
-            url: '@Url.Action("CreateCategoryMenu", "Admin")',
+            url: 'Url.Action("CreateCategoryMenu", "Admin")',
             data: formData,
             dataType: 'json',
             contentType: false,
@@ -181,6 +185,8 @@
             }
         });
     }
+    */
+
     function validateForm() {
         if ($("#txtMenuCategoryTitle").val() == null || $("#txtMenuCategoryTitle").val() == "") {
             $("#txtMenuCategoryTitle").focus();

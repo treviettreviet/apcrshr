@@ -154,20 +154,25 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult CreateCategoryMenu(MenuModel menu, string parentTitle)
+        public ActionResult CreateCategoryMenu(MenuModel menu, string parentTitle)
         {
-            FindItemReponse<MenuModel> findParentMenu = _menuCategoryService.FindByTitle(parentTitle);
-            if (findParentMenu.Item != null)
+            if (ModelState.IsValid)
             {
-                menu.ParentID = findParentMenu.Item.MenuID;
+                FindItemReponse<MenuModel> findParentMenu = _menuCategoryService.FindByTitle(parentTitle);
+                if (findParentMenu.Item != null)
+                {
+                    menu.ParentID = findParentMenu.Item.MenuID;
+                }
+                menu.MenuID = Guid.NewGuid().ToString();
+                menu.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(menu.Title), UrlSlugger.Get8Digits());
+                menu.CreatedDate = DateTime.Now;
+
+                InsertResponse response = _menuCategoryService.CreateMenu(menu);
+
+                //return Json(new { errorcode = response.ErrorCode, message = response.Message, title = menu.Title }, JsonRequestBehavior.AllowGet);
             }
-            menu.MenuID = Guid.NewGuid().ToString();
-            menu.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(menu.Title), UrlSlugger.Get8Digits());
-            menu.CreatedDate = DateTime.Now;
-
-            InsertResponse response = _menuCategoryService.CreateMenu(menu);
-
-            return Json(new { errorcode = response.ErrorCode, message = response.Message, title = menu.Title }, JsonRequestBehavior.AllowGet);
+            FindAllItemReponse<MenuModel> menuReponse = _menuCategoryService.FindAllMenus();
+            return View("Index", menuReponse.Items);
         }
 
         [HttpPost]
