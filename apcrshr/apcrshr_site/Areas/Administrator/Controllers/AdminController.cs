@@ -286,6 +286,21 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             {
                 return Json(new { errorCode = (int)ErrorCode.Error, message = string.Format(Resources.AdminResource.msg_unableToDelete, findParentMenu.Item.Title) }, JsonRequestBehavior.AllowGet);
             }
+            else
+            {
+                //find sub menu
+                if (findParentMenu.Item != null && findParentMenu.Item.SubMenus != null)
+                {
+                    foreach (var menu in findParentMenu.Item.SubMenus)
+                    {
+                        FindAllItemReponse<ArticleModel> articles = _articleService.FindArticleByMenuID(menu.MenuID);
+                        if (articles == null || articles.Count == 0)
+                        {
+                            _menuCategoryService.DeleteMenu(menu.MenuID);
+                        }
+                    }
+                }
+            }
             BaseResponse response = _menuCategoryService.DeleteMenu(menuID);
             return Json(new { errorCode = response.ErrorCode, message = response.Message }, JsonRequestBehavior.AllowGet);
         }

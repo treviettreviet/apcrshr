@@ -93,7 +93,7 @@ namespace Site.Core.Service.Implementation
             {
                 IImportantDeadlineRepository importantDeadlineRepository = RepositoryClassFactory.GetInstance().GetImportantDeadlineRepository();
                 IList<ImportantDeadline> importantDeadline = importantDeadlineRepository.FindAll();
-                var _importantDeadline = importantDeadline.Select(i => Mapper.Map<ImportantDeadline, ImportantDeadlineModel>(i)).ToList();
+                var _importantDeadline = importantDeadline.Select(i => MapperUtil.CreateMapper().Mapper.Map<ImportantDeadline, ImportantDeadlineModel>(i)).ToList();
                 return new FindAllItemReponse<ImportantDeadlineModel>
                 {
                     Items = _importantDeadline,
@@ -212,7 +212,7 @@ namespace Site.Core.Service.Implementation
             {
                 IImportantDeadlineRepository importantDeadlineRepository = RepositoryClassFactory.GetInstance().GetImportantDeadlineRepository();
                 IList<ImportantDeadline> result = importantDeadlineRepository.FindTop(top);
-                var _importantDeadline = result.Select(i => Mapper.Map<ImportantDeadline, ImportantDeadlineModel>(i)).ToList();
+                var _importantDeadline = result.Select(i => MapperUtil.CreateMapper().Mapper.Map<ImportantDeadline, ImportantDeadlineModel>(i)).ToList();
                 return new FindAllItemReponse<ImportantDeadlineModel>
                 {
                     Items = _importantDeadline,

@@ -6,6 +6,8 @@ using Site.Core.DataModel.Model;
 using Site.Core.DataModel.Response;
 using Site.Core.Service.Contract;
 using Site.Core.Service.Implementation;
+using Site.Core.Repository.Repository;
+using Site.Core.Repository;
 
 namespace apcrshr_site.Helper
 {
@@ -25,6 +27,13 @@ namespace apcrshr_site.Helper
                 _instance = new DataHelper();
             }
             return _instance;
+        }
+
+        public string GetMenuTitle(string menuID)
+        {
+            IMenuRepository menuRepository = RepositoryClassFactory.GetInstance().GetMenuRepository();
+            Menu menu = menuRepository.FindByID(menuID);
+            return menu != null ? menu.Title : menuID;
         }
 
         /*public IList<IntroductionModel> GetIntroductionMenu(string language)

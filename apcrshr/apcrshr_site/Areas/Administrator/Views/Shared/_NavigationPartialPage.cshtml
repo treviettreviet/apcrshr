@@ -10,6 +10,11 @@
                     <span>Trang Chủ</span>
                 </a>
             </li>
+            <li class='@(ViewBag.CurrentNode == "Article" ? "active" : "")'>
+                <a href='@Url.Action("Index", "Article")'>
+                    <span>Bài Viết</span>
+                </a>
+            </li>
             <li class='@(ViewBag.CurrentNode == "AdminNews" ? "active" : "")'>
                 <a href='@Url.Action("Index", "AdminNews")'>
                     <span>Tin Tức</span>
