@@ -39,13 +39,17 @@ namespace apcrshr_site.Helper
                     builder.Append("<ul>");
                     foreach (MenuModel sub in list)
                     {
-                        builder.Append("<li><span class='file'>" + sub.Title + "</span></li>");
+                        builder.Append("<li><span id='"+sub.MenuID+"' class='file'>" + sub.Title + "</span>"+
+                        "<a href='#' onclick='updateMenu(\"" + sub.MenuID + "\", \"" + sub.Title + "\")' class='btn' rel='tooltip' title='Sửa'><i class='fa fa-edit'></i></a>&nbsp;" +
+                        "<a href='#' onclick='deleteMenu(\"" + sub.MenuID + "\")' class='btn' rel='tooltip' title='Xóa'><i class='fa fa-times'></i></a></li>");
                     }
                     builder.Append("</ul>");
                 }
                 else
                 {
-                    builder.Append("<span class='file'>" + m.Title + "</span>");
+                    builder.Append("<span id='" + m.MenuID + "' class='file'>" + m.Title + "</span>" +
+                    "<a href='#' onclick='updateMenu(\"" + m.MenuID + "\", \"" + m.Title + "\")' class='btn' rel='tooltip' title='Sửa'><i class='fa fa-edit'></i></a>&nbsp;" +
+                    "<a href='#' onclick='deleteMenu(\"" + m.MenuID + "\")' class='btn' rel='tooltip' title='Xóa'><i class='fa fa-times'></i></a>");
                 }
 
                 builder.Append("</li>");

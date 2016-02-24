@@ -25,6 +25,13 @@ namespace Site.Core.Service.Contract
         FindItemReponse<ArticleModel> FindArticleByActionURL(string actionURL);
 
         /// <summary>
+        /// Find by menu ID
+        /// </summary>
+        /// <param name="menuID"></param>
+        /// <returns></returns>
+        FindAllItemReponse<ArticleModel> FindArticleByMenuID(string menuID);
+
+        /// <summary>
         /// Delete article
         /// </summary>
         /// <param name="id"></param>

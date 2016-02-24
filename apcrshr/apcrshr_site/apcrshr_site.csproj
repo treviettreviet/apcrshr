@@ -184,11 +184,14 @@
     <Compile Include="Areas\Administrator\AdministratorAreaRegistration.cs" />
     <Compile Include="Areas\Administrator\Controllers\AdminController.cs" />
     <Compile Include="Areas\Administrator\Controllers\AdminHomeController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\AdminNewsController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\AdminImportantDeadlineController.cs" />
     <Compile Include="Areas\Administrator\Controllers\AdminUserController.cs" />
     <Compile Include="Areas\Administrator\Controllers\ArticleController.cs" />
     <Compile Include="Constants\Constants.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Filters\SessionFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -684,6 +687,12 @@
     <Content Include="Areas\Administrator\Views\Shared\_NavigationPartialPage.cshtml" />
     <Content Include="Areas\Administrator\Views\Article\Index.cshtml" />
     <Content Include="Areas\Administrator\Views\Article\CreateArticle.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdminNews\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdminNews\CreateNews.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdminNews\UpdateNews.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdminImportantDeadline\AddNewImportantDeadline.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdminImportantDeadline\UpdateImportantDeadline.cshtml" />
+    <Content Include="Areas\Administrator\Views\Article\UpdateArticle.cshtml" />
     <None Include="Properties\PublishProfiles\apcrshr.hvtec.vn - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
@@ -729,7 +738,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\script.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -752,10 +763,11 @@
     <Content Include="Images\orderedList8.png" />
     <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\News.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_FooterPartialPage.cshtml" />
     <Content Include="Views\Shared\_FullWidthLayoutPage.cshtml" />
@@ -765,10 +777,10 @@
     <Content Include="Views\Shared\_PartialLeftMenu.cshtml" />
     <Content Include="Views\Home\AboutBackground.cshtml" />
     <Content Include="Views\Home\AboutThemeObjective.cshtml" />
-    <Content Include="Views\Home\NewsGalerry.cshtml" />
-    <Content Include="Views\Home\NewsText.cshtml" />
     <Content Include="Views\Shared\_PartialRightWidget.cshtml" />
     <Content Include="Views\Home\ArticleView.cshtml" />
+    <Content Include="Views\News\Index.cshtml" />
+    <Content Include="Views\News\ViewNews.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -805,7 +817,7 @@
       <LastGenOutput>AdminResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

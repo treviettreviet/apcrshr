@@ -123,4 +123,7 @@
   <data name="msg_sessionInvalid" xml:space="preserve">
     <value>Hết thời gian phiên làm việc.</value>
   </data>
+  <data name="msg_unableToDelete" xml:space="preserve">
+    <value>Không thể xóa "{0}" có chứa bài viết.</value>
+  </data>
 </root>

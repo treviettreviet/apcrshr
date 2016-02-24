@@ -1,0 +1,58 @@
+﻿@using apcrshr_site.Helper
+@model Site.Core.DataModel.Response.FindAllItemReponse<Site.Core.DataModel.Model.NewsModel>
+@{
+    ViewBag.Title = Model.Items != null && Model.Items.Count > 0 ? Model.Items[0].Title : apcrshr_site.Resources.Resource.title_newDetail;
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="col-md-9 page-content">
+    @if (Model.Items != null && Model.Items.Count > 0)
+    {
+        int i = 1;
+        
+        <div class="blog-post standard-post">
+            <!-- Post Content -->
+            <div class="post-content-nopadding">
+                <h3>@Model.Items[0].Title</h3><br />
+                @Html.Raw(Model.Items[0].Contents)
+                <br />
+                <ul class="post-meta">
+                    <li>@Model.Items[0].CreatedDate.ToString("dddd, d MMMM, yyyy", new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.Name))</li>
+                    <li><a href="#">Posted by</a>, <a href="#">ACPRSHR</a></li>
+                </ul>
+            </div>
+        </div>
+
+        if (Model.Items.Count > 1)
+        {
+            <!-- Start related Posts -->
+            <div class="latest-posts-classic">
+
+                <h2>@apcrshr_site.Resources.Resource.title_relatedNews</h2><br />
+
+                @for (; i < Model.Items.Count; i++)
+                {
+                        <!-- Post 1 -->
+                    <div class="post-row animated fadeIn delay-01" data-animation="fadeIn" data-animation-delay="01">
+                        <div class="left-meta-post">
+                            <img class="img-thumbnail image-text" style="float:left; width:150px;" alt="" src="@Model.Items[i].ThumbnailURL">
+                        </div>
+                        <h3 class="post-title"><a href='@Url.Action("ViewNews", "News", new { ActionURL = @Model.Items[i].ActionURL })'>@Model.Items[i].Title</a></h3>
+                        <div class="post-content">
+                            <p>@Model.Items[i].ShortContent <a class="read-more" href='@Url.Action("ViewNews", "News", new { ActionURL = Model.Items[i].ActionURL })'>Read More</a></p>
+                        </div>
+                    </div>
+                }
+            </div>
+            <!-- End Latest Posts -->
+        }
+    }
+
+    <!-- Start Pagination -->
+    <div id="pagination">
+        @Html.PagingUtil("ViewNews", "News", Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("ActionURL")).SingleOrDefault().Value.ToString(), Model.Count, apcrshr_site.Constants.Constants.PAGE_SIZE,
+                Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("pageIndex")).SingleOrDefault())
+    </div>
+    <!-- End Pagination -->
+
+</div>

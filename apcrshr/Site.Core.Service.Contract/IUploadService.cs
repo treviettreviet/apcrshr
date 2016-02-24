@@ -31,6 +31,13 @@ namespace Site.Core.Service.Contract
         FindAllItemReponse<UploadModel> GetUploads();
 
         /// <summary>
+        /// Get top uploads
+        /// </summary>
+        /// <param name="top"></param>
+        /// <returns></returns>
+        FindAllItemReponse<UploadModel> GetTopUploads(int top);
+
+        /// <summary>
         /// Delete upload
         /// </summary>
         /// <param name="id"></param>

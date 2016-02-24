@@ -1,49 +1,63 @@
 ﻿@using apcrshr_site.Helper
-@model Site.Core.DataModel.Model.ArticleModel
+@model Site.Core.DataModel.Model.NewsModel
 @{
-    ViewBag.Title = "Viết Bài";
+    ViewBag.Title = "Cập Nhập Tin Tức";
     Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
 }
 
+<script src="~/Areas/Administrator/js/plugins/fileupload/bootstrap-fileupload.min.js"></script>
+<script src="~/Areas/Administrator/js/plugins/mockjax/jquery.mockjax.js"></script>
 <div class="row">
     <div class="col-sm-12">
-
-        <!--Alert-->
-        @if (ViewBag.ErrorMessage != null)
-        {
-            <br />
-            <div class="alert alert-danger"><a class="close" data-dismiss="alert" href="#">×</a><strong></strong> @ViewBag.ErrorMessage</div>
-        }
-
         <div class="box box-bordered box-color">
             <div class="box-title">
                 <h3>
-                    <i class="fa fa-edit"></i>Viết bài
+                    <i class="fa fa-edit"></i>Cập Nhập Tin Tức
                 </h3>
             </div>
             <div class="box-content nopadding">
-                @using (Html.BeginForm("SaveArticle", "Article", FormMethod.Post, new { @class = "form-horizontal form-bordered", @id = "frmSaveArticle", enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("SaveUpdateNews", "AdminNews", FormMethod.Post, new { @class = "form-horizontal form-bordered", id = "frmSaveNews", enctype = "multipart/form-data" }))
                 {
-                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.NewsID, new { @id = "NewsID" })
+                    @Html.HiddenFor(model => model.ThumbnailURL, new { @id = "ThumbnailURL" })
                     <div class="form-group">
-                        <label for="textfield" class="control-label col-sm-2">Tiêu Đề <span class="validation-span-required">(*)</span></label>
+                        <label for="textfield" class="control-label col-sm-2">Tiêu Đề</label>
                         <div class="col-sm-10">
-                            @Html.TextBoxFor(Model => Model.Title, new { @id = "Title", @class = "form-control" })
-                            @Html.ValidationMessageFor(Model => Model.Title)
+                            @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Title)
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="textfield" class="control-label col-sm-2">Tóm Tắt Nội Dung</label>
                         <div class="col-sm-10">
-                            @Html.TextBoxFor(Model => Model.ShortContent, new { @id = "ShortContent", @class = "form-control" })
-                            @Html.ValidationMessageFor(Model => Model.ShortContent)
+                            @Html.TextBoxFor(model => model.ShortContent, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ShortContent)
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="textfield" class="control-label col-sm-2">Mô Tả <span class="validation-span-required">(*)</span></label>
+                        <label for="textfield" class="control-label col-sm-2">Mô Tả</label>
                         <div class="col-sm-10">
-                            @Html.TextAreaFor(Model => Model.Contents, new { @id = "Contents", @class = "form-control" })
-                            @Html.ValidationMessageFor(Model => Model.Contents)
+                            @Html.TextBoxFor(model => model.Contents, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Contents)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="file" class="control-label col-sm-2">
+                            Ảnh
+                            <small>Kích Cỡ Lớn Nhất: 10MB</small>
+                        </label>
+                        <div class="col-sm-10">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                                <div>
+                                    <span class="btn btn-default btn-file">
+                                        <span class="fileinput-new">Chọn Ảnh</span>
+                                        <span class="fileinput-exists">Thay Đổi</span>
+                                        <input type="file" name="imageFile" id="imageFile" data-filesize="1048576" data-filesize-error="Kích Cỡ Lớn Nhất: 10MB">
+                                    </span>
+                                    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Xóa Bỏ</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -51,11 +65,11 @@
                         <div class="col-sm-10">
                             <div class="check-demo-col">
                                 <div class="check-line">
-                                    <input type="radio" name="Language" id="Language-EN" class='icheck-me' data-skin="square" data-color="blue" value="EN" checked>
+                                    <input type="radio" name="Language" id="Language" class='icheck-me' data-skin="square" data-color="blue" value="EN" @(Model.Language.Equals("EN") ? "checked" : "")>
                                     <label class='inline' for="Language">English</label>
                                 </div>
                                 <div class="check-line">
-                                    <input type="radio" name="Language" id="Language-VN" class='icheck-me' data-skin="square" data-color="blue" value="VN">
+                                    <input type="radio" name="Language" id="Language" class='icheck-me' data-skin="square" data-color="blue" value="VN" @(Model.Language.Equals("VN") ? "checked" : "")>
                                     <label class='inline' for="Language">Tiếng Việt</label>
                                 </div>
                             </div>
@@ -63,7 +77,7 @@
                     </div>
                     <div class="form-actions col-sm-offset-2 col-sm-10">
                         <button type="button" onclick="submitForm()" class="btn btn-primary">Lưu Thông Tin</button>
-                        <button type="button" onclick="resertForm()" class="btn">Khởi tạo lại</button>
+                        <button type="button" class="btn" onclick="resertForm()">Khởi tạo lại</button>
                         <a href='@Url.Action("Index")' class="btn btn-info">Hủy Bỏ</a>
                     </div>
                 }
@@ -75,12 +89,10 @@
 <script>
     $(document).ready(function () {
         $("#Contents").Editor({ name: "Editor-Contents" });
+        $("#Editor-Contents").html($("#Contents").val());
     });
 
     function submitForm() {
-        //$("#Contents").val($("#Editor-Contents").html());
-        //$("form#frmSaveNews").submit();
-
         if (!validateForm()) {
             bootbox.alert("Cần phải nhập dữ liệu những trường bắt buộc.", function () {
                 bootbox.hideAll();
@@ -90,15 +102,19 @@
 
         $.blockUI({ message: $('#spinner') });
         var formData = new FormData();
+        formData.append("NewsID", $("#NewsID").val());
+        formData.append("ThumbnailURL", $("#ThumbnailURL").val());
         formData.append("Title", $("#Title").val());
         formData.append("ShortContent", $("#ShortContent").val());
         formData.append("Contents", $("#Editor-Contents").html());
         formData.append("Language", $("input[name=Language]:checked").val());
-        formData.append("menuTitle", appUtil.utility.getURLParameter("menuTitle"));
+        if ($('#imageFile').get(0).files.length > 0) {
+            formData.append("imageFile", $('#imageFile').get(0).files[0]);
+        }
         formData.append(@Html.AntiForgeryTokenForAjaxPost());
         $.ajax({
             type: "POST",
-            url: '@Url.Action("SaveArticle", "Article")',
+            url: '@Url.Action("SaveUpdateNews", "AdminNews")',
             data: formData,
             dataType: 'json',
             contentType: false,
@@ -111,9 +127,6 @@
                 //Timeout
                 if (response.errorCode == 2) {
                     window.location = "/Administrator/AdminHome/Login";
-                }
-                if (response.errorCode == 0) {
-                    resertForm();
                 }
             },
             error: function (error) {
@@ -130,6 +143,10 @@
             $("#Title").focus();
             return false;
         }
+        if ($("#ShortContent").val() == null || $("#ShortContent").val() == "") {
+            $("#ShortContent").focus();
+            return false;
+        }
         if ($("#Editor-Contents").html() == null || $("#Editor-Contents").html() == "") {
             $("#Editor-Contents").focus();
             return false;
@@ -141,6 +158,7 @@
         $("#Title").val("");
         $("#ShortContent").val("");
         $("#Editor-Contents").html("");
+        $("#imageFile").closest('form').trigger('reset');
     }
 
     function setControlCss(control) {

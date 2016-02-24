@@ -144,5 +144,75 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindItemReponse<MenuModel> FindByID(string id)
+        {
+            try
+            {
+                IMenuRepository menuRepository = RepositoryClassFactory.GetInstance().GetMenuRepository();
+                Menu _menu = menuRepository.FindByID(id);
+                return new FindItemReponse<MenuModel>
+                {
+                    Item = MapperUtil.CreateMapper().Mapper.Map<Menu, MenuModel>(_menu),
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = Resources.Resource.msg_create_success
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindItemReponse<MenuModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
+
+
+        public BaseResponse UpdateMenu(MenuModel menu)
+        {
+            try
+            {
+                IMenuRepository menuRepository = RepositoryClassFactory.GetInstance().GetMenuRepository();
+                Menu _menu = MapperUtil.CreateMapper().Mapper.Map<MenuModel, Menu>(menu);
+                menuRepository.Update(_menu);
+                return new BaseResponse
+                {
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = Resources.Resource.msg_update_success
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
+
+        public BaseResponse DeleteMenu(string id)
+        {
+            try
+            {
+                IMenuRepository menuRepository = RepositoryClassFactory.GetInstance().GetMenuRepository();
+                menuRepository.Delete(id);
+                return new BaseResponse
+                {
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = Resources.Resource.msg_delete_success
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }

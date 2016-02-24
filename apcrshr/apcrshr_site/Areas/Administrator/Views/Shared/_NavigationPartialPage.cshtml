@@ -5,26 +5,22 @@
             <i class="fa fa-bars"></i>
         </a>
         <ul class='main-nav'>
-            <li class='active'>
+            <li class='@(ViewBag.CurrentNode == "Home" ? "active" : "")'>
                 <a href='@Url.Action("Index", "Admin")'>
                     <span>Trang Chủ</span>
                 </a>
             </li>
-            <li>
-                <a href='@Url.Action("Index", "AdminNews")' data-toggle="dropdown" class='dropdown-toggle'>
-                    <span>Tin Tức</span>
-                    <span class="caret"></span>
+            <li class='@(ViewBag.CurrentNode == "Article" ? "active" : "")'>
+                <a href='@Url.Action("Index", "Article")'>
+                    <span>Bài Viết</span>
                 </a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href='@Url.Action("Index", "AdminNews")'>Danh Sách Tin Tức</a>
-                    </li>
-                    <li>
-                        <a href='@Url.Action("NewsCategory", "AdminNews")'>Danh Mục Tin</a>
-                    </li>
-                </ul>
             </li>
-            <li>
+            <li class='@(ViewBag.CurrentNode == "AdminNews" ? "active" : "")'>
+                <a href='@Url.Action("Index", "AdminNews")'>
+                    <span>Tin Tức</span>
+                </a>
+            </li>
+            <li class='@(ViewBag.CurrentNode == "AdminMember" ? "active" : "")'>
                 <a href="@Url.Action("Index","AdminUser")">
                     <span>Thành Viên</span>
 

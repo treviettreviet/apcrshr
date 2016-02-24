@@ -25,21 +25,20 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         private IAdminService _adminService;
         private IMenuCategoryService _menuCategoryService;
         private IUploadService _uploadService;
+        private IArticleService _articleService;
 
         public AdminController()
         {
+            ViewBag.CurrentNode = "Home";
             this._adminService = new AdminService();
             this._menuCategoryService = new MenuCategoryService();
             this._uploadService = new UploadService();
+            this._articleService = new ArticleService();
         }
 
         [SessionFilter]
         public ActionResult Index()
         {
-            if (this.Session["UserName"] != null)
-            {
-                ViewBag.UserName = this.Session["UserName"].ToString();
-            }
             var sessionId = this.Session["SessionID"].ToString();
             IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository();
             UserSession userSession = userSessionRepository.FindByID(sessionId);
@@ -155,20 +154,25 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult CreateCategoryMenu(MenuModel menu, string parentTitle)
+        public ActionResult CreateCategoryMenu(MenuModel menu, string parentTitle)
         {
-            FindItemReponse<MenuModel> findParentMenu = _menuCategoryService.FindByTitle(parentTitle);
-            if (findParentMenu.Item != null)
+            if (ModelState.IsValid)
             {
-                menu.ParentID = findParentMenu.Item.MenuID;
+                FindItemReponse<MenuModel> findParentMenu = _menuCategoryService.FindByTitle(parentTitle);
+                if (findParentMenu.Item != null)
+                {
+                    menu.ParentID = findParentMenu.Item.MenuID;
+                }
+                menu.MenuID = Guid.NewGuid().ToString();
+                menu.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(menu.Title), UrlSlugger.Get8Digits());
+                menu.CreatedDate = DateTime.Now;
+
+                InsertResponse response = _menuCategoryService.CreateMenu(menu);
+
+                //return Json(new { errorcode = response.ErrorCode, message = response.Message, title = menu.Title }, JsonRequestBehavior.AllowGet);
             }
-            menu.MenuID = Guid.NewGuid().ToString();
-            menu.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(menu.Title), UrlSlugger.Get8Digits());
-            menu.CreatedDate = DateTime.Now;
-
-            InsertResponse response = _menuCategoryService.CreateMenu(menu);
-
-            return Json(new { errorcode = response.ErrorCode, message = response.Message, title = menu.Title }, JsonRequestBehavior.AllowGet);
+            FindAllItemReponse<MenuModel> menuReponse = _menuCategoryService.FindAllMenus();
+            return View("Index", menuReponse.Items);
         }
 
         [HttpPost]
@@ -233,7 +237,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         [HttpGet]
         public JsonResult ShowUploads()
         {
-            FindAllItemReponse<UploadModel> response = _uploadService.GetUploads();
+            FindAllItemReponse<UploadModel> response = _uploadService.GetTopUploads(100);
             return Json(new { errorcode = response.ErrorCode, message = response.Message, data = response.Items }, JsonRequestBehavior.AllowGet);
         }
 
@@ -254,6 +258,51 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             }
             BaseResponse response = _uploadService.DeleteUpload(uploadID);
             return Json(new { errorcode = response.ErrorCode, message = response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult UpdateCategoryMenu(MenuModel menu)
+        {
+            FindItemReponse<MenuModel> findParentMenu = _menuCategoryService.FindByID(menu.MenuID);
+            if (findParentMenu.Item == null)
+            {
+                return Json(new { errorCode = (int)ErrorCode.Error, message = string.Format(Resources.AdminResource.msg_menuCategoryNotFound, menu.MenuID) }, JsonRequestBehavior.AllowGet);
+            }
+
+            findParentMenu.Item.Title = menu.Title;
+
+            BaseResponse response = _menuCategoryService.UpdateMenu(findParentMenu.Item);
+
+            return Json(new { errorcode = response.ErrorCode, message = response.Message, title = menu.Title }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult DeleteMenu(string menuID)
+        {
+            FindItemReponse<MenuModel> findParentMenu = _menuCategoryService.FindByID(menuID);
+            FindAllItemReponse<ArticleModel> articleReponse = _articleService.FindArticleByMenuID(menuID);
+            if (articleReponse.Items != null && articleReponse.Items.Count > 0)
+            {
+                return Json(new { errorCode = (int)ErrorCode.Error, message = string.Format(Resources.AdminResource.msg_unableToDelete, findParentMenu.Item.Title) }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                //find sub menu
+                if (findParentMenu.Item != null && findParentMenu.Item.SubMenus != null)
+                {
+                    foreach (var menu in findParentMenu.Item.SubMenus)
+                    {
+                        FindAllItemReponse<ArticleModel> articles = _articleService.FindArticleByMenuID(menu.MenuID);
+                        if (articles == null || articles.Count == 0)
+                        {
+                            _menuCategoryService.DeleteMenu(menu.MenuID);
+                        }
+                    }
+                }
+            }
+            BaseResponse response = _menuCategoryService.DeleteMenu(menuID);
+            return Json(new { errorCode = response.ErrorCode, message = response.Message }, JsonRequestBehavior.AllowGet);
         }
     }
 }

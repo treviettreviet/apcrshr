@@ -48,6 +48,7 @@
     <Compile Include="Enum\Language.cs" />
     <Compile Include="Model\AdminModel.cs" />
     <Compile Include="Model\ArticleModel.cs" />
+    <Compile Include="Model\ImportantDeadlineModel.cs" />
     <Compile Include="Model\MenuModel.cs" />
     <Compile Include="Model\NewsModel.cs" />
     <Compile Include="Model\SearchModel.cs" />

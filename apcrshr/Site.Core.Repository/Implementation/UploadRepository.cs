@@ -73,7 +73,15 @@ namespace Site.Core.Repository.Implementation
         {
             using (APCRSHREntities context = new APCRSHREntities())
             {
-                return context.Uploads.ToList();
+                return context.Uploads.OrderByDescending(u => u.CreatedDate).ToList();
+            }
+        }
+
+        public IList<Upload> FindAll(int top)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Uploads.OrderByDescending(u => u.CreatedDate).Take(top).ToList();
             }
         }
     }

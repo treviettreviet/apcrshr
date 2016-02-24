@@ -132,4 +132,10 @@
   <data name="text_page" xml:space="preserve">
     <value>Page</value>
   </data>
+  <data name="title_newDetail" xml:space="preserve">
+    <value>News Details</value>
+  </data>
+  <data name="title_relatedNews" xml:space="preserve">
+    <value>Related News</value>
+  </data>
 </root>

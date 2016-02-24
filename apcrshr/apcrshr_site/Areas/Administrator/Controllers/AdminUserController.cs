@@ -20,6 +20,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         public AdminUserController()
         {
+            ViewBag.CurrentNode = "AdminMember";
             this._userService = new UserService();
         }
 
@@ -59,7 +60,6 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         {
             if (ModelState.IsValid)
             {
-                ViewBag.UserName = this.Session["UserName"].ToString();
                 var sessionId = this.Session["SessionID"].ToString();
                 IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository();
                 BaseResponse response = _userService.UpdateUser(user);

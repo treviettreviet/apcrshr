@@ -5,6 +5,7 @@ using Site.Core.DataModel.Response;
 using Site.Core.Repository;
 using Site.Core.Repository.Repository;
 using Site.Core.Service.Contract;
+using Site.Core.Service.Implementation.ModelMapper;
 using Site.Core.Service.Implementation.Resources;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace Site.Core.Service.Implementation
             try
             {
                 ISubscriberRepository subscriberRepository = RepositoryClassFactory.GetInstance().GetSubscriberRepository();
-                var _sub = Mapper.Map<SubscriberModel, Subscriber>(subscriber);
+                var _sub = MapperUtil.CreateMapper().Mapper.Map<SubscriberModel, Subscriber>(subscriber);
                 object id = subscriberRepository.Insert(_sub);
                 return new InsertResponse
                 {
@@ -67,7 +68,7 @@ namespace Site.Core.Service.Implementation
             try
             {
                 ISubscriberRepository subscriberRepository = RepositoryClassFactory.GetInstance().GetSubscriberRepository();
-                var _sub = Mapper.Map<SubscriberModel, Subscriber>(subscriber);
+                var _sub = MapperUtil.CreateMapper().Mapper.Map<SubscriberModel, Subscriber>(subscriber);
                 subscriberRepository.Update(_sub);
                 return new BaseResponse
                 {
@@ -91,7 +92,7 @@ namespace Site.Core.Service.Implementation
             {
                 ISubscriberRepository subscriberRepository = RepositoryClassFactory.GetInstance().GetSubscriberRepository();
                 IList<Subscriber> result = subscriberRepository.FindAll();
-                var _subs = result.Select(m => Mapper.Map<Subscriber, SubscriberModel>(m)).ToList();
+                var _subs = result.Select(m => MapperUtil.CreateMapper().Mapper.Map<Subscriber, SubscriberModel>(m)).ToList();
                 return new FindAllItemReponse<SubscriberModel>
                 {
                     Items = _subs,
@@ -115,7 +116,7 @@ namespace Site.Core.Service.Implementation
             {
                 ISubscriberRepository subscriberRepository = RepositoryClassFactory.GetInstance().GetSubscriberRepository();
                 Subscriber sub = subscriberRepository.FindByID(id);
-                var _sub = Mapper.Map<Subscriber, SubscriberModel>(sub);
+                var _sub = MapperUtil.CreateMapper().Mapper.Map<Subscriber, SubscriberModel>(sub);
                 return new FindItemReponse<SubscriberModel>
                 {
                     Item = _sub,
@@ -139,7 +140,7 @@ namespace Site.Core.Service.Implementation
             {
                 ISubscriberRepository subscriberRepository = RepositoryClassFactory.GetInstance().GetSubscriberRepository();
                 Subscriber sub = subscriberRepository.FindByEmail(email);
-                var _sub = Mapper.Map<Subscriber, SubscriberModel>(sub);
+                var _sub = MapperUtil.CreateMapper().Mapper.Map<Subscriber, SubscriberModel>(sub);
                 return new FindItemReponse<SubscriberModel>
                 {
                     Item = _sub,

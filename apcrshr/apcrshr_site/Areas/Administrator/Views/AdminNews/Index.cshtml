@@ -1,27 +1,28 @@
-﻿@model IList<Site.Core.DataModel.Model.ArticleModel>
+﻿@model IList<Site.Core.DataModel.Model.NewsModel>
 @{
-    ViewBag.Title = "Danh Sách Bài Viết";
+    ViewBag.Title = "Danh Sách Tin Tức";
     Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
 }
 
 <div class="row">
     <div class="col-sm-12">
         <div class="box box-color box-bordered">
+            <br />
+            <a href='@Url.Action("CreateNews", "AdminNews")' class="btn btn-blue">Thêm Mới</a>
             <div class="box-title">
                 <h3>
-                    <i class="fa fa-th-list"></i>Danh Sách Bài Viết
+                    <i class="fa fa-th-list"></i>Danh Sách Tin Tức
                 </h3>
             </div>
             <div class="box-content nopadding">
-                <table id="tableArticle" class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
-                       data-column_filter_types="null,select,text,text,daterange,text,null,null,null"
+                <table id="tableNews" class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
+                       data-column_filter_types="null,text,text,daterange,text,null,null,null"
                        data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
                     <thead>
                         <tr>
                             <th class='with-checkbox'>
                                 <input type="checkbox" name="check_all" class="dataTable-checkall">
                             </th>
-                            <th>Thể Loại</th>
                             <th>Tiêu Đề</th>
                             <th>Nội Dung</th>
                             <th class='hidden-1024'>Ngày Tạo</th>
@@ -36,12 +37,9 @@
                         {
                             for (int i = 0; i < Model.Count; i++)
                             {
-                                <tr id="@Model[i].ArticleID">
+                                <tr id="@Model[i].NewsID">
                                     <td class="with-checkbox">
-                                        <input type="checkbox" name="check" value="@Model[i].ArticleID">
-                                    </td>
-                                    <td>
-                                        @apcrshr_site.Helper.DataHelper.GetInstance().GetMenuTitle(@Model[i].MenuID)
+                                        <input type="checkbox" name="check" value="@Model[i].NewsID">
                                     </td>
                                     <td>
                                         @Model[i].Title
@@ -78,10 +76,10 @@
                                         }
                                     </td>
                                     <td class='hidden-480'>
-                                        <a href='@Url.Action("UpdateArticle", "Article", new { articleID = Model[i].ArticleID })' class="btn" rel="tooltip" title="Sửa">
+                                        <a href='@Url.Action("UpdateNews", "AdminNews", new { newsID = Model[i].NewsID })' class="btn" rel="tooltip" title="Sửa">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                        <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteArticle('@Model[i].ArticleID')">
+                                        <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteNews('@Model[i].NewsID')">
                                             <i class="fa fa-times"></i>
                                         </a>
                                     </td>
@@ -95,18 +93,18 @@
     </div>
 </div>
 <script type="text/javascript">
-    function deleteArticle(articleID) {
+    function deleteNews(newsID) {
         bootbox.confirm("Bạn có chắc chắn muốn xóa bản ghi này?", function (result) {
             if (result) {
                 $.ajax({
                     type: 'GET',
                     contentType: 'application/json',
-                    url: '@Url.Action("DeleteArticle", "Article")',
-                    data: { articleID: articleID },
+                    url: '@Url.Action("DeleteNews", "AdminNews")',
+                    data: { newsID: newsID },
                     success: function (data) {
                         if (data.ErrorCode == 0) {
-                            $('#' + articleID + '').remove();
-                            $('table#tableArticle tr#' + articleID + '').remove();
+                            $('#' + newsID + '').remove();
+                            $('table#tableNews tr#' + newsID + '').remove();
                             bootbox.hideAll();
                         } else {
                             bootbox.lert(data.Message, function () {

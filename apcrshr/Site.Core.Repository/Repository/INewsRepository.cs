@@ -13,7 +13,7 @@ namespace Site.Core.Repository.Repository
         Tuple<int, IList<News>> FindAll(int pageSize, int pageIndex);
         Tuple<int, IList<News>> FindAll(int pageSize, int pageIndex, string language);
         Tuple<int, IList<News>> FindAll(int pageSize, int pageIndex, string language, string menuID);
-        Tuple<int, IList<News>> FindAllRelated(string menuID, DateTime date, int pageSize, int pageIndex, string language);
+        Tuple<int, IList<News>> FindAllRelated(DateTime date, int pageSize, int pageIndex, string language);
         IList<News> Search(string key);
     }
 }

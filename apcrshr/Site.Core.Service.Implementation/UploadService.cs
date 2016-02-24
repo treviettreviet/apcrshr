@@ -131,5 +131,30 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindAllItemReponse<UploadModel> GetTopUploads(int top)
+        {
+            try
+            {
+                IUploadRepository uploadRepository = RepositoryClassFactory.GetInstance().GetUploadRepository();
+                IList<Upload> uploads = uploadRepository.FindAll(top);
+                var _uploads = uploads.Select(a => MapperUtil.CreateMapper().Mapper.Map<Upload, UploadModel>(a)).ToList();
+                return new FindAllItemReponse<UploadModel>
+                {
+                    Items = _uploads,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindAllItemReponse<UploadModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }
