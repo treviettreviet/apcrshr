@@ -1,0 +1,7 @@
+USE [APCRSHR]
+
+GO
+
+ALTER TABLE [Upload] ADD [FilePath] NVARCHAR(200) NULL
+
+GO
