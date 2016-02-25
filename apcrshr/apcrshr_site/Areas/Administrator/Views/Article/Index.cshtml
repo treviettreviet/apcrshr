@@ -23,7 +23,7 @@
                             </th>
                             <th>Thể Loại</th>
                             <th>Tiêu Đề</th>
-                            <th>Nội Dung</th>
+                            <th>Tóm Tắt</th>
                             <th class='hidden-1024'>Ngày Tạo</th>
                             <th>Người Tạo</th>
                             <th>Tiếng Việt</th>
@@ -46,7 +46,7 @@
                                     <td>
                                         @Model[i].Title
                                     </td>
-                                    <td>@(Model[i].ShortContent.Length > 50 ? Model[i].ShortContent.Substring(0, 50) : Model[i].ShortContent)</td>
+                                    <td>@(Model[i].ShortContent != null && Model[i].ShortContent.Length > 50 ? Model[i].ShortContent.Substring(0, 50) : Model[i].ShortContent)</td>
                                     <td class='hidden-1024'>@Model[i].CreatedDate.ToShortDateString()</td>
                                     <td>@apcrshr_site.Helper.UserHelper.GetAdminName(Model[i].CreatedBy)</td>
                                     <td>
