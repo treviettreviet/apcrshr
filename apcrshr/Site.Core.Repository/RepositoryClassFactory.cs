@@ -66,5 +66,9 @@ namespace Site.Core.Repository
         {
             return new ImportantDeadlineRepository();
         }
+        public IConferenceDeclarationRepository GetConferenceDeclarationRepository()
+        {
+            return new ConferenceDeclarationRepository();
+        }
     }
 }
