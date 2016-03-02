@@ -147,12 +147,12 @@ namespace Site.Core.Service.Implementation
             }
         }
 
-        public DataModel.Response.InsertResponse CreateConference(DataModel.Model.ConferenceDeclarationModel conference)
+        public InsertResponse CreateConference(ConferenceDeclarationModel conference)
         {
             try
             {
                 IConferenceDeclarationRepository conferenceRepository = RepositoryClassFactory.GetInstance().GetConferenceDeclarationRepository();
-                var _con = MapperUtil.CreateMapper().Mapper.Map<ConferenceDeclarationModel, ConferenceDeclaration>(conference);
+                ConferenceDeclaration _con = MapperUtil.CreateMapper().Mapper.Map<ConferenceDeclarationModel, ConferenceDeclaration>(conference);
                 object id = conferenceRepository.Insert(_con);
                 return new InsertResponse
                 {

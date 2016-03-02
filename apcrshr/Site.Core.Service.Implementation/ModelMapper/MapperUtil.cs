@@ -48,6 +48,7 @@ namespace Site.Core.Service.Implementation.ModelMapper
                 cfg.CreateMap<MenuModel, Menu>();
                 cfg.CreateMap<ArticleModel, Article>();
                 cfg.CreateMap<UploadModel, Upload>();
+                cfg.CreateMap<ConferenceDeclarationModel, ConferenceDeclaration>();
 
                 //Entity model mapper
                 cfg.CreateMap<Admin, AdminModel>();
@@ -59,6 +60,7 @@ namespace Site.Core.Service.Implementation.ModelMapper
                     .ForMember(m => m.Parent, c => c.MapFrom(m => m.Menu2));
                 cfg.CreateMap<Article, ArticleModel>();
                 cfg.CreateMap<Upload, UploadModel>();
+                cfg.CreateMap<ConferenceDeclaration, ConferenceDeclarationModel>();
             });
 
             mapper = config.CreateMapper();
