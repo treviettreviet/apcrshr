@@ -55,7 +55,15 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             InsertResponse response = new InsertResponse();
 
             conference.Title = conference.Title.Length > 200 ? conference.Title.Substring(0, 100) + "..." : conference.Title;
-            conference.ShortContent = conference.ShortContent.Length > 300 ? conference.ShortContent.Substring(0, 296) + "..." : conference.ShortContent;
+            if (!string.IsNullOrEmpty(conference.ShortContent))
+            {
+                conference.ShortContent = conference.ShortContent.Length > 300 ? conference.ShortContent.Substring(0, 296) + "..." : conference.ShortContent;
+            }
+            else
+            {
+                conference.ShortContent = null;
+            }
+            
             conference.CreatedDate = DateTime.Now;
             conference.ConferenceID = Guid.NewGuid().ToString();
             conference.CreatedBy = userSession != null ? userSession.UserID : string.Empty;

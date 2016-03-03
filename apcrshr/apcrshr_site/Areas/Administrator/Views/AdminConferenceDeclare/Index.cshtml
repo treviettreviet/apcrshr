@@ -44,7 +44,15 @@
                                     <td>
                                         @Model[i].Title
                                     </td>
-                                    <td>@(Model[i].ShortContent.Length > 50 ? Model[i].ShortContent.Substring(0, 50) : Model[i].ShortContent)</td>
+                                    @if (!string.IsNullOrEmpty(Model[i].ShortContent))
+                                    {
+                                        <td>@(Model[i].ShortContent.Length > 50 ? Model[i].ShortContent.Substring(0, 50) : Model[i].ShortContent)</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@Model[i].ShortContent</td>
+                                    }
+                                    
                                     <td>
                                         @Model[i].AttachmentURL
                                     </td>
