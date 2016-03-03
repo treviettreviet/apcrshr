@@ -51,6 +51,11 @@ namespace Site.Core.Repository.Implementation
                 if (result != null)
                 {
                     result.Title = item.Title;
+                    if (!string.IsNullOrEmpty(item.ActionURL))
+                    {
+                        result.ActionURL = item.ActionURL;
+                    }
+
                     if (!string.IsNullOrEmpty(item.AttachmentURL))
                     {
                         result.AttachmentURL = item.AttachmentURL;

@@ -63,7 +63,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             {
                 conference.ShortContent = null;
             }
-            
+            conference.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(conference.Title), UrlSlugger.Get8Digits());
             conference.CreatedDate = DateTime.Now;
             conference.ConferenceID = Guid.NewGuid().ToString();
             conference.CreatedBy = userSession != null ? userSession.UserID : string.Empty;
@@ -132,6 +132,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             {
                 return Json(new { errorCode = (int)ErrorCode.Redirect, message = Resources.AdminResource.msg_sessionInvalid }, JsonRequestBehavior.AllowGet);
             }
+            conference.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(conference.Title), UrlSlugger.Get8Digits());
             conference.UpdatedBy = userSession.UserID;
             conference.UpdatedDate = DateTime.Now;
             BaseResponse response = _conferenceService.UpdateConference(conference);
