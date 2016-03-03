@@ -18,6 +18,13 @@ namespace Site.Core.Service.Contract
         FindItemReponse<ConferenceDeclarationModel> FindConferenceByID(string id);
 
         /// <summary>
+        /// Get conference detail
+        /// </summary>
+        /// <param name="actionURL"></param>
+        /// <returns></returns>
+        FindItemReponse<ConferenceDeclarationModel> FindConferenceByActionURL(string actionURL);
+
+        /// <summary>
         /// Delete ConferenceDeclaration
         /// </summary>
         /// <param name="id"></param>
@@ -58,5 +65,15 @@ namespace Site.Core.Service.Contract
         /// <param name="conferenceID"></param>
         /// <returns></returns>
         FindItemReponse<ConferenceDeclarationModel> GetConferenceByID(string conferenceID);
+
+        /// <summary>
+        /// Get all related Conference by date
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="date"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <returns></returns>
+        FindAllItemReponse<ConferenceDeclarationModel> GetRelatedConference(DateTime date, int pageSize, int pageIndex);
     }
 }

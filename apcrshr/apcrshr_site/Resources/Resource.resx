@@ -132,8 +132,14 @@
   <data name="text_page" xml:space="preserve">
     <value>Page</value>
   </data>
+  <data name="title_conferenceDetail" xml:space="preserve">
+    <value>Conference Details</value>
+  </data>
   <data name="title_newDetail" xml:space="preserve">
     <value>News Details</value>
+  </data>
+  <data name="title_relatedConference" xml:space="preserve">
+    <value>Related Conference</value>
   </data>
   <data name="title_relatedNews" xml:space="preserve">
     <value>Related News</value>

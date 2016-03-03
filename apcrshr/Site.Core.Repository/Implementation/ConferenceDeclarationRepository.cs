@@ -111,5 +111,24 @@ namespace Site.Core.Repository.Implementation
                 return context.ConferenceDeclarations.OrderByDescending(n => n.CreatedDate).ToList();
             }
         }
+
+
+        public Tuple<int, IList<ConferenceDeclaration>> FindAllRelated(DateTime date, int pageSize, int pageIndex)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                var conference = context.ConferenceDeclarations.OrderByDescending(n => n.CreatedDate).Where(n => n.CreatedDate < date).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+                var count = context.ConferenceDeclarations.OrderByDescending(n => n.CreatedDate).Where(n => n.CreatedDate < date).Count();
+                return Tuple.Create<int, IList<ConferenceDeclaration>>(count, conference);
+            }
+        }
+
+        public ConferenceDeclaration FindByActionURL(string actionURL)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.ConferenceDeclarations.Where(a => a.ActionURL.Equals(actionURL)).SingleOrDefault();
+            }
+        }
     }
 }

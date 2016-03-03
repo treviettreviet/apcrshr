@@ -200,5 +200,57 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindAllItemReponse<ConferenceDeclarationModel> GetRelatedConference(DateTime date, int pageSize, int pageIndex)
+        {
+            try
+            {
+                IConferenceDeclarationRepository conRepository = RepositoryClassFactory.GetInstance().GetConferenceDeclarationRepository();
+
+                var result = conRepository.FindAllRelated(date, pageSize, pageIndex);
+                var _con = result.Item2.Select(n => MapperUtil.CreateMapper().Mapper.Map<ConferenceDeclaration, ConferenceDeclarationModel>(n)).ToList();
+                return new FindAllItemReponse<ConferenceDeclarationModel>
+                {
+                    Count = result.Item1,
+                    Items = _con,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindAllItemReponse<ConferenceDeclarationModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
+
+
+        public FindItemReponse<ConferenceDeclarationModel> FindConferenceByActionURL(string actionURL)
+        {
+            try
+            {
+                IConferenceDeclarationRepository conRepository = RepositoryClassFactory.GetInstance().GetConferenceDeclarationRepository();
+                ConferenceDeclaration con = conRepository.FindByActionURL(actionURL);
+                var _con = MapperUtil.CreateMapper().Mapper.Map<ConferenceDeclaration, ConferenceDeclarationModel>(con);
+                return new FindItemReponse<ConferenceDeclarationModel>
+                {
+                    Item = _con,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindItemReponse<ConferenceDeclarationModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }

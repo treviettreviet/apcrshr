@@ -106,11 +106,29 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Conference Details.
+        /// </summary>
+        public static string title_conferenceDetail {
+            get {
+                return ResourceManager.GetString("title_conferenceDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to News Details.
         /// </summary>
         public static string title_newDetail {
             get {
                 return ResourceManager.GetString("title_newDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Related Conference.
+        /// </summary>
+        public static string title_relatedConference {
+            get {
+                return ResourceManager.GetString("title_relatedConference", resourceCulture);
             }
         }
         
