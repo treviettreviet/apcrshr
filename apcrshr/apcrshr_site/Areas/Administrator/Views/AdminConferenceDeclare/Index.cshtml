@@ -54,10 +54,10 @@
                                     }
                                     
                                     <td>
-                                        @Model[i].AttachmentURL
+                                        @(Model[i].AttachmentURL != null ? Model[i].AttachmentURL.Substring(Model[i].AttachmentURL.LastIndexOf("/") + 1) : "")
                                     </td>
                                     <td>
-                                        @Model[i].ImageURL
+                                        <img class="thumbnail" src="@Model[i].ImageURL" style="width: 200px; height: 150px;">
                                     </td>
                                     <td class='hidden-1024'>@Model[i].CreatedDate.ToShortDateString()</td>
                                     <td>@apcrshr_site.Helper.UserHelper.GetAdminName(Model[i].CreatedBy)</td>

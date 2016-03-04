@@ -20,7 +20,8 @@
         <ul>
             <li class="calendar">@Model.Items[0].CreatedDate.ToString("dddd, d MMMM, yyyy", new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.Name))</li>
             <li class="user">@apcrshr_site.Helper.UserHelper.GetAdminName(Model.Items[0].CreatedBy)</li>
-            <li class="comment"><a href="@Model.Items[0].ImageURL">@(string.IsNullOrEmpty(Model.Items[0].ImageURL) ? "0" : "") attachment</a></li>
+            <li class="comment"><a href="@Model.Items[0].ImageURL">@(string.IsNullOrEmpty(Model.Items[0].ImageURL) ? "0" : "") image</a></li>
+            <li class="comment"><a href="@Model.Items[0].AttachmentURL">@(string.IsNullOrEmpty(Model.Items[0].AttachmentURL) ? "0" : "") attachment</a></li>
         </ul>
     </div>
 </article>
