@@ -27,6 +27,12 @@ namespace Site.Core.Repository.Implementation
                 menu.Language = item.Language;
                 menu.ParentID = item.ParentID;
                 menu.Title = item.Title;
+                menu.Type = item.Type;
+                if (!string.IsNullOrEmpty(item.URL))
+                {
+                    menu.URL = item.URL;
+                }
+                menu.DisplayOrder = item.DisplayOrder;
 
                 context.SaveChanges();
             }

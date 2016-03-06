@@ -46,5 +46,14 @@ namespace apcrshr_site.Helper
             }
             return response.Introductions;
         }*/
+
+        public IDictionary<string, string> InternalLinks()
+        {
+            IDictionary<string, string> links = new Dictionary<string, string>();
+            links.Add("Tài liệu / Ấn phẩm", "/Document/Index");
+            links.Add("Tin Tức", "/News/Index");
+            links.Add("Tạp chí y tế công cộng", "/Magazine/Index");
+            return links;
+        }
     }
 }

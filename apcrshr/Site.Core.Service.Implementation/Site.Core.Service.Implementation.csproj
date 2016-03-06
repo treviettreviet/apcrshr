@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="AdminService.cs" />
     <Compile Include="ArticleService.cs" />
+    <Compile Include="ConferenceDeclarationService.cs" />
     <Compile Include="Convertor\ConvertBase.cs" />
     <Compile Include="Convertor\IConvertor.cs" />
     <Compile Include="HomeService.cs" />

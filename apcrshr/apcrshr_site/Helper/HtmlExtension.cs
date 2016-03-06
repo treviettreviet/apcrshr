@@ -39,8 +39,8 @@ namespace apcrshr_site.Helper
                     builder.Append("<ul>");
                     foreach (MenuModel sub in list)
                     {
-                        builder.Append("<li><span id='"+sub.MenuID+"' class='file'>" + sub.Title + "</span>"+
-                        "<a href='#' onclick='updateMenu(\"" + sub.MenuID + "\", \"" + sub.Title + "\")' class='btn' rel='tooltip' title='Sửa'><i class='fa fa-edit'></i></a>&nbsp;" +
+                        builder.Append("<li><span id='" + sub.MenuID + "' class='file'>" + sub.Title + "</span>" +
+                        "<a href='/Administrator/Admin/UpdateCategory?id=" + sub.MenuID + "' class='btn' rel='tooltip' title='Sửa'><i class='fa fa-edit'></i></a>&nbsp;" +
                         "<a href='#' onclick='deleteMenu(\"" + sub.MenuID + "\")' class='btn' rel='tooltip' title='Xóa'><i class='fa fa-times'></i></a></li>");
                     }
                     builder.Append("</ul>");
@@ -48,7 +48,7 @@ namespace apcrshr_site.Helper
                 else
                 {
                     builder.Append("<span id='" + m.MenuID + "' class='file'>" + m.Title + "</span>" +
-                    "<a href='#' onclick='updateMenu(\"" + m.MenuID + "\", \"" + m.Title + "\")' class='btn' rel='tooltip' title='Sửa'><i class='fa fa-edit'></i></a>&nbsp;" +
+                    "<a href='/Administrator/Admin/UpdateCategory?id=" + m.MenuID + "' class='btn' rel='tooltip' title='Sửa'><i class='fa fa-edit'></i></a>&nbsp;" +
                     "<a href='#' onclick='deleteMenu(\"" + m.MenuID + "\")' class='btn' rel='tooltip' title='Xóa'><i class='fa fa-times'></i></a>");
                 }
 

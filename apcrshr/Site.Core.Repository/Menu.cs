@@ -25,6 +25,9 @@ namespace Site.Core.Repository
         public string Language { get; set; }
         public string ParentID { get; set; }
         public System.DateTime CreatedDate { get; set; }
+        public string URL { get; set; }
+        public bool Type { get; set; }
+        public int DisplayOrder { get; set; }
     
         public virtual ICollection<Menu> Menu1 { get; set; }
         public virtual Menu Menu2 { get; set; }

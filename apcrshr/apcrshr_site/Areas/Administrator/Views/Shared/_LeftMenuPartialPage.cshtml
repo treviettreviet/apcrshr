@@ -125,12 +125,7 @@
 
     var uploadListDialogs = [
         '<div class="box box-color box-bordered">',
-            '<div class="box-title">',
-                '<h3>',
-                    '<i class="fa fa-th-list"></i>Danh Sách file đã tải lên',
-                '</h3>',
-            '</div>',
-            '<div class="box-content nopadding">',
+            '<div class="nopadding">',
                 '<table id="tableUploads" class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"',
                     'data-column_filter_types="text,text,text,null"',
                     'data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">',
@@ -159,19 +154,6 @@
             success: function (response) {
                 if (response.errorcode == 0) {
                     $.unblockUI();
-                    /*bootbox.dialog({
-                        message: uploadListDialogs,
-                        title: "Danh sách file",
-                        buttons: {
-                            danger: {
-                                label: "Đóng",
-                                className: "btn-danger",
-                                callback: function () {
-                                    bootbox.hideAll();
-                                }
-                            }
-                        }
-                    });*/
                     //jQuery dialog
                     $(uploadListDialogs).dialog({
                         modal: true,        
