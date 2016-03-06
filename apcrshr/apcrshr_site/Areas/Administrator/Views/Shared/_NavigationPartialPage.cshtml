@@ -26,17 +26,11 @@
 
                 </a>
             </li>
-            <li class='@(ViewBag.CurrentNode == "AdminConferenceDeclare" ? "active" : "")'>
-                <a href="@Url.Action("Index", "AdminConferenceDeclare")">
-                    <span>Hội Nghị</span>
-
-                </a>
-            </li>
         </ul>
         <div class="user">
             <div class="dropdown">
                 <a href="#" class='dropdown-toggle' data-toggle="dropdown">
-                    @ViewBag.UserName
+                    @Session["UserName"]
                     <img src="~/Areas/Administrator/img/demo/user157.png" alt="">
                 </a>
                 <ul class="dropdown-menu pull-right">

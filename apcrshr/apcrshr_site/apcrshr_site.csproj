@@ -194,6 +194,7 @@
     <Compile Include="Controllers\ConferenceDeclarationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Filters\SessionFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -484,11 +485,15 @@
     <Content Include="Content\css\settings.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\table.css" />
+    <Content Include="Content\font\fontawesome-webfont78ce.svg" />
     <Content Include="Content\font\fontello1129.svg" />
+    <Content Include="Content\font\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\font\glyphicons-regular.svg" />
     <Content Include="Content\font\revicons90c6-2.html" />
     <Content Include="Content\font\revicons90c6-3.html" />
     <Content Include="Content\font\revicons90c6-4.html" />
     <Content Include="Content\font\revicons90c6.html" />
+    <Content Include="Content\form.css" />
     <Content Include="Content\images\about-section.jpg" />
     <Content Include="Content\images\ao_dai.png" />
     <Content Include="Content\images\apcrshr.ico" />
@@ -696,8 +701,21 @@
     <Content Include="Areas\Administrator\Views\AdminImportantDeadline\UpdateImportantDeadline.cshtml" />
     <Content Include="Areas\Administrator\Views\Article\UpdateArticle.cshtml" />
     <Content Include="Areas\Administrator\Views\AdminConferenceDeclare\Index.cshtml" />
+    <Content Include="Content\font\fontawesome-webfont78ce.eot" />
     <Content Include="Areas\Administrator\Views\AdminConferenceDeclare\CreateConference.cshtml" />
+    <Content Include="Content\font\fontawesome-webfont78ce.ttf" />
     <Content Include="Areas\Administrator\Views\AdminConferenceDeclare\UpdateConference.cshtml" />
+    <Content Include="Content\font\fontawesome-webfont78ce.woff" />
+    <Content Include="Content\font\fontawesome-webfontd41d.eot" />
+    <Content Include="Content\font\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\font\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\font\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\font\glyphicons-halflings-regulard41d.eot" />
+    <Content Include="Content\font\glyphicons-regular.eot" />
+    <Content Include="Content\font\glyphicons-regular.ttf" />
+    <Content Include="Content\font\glyphicons-regular.woff" />
+    <Content Include="Content\font\glyphicons-regulard41d.eot" />
+    <Content Include="Areas\Administrator\Views\Admin\UpdateCategory.cshtml" />
     <None Include="Properties\PublishProfiles\apcrshr.hvtec.vn - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
@@ -787,6 +805,7 @@
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\News\ViewNews.cshtml" />
     <Content Include="Views\ConferenceDeclaration\Index.cshtml" />
+    <Content Include="Views\Registration\RegistrationForm.cshtml" />
     <Content Include="Views\ConferenceDeclaration\ViewConference.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -22,6 +22,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         public ArticleController()
         {
+            ViewBag.CurrentNode = "Article";
             this._menuCategoryService = new MenuCategoryService();
             this._articleService = new ArticleService();
         }

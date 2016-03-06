@@ -18,5 +18,8 @@ namespace Site.Core.DataModel.Model
         public DateTime CreatedDate { get; set; }
         public IList<MenuModel> SubMenus { get; set; }
         public MenuModel Parent { get; set; }
+        public bool Type { get; set; }
+        public string URL { get; set; }
+        public int DisplayOrder { get; set; }
     }
 }

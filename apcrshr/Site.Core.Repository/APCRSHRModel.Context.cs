@@ -26,18 +26,21 @@ namespace Site.Core.Repository
         }
     
         public DbSet<Admin> Admins { get; set; }
+        public DbSet<Album> Albums { get; set; }
         public DbSet<Article> Articles { get; set; }
-        public DbSet<ConferenceData> ConferenceDatas { get; set; }
+        public DbSet<ConferenceDeclaration> ConferenceDeclarations { get; set; }
         public DbSet<DownloadCode> DownloadCodes { get; set; }
         public DbSet<ImportantDeadline> ImportantDeadlines { get; set; }
         public DbSet<MailingAddress> MailingAddresses { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<OfficeAddress> OfficeAddresses { get; set; }
+        public DbSet<Photo> Photos { get; set; }
+        public DbSet<Slider> Sliders { get; set; }
         public DbSet<Subscriber> Subscribers { get; set; }
+        public DbSet<Upload> Uploads { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserSession> UserSessions { get; set; }
-        public DbSet<Slider> Sliders { get; set; }
-        public DbSet<Upload> Uploads { get; set; }
+        public DbSet<Presentation> Presentations { get; set; }
     }
 }

@@ -12,24 +12,17 @@ namespace Site.Core.Repository
     using System;
     using System.Collections.Generic;
     
-    public partial class Menu
+    public partial class Presentation
     {
-        public Menu()
-        {
-            this.Menu1 = new HashSet<Menu>();
-        }
-    
-        public string MenuID { get; set; }
+        public string PresentationID { get; set; }
         public string Title { get; set; }
-        public string ActionURL { get; set; }
-        public string Language { get; set; }
-        public string ParentID { get; set; }
+        public string AttachmentURL { get; set; }
+        public string ImageURL { get; set; }
+        public string Contents { get; set; }
+        public string ShortContent { get; set; }
+        public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
-        public string URL { get; set; }
-        public bool Type { get; set; }
-        public int DisplayOrder { get; set; }
-    
-        public virtual ICollection<Menu> Menu1 { get; set; }
-        public virtual Menu Menu2 { get; set; }
+        public string UpdatedBy { get; set; }
+        public Nullable<System.DateTime> UpdatedDate { get; set; }
     }
 }

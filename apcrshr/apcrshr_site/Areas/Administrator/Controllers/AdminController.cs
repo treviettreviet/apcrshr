@@ -260,21 +260,24 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             return Json(new { errorcode = response.ErrorCode, message = response.Message }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public ActionResult UpdateCategory(string id)
+        {
+            FindItemReponse<MenuModel> response = _menuCategoryService.FindByID(id);
+            return View(response.Item);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult UpdateCategoryMenu(MenuModel menu)
+        public ActionResult UpdateCategoryMenu(MenuModel menu)
         {
-            FindItemReponse<MenuModel> findParentMenu = _menuCategoryService.FindByID(menu.MenuID);
-            if (findParentMenu.Item == null)
+            if (ModelState.IsValid)
             {
-                return Json(new { errorCode = (int)ErrorCode.Error, message = string.Format(Resources.AdminResource.msg_menuCategoryNotFound, menu.MenuID) }, JsonRequestBehavior.AllowGet);
+                menu.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(menu.Title), UrlSlugger.Get8Digits());
+                BaseResponse response = _menuCategoryService.UpdateMenu(menu);
+                ViewBag.Message = response;
             }
-
-            findParentMenu.Item.Title = menu.Title;
-
-            BaseResponse response = _menuCategoryService.UpdateMenu(findParentMenu.Item);
-
-            return Json(new { errorcode = response.ErrorCode, message = response.Message, title = menu.Title }, JsonRequestBehavior.AllowGet);
+            return View("UpdateCategory", menu);
         }
 
         [HttpGet]

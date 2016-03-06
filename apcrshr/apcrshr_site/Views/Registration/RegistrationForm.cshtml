@@ -1,0 +1,191 @@
+﻿@{
+    ViewBag.Title = "RegistrationForm";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<!-- Color CSS -->
+<link rel="stylesheet" href="~/Areas/Administrator/css/themes.css">
+<link rel="stylesheet" href="~/Content/form.css">
+<!-- jQuery UI -->
+<script src="~/Areas/Administrator/js/plugins/jquery-ui/jquery-ui.js"></script>
+<!-- Form -->
+<script src="~/Areas/Administrator/js/plugins/form/jquery.form.min.js"></script>
+<!-- Wizard -->
+<script src="~/Areas/Administrator/js/plugins/wizard/jquery.form.wizard.min.js"></script>
+
+<div class="col-sm-9">
+    <div class="box box-color box-bordered">
+        <div class="box-title">
+            <h3>
+                <i class="fa fa-magic"></i>
+                Wizard with step overview
+            </h3>
+        </div>
+        <div class="box-content nopadding">
+            <form action="http://www.eakroko.de/flat/post.php" method="POST" class='form-horizontal form-wizard' id="ss">
+                <div class="step" id="firstStep">
+                    <ul class="wizard-steps steps-3">
+                        <li class='active'>
+                            <div class="single-step">
+                                <span class="title">1</span>
+                                <span class="circle">
+                                    <span class="active"></span>
+                                </span>
+                                <span class="description">
+                                    Basic information
+                                </span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="single-step">
+                                <span class="title">2</span>
+                                <span class="circle">
+                                </span>
+                                <span class="description">
+                                    Advanced information
+                                </span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="single-step">
+                                <span class="title">3</span>
+                                <span class="circle">
+                                </span>
+                                <span class="description">
+                                    Additional information
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="form-group">
+                        <label for="firstname" class="control-label col-sm-2">First name</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="firstname" id="firstname" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="anotherelem" class="control-label col-sm-2">Last name</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="anotherelem" id="anotherelem" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="additionalfield" class="control-label col-sm-2">Additional information</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="additionalfield" id="additionalfield" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="step" id="secondStep">
+                    <ul class="wizard-steps steps-3">
+                        <li>
+                            <div class="single-step">
+                                <span class="title">1</span>
+                                <span class="circle">
+                                </span>
+                                <span class="description">
+                                    Basic information
+                                </span>
+                            </div>
+                        </li>
+                        <li class='active'>
+                            <div class="single-step">
+                                <span class="title">
+                                    2
+                                </span>
+                                <span class="circle">
+                                    <span class="active"></span>
+                                </span>
+                                <span class="description">
+                                    Advanced information
+                                </span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="single-step">
+                                <span class="title">
+                                    3
+                                </span>
+                                <span class="circle">
+                                </span>
+                                <span class="description">
+                                    Additional information
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="form-group">
+                        <label for="text" class="control-label col-sm-2">Gender</label>
+                        <div class="col-sm-10">
+                            <select name="gend" id="gend">
+                                <option value="">-- Chose one --</option>
+                                <option value="1">Male</option>
+                                <option value="2">Female</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="text" class="control-label col-sm-2">Accept policy</label>
+                        <div class="col-sm-10">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="policy" value="agree">I agree the policy.
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="step" id="thirdStep">
+                    <ul class="wizard-steps steps-3">
+                        <li>
+                            <div class="single-step">
+                                <span class="title">
+                                    1
+                                </span>
+                                <span class="circle">
+                                </span>
+                                <span class="description">
+                                    Basic information
+                                </span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="single-step">
+                                <span class="title">
+                                    2
+                                </span>
+                                <span class="circle">
+                                </span>
+                                <span class="description">
+                                    Advanced information
+                                </span>
+                            </div>
+                        </li>
+                        <li class='active'>
+                            <div class="single-step">
+                                <span class="title">
+                                    3
+                                </span>
+                                <span class="circle">
+                                    <span class="active"></span>
+                                </span>
+                                <span class="description">
+                                    Additional information
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="form-group">
+                        <label for="text" class="control-label col-sm-2">Additional information</label>
+                        <div class="col-sm-10">
+                            <textarea name="textare" id="tt333" class="form-control" rows="7" placeholder="You can provide additional information in here..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <input type="reset" class="btn" value="Back" id="back">
+                    <input type="submit" class="btn btn-primary" value="Submit" id="next">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

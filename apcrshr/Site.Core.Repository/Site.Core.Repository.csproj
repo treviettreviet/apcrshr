@@ -50,6 +50,9 @@
     <Compile Include="Admin.cs">
       <DependentUpon>APCRSHRModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Album.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="APCRSHRModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -68,7 +71,7 @@
     <Compile Include="Article.cs">
       <DependentUpon>APCRSHRModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ConferenceData.cs">
+    <Compile Include="ConferenceDeclaration.cs">
       <DependentUpon>APCRSHRModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DownloadCode.cs">
@@ -76,6 +79,7 @@
     </Compile>
     <Compile Include="Implementation\AdminRepository.cs" />
     <Compile Include="Implementation\ArticleRepository.cs" />
+    <Compile Include="Implementation\ConferenceDeclarationRepository.cs" />
     <Compile Include="Implementation\ImportantDeadlineRepository.cs" />
     <Compile Include="Implementation\MenuRepository.cs" />
     <Compile Include="Implementation\NewsRepository.cs" />
@@ -98,10 +102,17 @@
     <Compile Include="OfficeAddress.cs">
       <DependentUpon>APCRSHRModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Photo.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryClassFactory.cs" />
     <Compile Include="Repository\IAdminRepository.cs" />
     <Compile Include="Repository\IArticleRepository.cs" />
+    <Compile Include="Repository\IConferenceDeclarationRepository.cs" />
     <Compile Include="Repository\IImportantDeadlineRepository.cs" />
     <Compile Include="Repository\IMenuRepository.cs" />
     <Compile Include="Repository\INewsRepository.cs" />

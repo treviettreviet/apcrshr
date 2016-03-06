@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="APCRSHRModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="APCRSHRModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Admin">
           <Key>
             <PropertyRef Name="AdminID" />
@@ -18,6 +18,19 @@
           <Property Name="Locked" Type="bit" Nullable="false" />
           <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Album">
+          <Key>
+            <PropertyRef Name="AlbumID" />
+          </Key>
+          <Property Name="AlbumID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ActionURL" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="Description" Type="nvarchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="Article">
           <Key>
@@ -35,22 +48,21 @@
           <Property Name="MenuID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ShortContent" Type="nvarchar" MaxLength="300" />
         </EntityType>
-        <EntityType Name="ConferenceData">
+        <EntityType Name="ConferenceDeclaration">
           <Key>
-            <PropertyRef Name="ConferenceDataID" />
+            <PropertyRef Name="ConferenceID" />
           </Key>
-          <Property Name="ConferenceDataID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ConferenceID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="Contents" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="ActionURL" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="AttachmentURL" Type="nvarchar" MaxLength="200" />
+          <Property Name="ImageURL" Type="nvarchar" MaxLength="200" />
+          <Property Name="Contents" Type="nvarchar(max)" />
+          <Property Name="ShortContent" Type="nvarchar" MaxLength="300" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
-          <Property Name="Language" Type="varchar" MaxLength="50" />
-          <Property Name="MenuID" Type="varchar" MaxLength="50" />
-          <Property Name="DocURL" Type="nvarchar" MaxLength="200" />
-          <Property Name="ImageURL" Type="nvarchar" MaxLength="200" />
+          <Property Name="ActionURL" Type="nvarchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <EntityType Name="DownloadCode">
           <Key>
@@ -105,6 +117,9 @@
           <Property Name="Language" Type="varchar" MaxLength="50" />
           <Property Name="ParentID" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="URL" Type="nvarchar" MaxLength="200" />
+          <Property Name="Type" Type="bit" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="News">
           <Key>
@@ -139,6 +154,40 @@
           <Property Name="Phone" Type="varchar" MaxLength="50" />
           <Property Name="Fax" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Photo">
+          <Key>
+            <PropertyRef Name="PhotoID" />
+          </Key>
+          <Property Name="PhotoID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ImageURL" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="300" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="AlbumID" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'APCRSHR.dbo.Presentation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Presentation">
+          <Key>
+            <PropertyRef Name="PresentationID" />
+            <PropertyRef Name="Title" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDate" />
+          </Key>
+          <Property Name="PresentationID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="AttachmentURL" Type="nvarchar" MaxLength="200" />
+          <Property Name="ImageURL" Type="nvarchar" MaxLength="200" />
+          <Property Name="Contents" Type="nvarchar(max)" />
+          <Property Name="ShortContent" Type="nvarchar" MaxLength="300" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Slider">
@@ -247,19 +296,35 @@
         </Association>
         <EntityContainer Name="APCRSHRModelStoreContainer">
           <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Album" EntityType="Self.Album" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Article" EntityType="Self.Article" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ConferenceData" EntityType="Self.ConferenceData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConferenceDeclaration" EntityType="Self.ConferenceDeclaration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DownloadCode" EntityType="Self.DownloadCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ImportantDeadline" EntityType="Self.ImportantDeadline" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MailingAddress" EntityType="Self.MailingAddress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="News" EntityType="Self.News" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OfficeAddress" EntityType="Self.OfficeAddress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Photo" EntityType="Self.Photo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Slider" EntityType="Self.Slider" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Subscriber" EntityType="Self.Subscriber" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Upload" EntityType="Self.Upload" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserSession" EntityType="Self.UserSession" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Presentation" EntityType="Self.Presentation" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[Presentation].[PresentationID] AS [PresentationID], 
+[Presentation].[Title] AS [Title], 
+[Presentation].[AttachmentURL] AS [AttachmentURL], 
+[Presentation].[ImageURL] AS [ImageURL], 
+[Presentation].[Contents] AS [Contents], 
+[Presentation].[ShortContent] AS [ShortContent], 
+[Presentation].[CreatedBy] AS [CreatedBy], 
+[Presentation].[CreatedDate] AS [CreatedDate], 
+[Presentation].[UpdatedBy] AS [UpdatedBy], 
+[Presentation].[UpdatedDate] AS [UpdatedDate]
+FROM [dbo].[Presentation] AS [Presentation]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_MailingAddress_User" Association="Self.FK_MailingAddress_User">
             <End Role="User" EntitySet="User" />
             <End Role="MailingAddress" EntitySet="MailingAddress" />
@@ -273,7 +338,8 @@
             <End Role="OfficeAddress" EntitySet="OfficeAddress" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="APCRSHRModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -291,6 +357,19 @@
           <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
+        <EntityType Name="Album">
+          <Key>
+            <PropertyRef Name="AlbumID" />
+          </Key>
+          <Property Name="AlbumID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ActionURL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="Article">
           <Key>
             <PropertyRef Name="ArticleID" />
@@ -307,22 +386,21 @@
           <Property Name="MenuID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ShortContent" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="ConferenceData">
+        <EntityType Name="ConferenceDeclaration">
           <Key>
-            <PropertyRef Name="ConferenceDataID" />
+            <PropertyRef Name="ConferenceID" />
           </Key>
-          <Property Name="ConferenceDataID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ConferenceID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Contents" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ActionURL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AttachmentURL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ImageURL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Contents" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ShortContent" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="Language" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MenuID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DocURL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ImageURL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ActionURL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="DownloadCode">
           <Key>
@@ -378,8 +456,11 @@
           <Property Name="Language" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ParentID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Menu1" Relationship="APCRSHRModel.FK_Menu_Menu" FromRole="Menu" ToRole="Menu1" />
-          <NavigationProperty Name="Menu2" Relationship="APCRSHRModel.FK_Menu_Menu" FromRole="Menu1" ToRole="Menu" />
+          <Property Name="URL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="Boolean" Nullable="false" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Menu1" Relationship="Self.FK_Menu_Menu" FromRole="Menu" ToRole="Menu1" />
+          <NavigationProperty Name="Menu2" Relationship="Self.FK_Menu_Menu" FromRole="Menu1" ToRole="Menu" />
         </EntityType>
         <EntityType Name="News">
           <Key>
@@ -417,6 +498,34 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="User" Relationship="Self.FK_OfficeAddress_User" FromRole="OfficeAddress" ToRole="User" />
         </EntityType>
+        <EntityType Name="Photo">
+          <Key>
+            <PropertyRef Name="PhotoID" />
+          </Key>
+          <Property Name="PhotoID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ImageURL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="AlbumID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Slider">
+          <Key>
+            <PropertyRef Name="SliderID" />
+          </Key>
+          <Property Name="SliderID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="URL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ImageURL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Language" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
         <EntityType Name="Subscriber">
           <Key>
             <PropertyRef Name="SubscriberID" />
@@ -430,6 +539,20 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Upload">
+          <Key>
+            <PropertyRef Name="UploadID" />
+          </Key>
+          <Property Name="UploadID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="UploadURL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="FilePath" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -459,6 +582,24 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="Presentation">
+          <Key>
+            <PropertyRef Name="PresentationID" />
+            <PropertyRef Name="Title" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDate" />
+          </Key>
+          <Property Name="PresentationID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AttachmentURL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ImageURL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Contents" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ShortContent" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
         <Association Name="FK_MailingAddress_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="MailingAddress" Type="Self.MailingAddress" Multiplicity="*" />
@@ -468,6 +609,18 @@
             </Principal>
             <Dependent Role="MailingAddress">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Menu_Menu">
+          <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
+          <End Role="Menu1" Type="Self.Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="MenuID" />
+            </Principal>
+            <Dependent Role="Menu1">
+              <PropertyRef Name="ParentID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -485,72 +638,35 @@
         </Association>
         <EntityContainer Name="APCRSHREntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Admins" EntityType="Self.Admin" />
+          <EntitySet Name="Albums" EntityType="Self.Album" />
           <EntitySet Name="Articles" EntityType="Self.Article" />
-          <EntitySet Name="ConferenceDatas" EntityType="Self.ConferenceData" />
+          <EntitySet Name="ConferenceDeclarations" EntityType="Self.ConferenceDeclaration" />
           <EntitySet Name="DownloadCodes" EntityType="Self.DownloadCode" />
           <EntitySet Name="ImportantDeadlines" EntityType="Self.ImportantDeadline" />
           <EntitySet Name="MailingAddresses" EntityType="Self.MailingAddress" />
           <EntitySet Name="Menus" EntityType="Self.Menu" />
           <EntitySet Name="News" EntityType="Self.News" />
           <EntitySet Name="OfficeAddresses" EntityType="Self.OfficeAddress" />
+          <EntitySet Name="Photos" EntityType="Self.Photo" />
+          <EntitySet Name="Sliders" EntityType="Self.Slider" />
           <EntitySet Name="Subscribers" EntityType="Self.Subscriber" />
+          <EntitySet Name="Uploads" EntityType="Self.Upload" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="UserSessions" EntityType="Self.UserSession" />
+          <EntitySet Name="Presentations" EntityType="Self.Presentation" />
           <AssociationSet Name="FK_MailingAddress_User" Association="Self.FK_MailingAddress_User">
             <End Role="User" EntitySet="Users" />
             <End Role="MailingAddress" EntitySet="MailingAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Menu_Menu" Association="Self.FK_Menu_Menu">
+            <End Role="Menu" EntitySet="Menus" />
+            <End Role="Menu1" EntitySet="Menus" />
           </AssociationSet>
           <AssociationSet Name="FK_OfficeAddress_User" Association="Self.FK_OfficeAddress_User">
             <End Role="User" EntitySet="Users" />
             <End Role="OfficeAddress" EntitySet="OfficeAddresses" />
           </AssociationSet>
-          <AssociationSet Name="FK_Menu_Menu" Association="APCRSHRModel.FK_Menu_Menu">
-            <End Role="Menu" EntitySet="Menus" />
-            <End Role="Menu1" EntitySet="Menus" />
-          </AssociationSet>
-          <EntitySet Name="Sliders" EntityType="APCRSHRModel.Slider" />
-          <EntitySet Name="Uploads" EntityType="APCRSHRModel.Upload" />
         </EntityContainer>
-        <Association Name="FK_Menu_Menu">
-          <End Type="APCRSHRModel.Menu" Role="Menu" Multiplicity="0..1" />
-          <End Type="APCRSHRModel.Menu" Role="Menu1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Menu">
-              <PropertyRef Name="MenuID" />
-            </Principal>
-            <Dependent Role="Menu1">
-              <PropertyRef Name="ParentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Slider">
-          <Key>
-            <PropertyRef Name="SliderID" />
-          </Key>
-          <Property Name="SliderID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="URL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ImageURL" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Language" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Upload">
-          <Key>
-            <PropertyRef Name="UploadID" />
-          </Key>
-          <Property Name="UploadID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="UploadURL" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="FilePath" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -572,10 +688,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Albums">
+            <EntityTypeMapping TypeName="APCRSHRModel.Album">
+              <MappingFragment StoreEntitySet="Album">
+                <ScalarProperty Name="AlbumID" ColumnName="AlbumID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ActionURL" ColumnName="ActionURL" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Articles">
             <EntityTypeMapping TypeName="APCRSHRModel.Article">
               <MappingFragment StoreEntitySet="Article">
-                <ScalarProperty Name="ShortContent" ColumnName="ShortContent" />
                 <ScalarProperty Name="ArticleID" ColumnName="ArticleID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Contents" ColumnName="Contents" />
@@ -586,24 +715,24 @@
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="Language" ColumnName="Language" />
                 <ScalarProperty Name="MenuID" ColumnName="MenuID" />
+                <ScalarProperty Name="ShortContent" ColumnName="ShortContent" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ConferenceDatas">
-            <EntityTypeMapping TypeName="APCRSHRModel.ConferenceData">
-              <MappingFragment StoreEntitySet="ConferenceData">
-                <ScalarProperty Name="ConferenceDataID" ColumnName="ConferenceDataID" />
+          <EntitySetMapping Name="ConferenceDeclarations">
+            <EntityTypeMapping TypeName="APCRSHRModel.ConferenceDeclaration">
+              <MappingFragment StoreEntitySet="ConferenceDeclaration">
+                <ScalarProperty Name="ConferenceID" ColumnName="ConferenceID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="AttachmentURL" ColumnName="AttachmentURL" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
                 <ScalarProperty Name="Contents" ColumnName="Contents" />
-                <ScalarProperty Name="ActionURL" ColumnName="ActionURL" />
+                <ScalarProperty Name="ShortContent" ColumnName="ShortContent" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="Language" ColumnName="Language" />
-                <ScalarProperty Name="MenuID" ColumnName="MenuID" />
-                <ScalarProperty Name="DocURL" ColumnName="DocURL" />
-                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="ActionURL" ColumnName="ActionURL" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -656,12 +785,15 @@
           <EntitySetMapping Name="Menus">
             <EntityTypeMapping TypeName="APCRSHRModel.Menu">
               <MappingFragment StoreEntitySet="Menu">
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="MenuID" ColumnName="MenuID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="ActionURL" ColumnName="ActionURL" />
                 <ScalarProperty Name="Language" ColumnName="Language" />
                 <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -702,6 +834,36 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Photos">
+            <EntityTypeMapping TypeName="APCRSHRModel.Photo">
+              <MappingFragment StoreEntitySet="Photo">
+                <ScalarProperty Name="PhotoID" ColumnName="PhotoID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="AlbumID" ColumnName="AlbumID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sliders">
+            <EntityTypeMapping TypeName="APCRSHRModel.Slider">
+              <MappingFragment StoreEntitySet="Slider">
+                <ScalarProperty Name="SliderID" ColumnName="SliderID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="Language" ColumnName="Language" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Subscribers">
             <EntityTypeMapping TypeName="APCRSHRModel.Subscriber">
               <MappingFragment StoreEntitySet="Subscriber">
@@ -714,6 +876,21 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Uploads">
+            <EntityTypeMapping TypeName="APCRSHRModel.Upload">
+              <MappingFragment StoreEntitySet="Upload">
+                <ScalarProperty Name="UploadID" ColumnName="UploadID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="UploadURL" ColumnName="UploadURL" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -745,33 +922,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Sliders">
-            <EntityTypeMapping TypeName="APCRSHRModel.Slider">
-              <MappingFragment StoreEntitySet="Slider">
-                <ScalarProperty Name="Language" ColumnName="Language" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <EntitySetMapping Name="Presentations">
+            <EntityTypeMapping TypeName="APCRSHRModel.Presentation">
+              <MappingFragment StoreEntitySet="Presentation">
+                <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="AttachmentURL" ColumnName="AttachmentURL" />
                 <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
-                <ScalarProperty Name="URL" ColumnName="URL" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="SliderID" ColumnName="SliderID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Uploads">
-            <EntityTypeMapping TypeName="APCRSHRModel.Upload">
-              <MappingFragment StoreEntitySet="Upload">
-                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Contents" ColumnName="Contents" />
+                <ScalarProperty Name="ShortContent" ColumnName="ShortContent" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="UploadURL" ColumnName="UploadURL" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="UploadID" ColumnName="UploadID" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
