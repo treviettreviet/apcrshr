@@ -70,20 +70,20 @@ namespace Site.Core.Repository.Implementation
         public IList<Menu> FindAll()
         {
             APCRSHREntities context = new APCRSHREntities();
-            return context.Menus.Where(m => m.ParentID == null).OrderBy(m => m.CreatedDate).ToList();
+            return context.Menus.Where(m => m.ParentID == null).OrderBy(m => m.DisplayOrder).ToList();
         }
 
         public IList<Menu> FindSubMenus(string parentID)
         {
             APCRSHREntities context = new APCRSHREntities();
-            return context.Menus.Where(m => m.ParentID.Equals(parentID)).OrderBy(m => m.CreatedDate).ToList();
+            return context.Menus.Where(m => m.ParentID.Equals(parentID)).OrderBy(m => m.DisplayOrder).ToList();
         }
 
 
         public IList<Menu> FindAll(string language)
         {
             APCRSHREntities context = new APCRSHREntities();
-            return context.Menus.Where(m => m.Language.Equals(language)).OrderBy(m => m.CreatedDate).ToList();
+            return context.Menus.Where(m => m.Language.Equals(language)).OrderBy(m => m.DisplayOrder).ToList();
         }
 
 
