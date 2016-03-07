@@ -229,5 +229,32 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindAllItemReponse<ImportantDeadlineModel> GetRelatedImportantDeadline(DateTime date, int pageSize, int pageIndex)
+        {
+            try
+            {
+                IImportantDeadlineRepository conRepository = RepositoryClassFactory.GetInstance().GetImportantDeadlineRepository();
+
+                var result = conRepository.FindAllRelated(date, pageSize, pageIndex);
+                var _con = result.Item2.Select(n => MapperUtil.CreateMapper().Mapper.Map<ImportantDeadline, ImportantDeadlineModel>(n)).ToList();
+                return new FindAllItemReponse<ImportantDeadlineModel>
+                {
+                    Count = result.Item1,
+                    Items = _con,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindAllItemReponse<ImportantDeadlineModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }

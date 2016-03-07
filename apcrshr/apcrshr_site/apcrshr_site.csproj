@@ -716,6 +716,9 @@
     <Content Include="Content\font\glyphicons-regular.woff" />
     <Content Include="Content\font\glyphicons-regulard41d.eot" />
     <Content Include="Areas\Administrator\Views\Admin\UpdateCategory.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdminImportantDeadline\Index.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <None Include="Properties\PublishProfiles\apcrshr.hvtec.vn - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />

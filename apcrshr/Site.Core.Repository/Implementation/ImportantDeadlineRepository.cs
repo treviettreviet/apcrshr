@@ -125,5 +125,16 @@ namespace Site.Core.Repository.Implementation
                 return Tuple.Create<int, IList<ImportantDeadline>>(count, importantDeadline);
             }
         }
+
+
+        public Tuple<int, IList<ImportantDeadline>> FindAllRelated(DateTime date, int pageSize, int pageIndex)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                var deadlines = context.ImportantDeadlines.OrderByDescending(n => n.CreatedDate).Where(n => n.CreatedDate < date).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+                var count = context.ImportantDeadlines.OrderByDescending(n => n.CreatedDate).Where(n => n.CreatedDate < date).Count();
+                return Tuple.Create<int, IList<ImportantDeadline>>(count, deadlines);
+            }
+        }
     }
 }

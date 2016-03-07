@@ -64,6 +64,15 @@ namespace Site.Core.Service.Contract
         /// <param name="top"></param>
         /// <returns></returns>
         FindAllItemReponse<ImportantDeadlineModel> GetTopImportantDeadlines(int top);
+        /// <summary>
+        /// Get all related important deadline by date
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="date"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <returns></returns>
+        FindAllItemReponse<ImportantDeadlineModel> GetRelatedImportantDeadline(DateTime date, int pageSize, int pageIndex);
 
     }
 }

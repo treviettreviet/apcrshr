@@ -19,13 +19,13 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         public AdminImportantDeadlineController()
         {
+            ViewBag.CurrentNode = "AdminImportantDeadline";
             this._importantDeadline = new ImportantDeadlineService();
         }
 
         [SessionFilter]
         public ActionResult Index()
         {
-            IImportantDeadlineRepository importantDeadlineRepository = RepositoryClassFactory.GetInstance().GetImportantDeadlineRepository();
             FindAllItemReponse<ImportantDeadlineModel> response = _importantDeadline.GetImportantDeadlines();
             if (response.Items == null)
             {
@@ -35,7 +35,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [SessionFilter]
-        public ActionResult AddNewImportantDeadline()
+        public ActionResult CreateImportantDeadline()
         {
             return View();
         }
