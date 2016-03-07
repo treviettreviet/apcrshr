@@ -10,18 +10,18 @@
             {
                 if (item.SubMenus == null || item.SubMenus.Count == 0)
                 {
-                    <li><a class='@(ViewBag.CurrentNode == item.ActionURL ? "active" : "")' href='@Url.Action("ArticleView", "Home", new { ActionURL = item.ActionURL })'><i class="fa fa-user"></i>@item.Title</a></li>
+                    <li><a class='@(ViewBag.CurrentNode == item.ActionURL ? "active" : "")' href='@(item.Type == true ? item.URL : Url.Action("ArticleView", "Home", new { ActionURL = item.ActionURL }))'><i class="fa fa-user"></i>@item.Title</a></li>
                 }
                 else
                 {
                     <li class="drop">
-                        <a class='@(ViewBag.CurrentNode == item.ActionURL ? "active" : "")' href="#"><i class="fa fa-cog"></i>@item.Title <i class="icon-right-small"></i></a>
+                        <a class='@(ViewBag.CurrentNode == item.ActionURL ? "active" : "")' href='@(item.Type == true ? item.URL : Url.Action("ArticleView", "Home", new { ActionURL = item.ActionURL }))'><i class="fa fa-cog"></i>@item.Title <i class="icon-right-small"></i></a>
                         <ul class="drop-down">
                             @{
                                 IList<Site.Core.DataModel.Model.MenuModel> subs = item.SubMenus.OrderBy(m => m.CreatedDate).ToList();
                                 foreach (var s in subs)
                                 {
-                                    <li><a href='@Url.Action("ArticleView", "Home", new { ActionURL = s.ActionURL })'>@s.Title</a></li>
+                                    <li><a href='@(s.Type == true ? s.URL : Url.Action("ArticleView", "Home", new { ActionURL = s.ActionURL }))'>@s.Title</a></li>
                                 }
                             }
                         </ul>

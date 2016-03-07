@@ -25,6 +25,7 @@
         <AssociationConnector Association="APCRSHRModel.FK_MailingAddress_User" ManuallyRouted="false" />
         <AssociationConnector Association="APCRSHRModel.FK_Menu_Menu" ManuallyRouted="false" />
         <AssociationConnector Association="APCRSHRModel.FK_OfficeAddress_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="APCRSHRModel.Video" Width="1.5" PointX="5.375" PointY="12.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

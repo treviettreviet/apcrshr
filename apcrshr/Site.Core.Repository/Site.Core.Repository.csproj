@@ -47,6 +47,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Album.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="APCRSHRModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>APCRSHRModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="APCRSHRModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="APCRSHRModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>APCRSHRModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Article.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ConferenceDeclaration.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DownloadCode.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Implementation\AdminRepository.cs" />
     <Compile Include="Implementation\ArticleRepository.cs" />
     <Compile Include="Implementation\ConferenceDeclarationRepository.cs" />
@@ -57,6 +87,27 @@
     <Compile Include="Implementation\UploadRepository.cs" />
     <Compile Include="Implementation\UserRepository.cs" />
     <Compile Include="Implementation\UserSessionRepository.cs" />
+    <Compile Include="ImportantDeadline.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MailingAddress.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Menu.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="News.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfficeAddress.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Photo.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryClassFactory.cs" />
     <Compile Include="Repository\IAdminRepository.cs" />
@@ -70,8 +121,33 @@
     <Compile Include="Repository\IUploadRepository.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Repository\IUserSessionRepository.cs" />
+    <Compile Include="Slider.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subscriber.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Upload.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserSession.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Video.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EntityDeploy Include="APCRSHRModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>APCRSHRModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="APCRSHRModel.edmx.diagram">
+      <DependentUpon>APCRSHRModel.edmx</DependentUpon>
+    </None>
     <None Include="App.Config" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -83,6 +159,18 @@
       <Project>{930cede8-c490-460c-9ca4-47b84bfe0ff7}</Project>
       <Name>Site.Core.Common.Ultil</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="APCRSHRModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>APCRSHRModel.edmx</DependentUpon>
+      <LastGenOutput>APCRSHRModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="APCRSHRModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>APCRSHRModel.edmx</DependentUpon>
+      <LastGenOutput>APCRSHRModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
