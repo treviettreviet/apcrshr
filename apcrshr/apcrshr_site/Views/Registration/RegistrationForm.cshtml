@@ -21,7 +21,7 @@
             </h3>
         </div>
         <div class="box-content nopadding">
-            <form action="http://www.eakroko.de/flat/post.php" method="POST" class='form-horizontal form-wizard' id="ss">
+            <form action="#" method="POST" class='form-horizontal form-wizard' id="ss">
                 <div class="step" id="firstStep">
                     <ul class="wizard-steps steps-3">
                         <li class='active'>
@@ -31,7 +31,7 @@
                                     <span class="active"></span>
                                 </span>
                                 <span class="description">
-                                    Basic information
+                                    General information
                                 </span>
                             </div>
                         </li>
@@ -41,7 +41,7 @@
                                 <span class="circle">
                                 </span>
                                 <span class="description">
-                                    Advanced information
+                                    Contact information
                                 </span>
                             </div>
                         </li>
@@ -51,27 +51,55 @@
                                 <span class="circle">
                                 </span>
                                 <span class="description">
-                                    Additional information
+                                    Registration information
                                 </span>
                             </div>
                         </li>
                     </ul>
                     <div class="form-group">
-                        <label for="firstname" class="control-label col-sm-2">First name</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="firstname" id="firstname" class="form-control">
+                        <label for="firstname" class="control-label col-sm-3">Title <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-9">
+                            <select name="Title" id="Title">
+                                <option value="">-- Chose one --</option>
+                                <option value="Dr">Dr</option>
+                                <option value="Mr">Mr</option>
+                                <option value="Mrs">Mrs</option>
+                                <option value="Ms">Ms</option>
+                                <option value="Others">Others</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="anotherelem" class="control-label col-sm-2">Last name</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="anotherelem" id="anotherelem" class="form-control">
+                        <label for="anotherelem" class="control-label col-sm-3">Full name <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-9">
+                            <input type="text" name="FullName" id="FullName" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="additionalfield" class="control-label col-sm-2">Additional information</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="additionalfield" id="additionalfield" class="form-control">
+                        <label for="additionalfield" class="control-label col-sm-3">Sex <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-9">
+                            <select name="Sex" id="Sex">
+                                <option value="">-- Chose one --</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="additionalfield" class="control-label col-sm-3">Meal preference <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-9">
+                            <select name="MealPreference" id="MealPreference">
+                                <option value="">-- Chose one --</option>
+                                <option value="Vegetarian">Vegetarian</option>
+                                <option value="Non- vegetarian">Non- vegetarian</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="anotherelem" class="control-label col-sm-3">Disability or special treatment</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="DisabilityOrTreatment" id="DisabilityOrTreatment" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -83,7 +111,7 @@
                                 <span class="circle">
                                 </span>
                                 <span class="description">
-                                    Basic information
+                                    General information
                                 </span>
                             </div>
                         </li>
@@ -96,7 +124,7 @@
                                     <span class="active"></span>
                                 </span>
                                 <span class="description">
-                                    Advanced information
+                                    Contact information
                                 </span>
                             </div>
                         </li>
@@ -108,29 +136,68 @@
                                 <span class="circle">
                                 </span>
                                 <span class="description">
-                                    Additional information
+                                    Registration information
                                 </span>
                             </div>
                         </li>
                     </ul>
                     <div class="form-group">
-                        <label for="text" class="control-label col-sm-2">Gender</label>
-                        <div class="col-sm-10">
-                            <select name="gend" id="gend">
-                                <option value="">-- Chose one --</option>
-                                <option value="1">Male</option>
-                                <option value="2">Female</option>
-                            </select>
+                        <label for="anotherelem" class="control-label col-sm-3">Email address <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-9">
+                            <input type="text" name="Email" id="Email" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="text" class="control-label col-sm-2">Accept policy</label>
-                        <div class="col-sm-10">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="policy" value="agree">I agree the policy.
-                                </label>
-                            </div>
+                        <label for="anotherelem" class="control-label col-sm-3">Other email address</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="OtherEmail" id="OtherEmail" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="anotherelem" class="control-label col-sm-3">Phone number <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-9">
+                            <input type="text" name="Phone" id="Phone" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="anotherelem" class="control-label col-sm-3">Address <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-9">
+                            <input type="text" name="Address" id="Address" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="anotherelem" class="control-label col-sm-3">City <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-9">
+                            <input type="text" name="City" id="City" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="text" class="control-label col-sm-3">Country <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-9">
+                            <select name="Country" id="Country">
+                                <option value="">-- Chose one --</option>
+                                <option value="vietnam">Viet Name</option>
+                                <option value="usa">USA</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="box-title">
+                        <h3>
+                            <i class="fa fa-check"></i>
+                            Work place information
+                        </h3>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label for="anotherelem" class="control-label col-sm-3">Address</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="WorkAddress" id="WorkAddress" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="anotherelem" class="control-label col-sm-3">Organization</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="Organization" id="Organization" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -144,7 +211,7 @@
                                 <span class="circle">
                                 </span>
                                 <span class="description">
-                                    Basic information
+                                    General information
                                 </span>
                             </div>
                         </li>
@@ -156,7 +223,7 @@
                                 <span class="circle">
                                 </span>
                                 <span class="description">
-                                    Advanced information
+                                    Contact information
                                 </span>
                             </div>
                         </li>
@@ -169,15 +236,113 @@
                                     <span class="active"></span>
                                 </span>
                                 <span class="description">
-                                    Additional information
+                                    Registration information
                                 </span>
                             </div>
                         </li>
                     </ul>
                     <div class="form-group">
-                        <label for="text" class="control-label col-sm-2">Additional information</label>
-                        <div class="col-sm-10">
-                            <textarea name="textare" id="tt333" class="form-control" rows="7" placeholder="You can provide additional information in here..."></textarea>
+                        <label for="additionalfield" class="control-label col-sm-3">Participant type <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-9">
+                            <select name="ParticipantType" id="ParticipantType">
+                                <option value="">-- Chose one --</option>
+                                <option value="VIP">VIP</option>
+                                <option value="Plenary Speaker">Plenary Speaker</option>
+                                <option value="Invited Guest">Invited Guest</option>
+                                <option value="Oral Presenter">Oral Presenter</option>
+                                <option value="Poster Presenter">Poster Presenter</option>
+                                <option value="Youth Scholar">Youth Scholar</option>
+                                <option value="Participant">Participant</option>
+                                <option value="Press">Press</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="text" class="control-label col-sm-3">Youth conference <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-9">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="YouthConference" value="true">[age 15-29-(1988 - 2002)]: (Yes/ No).
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-title">
+                        <h3>
+                            <i class="fa fa-check"></i>
+                            Visa/Guest management information
+                        </h3>
+                    </div>
+                    <div class="form-group">
+                        <i>Your information will be submitted to Vietnam Department of Immigration as the security requirement.</i>
+                    </div>
+                    <div class="form-group">
+                        <label for="anotherelem" class="control-label col-sm-3">Date of birth <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-9">
+                            <input type="text" name="DateOfBirth" id="DateOfBirth" class="form-control">
+                            <i>(dd/mm/yyyy)</i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="anotherelem" class="control-label col-sm-3">Original nationality <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-9">
+                            <input type="text" name="OriginalNationality" id="OriginalNationality" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="anotherelem" class="control-label col-sm-3">Current nationality <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-9">
+                            <input type="text" name="CurrentNationality" id="CurrentNationality" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="anotherelem" class="control-label col-sm-3">Passport number <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-9">
+                            <input type="text" name="PassportNumber" id="PassportNumber" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="additionalfield" class="control-label col-sm-3">Type of passport <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-9">
+                            <select name="TypeOfPassport" id="TypeOfPassport">
+                                <option value="">-- Chose one --</option>
+                                <option value="Regular">Regular</option>
+                                <option value="Official">Official</option>
+                                <option value="Diplomatic">Diplomatic</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="anotherelem" class="control-label col-sm-3">Occupation <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-9">
+                            <input type="text" name="Occupation" id="Occupation" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="anotherelem" class="control-label col-sm-3">Date of Passport issue <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-9">
+                            <input type="text" name="DateOfPassportIssue" id="DateOfPassportIssue" class="form-control">
+                            <i>(dd/mm/yyyy)</i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="anotherelem" class="control-label col-sm-3">Date of Passport expiry <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-9">
+                            <input type="text" name="DateOfPassportExpiry" id="DateOfPassportExpiry" class="form-control">
+                            <i>(dd/mm/yyyy)</i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="file" class="control-label col-sm-3">Photocopies of the first 3 pages of the passport <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-9">
+                            <input type="file" name="file" id="file" class="form-control">
+                            <span class="help-block">Only .jpg, .png (Max Size: 100MB)</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="text" class="control-label col-sm-3">Detail address of the Embassy of Viet Nam in your country which you will apply for your Visa to enter Viet Nam (for all delegates who need visa)</label>
+                        <div class="col-sm-9">
+                            <textarea name="textare" id="tt333" class="form-control ui-wizard-content" rows="7" placeholder="You can provide additional information in here..."></textarea>
                         </div>
                     </div>
                 </div>

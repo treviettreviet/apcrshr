@@ -100,7 +100,7 @@
                             <div class="form-group">
                                 <label for="textfield" class="control-label col-sm-2">Thứ tự</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="DisplayOrder" id="txtDisplayOrder" placeholder="Thứ tự" class="form-control">
+                                    <input type="text" name="DisplayOrder" id="txtDisplayOrder" value="@(Model != null && Model.Count > 0 ? Model.Max(m => m.DisplayOrder) + 1 : 0)" placeholder="Thứ tự" class="form-control" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -228,7 +228,10 @@
             $('.selected').removeClass('selected');
             //set this clicked
             $(this).addClass('selected');
-            $("#txtMenuParent").val($(this).html());
+            //$("#txtMenuParent").val($(this).html());
+
+            //Select parent menu
+            selectParent($(this).html(), $(this).attr("id"));
 
             //Enable article
             $("#lnkCreateArticle").removeAttr("disabled");
@@ -239,7 +242,10 @@
             $('.selected').removeClass('selected');
             //set this clicked
             $(this).addClass('selected');
-            $("#txtMenuParent").val($(this).html());
+            //$("#txtMenuParent").val($(this).html());
+
+            //Select parent menu
+            selectParent($(this).html(), $(this).attr("id"));
 
             //Disabled article
             $("#lnkCreateArticle").attr("disabled", "disabled");
@@ -252,6 +258,26 @@
                 return false;
             }
         });
+
+
     })
+
+    function selectParent(title, id) {
+        $.blockUI({ message: $('#spinner') });
+        $.ajax({
+            type: 'GET',
+            contentType: 'application/json',
+            url: '@Url.Action("GetMenuCreation", "Admin")',
+            data: { title: title, id: id },
+            success: function (data) {
+                $.unblockUI();
+                $("#txtMenuParent").val(data.title);
+                $("#txtDisplayOrder").val(data.displayOrder);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $.unblockUI();
+            }
+        });
+    }
 
 </script>

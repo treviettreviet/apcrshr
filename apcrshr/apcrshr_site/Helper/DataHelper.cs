@@ -50,9 +50,7 @@ namespace apcrshr_site.Helper
         public IDictionary<string, string> InternalLinks()
         {
             IDictionary<string, string> links = new Dictionary<string, string>();
-            links.Add("Tài liệu / Ấn phẩm", "/Document/Index");
-            links.Add("Tin Tức", "/News/Index");
-            links.Add("Tạp chí y tế công cộng", "/Magazine/Index");
+            links.Add("Registration Form", "/Registration/RegistrationForm");
             return links;
         }
     }

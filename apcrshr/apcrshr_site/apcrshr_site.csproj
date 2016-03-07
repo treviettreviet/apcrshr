@@ -807,6 +807,7 @@
     <Content Include="Views\ConferenceDeclaration\Index.cshtml" />
     <Content Include="Views\Registration\RegistrationForm.cshtml" />
     <Content Include="Views\ConferenceDeclaration\ViewConference.cshtml" />
+    <Content Include="Views\ConferenceDeclaration\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

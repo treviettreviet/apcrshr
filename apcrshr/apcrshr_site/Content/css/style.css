@@ -5237,7 +5237,7 @@ a.elemadded:hover {
   -webkit-transition: all 0.23s ease-in-out;
   -o-transition: all 0.23s ease-in-out;
   display: block;
-  background: #00afd1;
+  background: #368ee0;
   color: #FFF;
   font-size: 16px;
   font-family: 'Roboto', sans-serif;
@@ -5417,4 +5417,9 @@ a.elemadded:hover {
 	display: block;
 	color: #fff;
 	font-size: 1em;
+}
+
+.validation-span-required {
+    color: #ff0000;
+    font-weight: bold;
 }
