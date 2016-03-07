@@ -136,6 +136,9 @@
     <Compile Include="UserSession.cs">
       <DependentUpon>APCRSHRModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Video.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="APCRSHRModel.edmx">

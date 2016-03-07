@@ -42,5 +42,6 @@ namespace Site.Core.Repository
         public DbSet<User> Users { get; set; }
         public DbSet<UserSession> UserSessions { get; set; }
         public DbSet<Presentation> Presentations { get; set; }
+        public DbSet<Video> Videos { get; set; }
     }
 }
