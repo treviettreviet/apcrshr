@@ -70,7 +70,15 @@ namespace Site.Core.Service.Implementation
             try
             {
                 IMenuRepository menuRepository = RepositoryClassFactory.GetInstance().GetMenuRepository();
-                Menu _menu = menuRepository.FindByTitle(menu.Title);
+                Menu _menu = null;
+                if (string.IsNullOrEmpty(menu.ParentID))
+                {
+                    _menu = menuRepository.FindByTitle(menu.Title);
+                }
+                else
+                {
+                    _menu = menuRepository.FindByTitleAndParent(menu.Title, menu.ParentID);
+                }
                 if (_menu != null)
                 {
                     return new InsertResponse
@@ -209,6 +217,57 @@ namespace Site.Core.Service.Implementation
             {
                 return new BaseResponse
                 {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
+
+
+        public MenuDisplayResponse GetMaxDisplayOrder(string title, string id)
+        {
+            try
+            {
+                IMenuRepository menuRepository = RepositoryClassFactory.GetInstance().GetMenuRepository();
+                int displayOrder = 0;
+                string _title = title;
+                var menu = menuRepository.FindByID(id);
+                if (menu != null)
+                {
+                    //Has parent
+                    if (menu.Menu2 != null)
+                    {
+                        _title = menu.Menu2.Title;
+                        //find all subs
+                        IList<Menu> subs = menuRepository.FindSubMenus(menu.Menu2.MenuID);
+                        if (subs != null && subs.Count > 0)
+                        {
+                            displayOrder = subs.Max(s => s.DisplayOrder) + 1;
+                        }
+                    }
+                    else
+                    {
+                        //find all subs
+                        IList<Menu> subs = menuRepository.FindSubMenus(menu.MenuID);
+                        if (subs != null && subs.Count > 0)
+                        {
+                            displayOrder = subs.Max(s => s.DisplayOrder) + 1;
+                        }
+                    }
+                }
+                return new MenuDisplayResponse
+                {
+                    DisplayOrder = displayOrder,
+                    Title = _title,
+                    ErrorCode = (int)ErrorCode.None
+                };
+            }
+            catch (Exception ex)
+            {
+                return new MenuDisplayResponse
+                {
+                    DisplayOrder = 0,
+                    Title = title,
                     ErrorCode = (int)ErrorCode.Error,
                     Message = ex.Message
                 };

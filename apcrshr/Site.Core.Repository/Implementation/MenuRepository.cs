@@ -98,5 +98,12 @@ namespace Site.Core.Repository.Implementation
             APCRSHREntities context = new APCRSHREntities();
             return context.Menus.Where(a => a.ActionURL.Equals(actionURL)).SingleOrDefault();
         }
+
+
+        public Menu FindByTitleAndParent(string title, string parentID)
+        {
+            APCRSHREntities context = new APCRSHREntities();
+            return context.Menus.Where(a => a.Title.Equals(title) && a.ParentID.Equals(parentID)).SingleOrDefault();
+        }
     }
 }

@@ -64,5 +64,12 @@ namespace Site.Core.Service.Contract
         /// <param name="actionURL"></param>
         /// <returns></returns>
         FindItemReponse<MenuModel> FindByActionURL(string actionURL);
+
+        /// <summary>
+        /// Get max menu
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        MenuDisplayResponse GetMaxDisplayOrder(string title, string id);
     }
 }

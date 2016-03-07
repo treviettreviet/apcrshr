@@ -307,5 +307,12 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             BaseResponse response = _menuCategoryService.DeleteMenu(menuID);
             return Json(new { errorCode = response.ErrorCode, message = response.Message }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public JsonResult GetMenuCreation(string title, string id)
+        {
+            MenuDisplayResponse response = _menuCategoryService.GetMaxDisplayOrder(title, id);
+            return Json(new { errorCode = response.ErrorCode, title = response.Title, displayOrder = response.DisplayOrder }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
