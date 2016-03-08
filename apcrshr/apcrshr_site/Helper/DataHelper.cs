@@ -51,6 +51,7 @@ namespace apcrshr_site.Helper
         {
             IDictionary<string, string> links = new Dictionary<string, string>();
             links.Add("Registration Form", "/Registration/RegistrationForm");
+            links.Add("Conference Declaration", "/ConferenceDeclaration/Index");
             return links;
         }
     }
