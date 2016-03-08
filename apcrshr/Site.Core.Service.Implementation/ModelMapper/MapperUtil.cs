@@ -49,6 +49,7 @@ namespace Site.Core.Service.Implementation.ModelMapper
                 cfg.CreateMap<ArticleModel, Article>();
                 cfg.CreateMap<UploadModel, Upload>();
                 cfg.CreateMap<ConferenceDeclarationModel, ConferenceDeclaration>();
+                cfg.CreateMap<ImportantDeadlineModel, ImportantDeadline>();
 
                 //Entity model mapper
                 cfg.CreateMap<Admin, AdminModel>();
@@ -61,6 +62,7 @@ namespace Site.Core.Service.Implementation.ModelMapper
                 cfg.CreateMap<Article, ArticleModel>();
                 cfg.CreateMap<Upload, UploadModel>();
                 cfg.CreateMap<ConferenceDeclaration, ConferenceDeclarationModel>();
+                cfg.CreateMap<ImportantDeadline, ImportantDeadlineModel>();
             });
 
             mapper = config.CreateMapper();

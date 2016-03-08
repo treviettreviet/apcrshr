@@ -16,7 +16,7 @@
 
         <div class="box box-color box-bordered">
             <br />
-            <a href='@Url.Action("AddNewImportantDeadline", "AdminImportantDeadline")' class="btn btn-blue">Thêm Mới</a>
+            <a href='@Url.Action("CreateImportantDeadline", "AdminImportantDeadline")' class="btn btn-blue">Thêm Mới</a>
             <div class="box-title">
                 <h3>
                     <i class="fa fa-th-list"></i>Danh Sách Người Dùng
@@ -48,16 +48,23 @@
                                     <input type="checkbox" name="check" value="@Model[i].DeadlineID">
                                 </td>
                                 <td>@Model[i].Title</td>
-                                <td>@(Model[i].ShortContent.Length > 50 ? Model[i].ShortContent.Substring(0, 50) : Model[i].ShortContent)</td>
+                                @if (!string.IsNullOrEmpty(Model[i].ShortContent))
+                                {
+                                    <td>@(Model[i].ShortContent.Length > 50 ? Model[i].ShortContent.Substring(0, 50) : Model[i].ShortContent)</td>
+                                }
+                                else
+                                {
+                                    <td>@Model[i].ShortContent</td>
+                                }
                                 <td>@apcrshr_site.Helper.UserHelper.GetAdminName(Model[i].CreatedBy)</td>
                                 <td>@Model[i].StartDate.ToShortDateString()</td>
                                 <td>@Model[i].EndDate.ToShortDateString()</td>
                                 <td>@Model[i].Deadline</td>
                                 <td class='hidden-480'>
-                                    <a href='@Url.Action("UpdateUser", "AdminUser", new { deadlineID = Model[i].DeadlineID })' class="btn" rel="tooltip" title="Sửa">
+                                    <a href='@Url.Action("UpdateImportantDeadline", "AdminImportantDeadline", new { deadlineID = Model[i].DeadlineID })' class="btn" rel="tooltip" title="Sửa">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteUser('@Model[i].DeadlineID')">
+                                    <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteImportantDeadline('@Model[i].DeadlineID')">
                                         <i class="fa fa-times"></i>
                                     </a>
                                 </td>
@@ -70,7 +77,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    function deleteUser(deadlineID) {
+    function deleteImportantDeadline(deadlineID) {
         bootbox.confirm("Bạn có chắc chắn muốn xóa bản ghi này?", function (result) {
             if (result) {
                 $.ajax({

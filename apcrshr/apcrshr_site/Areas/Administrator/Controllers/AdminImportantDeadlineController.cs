@@ -1,4 +1,6 @@
 ﻿using apcrshr_site.Filters;
+using apcrshr_site.Helper;
+using Site.Core.DataModel.Enum;
 using Site.Core.DataModel.Model;
 using Site.Core.DataModel.Response;
 using Site.Core.Repository;
@@ -39,6 +41,33 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         {
             return View();
         }
+        [SessionFilter]
+        [ValidateAntiForgeryToken]
+        public JsonResult SaveImportantDeadline(ImportantDeadlineModel importantDeadline)
+        {
+            var sessionId = this.Session["SessionID"].ToString();
+            IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository();
+            UserSession userSession = userSessionRepository.FindByID(sessionId);
+            if (userSession == null)
+            {
+                return Json(new { errorCode = (int)ErrorCode.Redirect, message = Resources.AdminResource.msg_sessionInvalid }, JsonRequestBehavior.AllowGet);
+            }
+            InsertResponse response = new InsertResponse();
+
+            importantDeadline.Title = importantDeadline.Title.Length > 200 ? importantDeadline.Title.Substring(0, 100) + "..." : importantDeadline.Title;
+            if (importantDeadline.ShortContent != null)
+            {
+                importantDeadline.ShortContent = importantDeadline.ShortContent.Length > 300 ? importantDeadline.ShortContent.Substring(0, 296) + "..." : importantDeadline.ShortContent;
+            }
+            importantDeadline.DeadlineID = Guid.NewGuid().ToString();
+            importantDeadline.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(importantDeadline.Title), UrlSlugger.Get8Digits());
+            importantDeadline.CreatedDate = DateTime.Now;
+            importantDeadline.CreatedBy = userSession != null ? userSession.UserID : string.Empty;
+            response = _importantDeadline.CreateImportantDeadline(importantDeadline);
+
+            return Json(new { errorCode = response.ErrorCode, message = response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
 
         [HttpGet]
         public JsonResult DeleteImportantDealine(string deadlineID)
