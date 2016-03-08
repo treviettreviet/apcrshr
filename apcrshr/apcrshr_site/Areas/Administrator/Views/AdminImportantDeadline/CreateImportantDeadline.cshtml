@@ -1,0 +1,186 @@
+﻿@using apcrshr_site.Helper
+@model Site.Core.DataModel.Model.ImportantDeadlineModel
+@{
+    ViewBag.Title = "Kỳ Hạn";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <!--Alert-->
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <br />
+            <div class="alert alert-danger"><a class="close" data-dismiss="alert" href="#">×</a><strong></strong> @ViewBag.ErrorMessage</div>
+        }
+
+        <div class="box box-bordered box-color">
+            <div class="box-title">
+                <h3>
+                    <i class="fa fa-edit"></i>Thêm Kỳ Hạn
+                </h3>
+            </div>
+            <div class="box-content nopadding">
+                @using (Html.BeginForm("SaveImportantDeadline", "AdminImportantDeadline", FormMethod.Post, new { @class = "form-horizontal form-bordered", @id = "frmSaveImportantDeadline", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Tiêu Đề <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(Model => Model.Title, new { @id = "Title", @class = "form-control" })
+                            @Html.ValidationMessageFor(Model => Model.Title)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Tóm Tắt Nội Dung <span class="validation-span-required"></span></label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(Model => Model.ShortContent, new { @id = "ShortContent", @class = "form-control" })
+                            @Html.ValidationMessageFor(Model => Model.ShortContent)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Mô Tả <span class="validation-span-required"></span></label>
+                        <div class="col-sm-10">
+                            @Html.TextAreaFor(Model => Model.Contents, new { @id = "Contents", @class = "form-control" })
+                            @Html.ValidationMessageFor(Model => Model.Contents)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Ngày Bắt Đầu <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(Model => Model.StartDate, new { @id = "StartDate", @class = "form-control" })
+                            @Html.ValidationMessageFor(Model => Model.StartDate)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Ngày Kết Thúc <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(Model => Model.EndDate, new { @id = "EndDate", @class = "form-control" })
+                            @Html.ValidationMessageFor(Model => Model.EndDate)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Hạn Chót <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(Model => Model.Deadline, new { @id = "Deadline", @class = "form-control" })
+                            @Html.ValidationMessageFor(Model => Model.Deadline)
+                        </div>
+                    </div>
+
+                    <div class="form-actions col-sm-offset-2 col-sm-10">
+                        <button type="button" onclick="submitForm()" class="btn btn-primary">Lưu Thông Tin</button>
+                        <button type="button" onclick="resetForm()" class="btn">Khởi tạo lại</button>
+                        <a href='@Url.Action("Index")' class="btn btn-info">Hủy Bỏ</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#Contents").Editor({ name: "Editor-Contents" });
+        $('#StartDate').datepicker({ dateFormat: 'mm/dd/yy' }).datepicker("setDate", new Date());
+        $('#EndDate').datepicker({ dateFormat: 'mm/dd/yy' }).datepicker("setDate", new Date());
+        $('#Deadline').datepicker({ dateFormat: 'mm/dd/yy' }).datepicker("setDate", new Date());
+    });
+
+    function submitForm() {
+        if (!validateForm()) {
+            bootbox.alert("Cần phải nhập dữ liệu những trường bắt buộc.", function () {
+                bootbox.hideAll();
+            });
+            return false;
+        }
+        if (!validateDatetime()) {
+            bootbox.alert("Ngày bắt đầu phải nhỏ hơn ngày kết thúc hoặc hạn chót.", function () {
+                bootbox.hideAll();
+            });
+            return false;
+        }
+
+        $.blockUI({ message: $('#spinner') });
+        var formData = new FormData();
+        formData.append("Title", $("#Title").val());
+        formData.append("ShortContent", $("#ShortContent").val());
+        formData.append("Contents", $("#Editor-Contents").html());
+        formData.append("StartDate", $("#StartDate").val());
+        formData.append("EndDate", $("#EndDate").val());
+        formData.append("Deadline", $("#Deadline").val());
+        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveImportantDeadline", "AdminImportantDeadline")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $.unblockUI();
+                bootbox.alert(response.message, function () {
+                    bootbox.hideAll();
+                });
+                //Timeout
+                if (response.errorCode == 2) {
+                    window.location = "/Administrator/AdminHome/Login";
+                }
+                if (response.errorCode == 0) {
+                    resetForm();
+                }
+            },
+            error: function (error) {
+                $.unblockUI();
+                bootbox.alert(error, function () {
+                    bootbox.hideAll();
+                });
+            }
+        });
+    }
+
+    function validateForm() {
+        if ($("#Title").val() == null || $("#Title").val() == "") {
+            $("#Title").focus();
+            return false;
+        }
+        if ($("#StartDate").val() == null || $("#StartDate").val() == "") {
+            $("#StartDate").focus();
+            return false;
+        }
+        if ($("#EndDate").val() == null || $("#EndDate").val() == "") {
+            $("#EndDate").focus();
+            return false;
+        }
+        if ($("#Deadline").val() == null || $("#Deadline").val() == "") {
+            $("#Deadline").focus();
+            return false;
+        }
+        return true;
+    }
+    function validateDatetime() {
+        if ($("#StartDate").val() > $("#EndDate").val()) {
+            $("#StartDate").focus();
+            return false;
+        }
+        if ($("#StartDate").val() > $("#Deadline").val()) {
+            $("#StartDate").focus();
+            return false;
+        }
+        return true;
+    }
+
+    function resetForm() {
+        $("#Title").val("");
+        $("#ShortContent").val("");
+        $("#Editor-Contents").html("");
+        $("#StartDate").val("");
+        $("#EndDate").val("");
+        $("#Deadline").val("");
+    }
+
+    function setControlCss(control) {
+        $(control).css({ "background-color": "#ffafb3" });
+    }
+</script>
+
