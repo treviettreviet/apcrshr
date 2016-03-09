@@ -87,7 +87,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
                     string filename = imageFile.FileName.Substring(0, imageFile.FileName.LastIndexOf(".")).Replace(" ", "-");
                     filename = string.Format("{0}-{1}", filename, UrlSlugger.Get8Digits());
                     imageFile.SaveAs(Server.MapPath("~/Content/upload/images/Conference/" + filename + extension));
-                    conference.ImageURL = "~/Content/upload/images/Conference/" + filename + extension;
+                    conference.ImageURL = "/Content/upload/images/Conference/" + filename + extension;
                     _conferenceService.UpdateConference(conference);
                 }
                 if (file != null)
@@ -105,7 +105,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
                     string filename = file.FileName.Substring(0, file.FileName.LastIndexOf(".")).Replace(" ", "-");
                     filename = string.Format("{0}-{1}", filename, UrlSlugger.Get8Digits());
                     file.SaveAs(Server.MapPath("~/Content/upload/documents/Conference/" + filename + extension));
-                    conference.AttachmentURL = "~/Content/upload/documents/Conference/" + filename + extension;
+                    conference.AttachmentURL = "/Content/upload/documents/Conference/" + filename + extension;
                     _conferenceService.UpdateConference(conference);
                 }
             }
