@@ -45,7 +45,7 @@ namespace Site.Core.Service.Implementation
             try
             {
                 IImportantDeadlineRepository importantDeadlineRepository = RepositoryClassFactory.GetInstance().GetImportantDeadlineRepository();
-                ImportantDeadline importantDealine = importantDeadlineRepository.FindByID(url);
+                ImportantDeadline importantDealine = importantDeadlineRepository.FindByActionURL(url);
                 var _importantDeadline = MapperUtil.CreateMapper().Mapper.Map<ImportantDeadline, ImportantDeadlineModel>(importantDealine);
                 return new FindItemReponse<ImportantDeadlineModel>
                 {

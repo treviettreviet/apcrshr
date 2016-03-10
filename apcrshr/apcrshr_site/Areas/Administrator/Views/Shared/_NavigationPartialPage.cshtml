@@ -26,6 +26,12 @@
 
                 </a>
             </li>
+            <li class='@(ViewBag.CurrentNode == "AdminMember" ? "active" : "")'>
+                <a href="@Url.Action("Index","AdminImportantDeadline")">
+                    <span>Kỳ Hạn</span>
+
+                </a>
+            </li>
         </ul>
         <div class="user">
             <div class="dropdown">

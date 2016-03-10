@@ -193,6 +193,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ConferenceDeclarationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImportantDeadlineController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -811,6 +812,8 @@
     <Content Include="Views\Registration\RegistrationForm.cshtml" />
     <Content Include="Views\ConferenceDeclaration\ViewConference.cshtml" />
     <Content Include="Views\ConferenceDeclaration\Index.cshtml" />
+    <Content Include="Views\ImportantDeadline\Index.cshtml" />
+    <Content Include="Views\ImportantDeadline\ViewImportantDeadline.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

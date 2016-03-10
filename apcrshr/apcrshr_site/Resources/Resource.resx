@@ -135,11 +135,17 @@
   <data name="title_conferenceDetail" xml:space="preserve">
     <value>Conference Details</value>
   </data>
+  <data name="title_DeadlineDetail" xml:space="preserve">
+    <value>Deadline Details</value>
+  </data>
   <data name="title_newDetail" xml:space="preserve">
     <value>News Details</value>
   </data>
   <data name="title_relatedConference" xml:space="preserve">
     <value>Related Conference</value>
+  </data>
+  <data name="title_relatedDeadline" xml:space="preserve">
+    <value>Related Deadline</value>
   </data>
   <data name="title_relatedNews" xml:space="preserve">
     <value>Related News</value>
