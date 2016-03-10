@@ -1,0 +1,60 @@
+﻿@using apcrshr_site.Helper
+@model Site.Core.DataModel.Response.FindAllItemReponse<Site.Core.DataModel.Model.VideoModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+@if (Model.Items.Count > 0)
+{
+    int i = 1;
+    <div class="themeple_sc"><div class="header"><h3>@Model.Items[0].Title</h3><span class="border_style_color"></span></div></div>
+    <article class="post type-post status-publish format-standard hentry category-uncategorized category-web-design row-fluid blog-article v2 normal">
+        <div class="span12">
+            @Html.Raw(Model.Items[0].Contents)
+        </div>
+    </article>
+
+    <article class="post type-post status-publish format-standard hentry category-uncategorized category-web-design row-fluid blog-article v2 normal">
+        <div class="info">
+            <ul>
+                <li class="calendar">@Model.Items[0].CreatedDate.ToString("dddd, d MMMM, yyyy", new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.Name))</li>
+                <li class="user">@apcrshr_site.Helper.UserHelper.GetAdminName(Model.Items[0].CreatedBy)</li>
+                <li class="comment"><a href="@Model.Items[0].VideoURL">@(string.IsNullOrEmpty(Model.Items[0].VideoURL) ? "0" : "") Video</a></li>
+                
+            </ul>
+        </div>
+    </article>
+
+    <div class="recent_news">
+        @for (; i < Model.Items.Count; i++)
+        {
+            <dl class="news-article blog-article style_2 dl-horizontal">
+                <dt>
+                    <div class="dt">
+                        <span class="date">@Model.Items[i].CreatedDate.Day</span>
+                        <span class="month">@Model.Items[i].CreatedDate.ToString("MMM")</span>
+                        <span class="year">@Model.Items[i].CreatedDate.Year</span>
+                    </div>
+                    <div class="icon_"><i class="moon-pencil"></i></div>
+                </dt>
+                <dd>
+                    <h5><a href='@Url.Action("ViewVideo", new { ActionURL = Model.Items[i].ActionURL, Language = Model.Items[i].Language })'>@Model.Items[i].Title</a></h5>
+                    <p>@Html.Raw(Model.Items[i].Contents.Length > 260 ? Model.Items[i].Contents.Substring(0, 260) + "..." : Model.Items[i].Contents)</p>
+                    <a href='@Url.Action("ViewVideo", new { ActionURL = Model.Items[i].ActionURL, Language = Model.Items[i].Language })' class="read_m"><span>read more</span> <span class="direct_btn"><i class="moon-arrow-right-2"></i></span></a>
+                </dd>
+            </dl>
+        }
+    </div>
+}
+
+    @*Start Pagination*@
+    <div id="pagination">
+        @Html.PagingUtil("Index", "Video", Model.Count, apcrshr_site.Constants.Constants.PAGE_SIZE,
+    Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("pageIndex")).SingleOrDefault())
+    </div>
+    @*End Pagination*@
+
+
+
+
