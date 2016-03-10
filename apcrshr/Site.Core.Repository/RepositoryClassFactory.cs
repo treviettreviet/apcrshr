@@ -70,5 +70,9 @@ namespace Site.Core.Repository
         {
             return new ConferenceDeclarationRepository();
         }
+        public IVideoRepository GetVideoRepository()
+        {
+            return new VideoRepository();
+        }
     }
 }

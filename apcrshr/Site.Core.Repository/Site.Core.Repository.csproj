@@ -87,6 +87,7 @@
     <Compile Include="Implementation\UploadRepository.cs" />
     <Compile Include="Implementation\UserRepository.cs" />
     <Compile Include="Implementation\UserSessionRepository.cs" />
+    <Compile Include="Implementation\VideoRepository.cs" />
     <Compile Include="ImportantDeadline.cs">
       <DependentUpon>APCRSHRModel.tt</DependentUpon>
     </Compile>
@@ -121,6 +122,7 @@
     <Compile Include="Repository\IUploadRepository.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Repository\IUserSessionRepository.cs" />
+    <Compile Include="Repository\IVideoRepository.cs" />
     <Compile Include="Slider.cs">
       <DependentUpon>APCRSHRModel.tt</DependentUpon>
     </Compile>

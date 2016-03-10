@@ -39,6 +39,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         {
             return View();
         }
+        
         [SessionFilter]
         [ValidateAntiForgeryToken]
         public JsonResult SaveConference(ConferenceDeclarationModel conference, HttpPostedFileBase imageFile, HttpPostedFileBase file)
@@ -111,6 +112,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             }
             return Json(new { errorCode = response.ErrorCode, message = response.Message }, JsonRequestBehavior.AllowGet);
         }
+        
         [SessionFilter]
         [HttpGet]
         public ActionResult UpdateConference(string conferenceID)

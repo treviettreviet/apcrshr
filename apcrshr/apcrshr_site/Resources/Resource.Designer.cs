@@ -158,5 +158,23 @@ namespace apcrshr_site.Resources {
                 return ResourceManager.GetString("title_relatedNews", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Related Video.
+        /// </summary>
+        public static string title_relatedVideo {
+            get {
+                return ResourceManager.GetString("title_relatedVideo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video Details.
+        /// </summary>
+        public static string title_videoDetails {
+            get {
+                return ResourceManager.GetString("title_videoDetails", resourceCulture);
+            }
+        }
     }
 }

@@ -188,6 +188,7 @@
     <Compile Include="Areas\Administrator\Controllers\AdminNewsController.cs" />
     <Compile Include="Areas\Administrator\Controllers\AdminImportantDeadlineController.cs" />
     <Compile Include="Areas\Administrator\Controllers\AdminUserController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\AdminVideoController.cs" />
     <Compile Include="Areas\Administrator\Controllers\ArticleController.cs" />
     <Compile Include="Constants\Constants.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -196,6 +197,7 @@
     <Compile Include="Controllers\ImportantDeadlineController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
+    <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Filters\SessionFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -720,6 +722,9 @@
     </Content>
     <Content Include="Areas\Administrator\Views\AdminImportantDeadline\CreateImportantDeadline.cshtml" />
     <Content Include="Areas\Administrator\Views\AdminImportantDeadline\UpdateImportantDeadline.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdminVideo\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdminVideo\CreateVideo.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdminVideo\UpdateVideo.cshtml" />
     <None Include="Properties\PublishProfiles\apcrshr.hvtec.vn - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
@@ -814,6 +819,8 @@
     <Content Include="Views\ConferenceDeclaration\Index.cshtml" />
     <Content Include="Views\ImportantDeadline\Index.cshtml" />
     <Content Include="Views\ImportantDeadline\ViewImportantDeadline.cshtml" />
+    <Content Include="Views\Video\Index.cshtml" />
+    <Content Include="Views\Video\ViewVideo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

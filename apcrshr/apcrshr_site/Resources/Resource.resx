@@ -150,4 +150,10 @@
   <data name="title_relatedNews" xml:space="preserve">
     <value>Related News</value>
   </data>
+  <data name="title_videoDetails" xml:space="preserve">
+    <value>Video Details</value>
+  </data>
+  <data name="title_relatedVideo" xml:space="preserve">
+    <value>Related Video</value>
+  </data>
 </root>

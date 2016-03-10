@@ -49,6 +49,7 @@
     <Compile Include="ISubscriberService.cs" />
     <Compile Include="IUploadService.cs" />
     <Compile Include="IUserService.cs" />
+    <Compile Include="IVideoService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
