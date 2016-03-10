@@ -23,7 +23,7 @@
                 </h3>
             </div>
             <div class="box-content nopadding">
-                <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
+                <table id="tableImportantDeadline" class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
                        data-column_filter_types="null,text,text,text,daterange,daterange,daterange,null"
                        data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
                     <thead>
@@ -41,34 +41,37 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for (int i = 0; i < Model.Count; i++)
+                        @if (Model != null)
                         {
-                            <tr id="@Model[i].DeadlineID">
-                                <td class="with-checkbox">
-                                    <input type="checkbox" name="check" value="@Model[i].DeadlineID">
-                                </td>
-                                <td>@Model[i].Title</td>
-                                @if (!string.IsNullOrEmpty(Model[i].ShortContent))
-                                {
-                                    <td>@(Model[i].ShortContent.Length > 50 ? Model[i].ShortContent.Substring(0, 50) : Model[i].ShortContent)</td>
-                                }
-                                else
-                                {
-                                    <td>@Model[i].ShortContent</td>
-                                }
-                                <td>@apcrshr_site.Helper.UserHelper.GetAdminName(Model[i].CreatedBy)</td>
-                                <td>@Model[i].StartDate.ToShortDateString()</td>
-                                <td>@Model[i].EndDate.ToShortDateString()</td>
-                                <td>@Model[i].Deadline</td>
-                                <td class='hidden-480'>
-                                    <a href='@Url.Action("UpdateImportantDeadline", "AdminImportantDeadline", new { deadlineID = Model[i].DeadlineID })' class="btn" rel="tooltip" title="Sửa">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteImportantDeadline('@Model[i].DeadlineID')">
-                                        <i class="fa fa-times"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                            for (int i = 0; i < Model.Count; i++)
+                            {
+                                <tr id="@Model[i].DeadlineID">
+                                    <td class="with-checkbox">
+                                        <input type="checkbox" name="check" value="@Model[i].DeadlineID">
+                                    </td>
+                                    <td>@Model[i].Title</td>
+                                    @if (!string.IsNullOrEmpty(Model[i].ShortContent))
+                                    {
+                                        <td>@(Model[i].ShortContent.Length > 50 ? Model[i].ShortContent.Substring(0, 50) : Model[i].ShortContent)</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@Model[i].ShortContent</td>
+                                    }
+                                    <td>@apcrshr_site.Helper.UserHelper.GetAdminName(Model[i].CreatedBy)</td>
+                                    <td>@Model[i].StartDate.ToShortDateString()</td>
+                                    <td>@Model[i].EndDate.ToShortDateString()</td>
+                                    <td>@Model[i].Deadline</td>
+                                    <td class='hidden-480'>
+                                        <a href='@Url.Action("UpdateImportantDeadline", "AdminImportantDeadline", new { deadlineID = Model[i].DeadlineID })' class="btn" rel="tooltip" title="Sửa">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteImportantDeadline('@Model[i].DeadlineID')">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
                         }
                     </tbody>
                 </table>
@@ -88,6 +91,7 @@
                     success: function (data) {
                         if (data.ErrorCode == 0) {
                             $('#' + deadlineID + '').remove();
+                            $('table#tableImportantDeadline tr#' + deadlineID + '').remove();
                             bootbox.hideAll();
                         } else {
                             bootbox.lert(data.Message, function () {

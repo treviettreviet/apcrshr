@@ -95,7 +95,7 @@
             return false;
         }
         if (!validateDatetime()) {
-            bootbox.alert("Ngày bắt đầu phải nhỏ hơn ngày kết thúc hoặc hạn chót.", function () {
+            bootbox.alert("Ngày bắt đầu không được phép lớn hơn ngày kết thúc và hạn chót.", function () {
                 bootbox.hideAll();
             });
             return false;
@@ -165,6 +165,10 @@
         }
         if ($("#StartDate").val() > $("#Deadline").val()) {
             $("#StartDate").focus();
+            return false;
+        }
+        if ($("#EndDate").val() > $("#Deadline").val()) {
+            $("#EndDate").focus();
             return false;
         }
         return true;

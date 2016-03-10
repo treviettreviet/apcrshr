@@ -81,8 +81,29 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         public ActionResult UpdateImportantDeadline(string deadlineID)
         {
             FindItemReponse<ImportantDeadlineModel> response = _importantDeadline.FindImportantByID(deadlineID);
-            return View(response);
+            return View(response.Item);
         }
+
+        [SessionFilter]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult SaveUpdateImportantDeadline(ImportantDeadlineModel importantDeadline)
+        {
+            var sessionId = this.Session["SessionID"].ToString();
+            IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository();
+            UserSession userSession = userSessionRepository.FindByID(sessionId);
+
+            if (userSession == null)
+            {
+                return Json(new { errorCode = (int)ErrorCode.Redirect, message = Resources.AdminResource.msg_sessionInvalid }, JsonRequestBehavior.AllowGet);
+            }
+            importantDeadline.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(importantDeadline.Title), UrlSlugger.Get8Digits());
+            importantDeadline.UpdatedBy = userSession.UserID;
+            importantDeadline.UpdateDate = DateTime.Now;
+            BaseResponse response = _importantDeadline.UpdateImportantDealine(importantDeadline);
+            return Json(new { errorCode = response.ErrorCode, message = response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }

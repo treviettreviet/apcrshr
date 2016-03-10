@@ -94,7 +94,7 @@ namespace Site.Core.Repository.Implementation
             var _id = id.ToString();
             using (APCRSHREntities context = new APCRSHREntities())
             {
-                return context.ImportantDeadlines.Where(i => i.DeadlineID.Equals(id)).SingleOrDefault();
+                return context.ImportantDeadlines.Where(i => i.DeadlineID.Equals(_id)).SingleOrDefault();
             }
         }
 
