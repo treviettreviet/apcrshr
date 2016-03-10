@@ -1,4 +1,5 @@
-﻿using Site.Core.DataModel.Model;
+﻿using Site.Core.DataModel.Enum;
+using Site.Core.DataModel.Model;
 using Site.Core.DataModel.Response;
 using Site.Core.Service.Contract;
 using Site.Core.Service.Implementation;
@@ -14,11 +15,13 @@ namespace apcrshr_site.Controllers
     {
         private IArticleService _articleService;
         private INewsService _newsService;
+        private IUserService _userService;
 
         public HomeController()
         {
             this._articleService = new ArticleService();
             this._newsService = new NewsService();
+            this._userService = new UserService();
         }
 
         [HttpGet]
@@ -52,6 +55,41 @@ namespace apcrshr_site.Controllers
                 return View(articleResponse);
             }
             return View(new FindAllItemReponse<ArticleModel>());
+        }
+
+        public ActionResult Login()
+        {
+            return View(new UserModel());
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult UserLogin(UserModel user)
+        {
+            if (ModelState.IsValid)
+            {
+                UserLoginResponse response = _userService.Login(user.UserName, user.Password);
+                if (response.ErrorCode == (int)ErrorCode.None)
+                {
+                    this.Session["User-SessionID"] = response.SessionId;
+                    this.Session["User-UserName"] = response.UserName;
+                    return RedirectToAction("Index", "Home");
+                }
+                ViewBag.Response = response;
+            }
+            return View("Login");
+        }
+
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RegisterUser(UserModel user)
+        {
+            return View();
         }
     }
 }

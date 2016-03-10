@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "RegistrationForm";
+    ViewBag.Title = "Registration Form";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 <!-- Color CSS -->
@@ -13,7 +13,7 @@
 <script src="~/Areas/Administrator/js/plugins/wizard/jquery.form.wizard.min.js"></script>
 
 <div class="col-sm-9">
-    @if (Session["UserSession"] == null)
+    @if (Session["User-UserName"] == null)
     {
         <div class="big-title text-center">
             <h1>This feature <span class="accent-color"><strong>under construction</strong></span></h1>
@@ -26,7 +26,7 @@
         <div class="box-title">
             <h3>
                 <i class="fa fa-magic"></i>
-                Wizard with step overview
+                Step overview
             </h3>
         </div>
         <div class="box-content nopadding">

@@ -14,6 +14,33 @@
         </ul>
     </div>
 
+    <!--Member widget-->
+    @if (Session["User-UserName"] != null)
+    {
+        <div id="categories-3" class="widget widget_categories profile">
+            <div class="btn_style bg1">
+                <h4>@apcrshr_site.Resources.Resource.text_myProfile</h4>
+            </div>
+            <div class="profile-box">
+                <div class="profile-cover-image">
+                    @*<img src="http://api.randomuser.me/0.3/portraits/men/2.jpg" />*@
+                </div>
+                <div class="profile-picture">
+                    <img src="~/Content/images/default-avatar.png" />
+                </div>
+                <div class="profile-content">
+                    <h2>
+                        @Session["User-UserName"].ToString().ToUpper()
+                    </h2>
+                    <div class="row span2" id="btn_action">
+                        <a href="@Url.Action("ViewProfile", "User")">@apcrshr_site.Resources.Resource.button_viewProfile</a>
+                        <a href='@Url.Action("Logout", "User")'>@apcrshr_site.Resources.Resource.button_logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
     <!-- Important Deadlines widget -->
     <!--
     <div class="widget widget-popular-posts">
@@ -93,5 +120,5 @@
     </div>
         -->
 
-</div>
+    </div>
 <!--End sidebar-->

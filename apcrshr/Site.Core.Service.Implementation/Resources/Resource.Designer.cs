@@ -61,7 +61,7 @@ namespace Site.Core.Service.Implementation.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tài khoản đã bị khóa, xin hãy liên hệ quản trị..
+        ///   Looks up a localized string similar to Account is locked, please contact administrator..
         /// </summary>
         internal static string msg_account_locked {
             get {
@@ -70,7 +70,7 @@ namespace Site.Core.Service.Implementation.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bản ghi đã tồn tại..
+        ///   Looks up a localized string similar to The record is already existed..
         /// </summary>
         internal static string msg_create_fail_existed {
             get {
@@ -79,7 +79,7 @@ namespace Site.Core.Service.Implementation.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thêm mới bản ghi thành công..
+        ///   Looks up a localized string similar to Successful added..
         /// </summary>
         internal static string msg_create_success {
             get {
@@ -88,7 +88,7 @@ namespace Site.Core.Service.Implementation.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Xóa bản ghi thành công..
+        ///   Looks up a localized string similar to Successful deleted..
         /// </summary>
         internal static string msg_delete_success {
             get {
@@ -97,7 +97,7 @@ namespace Site.Core.Service.Implementation.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email đã tồn tại..
+        ///   Looks up a localized string similar to Email is alredy existed..
         /// </summary>
         internal static string msg_email_exists {
             get {
@@ -106,7 +106,7 @@ namespace Site.Core.Service.Implementation.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} &quot;{1}&quot; đã tồn tại.
+        ///   Looks up a localized string similar to {0} &quot;{1}&quot; is existed..
         /// </summary>
         internal static string msg_insert_exists {
             get {
@@ -115,7 +115,7 @@ namespace Site.Core.Service.Implementation.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tên đăng nhập hoặc mật khẩu không chính xác..
+        ///   Looks up a localized string similar to User name or password invalid..
         /// </summary>
         internal static string msg_login_fail {
             get {
@@ -124,7 +124,7 @@ namespace Site.Core.Service.Implementation.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cập nhập bản ghi thành công..
+        ///   Looks up a localized string similar to Successful updated..
         /// </summary>
         internal static string msg_update_success {
             get {
@@ -133,7 +133,7 @@ namespace Site.Core.Service.Implementation.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tên đăng nhập đã tồn tại..
+        ///   Looks up a localized string similar to User name is already existed..
         /// </summary>
         internal static string msg_username_exists {
             get {
@@ -142,7 +142,7 @@ namespace Site.Core.Service.Implementation.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tiêu đề.
+        ///   Looks up a localized string similar to Title.
         /// </summary>
         internal static string text_category_title {
             get {
@@ -151,7 +151,7 @@ namespace Site.Core.Service.Implementation.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Không tìm thấy kết quả nào với từ khóa &quot;{0}&quot;..
+        ///   Looks up a localized string similar to No result for this word &quot;{0}&quot;..
         /// </summary>
         internal static string text_searchNotFound {
             get {

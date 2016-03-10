@@ -61,6 +61,24 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cập Nhật Tài Khoản.
+        /// </summary>
+        public static string button_editProfile {
+            get {
+                return ResourceManager.GetString("button_editProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đăng Xuất.
+        /// </summary>
+        public static string button_logout {
+            get {
+                return ResourceManager.GetString("button_logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Next.
         /// </summary>
         public static string button_next {
@@ -79,11 +97,29 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tài Khoản.
+        /// </summary>
+        public static string button_viewProfile {
+            get {
+                return ResourceManager.GetString("button_viewProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current page:.
         /// </summary>
         public static string text_currentPage {
             get {
                 return ResourceManager.GetString("text_currentPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thông Tin Người Dùng.
+        /// </summary>
+        public static string text_myProfile {
+            get {
+                return ResourceManager.GetString("text_myProfile", resourceCulture);
             }
         }
         

@@ -1,0 +1,111 @@
+﻿@model Site.Core.DataModel.Model.UserModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<!-- Color CSS -->
+<link rel="stylesheet" href="~/Areas/Administrator/css/themes.css">
+<link rel="stylesheet" href="~/Content/form.css">
+<!-- jQuery UI -->
+<script src="~/Areas/Administrator/js/plugins/jquery-ui/jquery-ui.js"></script>
+<!-- Form -->
+<script src="~/Areas/Administrator/js/plugins/form/jquery.form.min.js"></script>
+
+<div class="col-sm-9 page-content">
+    <div class="box box-bordered box-color">
+        <div class="box-title">
+            <h3>
+                <i class="fa fa-edit"></i>User Registration
+            </h3>
+        </div>
+        <div class="box-content nopadding">
+            @using (Html.BeginForm("RegisterUser", "Home", FormMethod.Post, new { @class = "form-horizontal form-bordered" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label for="firstname" class="control-label col-sm-3">Title <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <select name="Title" id="Title">
+                            <option value="">-- Chose one --</option>
+                            <option value="Dr">Dr</option>
+                            <option value="Mr">Mr</option>
+                            <option value="Mrs">Mrs</option>
+                            <option value="Ms">Ms</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Full name <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(Model => Model.FullName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(Model => Model.FullName)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="additionalfield" class="control-label col-sm-3">Sex <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <select name="Sex" id="Sex">
+                            <option value="">-- Chose one --</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Email address <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(Model => Model.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(Model => Model.Email)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Other email address</label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(Model => Model.OtherEmail, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Date of birth <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="DateOfBirth" id="DateOfBirth" class="form-control">
+                        <i>(dd/mm/yyyy)</i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Phone number <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(Model => Model.PhoneNumber, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(Model => Model.PhoneNumber)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="textfield" class="control-label col-sm-2">User Name</label>
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(Model => Model.UserName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(Model => Model.UserName)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="textfield" class="control-label col-sm-2">Password</label>
+                    <div class="col-sm-10">
+                        @Html.PasswordFor(Model => Model.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(Model => Model.Password)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="textfield" class="control-label col-sm-2">Confirm password</label>
+                    <div class="col-sm-10">
+                        @Html.PasswordFor(Model => Model.ConfirmPassword, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(Model => Model.ConfirmPassword)
+                    </div>
+                </div>
+                <div class="form-actions col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <a href='/' class="btn btn-info">Cancel</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

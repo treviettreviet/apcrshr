@@ -40,7 +40,7 @@
 
     <!-- Css3 Transitions Styles  -->
     <link rel="stylesheet" type="text/css" href="~/Content/css/animate.css" media="screen">
-
+    <link rel="stylesheet" id='profile-style' href="~/Content/css/profile-style.css" type='text/css' media='all' />
     <!-- Color CSS Styles  -->
     @Styles.Render("~/bundles/css/colors")
 
@@ -88,7 +88,7 @@
                 </div>
             </div>
             <!--Login button-->
-            <a class="main-button login-button" href="#">Login <i class="icon-right-small"></i></a>
+            <a class="main-button login-button" href='@Url.Action("Login", "Home")'>Login <i class="icon-right-small"></i></a>
         </div>
         <!-- End Page Banner -->
         <!-- Start Content -->

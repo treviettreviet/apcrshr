@@ -118,27 +118,27 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Field_Email_Invalid" xml:space="preserve">
-    <value>Invalid email address.</value>
+    <value>Email không hợp lệ.</value>
   </data>
   <data name="Field_Password_Not_Match" xml:space="preserve">
-    <value>Password does not match.</value>
+    <value>Mật khẩu không khớp.</value>
   </data>
   <data name="Field_Phone_Invalid" xml:space="preserve">
-    <value>Invalid phone number</value>
+    <value>Số điện thoại không hợp lệ</value>
   </data>
   <data name="Field_Required" xml:space="preserve">
-    <value>This field is required.</value>
+    <value>Trường này bắt buộc.</value>
   </data>
   <data name="lbl_CreatedDate" xml:space="preserve">
-    <value>Created Date</value>
+    <value>Ngày Tạo</value>
   </data>
   <data name="lbl_Email" xml:space="preserve">
     <value>Email</value>
   </data>
   <data name="lbl_FirstName" xml:space="preserve">
-    <value>First Name</value>
+    <value>Tên</value>
   </data>
   <data name="lbl_LastName" xml:space="preserve">
-    <value>Last Name</value>
+    <value>Họ</value>
   </data>
 </root>
