@@ -30,13 +30,14 @@ namespace Site.Core.Repository.Implementation
                 if (user != null)
                 {
                     user.Email = item.Email;
-                    user.FirstName = item.FirstName;
-                    user.LastName = item.LastName;
+                    user.DateOfBirth = item.DateOfBirth;
+                    user.FullName = item.FullName;
                     user.Locked = item.Locked;
+                    user.OtherEmail = item.OtherEmail;
                     user.Password = string.IsNullOrEmpty(item.Password) ? user.Password : Encryption.ComputeHash(item.Password, Algorithm.SHA384, null);
                     user.UserName = item.UserName;
                     user.UpdatedDate = DateTime.Now;
-                    user.PhoneCode = item.PhoneCode;
+                    user.Sex = item.Sex;
                     user.PhoneNumber = item.PhoneNumber;
                     user.Title = item.Title;
 

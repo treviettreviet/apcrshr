@@ -13,7 +13,16 @@
 <script src="~/Areas/Administrator/js/plugins/wizard/jquery.form.wizard.min.js"></script>
 
 <div class="col-sm-9">
-    <div class="box box-color box-bordered">
+    @if (Session["UserSession"] == null)
+    {
+        <div class="big-title text-center">
+            <h1>This feature <span class="accent-color"><strong>under construction</strong></span></h1>
+            <p class="title-desc">Thank You</p>
+        </div>
+    }
+    else
+    {
+        <div class="box box-color box-bordered">
         <div class="box-title">
             <h3>
                 <i class="fa fa-magic"></i>
@@ -353,4 +362,5 @@
             </form>
         </div>
     </div>
+    }
 </div>
