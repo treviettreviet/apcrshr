@@ -171,7 +171,7 @@ namespace Site.Core.Service.Implementation
                         Message = string.Empty,
                         SessionId = userSession.SessionID,
                         UserId = user.UserID,
-                        UserName = user.LastName
+                        UserName = user.UserName
                     };
                 }
                 else
