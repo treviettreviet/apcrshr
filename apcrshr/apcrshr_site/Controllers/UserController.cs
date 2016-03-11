@@ -99,5 +99,23 @@ namespace apcrshr_site.Controllers
             }
             return View("Register");
         }
+
+        [HttpGet]
+        public ActionResult Logout()
+        {
+            string sessionId = string.Empty;
+            if (this.Session["User-SessionID"] != null)
+            {
+                sessionId = this.Session["User-SessionID"].ToString();
+            }
+            if (string.IsNullOrEmpty(sessionId))
+            {
+                RedirectToAction("Index", "Home");
+            }
+            BaseResponse response = _userService.Logout(sessionId);
+            this.Session["User-SessionID"] = null;
+            this.Session["User-UserName"] = null;
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

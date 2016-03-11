@@ -187,6 +187,15 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Posted by.
+        /// </summary>
+        public static string title_postedBy {
+            get {
+                return ResourceManager.GetString("title_postedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Presentation Details.
         /// </summary>
         public static string title_presentationDetail {

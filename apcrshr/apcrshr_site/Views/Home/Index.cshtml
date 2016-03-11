@@ -49,12 +49,11 @@
 
 
         <!-- Start Post -->
-@if (ViewBag.TopVideo != null)
-{
-    IList<Site.Core.DataModel.Model.VideoModel> videos = (IList<Site.Core.DataModel.Model.VideoModel>)ViewBag.TopVideo;
-    foreach (var item in videos)
-    {
-
+        @if (ViewBag.TopVideo != null)
+        {
+            IList<Site.Core.DataModel.Model.VideoModel> videos = (IList<Site.Core.DataModel.Model.VideoModel>)ViewBag.TopVideo;
+            foreach (var item in videos)
+            {
                 <div class="blog-post video-post">
                     <!-- Post Video -->
                     <div class="post-head">
@@ -66,13 +65,13 @@
                         <h2><a href="#">@item.Title</a></h2>
                         <ul class="post-meta">
                             <li>@item.CreatedDate</li>
-                            <li><a href="#">Posted by</a>, <a href="#">@item.CreatedBy</a></li>
+                            <li><a href="#">@apcrshr_site.Resources.Resource.title_postedBy</a>, <a href="#">@apcrshr_site.Helper.UserHelper.GetAdminName(item.CreatedBy)</a></li>
                         </ul>
                         <p>@item.Shortcontent</p>
                     </div>
                 </div>
-    }
-}
+            }
+        }
         <!-- End Post -->
 
 

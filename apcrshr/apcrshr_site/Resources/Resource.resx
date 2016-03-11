@@ -180,4 +180,7 @@
   <data name="msg_username_exist" xml:space="preserve">
     <value>The user has registered by another user.</value>
   </data>
+  <data name="title_postedBy" xml:space="preserve">
+    <value>Posted by</value>
+  </data>
 </root>
