@@ -15,6 +15,8 @@ namespace apcrshr_site.Controllers
     {
         private IArticleService _articleService;
         private INewsService _newsService;
+        private IVideoService _videoService;
+        private IUserService _userService;
 
         public HomeController()
         {
