@@ -56,40 +56,5 @@ namespace apcrshr_site.Controllers
             }
             return View(new FindAllItemReponse<ArticleModel>());
         }
-
-        public ActionResult Login()
-        {
-            return View(new UserModel());
-        }
-
-        [ValidateAntiForgeryToken]
-        [HttpPost]
-        public ActionResult UserLogin(UserModel user)
-        {
-            if (ModelState.IsValid)
-            {
-                UserLoginResponse response = _userService.Login(user.UserName, user.Password);
-                if (response.ErrorCode == (int)ErrorCode.None)
-                {
-                    this.Session["User-SessionID"] = response.SessionId;
-                    this.Session["User-UserName"] = response.UserName;
-                    return RedirectToAction("Index", "Home");
-                }
-                ViewBag.Response = response;
-            }
-            return View("Login");
-        }
-
-        public ActionResult Register()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult RegisterUser(UserModel user)
-        {
-            return View();
-        }
     }
 }

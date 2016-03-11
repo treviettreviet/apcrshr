@@ -1,4 +1,5 @@
 ﻿@model Site.Core.DataModel.Model.UserModel
+
 @{
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
@@ -10,6 +11,10 @@
 <script src="~/Areas/Administrator/js/plugins/jquery-ui/jquery-ui.js"></script>
 <!-- Form -->
 <script src="~/Areas/Administrator/js/plugins/form/jquery.form.min.js"></script>
+<!-- Bootbox -->
+<script src="~/Areas/Administrator/js/plugins/bootbox/jquery.bootbox.js"></script>
+<script src="~/Areas/Administrator/js/plugins/validation/jquery.validate.min.js"></script>
+<script src="~/Areas/Administrator/js/plugins/validation/additional-methods.min.js"></script>
 
 <div class="col-sm-9 page-content">
     <div class="box box-bordered box-color">
@@ -19,27 +24,26 @@
             </h3>
         </div>
         <div class="box-content nopadding">
-            @using (Html.BeginForm("UserLogin", "Home", FormMethod.Post, new { @class = "form-horizontal form-bordered" }))
+            @using (Html.BeginForm("UserLogin", "User", FormMethod.Post, new { @id="frmUserLogin", @class="form-horizontal form-bordered form-validate" }))
             {
                 @Html.AntiForgeryToken()
                 <div class="form-group">
                     <label for="textfield" class="control-label col-sm-2">User Name</label>
                     <div class="col-sm-10">
-                        @Html.TextBoxFor(Model => Model.UserName, new { @class = "form-control", placeholder = "User Name" })
-                        @Html.ValidationMessageFor(Model => Model.UserName)
+                        <input type="text" name="UserName" id="UserName" class="form-control" data-rule-required="true" data-rule-minlength="6">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="textfield" class="control-label col-sm-2">Password</label>
                     <div class="col-sm-10">
-                        @Html.PasswordFor(Model => Model.Password, new { @class = "form-control", placeholder = "Password" })
+                        <input type="password" class="form-control" id="Password" name="Password" placeholder="Password">
                     </div>
                 </div>
                 <div class="forget">
                     <a href="#">
                         <span>Forgot password?</span>
                     </a>
-                    <a href='@Url.Action("Register", "Home")'>
+                    <a href='@Url.Action("Register", "User")'>
                         <span>Register</span>
                     </a>
                 </div>
@@ -47,6 +51,12 @@
                     <button type="submit" class="btn btn-primary">Login</button>
                     <a href='/' class="btn btn-info">Cancel</a>
                 </div>
+                if (ViewBag.Response != null)
+                {
+                    Site.Core.DataModel.Response.UserLoginResponse responseMsg = (Site.Core.DataModel.Response.UserLoginResponse)ViewBag.Response;
+                    <br /><br /><br />
+                    <div class="alert @(responseMsg.ErrorCode == (int)Site.Core.DataModel.Enum.ErrorCode.None ? " alert-info" : " alert-danger")"><a class="close" data-dismiss="alert" href="#">×</a><strong></strong> @responseMsg.Message</div>
+                }
             }
         </div>
     </div>
