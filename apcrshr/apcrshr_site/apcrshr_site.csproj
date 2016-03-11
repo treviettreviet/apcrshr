@@ -813,7 +813,6 @@
     <Content Include="Views\Home\ArticleView.cshtml" />
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\News\ViewNews.cshtml" />
-    <Content Include="Views\ConferenceDeclaration\Index.cshtml" />
     <Content Include="Views\Registration\RegistrationForm.cshtml" />
     <Content Include="Views\ConferenceDeclaration\ViewConference.cshtml" />
     <Content Include="Views\ConferenceDeclaration\Index.cshtml" />
