@@ -63,8 +63,39 @@ namespace apcrshr_site.Controllers
         {
             if (ModelState.IsValid)
             {
-                InsertResponse response = _userService.CreateUser(user);
-                ViewBag.Response = response;
+                InsertResponse response = new InsertResponse();
+                FindItemReponse<UserModel> usernameResponse = _userService.CheckUsername(user.UserName);
+                if (usernameResponse.Item != null)
+                {
+                    response = new InsertResponse
+                    {
+                        ErrorCode = (int)ErrorCode.Error,
+                        Message = Resources.Resource.msg_username_exist
+                    };
+                    ViewBag.Response = response;
+                    return View("Register");
+                }
+                else
+                {
+                    FindItemReponse<UserModel> emailResponse = _userService.CheckEmail(user.Email);
+                    if (emailResponse.Item != null)
+                    {
+                        response = new InsertResponse
+                        {
+                            ErrorCode = (int)ErrorCode.Error,
+                            Message = Resources.Resource.msg_email_exist
+                        };
+                        ViewBag.Response = response;
+                        return View("Register");
+                    }
+                    else
+                    {
+                        user.UserID = Guid.NewGuid().ToString();
+                        user.CreatedDate = DateTime.Now;
+                        response = _userService.CreateUser(user);
+                        ViewBag.Response = response;
+                    }
+                }
             }
             return View("Register");
         }

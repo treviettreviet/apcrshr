@@ -88,7 +88,10 @@
                 </div>
             </div>
             <!--Login button-->
-            <a class="main-button login-button" href='@Url.Action("Login", "User")'>Login <i class="icon-right-small"></i></a>
+            @if (Session["User-UserName"] == null)
+            {
+                <a class="main-button login-button" href='@Url.Action("Login", "User")'>Login <i class="icon-right-small"></i></a>
+            }
         </div>
         <!-- End Page Banner -->
         <!-- Start Content -->
