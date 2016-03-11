@@ -26,8 +26,14 @@
 
                 </a>
             </li>
-            <li class='@(ViewBag.CurrentNode == "AdminMember" ? "active" : "")'>
+            <li class='@(ViewBag.CurrentNode == "AdminImportantDeadline" ? "active" : "")'>
                 <a href="@Url.Action("Index","AdminImportantDeadline")">
+                    <span>Kỳ Hạn</span>
+
+                </a>
+            </li>
+            <li class='@(ViewBag.CurrentNode == "AdminConferenceDelaration" ? "active" : "")'>
+                <a href="@Url.Action("Index", "AdminConferenceDeclare")">
                     <span>Kỳ Hạn</span>
 
                 </a>

@@ -1,5 +1,5 @@
 ﻿@using apcrshr_site.Helper
-@model Site.Core.DataModel.Response.FindAllItemReponse<Site.Core.DataModel.Model.ImportantDeadlineModel>
+@model Site.Core.DataModel.Response.FindAllItemReponse<Site.Core.DataModel.Model.PresentationModel>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
@@ -20,9 +20,8 @@
             <ul>
                 <li class="calendar">@Model.Items[0].CreatedDate.ToString("dddd, d MMMM, yyyy", new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.Name))</li>
                 <li class="user">@apcrshr_site.Helper.UserHelper.GetAdminName(Model.Items[0].CreatedBy)</li>
-                <li class="comment">@Model.Items[0].StartDate.ToString("dddd, d MMMM, yyyy", new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.Name))</li>
-                <li class="comment">@Model.Items[0].EndDate.ToString("dddd, d MMMM, yyyy", new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.Name))</li>
-                <li class="comment">@Model.Items[0].Deadline.ToString("dddd, d MMMM, yyyy", new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.Name))</li>
+                <li class="comment"><a href="@Model.Items[0].ImageURL">@(string.IsNullOrEmpty(Model.Items[0].ImageURL) ? "0" : "") image</a></li>
+                <li class="comment"><a href="@Model.Items[0].AttachmentURL">@(string.IsNullOrEmpty(Model.Items[0].AttachmentURL) ? "0" : "") attachment</a></li>
             </ul>
         </div>
     </article>
@@ -40,12 +39,12 @@
                     <div class="icon_"><i class="moon-pencil"></i></div>
                 </dt>
                 <dd>
-                    <h5><a href='@Url.Action("ViewImportantDeadline", new { ActionURL = Model.Items[i].ActionURL })'>@Model.Items[i].Title</a></h5>
+                    <h5><a href='@Url.Action("ViewPresentation", new { ActionURL = Model.Items[i].ActionURL })'>@Model.Items[i].Title</a></h5>
                     @if (!string.IsNullOrEmpty(Model.Items[i].Contents))
                     {
                         <p>@Html.Raw(Model.Items[i].Contents.Length > 260 ? Model.Items[i].Contents.Substring(0, 260) + "..." : Model.Items[i].Contents)</p>
                     }
-                    <a href='@Url.Action("ViewImportantDeadline", new { ActionURL = Model.Items[i].ActionURL })' class="read_m"><span>read more</span> <span class="direct_btn"><i class="moon-arrow-right-2"></i></span></a>
+                    <a href='@Url.Action("ViewPresentation", new { ActionURL = Model.Items[i].ActionURL })' class="read_m"><span>read more</span> <span class="direct_btn"><i class="moon-arrow-right-2"></i></span></a>
                 </dd>
             </dl>
         }
@@ -54,7 +53,10 @@
 
     @*Start Pagination*@
     <div id="pagination">
-        @Html.PagingUtil("Index", "ImportantDeadline", Model.Count, apcrshr_site.Constants.Constants.PAGE_SIZE,
+        @Html.PagingUtil("Index", "Presentation", Model.Count, apcrshr_site.Constants.Constants.PAGE_SIZE,
     Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("pageIndex")).SingleOrDefault())
     </div>
     @*End Pagination*@
+
+
+

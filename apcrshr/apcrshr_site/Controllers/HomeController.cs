@@ -15,12 +15,14 @@ namespace apcrshr_site.Controllers
     {
         private IArticleService _articleService;
         private INewsService _newsService;
+        private IVideoService _videoService;
         private IUserService _userService;
 
         public HomeController()
         {
             this._articleService = new ArticleService();
             this._newsService = new NewsService();
+            this._videoService = new VideoService();
             this._userService = new UserService();
         }
 
@@ -30,6 +32,9 @@ namespace apcrshr_site.Controllers
             ViewBag.CurrentNode = "Home";
             FindAllItemReponse<NewsModel> newsReponse = _newsService.GetTopNews(3, this.culture);
             ViewBag.TopNews = newsReponse.Items;
+
+            FindAllItemReponse<VideoModel> videoReponse = _videoService.GetTopVideo(1, this.culture);
+            ViewBag.TopVideo = videoReponse.Items;
             return View();
         }
 

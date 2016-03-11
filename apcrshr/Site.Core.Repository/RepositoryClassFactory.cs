@@ -74,5 +74,9 @@ namespace Site.Core.Repository
         {
             return new VideoRepository();
         }
+        public IPresentationRepository GetPresentationRepository()
+        {
+            return new PresentationRepository();
+        }
     }
 }

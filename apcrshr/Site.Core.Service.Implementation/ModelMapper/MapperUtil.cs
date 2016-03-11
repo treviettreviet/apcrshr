@@ -51,6 +51,7 @@ namespace Site.Core.Service.Implementation.ModelMapper
                 cfg.CreateMap<ConferenceDeclarationModel, ConferenceDeclaration>();
                 cfg.CreateMap<ImportantDeadlineModel, ImportantDeadline>();
                 cfg.CreateMap<VideoModel, Video>();
+                cfg.CreateMap<PresentationModel, Presentation>();
 
                 //Entity model mapper
                 cfg.CreateMap<Admin, AdminModel>();
@@ -65,6 +66,7 @@ namespace Site.Core.Service.Implementation.ModelMapper
                 cfg.CreateMap<ConferenceDeclaration, ConferenceDeclarationModel>();
                 cfg.CreateMap<ImportantDeadline, ImportantDeadlineModel>();
                 cfg.CreateMap<Video, VideoModel>();
+                cfg.CreateMap<Presentation, PresentationModel>();
             });
 
             mapper = config.CreateMapper();
