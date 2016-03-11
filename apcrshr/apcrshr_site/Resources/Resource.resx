@@ -168,4 +168,10 @@
   <data name="text_myProfile" xml:space="preserve">
     <value>Thông Tin Người Dùng</value>
   </data>
+  <data name="title_presentationDetail" xml:space="preserve">
+    <value>Presentation Details</value>
+  </data>
+  <data name="title_relatedPresentation" xml:space="preserve">
+    <value>Related Presentation</value>
+  </data>
 </root>

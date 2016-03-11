@@ -83,6 +83,7 @@
     <Compile Include="Implementation\ImportantDeadlineRepository.cs" />
     <Compile Include="Implementation\MenuRepository.cs" />
     <Compile Include="Implementation\NewsRepository.cs" />
+    <Compile Include="Implementation\PresentationRepository.cs" />
     <Compile Include="Implementation\SubscriberRepository.cs" />
     <Compile Include="Implementation\UploadRepository.cs" />
     <Compile Include="Implementation\UserRepository.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Repository\IImportantDeadlineRepository.cs" />
     <Compile Include="Repository\IMenuRepository.cs" />
     <Compile Include="Repository\INewsRepository.cs" />
+    <Compile Include="Repository\IPresentationRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\ISubscriberRepository.cs" />
     <Compile Include="Repository\IUploadRepository.cs" />

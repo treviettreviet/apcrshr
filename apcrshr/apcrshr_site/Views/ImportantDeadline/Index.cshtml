@@ -41,7 +41,10 @@
                 </dt>
                 <dd>
                     <h5><a href='@Url.Action("ViewImportantDeadline", new { ActionURL = Model.Items[i].ActionURL })'>@Model.Items[i].Title</a></h5>
-                    <p>@Html.Raw(Model.Items[i].Contents.Length > 260 ? Model.Items[i].Contents.Substring(0, 260) + "..." : Model.Items[i].Contents)</p>
+                    @if (!string.IsNullOrEmpty(Model.Items[i].Contents))
+                    {
+                        <p>@Html.Raw(Model.Items[i].Contents.Length > 260 ? Model.Items[i].Contents.Substring(0, 260) + "..." : Model.Items[i].Contents)</p>
+                    }
                     <a href='@Url.Action("ViewImportantDeadline", new { ActionURL = Model.Items[i].ActionURL })' class="read_m"><span>read more</span> <span class="direct_btn"><i class="moon-arrow-right-2"></i></span></a>
                 </dd>
             </dl>

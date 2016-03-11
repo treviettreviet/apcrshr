@@ -169,6 +169,15 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Presentation Details.
+        /// </summary>
+        public static string title_presentationDetail {
+            get {
+                return ResourceManager.GetString("title_presentationDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Related Conference.
         /// </summary>
         public static string title_relatedConference {
@@ -192,6 +201,15 @@ namespace apcrshr_site.Resources {
         public static string title_relatedNews {
             get {
                 return ResourceManager.GetString("title_relatedNews", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Related Presentation.
+        /// </summary>
+        public static string title_relatedPresentation {
+            get {
+                return ResourceManager.GetString("title_relatedPresentation", resourceCulture);
             }
         }
         
