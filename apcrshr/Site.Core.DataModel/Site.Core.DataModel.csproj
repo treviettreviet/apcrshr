@@ -60,7 +60,6 @@
     <Compile Include="Model\VideoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Resources.Designer.cs" />
-    <Compile Include="Resources\Resources.en-US.Designer.cs" />
     <Compile Include="Response\AdminLoginResponse.cs" />
     <Compile Include="Response\BaseResponse.cs" />
     <Compile Include="Response\FindItemReponse.cs" />
@@ -71,7 +70,7 @@
     <Compile Include="Response\UserLoginResponse.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Resources.en-US.resx" />
+    <EmbeddedResource Include="Resources\Resource.vi-VN.resx" />
     <EmbeddedResource Include="Resources\Resources.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

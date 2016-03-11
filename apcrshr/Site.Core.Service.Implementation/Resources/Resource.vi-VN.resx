@@ -118,36 +118,36 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="msg_account_locked" xml:space="preserve">
-    <value>Account is locked, please contact administrator.</value>
+    <value>Tài khoản đã bị khóa, xin hãy liên hệ quản trị.</value>
   </data>
   <data name="msg_create_fail_existed" xml:space="preserve">
-    <value>The record is already existed.</value>
+    <value>Bản ghi đã tồn tại.</value>
   </data>
   <data name="msg_create_success" xml:space="preserve">
-    <value>Successful added.</value>
+    <value>Thêm mới bản ghi thành công.</value>
   </data>
   <data name="msg_delete_success" xml:space="preserve">
-    <value>Successful deleted.</value>
+    <value>Xóa bản ghi thành công.</value>
   </data>
   <data name="msg_email_exists" xml:space="preserve">
-    <value>Email is alredy existed.</value>
+    <value>Email đã tồn tại.</value>
   </data>
   <data name="msg_insert_exists" xml:space="preserve">
-    <value>{0} "{1}" is existed.</value>
+    <value>{0} "{1}" đã tồn tại</value>
   </data>
   <data name="msg_login_fail" xml:space="preserve">
-    <value>User name or password invalid.</value>
+    <value>Tên đăng nhập hoặc mật khẩu không chính xác.</value>
   </data>
   <data name="msg_update_success" xml:space="preserve">
-    <value>Successful updated.</value>
+    <value>Cập nhập bản ghi thành công.</value>
   </data>
   <data name="msg_username_exists" xml:space="preserve">
-    <value>User name is already existed.</value>
+    <value>Tên đăng nhập đã tồn tại.</value>
   </data>
   <data name="text_category_title" xml:space="preserve">
-    <value>Title</value>
+    <value>Tiêu đề</value>
   </data>
   <data name="text_searchNotFound" xml:space="preserve">
-    <value>No result for this word "{0}".</value>
+    <value>Không tìm thấy kết quả nào với từ khóa "{0}".</value>
   </data>
 </root>

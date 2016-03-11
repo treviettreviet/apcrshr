@@ -5423,3 +5423,16 @@ a.elemadded:hover {
     color: #ff0000;
     font-weight: bold;
 }
+
+/*login*/
+.forget{
+    padding-left: 130px;
+    padding-top:10px;
+    padding-bottom: 10px;
+}
+
+.forget a{
+    margin-right: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}

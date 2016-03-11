@@ -484,6 +484,7 @@
     <Content Include="Content\css\colors\yellow.css" />
     <Content Include="Content\css\fontello.css" />
     <Content Include="Content\css\jquery.bxslider.css" />
+    <Content Include="Content\css\profile-style.css" />
     <Content Include="Content\css\responsive.css" />
     <Content Include="Content\css\settings.css" />
     <Content Include="Content\css\style.css" />
@@ -512,6 +513,7 @@
     <Content Include="Content\images\c6.png" />
     <Content Include="Content\images\c7.png" />
     <Content Include="Content\images\c8.png" />
+    <Content Include="Content\images\default-avatar.png" />
     <Content Include="Content\images\gradient\g30.html" />
     <Content Include="Content\images\gradient\g40.html" />
     <Content Include="Content\images\icons\ajaxloader.gif" />
@@ -544,6 +546,7 @@
     <Content Include="Content\images\patterns\8.png" />
     <Content Include="Content\images\patterns\9.png" />
     <Content Include="Content\images\patterns\body_background.png" />
+    <Content Include="Content\images\photodune-1188545-belvedere-of-tuscany-s.jpg" />
     <Content Include="Content\images\slide_shadow.png" />
     <Content Include="Content\images\team-section.jpg" />
     <Content Include="Content\images\testimonials-bg.jpg" />
@@ -798,7 +801,6 @@
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_FooterPartialPage.cshtml" />
@@ -807,8 +809,6 @@
     <Content Include="Views\Shared\_LayoutPage.cshtml" />
     <Content Include="Views\Shared\_NatigationBarPartialPage.cshtml" />
     <Content Include="Views\Shared\_PartialLeftMenu.cshtml" />
-    <Content Include="Views\Home\AboutBackground.cshtml" />
-    <Content Include="Views\Home\AboutThemeObjective.cshtml" />
     <Content Include="Views\Shared\_PartialRightWidget.cshtml" />
     <Content Include="Views\Home\ArticleView.cshtml" />
     <Content Include="Views\News\Index.cshtml" />
@@ -820,6 +820,8 @@
     <Content Include="Views\ImportantDeadline\ViewImportantDeadline.cshtml" />
     <Content Include="Views\Video\Index.cshtml" />
     <Content Include="Views\Video\ViewVideo.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
