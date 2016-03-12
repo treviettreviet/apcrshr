@@ -88,7 +88,10 @@
                 </div>
             </div>
             <!--Login button-->
-            <a class="main-button login-button" href='@Url.Action("Login", "Home")'>Login <i class="icon-right-small"></i></a>
+            @if (Session["User-UserName"] == null)
+            {
+                <a class="main-button login-button" href='@Url.Action("Login", "User")'>Login <i class="icon-right-small"></i></a>
+            }
         </div>
         <!-- End Page Banner -->
         <!-- Start Content -->
@@ -154,19 +157,6 @@
             <div class="dot2"></div>
         </div>
     </div>
-
-    <!-- Histats.com  START (hidden counter)-->
-    <script type="text/javascript">document.write(unescape("%3Cscript src=%27http://s10.histats.com/js15.js%27 type=%27text/javascript%27%3E%3C/script%3E"));</script>
-    <a href="../../../www.histats.com/index.html" target="_blank" title="">
-        <script type="text/javascript">
-            try {
-                Histats.start(1, 2633271, 4, 0, 0, 0, "");
-                Histats.track_hits();
-            } catch (err) { };
-        </script>
-    </a>
-    <noscript><a href="../../../www.histats.com/index.html" target="_blank"><img src="../../../sstatic1.histats.com/0266b.gif?2633271&amp;101" alt="" border="0"></a></noscript>
-    <!-- Histats.com  END  -->
 
 </body>
 </html>

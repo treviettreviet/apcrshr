@@ -199,6 +199,7 @@
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PresentationController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Filters\SessionFilter.cs" />
@@ -825,8 +826,8 @@
     <Content Include="Views\ImportantDeadline\ViewImportantDeadline.cshtml" />
     <Content Include="Views\Video\Index.cshtml" />
     <Content Include="Views\Video\ViewVideo.cshtml" />
-    <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\Presentation\Index.cshtml" />
     <Content Include="Views\Presentation\ViewPresentation.cshtml" />
   </ItemGroup>

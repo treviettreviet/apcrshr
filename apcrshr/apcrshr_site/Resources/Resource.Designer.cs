@@ -61,7 +61,7 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cập Nhật Tài Khoản.
+        ///   Looks up a localized string similar to Update account.
         /// </summary>
         public static string button_editProfile {
             get {
@@ -70,7 +70,7 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Đăng Xuất.
+        ///   Looks up a localized string similar to Logout.
         /// </summary>
         public static string button_logout {
             get {
@@ -97,11 +97,29 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tài Khoản.
+        ///   Looks up a localized string similar to Account.
         /// </summary>
         public static string button_viewProfile {
             get {
                 return ResourceManager.GetString("button_viewProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This email has registered by another user..
+        /// </summary>
+        public static string msg_email_exist {
+            get {
+                return ResourceManager.GetString("msg_email_exist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user has registered by another user..
+        /// </summary>
+        public static string msg_username_exist {
+            get {
+                return ResourceManager.GetString("msg_username_exist", resourceCulture);
             }
         }
         
@@ -115,7 +133,7 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thông Tin Người Dùng.
+        ///   Looks up a localized string similar to Profile.
         /// </summary>
         public static string text_myProfile {
             get {
@@ -165,6 +183,15 @@ namespace apcrshr_site.Resources {
         public static string title_newDetail {
             get {
                 return ResourceManager.GetString("title_newDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Posted by.
+        /// </summary>
+        public static string title_postedBy {
+            get {
+                return ResourceManager.GetString("title_postedBy", resourceCulture);
             }
         }
         

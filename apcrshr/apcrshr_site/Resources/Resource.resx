@@ -157,21 +157,30 @@
     <value>Related Video</value>
   </data>
   <data name="button_editProfile" xml:space="preserve">
-    <value>Cập Nhật Tài Khoản</value>
+    <value>Update account</value>
   </data>
   <data name="button_logout" xml:space="preserve">
-    <value>Đăng Xuất</value>
+    <value>Logout</value>
   </data>
   <data name="button_viewProfile" xml:space="preserve">
-    <value>Tài Khoản</value>
+    <value>Account</value>
   </data>
   <data name="text_myProfile" xml:space="preserve">
-    <value>Thông Tin Người Dùng</value>
+    <value>Profile</value>
   </data>
   <data name="title_presentationDetail" xml:space="preserve">
     <value>Presentation Details</value>
   </data>
   <data name="title_relatedPresentation" xml:space="preserve">
     <value>Related Presentation</value>
+  </data>
+  <data name="msg_email_exist" xml:space="preserve">
+    <value>This email has registered by another user.</value>
+  </data>
+  <data name="msg_username_exist" xml:space="preserve">
+    <value>The user has registered by another user.</value>
+  </data>
+  <data name="title_postedBy" xml:space="preserve">
+    <value>Posted by</value>
   </data>
 </root>
