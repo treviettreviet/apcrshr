@@ -1,0 +1,139 @@
+﻿@model IList<Site.Core.DataModel.Model.VideoModel>
+@{
+    ViewBag.Title = "Danh Sách Video";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box box-color box-bordered">
+            <br />
+            <a href='@Url.Action("CreateVideo", "AdminVideo")' class="btn btn-blue">Thêm Mới</a>
+            <div class="box-title">
+                <h3>
+                    <i class="fa fa-th-list"></i>Danh Video
+                </h3>
+            </div>
+            <div class="box-content nopadding">
+                <table id="tableVideo" class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
+                       data-column_filter_types="null,text,text,text,daterange,text,null,null,null"
+                       data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
+                    <thead>
+                        <tr>
+                            <th class='with-checkbox'>
+                                <input type="checkbox" name="check_all" class="dataTable-checkall">
+                            </th>
+                            <th>Tiêu Đề</th>
+                            <th>Nội Dung Ngắn</th>
+                            <th>Video</th>
+                            <th class='hidden-1024'>Ngày Tạo</th>
+                            <th>Người Tạo</th>
+                            <th>Tiếng Việt</th>
+                            <th>Tiếng Anh</th>
+                            <th class='hidden-480'>Tùy Chọn</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            for (int i = 0; i < Model.Count; i++)
+                            {
+                                <tr id="@Model[i].VideoID">
+                                    <td class="with-checkbox">
+                                        <input type="checkbox" name="check" value="@Model[i].VideoID">
+                                    </td>
+                                    <td>
+                                        @Model[i].Title
+                                    </td>
+                                    @if (!string.IsNullOrEmpty(Model[i].Shortcontent))
+                                    {
+                                        <td>@(Model[i].Shortcontent.Length > 50 ? Model[i].Shortcontent.Substring(0, 50) : Model[i].Shortcontent)</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@Model[i].Shortcontent</td>
+                                    }
+
+                                    <td>
+                                        @(Model[i].VideoURL != null ? Model[i].VideoURL.Substring(Model[i].VideoURL.LastIndexOf("/") + 1) : "")
+                                    </td>
+                                    <td class='hidden-1024'>@Model[i].CreatedDate.ToShortDateString()</td>
+                                    <td>@apcrshr_site.Helper.UserHelper.GetAdminName(Model[i].CreatedBy)</td>
+                                    <td>
+                                        @if (Model[i].Language.Equals("VN"))
+                                        {
+                                            <a href="#" class="btn" rel="tooltip" title="Đã Thêm">
+                                                <i class="fa fa-check"></i>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="#" class="btn" rel="tooltip" title="Chưa Thêm">
+                                                <i class="fa fa-question-circle"></i>
+                                            </a>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model[i].Language.Equals("EN"))
+                                        {
+                                            <a href="#" class="btn" rel="tooltip" title="Đã Thêm">
+                                                <i class="fa fa-check"></i>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="#" class="btn" rel="tooltip" title="Chưa Thêm">
+                                                <i class="fa fa-question-circle"></i>
+                                            </a>
+                                        }
+                                    </td>
+                                    <td class='hidden-480'>
+                                        <a href='@Url.Action("UpdateVideo", "AdminVideo", new { videoID = Model[i].VideoID })' class="btn" rel="tooltip" title="Sửa">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteVideo('@Model[i].VideoID')">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function deleteVideo(VideoID) {
+        bootbox.confirm("Bạn có chắc chắn muốn xóa bản ghi này?", function (result) {
+            if (result) {
+                $.ajax({
+                    type: 'GET',
+                    contentType: 'application/json',
+                    url: '@Url.Action("DeleteVideo", "AdminVideo")',
+                    data: { VideoID: VideoID },
+                    success: function (data) {
+                        if (data.ErrorCode == 0) {
+                            $('#' + VideoID + '').remove();
+                            $('table#tableVideo tr#' + VideoID + '').remove();
+                            bootbox.hideAll();
+                        } else {
+                            bootbox.lert(data.Message, function () {
+                                bootbox.hideAll();
+                            });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        bootbox.hideAll();
+                    }
+                });
+                return true;
+            } else {
+                bootbox.hideAll();
+                return false;
+            }
+        });
+    }
+
+</script>
