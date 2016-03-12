@@ -38,6 +38,12 @@
 
                 </a>
             </li>
+            <li class='@(ViewBag.CurrentNode == "AdminVideo" ? "active" : "")'>
+                <a href="@Url.Action("Index", "AdminVideo")">
+                    <span>Video</span>
+
+                </a>
+            </li>
         </ul>
         <div class="user">
             <div class="dropdown">
