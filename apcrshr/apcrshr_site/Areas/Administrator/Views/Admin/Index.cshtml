@@ -30,7 +30,14 @@
                 <div class="statistic-big">
                     <div class="top">
                         <div class="left">
-                            <span class="title">Thư mục</span>
+                            @using (Html.BeginForm("ChangeCurrentCulture", "Admin", FormMethod.Post, new { @id = "frmChangeLanguage" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <select name="Language" id="Language" onchange="languageChanged(this)" class='chosen-select' data-nosearch="true" style="width:150px;">
+                                    <option value="VN" @(Session["AdminCulture"] != null && Session["AdminCulture"].ToString().Equals("VN") ? "selected" : "")>Tiếng việt</option>
+                                    <option value="EN" @(Session["AdminCulture"] != null && Session["AdminCulture"].ToString().Equals("EN") ? "selected" : "")>Tiếng anh</option>
+                                </select>
+                            }
                         </div>
                         <div class="right">
                             <span>Thêm bài viết</span>
@@ -73,8 +80,15 @@
             </div>
             <div class="box-content">
                 <div class="statistic-big">
+                    <!--Alert-->
+                    @if (ViewBag.Message != null)
+                    {
+                        Site.Core.DataModel.Response.InsertResponse responseMsg = (Site.Core.DataModel.Response.InsertResponse)ViewBag.Message;
+                        <br />
+                        <div class="alert @(responseMsg.ErrorCode == (int)Site.Core.DataModel.Enum.ErrorCode.None ? " alert-info" : " alert-danger")"><a class="close" data-dismiss="alert" href="#">×</a><strong></strong> @responseMsg.Message</div>
+                    }
                     <div class="bottom">
-                        @using (Html.BeginForm("CreateCategoryMenu", "Admin", FormMethod.Post, new { @class = "form-horizontal" }))
+                        @using (Html.BeginForm("CreateCategoryMenu", "Admin", FormMethod.Post, new { @class = "form-horizontal", @id="frmCreateCategory" }))
                         {
                             @Html.AntiForgeryToken()
                             <div class="form-group">
@@ -93,8 +107,7 @@
                             <div class="form-group">
                                 <label for="txtMenuCategoryTitle" class="control-label col-sm-2">Tiêu Đề <span class="validation-span-required">(*)</span></label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="Title" id="txtMenuCategoryTitle" placeholder="Tên danh mục (Menu)" class="form-control">
-                                    @Html.ValidationMessage("Title")
+                                    <input type="text" name="Title" id="txtMenuCategoryTitle" placeholder="Tên danh mục (Menu)" class="form-control" data-rule-required="true">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -118,7 +131,7 @@
                                     <input type="text" name="URL" list="productName" class="form-control" />
                                     <datalist id="productName">
                                         @{
-                                            IDictionary<string, string> links = DataHelper.GetInstance().InternalLinks();
+                                            IDictionary<string, string> links = DataHelper.GetInstance().InternalLinks(Session["AdminCulture"] != null ? Session["AdminCulture"].ToString() : "EN");
                                             var keys = links.Keys;
                                             foreach (var key in keys)
                                             {
@@ -133,13 +146,14 @@
                                 <div class="col-sm-10">
                                     <div class="check-demo-col">
                                         <div class="check-line">
-                                            <input type="radio" name="Language" id="Language-VN" class='icheck-me' data-skin="square" data-color="blue" value="VN" checked>
+                                            <input type="radio" name="Language" id="Language-VN" class='icheck-me' data-skin="square" data-color="blue" disabled value="VN" @(Session["AdminCulture"] != null && Session["AdminCulture"].ToString().Equals("VN") ? "checked" : "")>
                                             <label class='inline' for="Language">Tiếng Việt</label>
                                         </div>
                                         <div class="check-line">
-                                            <input type="radio" name="Language" id="Language-EN" class='icheck-me' data-skin="square" data-color="blue" value="EN">
+                                            <input type="radio" name="Language" id="Language-EN" class='icheck-me' data-skin="square" data-color="blue" disabled value="EN" @(Session["AdminCulture"] != null && Session["AdminCulture"].ToString().Equals("EN") ? "checked" : "")>
                                             <label class='inline' for="Language">English</label>
                                         </div>
+                                        @Html.Hidden("Language", Session["AdminCulture"] != null && Session["AdminCulture"].ToString().Equals("VN") ? "VN" : "EN")
                                     </div>
                                 </div>
                             </div>
@@ -154,6 +168,15 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    function languageChanged(control) {
+        $("form#frmChangeLanguage").submit();
+    }
+
+    $("#frmCreateCategory").validate();
+
+</script>
 
 <script type="text/javascript">
 

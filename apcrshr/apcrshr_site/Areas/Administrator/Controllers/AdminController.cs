@@ -43,9 +43,31 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository();
             UserSession userSession = userSessionRepository.FindByID(sessionId);
 
-            FindAllItemReponse<MenuModel> menuReponse = _menuCategoryService.FindAllMenus();
+            string currentLanguage = Session["AdminCulture"] != null ? Session["AdminCulture"].ToString() : "EN";
+            if (Session["AdminCulture"] == null)
+            {
+                Session["AdminCulture"] = currentLanguage;
+            }
+
+            FindAllItemReponse<MenuModel> menuReponse = _menuCategoryService.FindAllMenus(currentLanguage);
 
             return View(menuReponse.Items);
+        }
+
+        /// <summary>
+        /// Change language
+        /// </summary>
+        /// <param name="languageCode">VN for Vietnamese or EN for English</param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangeCurrentCulture(string Language)
+        {
+            Session["AdminCulture"] = Language;
+            //  
+            // Redirect to the same page from where the request was made!   
+            //  
+            return RedirectToAction("Index");
         }
 
         public ActionResult Logout()
@@ -168,11 +190,8 @@ namespace apcrshr_site.Areas.Administrator.Controllers
                 menu.CreatedDate = DateTime.Now;
 
                 InsertResponse response = _menuCategoryService.CreateMenu(menu);
-
-                //return Json(new { errorcode = response.ErrorCode, message = response.Message, title = menu.Title }, JsonRequestBehavior.AllowGet);
             }
-            FindAllItemReponse<MenuModel> menuReponse = _menuCategoryService.FindAllMenus();
-            return View("Index", menuReponse.Items);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

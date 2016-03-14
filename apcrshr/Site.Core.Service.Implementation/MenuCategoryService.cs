@@ -73,7 +73,7 @@ namespace Site.Core.Service.Implementation
                 Menu _menu = null;
                 if (string.IsNullOrEmpty(menu.ParentID))
                 {
-                    _menu = menuRepository.FindByTitle(menu.Title);
+                    _menu = menuRepository.FindParentByTitle(menu.Title, menu.Language);
                 }
                 else
                 {

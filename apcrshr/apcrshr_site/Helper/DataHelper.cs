@@ -47,12 +47,28 @@ namespace apcrshr_site.Helper
             return response.Introductions;
         }*/
 
-        public IDictionary<string, string> InternalLinks()
+        public IDictionary<string, string> InternalLinks(string language)
         {
             IDictionary<string, string> links = new Dictionary<string, string>();
-            links.Add("Registration Form", "/Registration/RegistrationForm");
-            links.Add("Conference Declaration", "/ConferenceDeclaration/Index");
+
+            //Get static links
+            GetStaticLinks(links, language);
+
             return links;
+        }
+
+        public void GetStaticLinks(IDictionary<string, string> links, string language)
+        {
+            if (language.Equals("VN"))
+            {
+                links.Add("Mẫu đăng ký", "/Registration/RegistrationForm");
+                links.Add("Tham gia hội nghị", "/ConferenceDeclaration/Index");
+            }
+            else
+            {
+                links.Add("Registration Form", "/Registration/RegistrationForm");
+                links.Add("Conference Declaration", "/ConferenceDeclaration/Index");
+            }
         }
     }
 }

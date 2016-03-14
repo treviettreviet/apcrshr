@@ -83,7 +83,7 @@ namespace Site.Core.Repository.Implementation
         public IList<Menu> FindAll(string language)
         {
             APCRSHREntities context = new APCRSHREntities();
-            return context.Menus.Where(m => m.Language.Equals(language)).OrderBy(m => m.DisplayOrder).ToList();
+            return context.Menus.Where(m => m.Language.Equals(language) && m.ParentID == null).OrderBy(m => m.DisplayOrder).ToList();
         }
 
 
@@ -104,6 +104,19 @@ namespace Site.Core.Repository.Implementation
         {
             APCRSHREntities context = new APCRSHREntities();
             return context.Menus.Where(a => a.Title.Equals(title) && a.ParentID.Equals(parentID)).SingleOrDefault();
+        }
+
+
+        public Menu FindByTitle(string title, string language)
+        {
+            APCRSHREntities context = new APCRSHREntities();
+            return context.Menus.Where(a => a.Title.Equals(title) && a.Language.Equals(language)).SingleOrDefault();
+        }
+
+        public Menu FindParentByTitle(string title, string language)
+        {
+            APCRSHREntities context = new APCRSHREntities();
+            return context.Menus.Where(a => a.Title.Equals(title) && a.ParentID == null && a.Language.Equals(language)).SingleOrDefault();
         }
     }
 }

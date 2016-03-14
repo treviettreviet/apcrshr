@@ -12,6 +12,8 @@ namespace Site.Core.Repository.Repository
         IList<Menu> FindSubMenus(string parentID);
         IList<Menu> FindAll(string language);
         Menu FindByTitle(string title);
+        Menu FindByTitle(string title, string language);
+        Menu FindParentByTitle(string title, string language);
         Menu FindByTitleAndParent(string title, string parentID);
     }
 }

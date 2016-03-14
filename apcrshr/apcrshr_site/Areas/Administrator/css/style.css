@@ -9380,3 +9380,7 @@ input[type="checkbox"].input-validation-error {
 .validation-span-required{
     color: #ff0000; font-weight:bold;
 }
+
+.error{
+    color: #E51400;
+}
