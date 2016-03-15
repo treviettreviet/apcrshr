@@ -48,6 +48,20 @@
                     <span>Thuyết Trình</span>
                 </a>
             </li>
+            <li>
+                <a href='@Url.Action("Index", "AdminPhoto")' data-toggle="dropdown" class='dropdown-toggle'>
+                    <span>Ảnh</span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href='@Url.Action("Index", "AdminPhoto")'>Danh Sách Ảnh</a>
+                    </li>
+                    <li>
+                        <a href='@Url.Action("Index", "AdminAlbum")'>Danh Sách Album</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
         <div class="user">
             <div class="dropdown">

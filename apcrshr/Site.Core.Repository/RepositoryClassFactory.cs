@@ -78,5 +78,9 @@ namespace Site.Core.Repository
         {
             return new PresentationRepository();
         }
+        public IAlbumRepository GetAlbumRepository()
+        {
+            return new AlbumRepository();
+        }
     }
 }

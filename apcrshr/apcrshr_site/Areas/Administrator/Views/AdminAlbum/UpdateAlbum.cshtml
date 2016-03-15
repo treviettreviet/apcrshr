@@ -1,0 +1,113 @@
+﻿@using apcrshr_site.Helper
+@model Site.Core.DataModel.Model.AlbumModel
+@{
+    ViewBag.Title = "Sửa Album";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Areas/Administrator/js/plugins/fileupload/bootstrap-fileupload.min.js"></script>
+<script src="~/Areas/Administrator/js/plugins/mockjax/jquery.mockjax.js"></script>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box box-bordered box-color">
+            <div class="box-title">
+                <h3>
+                    <i class="fa fa-edit"></i>Cập Nhập Album
+                </h3>
+            </div>
+            <div class="box-content nopadding">
+                @using (Html.BeginForm("SaveUpdateAlbum", "AdminAlbum", FormMethod.Post, new { @class = "form-horizontal form-bordered", id = "frmSaveAlbum", enctype = "multipart/form-data" }))
+                {
+                    @Html.HiddenFor(model => model.AlbumID)
+
+                    <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Tiêu Đề <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(Model => Model.Title, new { @id = "Title", @class = "form-control" })
+                            @Html.ValidationMessageFor(Model => Model.Title)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Mô Tả <span class="validation-span-required"></span></label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(Model => Model.Description, new { @id = "Description", @class = "form-control" })
+                            @Html.ValidationMessageFor(Model => Model.Description)
+                        </div>
+                    </div>
+
+                    <div class="form-actions col-sm-offset-2 col-sm-10">
+                        <button type="button" onclick="submitForm()" class="btn btn-primary">Lưu Thông Tin</button>
+                        <button type="button" class="btn" onclick="resetForm()">Khởi tạo lại</button>
+                        <a href='@Url.Action("Index")' class="btn btn-info">Hủy Bỏ</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#Contents").Editor({ name: "Editor-Contents" });
+    });
+
+    function submitForm() {
+        if (!validateForm()) {
+            bootbox.alert("Cần phải nhập dữ liệu những trường bắt buộc.", function () {
+                bootbox.hideAll();
+            });
+            return false;
+        }
+
+        $.blockUI({ message: $('#spinner') });
+        var formData = new FormData();
+        formData.append("AlbumID", $("#AlbumID").val());
+        formData.append("Title", $("#Title").val());
+        formData.append("Description", $("#Description").val());
+        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveUpdateAlbum", "AdminAlbum")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $.unblockUI();
+                bootbox.alert(response.message, function () {
+                    bootbox.hideAll();
+                });
+                //Timeout
+                if (response.errorCode == 2) {
+                    window.location = "/Administrator/AdminHome/Login";
+                }
+                if (response.errorCode == 0) {
+                    resetForm();
+                }
+            },
+            error: function (error) {
+                $.unblockUI();
+                bootbox.alert(error, function () {
+                    bootbox.hideAll();
+                });
+            }
+        });
+    }
+
+    function validateForm() {
+        if ($("#Title").val() == null || $("#Title").val() == "") {
+            $("#Title").focus();
+            return false;
+        }
+        return true;
+    }
+
+    function resetForm() {
+        $("#Title").val("");
+        $("#Description").val("");
+    }
+
+    function setControlCss(control) {
+        $(control).css({ "background-color": "#ffafb3" });
+    }
+</script>
+

@@ -52,6 +52,7 @@ namespace Site.Core.Service.Implementation.ModelMapper
                 cfg.CreateMap<ImportantDeadlineModel, ImportantDeadline>();
                 cfg.CreateMap<VideoModel, Video>();
                 cfg.CreateMap<PresentationModel, Presentation>();
+                cfg.CreateMap<AlbumModel, Album>();
 
                 //Entity model mapper
                 cfg.CreateMap<Admin, AdminModel>();
@@ -67,6 +68,7 @@ namespace Site.Core.Service.Implementation.ModelMapper
                 cfg.CreateMap<ImportantDeadline, ImportantDeadlineModel>();
                 cfg.CreateMap<Video, VideoModel>();
                 cfg.CreateMap<Presentation, PresentationModel>();
+                cfg.CreateMap<Album, AlbumModel>();
             });
 
             mapper = config.CreateMapper();

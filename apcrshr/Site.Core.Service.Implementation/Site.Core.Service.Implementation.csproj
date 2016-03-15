@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminService.cs" />
+    <Compile Include="AlbumService.cs" />
     <Compile Include="ArticleService.cs" />
     <Compile Include="ConferenceDeclarationService.cs" />
     <Compile Include="Convertor\ConvertBase.cs" />

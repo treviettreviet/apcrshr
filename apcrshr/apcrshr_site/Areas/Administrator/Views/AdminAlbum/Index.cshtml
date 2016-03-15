@@ -1,0 +1,99 @@
+﻿@model IList<Site.Core.DataModel.Model.AlbumModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box box-color box-bordered">
+            <br />
+            <a href='@Url.Action("CreateAlbum", "AdminAlbum")' class="btn btn-blue">Thêm Mới</a>
+            <div class="box-title">
+                <h3>
+                    <i class="fa fa-th-list"></i>Danh Sách Album
+                </h3>
+            </div>
+            <div class="box-content nopadding">
+                <table id="tableAlbum" class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
+                       data-column_filter_types="null,text,text,text,text,null"
+                       data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
+                    <thead>
+                        <tr>
+                            <th class='with-checkbox'>
+                                <input type="checkbox" name="check_all" class="dataTable-checkall">
+                            </th>
+                            <th>Tiêu Đề</th>
+                            <th>Mô Tả</th>
+                            <th>Ngày Tạo</th>
+                            <th>Người Tạo</th>
+                            <th class='hidden-480'>Tùy Chọn</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            for (int i = 0; i < Model.Count; i++)
+                            {
+                                <tr id="@Model[i].AlbumID">
+                                    <td class="with-checkbox">
+                                        <input type="checkbox" name="check" value="@Model[i].AlbumID">
+                                    </td>
+                                    <td>
+                                        @Model[i].Title
+                                    </td>
+                                    <td>
+                                        @Model[i].Description
+                                    </td>
+                                    <td class='hidden-1024'>@Model[i].CreatedDate.ToShortDateString()</td>
+                                    <td>@apcrshr_site.Helper.UserHelper.GetAdminName(Model[i].CreatedBy)</td>
+                                    <td class='hidden-480'>
+                                        <a href='@Url.Action("UpdateAlbum", "AdminAlbum", new { AlbumID = Model[i].AlbumID })' class="btn" rel="tooltip" title="Sửa">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteAlbum('@Model[i].AlbumID')">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function deleteAlbum(AlbumID) {
+        bootbox.confirm("Bạn có chắc chắn muốn xóa bản ghi này?", function (result) {
+            if (result) {
+                $.ajax({
+                    type: 'GET',
+                    contentType: 'application/json',
+                    url: '@Url.Action("DeleteAlbum", "AdminAlbum")',
+                    data: { AlbumID: AlbumID },
+                    success: function (data) {
+                        if (data.ErrorCode == 0) {
+                            $('#' + AlbumID + '').remove();
+                            $('table#tableAlbum tr#' + AlbumID + '').remove();
+                            bootbox.hideAll();
+                        } else {
+                            bootbox.lert(data.Message, function () {
+                                bootbox.hideAll();
+                            });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        bootbox.hideAll();
+                    }
+                });
+                return true;
+            } else {
+                bootbox.hideAll();
+                return false;
+            }
+        });
+    }
+
+</script>
