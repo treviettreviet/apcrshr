@@ -53,7 +53,7 @@
 
     @*Start Pagination*@
     <div id="pagination">
-        @Html.PagingUtil("Index", "Presentation", Model.Count, apcrshr_site.Constants.Constants.PAGE_SIZE,
+        @Html.PagingUtil("Index", "Presentation", Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("ActionURL")).SingleOrDefault().Value.ToString(), Model.Count, apcrshr_site.Constants.Constants.PAGE_SIZE,
     Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("pageIndex")).SingleOrDefault())
     </div>
     @*End Pagination*@

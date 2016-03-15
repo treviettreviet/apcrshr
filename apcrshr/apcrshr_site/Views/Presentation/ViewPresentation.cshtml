@@ -18,7 +18,9 @@
                 <br />
                 <ul class="post-meta">
                     <li>@Model.Items[0].CreatedDate.ToString("dddd, d MMMM, yyyy", new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.Name))</li>
-                    <li><a href="#">Posted by</a>, <a href="#">ACPRSHR</a></li>
+                    <li><a href="#">Posted by</a>, <a href="#">@apcrshr_site.Helper.UserHelper.GetAdminName(Model.Items[0].CreatedBy)</a></li>
+                    <li class="comment"><a href="@Model.Items[0].ImageURL">@(string.IsNullOrEmpty(Model.Items[0].ImageURL) ? "0" : "") image</a></li>
+                    <li class="comment"><a href="@Model.Items[0].AttachmentURL">@(string.IsNullOrEmpty(Model.Items[0].AttachmentURL) ? "0" : "") attachment</a></li>
                 </ul>
             </div>
         </div>
@@ -34,9 +36,18 @@
                 {
                         <!-- Post 1 -->
                     <div class="post-row animated fadeIn delay-01" data-animation="fadeIn" data-animation-delay="01">
-                        <div class="left-meta-post">
-                            <img class="img-thumbnail image-text" style="float:left; width:150px;" alt="" src="@Model.Items[i].ImageURL">
-                        </div>
+                        @if (!string.IsNullOrEmpty(Model.Items[i].ImageURL))
+                        {
+                            <div class="left-meta-post">
+                                <img class="img-thumbnail image-text" style="float:left; width:150px;" alt="" src="@Model.Items[i].ImageURL">
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="left-meta-post">
+                                <img class="img-thumbnail image-text" style="float:left; width:150px;" alt="Empty Image" src="">
+                            </div>
+                        }
                         <h3 class="post-title"><a href='@Url.Action("ViewPresentation", "Presentation", new { ActionURL = @Model.Items[i].ActionURL })'>@Model.Items[i].Title</a></h3>
                         <div class="post-content">
                             <p>@Model.Items[i].ShortContent <a class="read-more" href='@Url.Action("ViewPresentation", "Presentation", new { ActionURL = Model.Items[i].ActionURL })'>Read More</a></p>

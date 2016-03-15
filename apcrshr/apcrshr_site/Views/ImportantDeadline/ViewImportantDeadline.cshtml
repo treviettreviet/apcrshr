@@ -18,8 +18,11 @@
                 @Html.Raw(Model.Items[0].Contents)
                 <br />
                 <ul class="post-meta">
-                    <li>@Model.Items[0].CreatedDate.ToString("dddd, d MMMM, yyyy", new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.Name))</li>
-                    <li><a href="#">Posted by</a>, <a href="#">ACPRSHR</a></li>
+                    <li>Created Date: @Model.Items[0].CreatedDate.ToString("dddd, d MMMM, yyyy", new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.Name))</li>
+                    <li><a href="#">Posted by</a>, <a href="#">@apcrshr_site.Helper.UserHelper.GetAdminName(Model.Items[0].CreatedBy)</a></li>
+                    <li class="comment">Start Date: @Model.Items[0].StartDate.ToString("dddd, d MMMM, yyyy", new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.Name))</li>
+                    <li class="comment">End Date: @Model.Items[0].EndDate.ToString("dddd, d MMMM, yyyy", new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.Name))</li>
+                    <li class="comment">Deadline: @Model.Items[0].Deadline.ToString("dddd, d MMMM, yyyy", new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.Name))</li>
                 </ul>
             </div>
         </div>
@@ -38,9 +41,9 @@
                         <div class="left-meta-post">
                             Deadline: @Model.Items[0].Deadline.ToString("dddd, d MMMM, yyyy", new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.Name))
                         </div>
-                        <h3 class="post-title"><a href='@Url.Action("ViewConference", "ConferenceDeclaration", new { ActionURL = @Model.Items[i].ActionURL })'>@Model.Items[i].Title</a></h3>
+                        <h3 class="post-title"><a href='@Url.Action("ViewImportantDeadline", "ImportantDeadline", new { ActionURL = @Model.Items[i].ActionURL })'>@Model.Items[i].Title</a></h3>
                         <div class="post-content">
-                            <p>@Model.Items[i].ShortContent <a class="read-more" href='@Url.Action("ViewConference", "ConferenceDeclaration", new { ActionURL = Model.Items[i].ActionURL })'>Read More</a></p>
+                            <p>@Model.Items[i].ShortContent <a class="read-more" href='@Url.Action("ViewImportantDeadline", "ImportantDeadline", new { ActionURL = Model.Items[i].ActionURL })'>Read More</a></p>
                         </div>
                     </div>
                 }

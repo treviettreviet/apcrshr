@@ -41,7 +41,11 @@
             <li class='@(ViewBag.CurrentNode == "AdminVideo" ? "active" : "")'>
                 <a href="@Url.Action("Index", "AdminVideo")">
                     <span>Video</span>
-
+                </a>
+            </li>
+            <li class='@(ViewBag.CurrentNode == "AdminPresentation" ? "active" : "")'>
+                <a href="@Url.Action("Index", "AdminPresentation")">
+                    <span>Thuyết Trình</span>
                 </a>
             </li>
         </ul>

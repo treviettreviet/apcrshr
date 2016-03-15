@@ -95,6 +95,12 @@
             });
             return false;
         }
+        if (!validateDateline()) {
+            bootbox.alert("Ngày bắt kết thúc được phép lớn hơn hạn chót.", function () {
+                bootbox.hideAll();
+            });
+            return false;
+        }
 
         $.blockUI({ message: $('#spinner') });
         var formData = new FormData();
@@ -164,13 +170,15 @@
             $("#StartDate").focus();
             return false;
         }
+        return true;
+    }
+    function validateDateline() {
         if ($("#EndDate").val() > $("#Deadline").val()) {
             $("#EndDate").focus();
             return false;
         }
         return true;
     }
-
     function resetForm() {
         $("#Title").val("");
         $("#ShortContent").val("");
