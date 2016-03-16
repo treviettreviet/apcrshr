@@ -189,6 +189,7 @@
     <Compile Include="Areas\Administrator\Controllers\AdminNewsController.cs" />
     <Compile Include="Areas\Administrator\Controllers\AdminImportantDeadlineController.cs" />
     <Compile Include="Areas\Administrator\Controllers\AdminPresentationController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\AdminRoleController.cs" />
     <Compile Include="Areas\Administrator\Controllers\AdminUserController.cs" />
     <Compile Include="Areas\Administrator\Controllers\AdminVideoController.cs" />
     <Compile Include="Areas\Administrator\Controllers\ArticleController.cs" />
@@ -738,6 +739,7 @@
     <Content Include="Areas\Administrator\Views\AdminAlbum\Index.cshtml" />
     <Content Include="Areas\Administrator\Views\AdminAlbum\CreateAlbum.cshtml" />
     <Content Include="Areas\Administrator\Views\AdminAlbum\UpdateAlbum.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdminRole\Index.cshtml" />
     <None Include="Properties\PublishProfiles\apcrshr.hvtec.vn - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
