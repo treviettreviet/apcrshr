@@ -22,63 +22,87 @@
                 </h3>
             </div>
             <div class="box-content nopadding">
-                @using (Html.BeginForm("CreateAdmin", "Admin", FormMethod.Post, new { @class = "form-horizontal form-bordered" }))
+                @using (Html.BeginForm("CreateAdmin", "Admin", FormMethod.Post, new { @class = "form-horizontal form-bordered", @id = "frmCreateAdmin" }))
                 {
                     @Html.AntiForgeryToken()
                     <div class="form-group">
                         <label for="textfield" class="control-label col-sm-2">Họ</label>
                         <div class="col-sm-10">
-                            @Html.TextBoxFor(Model => Model.FirstName, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(Model => Model.FirstName)
+                            @Html.TextBoxFor(Model => Model.FirstName, new Dictionary<string, object> {
+                                { "class", "form-control" },
+                                { "data-rule-required", "true" }
+                            })
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="textfield" class="control-label col-sm-2">Tên</label>
                         <div class="col-sm-10">
-                            @Html.TextBoxFor(Model => Model.LastName, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(Model => Model.LastName)
+                            @Html.TextBoxFor(Model => Model.LastName, new Dictionary<string, object> {
+                                { "class", "form-control" },
+                                { "data-rule-required", "true" }
+                            })
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="textfield" class="control-label col-sm-2">Tên Đăng Nhập</label>
                         <div class="col-sm-10">
-                            @Html.TextBoxFor(Model => Model.UserName, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(Model => Model.UserName)
+                            @Html.TextBoxFor(Model => Model.UserName, new Dictionary<string, object> {
+                                { "class", "form-control" },
+                                { "data-rule-required", "true" }
+                            })
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="textfield" class="control-label col-sm-2">Mật Khẩu</label>
                         <div class="col-sm-10">
-                            @Html.PasswordFor(Model => Model.Password, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(Model => Model.Password)
+                            @Html.PasswordFor(Model => Model.Password, new Dictionary<string, object> {
+                                { "class", "form-control" },
+                                { "id", "Password" },
+                                { "data-rule-required", "true" },
+                                {"data-rule-minlength", "6"}
+                            })
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="textfield" class="control-label col-sm-2">Gõ Lại Mật Khẩu</label>
                         <div class="col-sm-10">
-                            @Html.PasswordFor(Model => Model.ConfirmPassword, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(Model => Model.ConfirmPassword)
+                            @Html.PasswordFor(Model => Model.ConfirmPassword, new Dictionary<string, object> {
+                                { "class", "form-control" },
+                                { "data-rule-required", "true" },
+                                {"data-rule-equalto", "#Password"}
+                            })
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="textfield" class="control-label col-sm-2">Email</label>
                         <div class="col-sm-10">
-                            @Html.TextBoxFor(Model => Model.Email, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(Model => Model.Email)
+                            @Html.TextBoxFor(Model => Model.Email, new Dictionary<string, object> {
+                                { "class", "form-control" },
+                                { "data-rule-required", "true" },
+                                {"data-rule-email", "true"}
+                            })
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="textfield" class="control-label col-sm-2">Ngày Sinh</label>
                         <div class="col-sm-10">
-                            @Html.TextBoxFor(Model => Model.BirthDate, new { @class = "form-control", @id = "BirthDate" })
-                            @Html.ValidationMessageFor(Model => Model.BirthDate)
+                            @Html.TextBoxFor(Model => Model.BirthDate, new Dictionary<string, object> {
+                                { "class", "form-control form-control mask_date" },
+                                { "data-rule-required", "true" },
+                                {"data-rule-date", "true"}
+                            })
+                            <i>(yyy/mm/dd)</i>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="textfield" class="control-label col-sm-2">Điện Thoại</label>
                         <div class="col-sm-10">
-                            @Html.TextBoxFor(Model => Model.Phone, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(Model => Model.Phone)
+                            @Html.TextBoxFor(Model => Model.Phone, new Dictionary<string, object> {
+                                { "class", "form-control" },
+                                { "data-rule-required", "true" },
+                                {"data-rule-number", "true"},
+                                {"data-rule-minlength", "10"}
+                            })
                         </div>
                     </div>
                     <div class="form-group">
@@ -109,4 +133,5 @@
 
 <script type="text/javascript">
     $('#BirthDate').datepicker({ dateFormat: 'mm/dd/yy' }).datepicker("setDate", new Date());
+    $("#frmCreateAdmin").validate();
 </script>

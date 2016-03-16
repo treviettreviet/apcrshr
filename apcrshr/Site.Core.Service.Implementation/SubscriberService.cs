@@ -28,7 +28,7 @@ namespace Site.Core.Service.Implementation
                 {
                     InsertID = _sub.SubscriberID,
                     ErrorCode = (int)ErrorCode.None,
-                    Message = Resource.msg_create_success
+                    Message = Site.Core.Service.Implementation.Resources.Resource.msg_create_success
                 };
             }
             catch (Exception ex)

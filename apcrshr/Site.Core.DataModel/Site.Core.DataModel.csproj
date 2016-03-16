@@ -56,6 +56,8 @@
     <Compile Include="Model\NewsModel.cs" />
     <Compile Include="Model\PhotoModel.cs" />
     <Compile Include="Model\PresentationModel.cs" />
+    <Compile Include="Model\ResourceModel.cs" />
+    <Compile Include="Model\RoleModel.cs" />
     <Compile Include="Model\SearchModel.cs" />
     <Compile Include="Model\SubscriberModel.cs" />
     <Compile Include="Model\UploadModel.cs" />

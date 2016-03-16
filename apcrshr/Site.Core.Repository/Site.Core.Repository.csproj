@@ -86,6 +86,8 @@
     <Compile Include="Implementation\NewsRepository.cs" />
     <Compile Include="Implementation\PhotoRepository.cs" />
     <Compile Include="Implementation\PresentationRepository.cs" />
+    <Compile Include="Implementation\ResourceRepository.cs" />
+    <Compile Include="Implementation\RoleRepository.cs" />
     <Compile Include="Implementation\SubscriberRepository.cs" />
     <Compile Include="Implementation\UploadRepository.cs" />
     <Compile Include="Implementation\UserRepository.cs" />
@@ -124,11 +126,19 @@
     <Compile Include="Repository\IPhotoRepository.cs" />
     <Compile Include="Repository\IPresentationRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\IResourceRepository.cs" />
+    <Compile Include="Repository\IRoleRepository.cs" />
     <Compile Include="Repository\ISubscriberRepository.cs" />
     <Compile Include="Repository\IUploadRepository.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Repository\IUserSessionRepository.cs" />
     <Compile Include="Repository\IVideoRepository.cs" />
+    <Compile Include="Resource.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Role.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Slider.cs">
       <DependentUpon>APCRSHRModel.tt</DependentUpon>
     </Compile>
