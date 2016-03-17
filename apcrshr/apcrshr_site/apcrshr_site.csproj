@@ -741,6 +741,7 @@
     <Content Include="Areas\Administrator\Views\AdminAlbum\CreateAlbum.cshtml" />
     <Content Include="Areas\Administrator\Views\AdminAlbum\UpdateAlbum.cshtml" />
     <Content Include="Areas\Administrator\Views\AdminRole\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdminRole\AssignRole.cshtml" />
     <None Include="Properties\PublishProfiles\apcrshr.hvtec.vn - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />

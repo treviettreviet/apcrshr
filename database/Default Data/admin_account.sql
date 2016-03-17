@@ -10,7 +10,8 @@ INSERT INTO [dbo].[Admin]
            ,[Phone]
            ,[Locked]
            ,[UserName]
-           ,[Password])
+           ,[Password]
+		   ,[Type])
      VALUES
            (N'03d48cb6-46b5-43d3-98f2-872eaacd36bc'
            , N'Mau Tien'
@@ -20,7 +21,8 @@ INSERT INTO [dbo].[Admin]
            , '0988888888'
            , 0
            , 'administrator'
-           ,N'4MMHYVkmhqIlcZxTKZq7qa8ABQ0e5n0A0KBq7IK3nmpxHvSDUycXcuAr0ZFduZPLkTIFarzy3w==')
+           ,N'4MMHYVkmhqIlcZxTKZq7qa8ABQ0e5n0A0KBq7IK3nmpxHvSDUycXcuAr0ZFduZPLkTIFarzy3w=='
+		   ,1)
 GO
 
 --User: administrator

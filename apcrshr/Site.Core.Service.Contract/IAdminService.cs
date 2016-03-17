@@ -64,5 +64,22 @@ namespace Site.Core.Service.Contract
         /// <returns>Response</returns>
         BaseResponse Logout(string sessionID);
 
+        /// <summary>
+        /// Find all standard admin
+        /// </summary>
+        /// <returns></returns>
+        FindAllItemReponse<AdminModel> GetStandardAdmins();
+
+        /// <summary>
+        /// Find all roles
+        /// </summary>
+        /// <returns></returns>
+        FindAllItemReponse<RoleModel> GetRoles();
+
+        /// <summary>
+        /// Find available roles
+        /// </summary>
+        /// <returns></returns>
+        FindAllItemReponse<RoleModel> GetAvailableRoles();
     }
 }

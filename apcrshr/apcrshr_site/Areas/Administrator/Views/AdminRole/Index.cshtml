@@ -1,6 +1,174 @@
 ﻿@{
-    ViewBag.Title = "Phân quyền quản trị";
+    ViewBag.Title = "Quản lý quyền người dùng";
     Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<br />
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box box-color">
+            <div class="box-title">
+                <h3>
+                    <i class="fa fa-bars"></i>
+                    Quản lý quyền người dùng
+                </h3>
+                <ul class="tabs">
+                    <li class="active">
+                        <a href="#t7" data-toggle="tab">Danh sách người dùng</a>
+                    </li>
+                    <li>
+                        <a href="#t8" data-toggle="tab">Dánh sách quyền</a>
+                    </li>
+                    <li>
+                        <a href="#t9" data-toggle="tab">Tài nguyên truy cập</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="box-content">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="t7">
+                        <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
+                               data-column_filter_types="null,text,text,text,daterange,text,null,null,null"
+                               data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
+                            <thead>
+                                <tr>
+                                    <th class='with-checkbox'>
+                                        <input type="checkbox" name="check_all" class="dataTable-checkall">
+                                    </th>
+                                    <th>Họ</th>
+                                    <th>Tên</th>
+                                    <th>Email</th>
+                                    <th class='hidden-1024'>Ngày Sinh</th>
+                                    <th>Số Điện Thoại</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Tên Đăng Nhập</th>
+                                    <th class='hidden-480'>Tùy Chọn</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    if (ViewBag.AdminList != null)
+                                    {
+                                        IList<Site.Core.DataModel.Model.AdminModel> admins = (IList<Site.Core.DataModel.Model.AdminModel>)ViewBag.AdminList;
+                                        for (int i = 0; i < admins.Count; i++)
+                                        {
+                                            <tr id="@admins[i].AdminID">
+                                                <td class="with-checkbox">
+                                                    <input type="checkbox" name="check" value="@admins[i].AdminID">
+                                                </td>
+                                                <td>@admins[i].FirstName</td>
+                                                <td>@admins[i].LastName</td>
+                                                <td>@admins[i].Email</td>
+                                                <td class='hidden-1024'>@admins[i].BirthDate.ToShortDateString()</td>
+                                                <td>@admins[i].Phone</td>
+                                                <td>@(admins[i].Locked ? "Đã Khóa" : "Đã Kích Hoạt")</td>
+                                                <td>@admins[i].UserName</td>
+                                                <td class='hidden-480'>
+                                                    <a href='@Url.Action("AssignRole", "AdminRole", new { adminID = admins[i].AdminID })' class="btn" rel="tooltip" title="Sửa">
+                                                        <i class="fa fa-key"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="t8">
+                        <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
+                               data-column_filter_types="null,text,text,text,daterange,text,null,null,null"
+                               data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
+                            <thead>
+                                <tr>
+                                    <th class='with-checkbox'>
+                                        <input type="checkbox" name="check_all" class="dataTable-checkall">
+                                    </th>
+                                    <th>Họ</th>
+                                    <th>Tên</th>
+                                    <th>Email</th>
+                                    <th class='hidden-1024'>Ngày Sinh</th>
+                                    <th>Số Điện Thoại</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Tên Đăng Nhập</th>
+                                    <th class='hidden-480'>Tùy Chọn</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @*for (int i = 0; i < Model.Count; i++)
+                                {
+                                    <tr id="@Model[i].AdminID">
+                                        <td class="with-checkbox">
+                                            <input type="checkbox" name="check" value="@Model[i].AdminID">
+                                        </td>
+                                        <td>@Model[i].FirstName</td>
+                                        <td>@Model[i].LastName</td>
+                                        <td>@Model[i].Email</td>
+                                        <td class='hidden-1024'>@Model[i].BirthDate.ToShortDateString()</td>
+                                        <td>@Model[i].Phone</td>
+                                        <td>@(Model[i].Locked ? "Đã Khóa" : "Đã Kích Hoạt")</td>
+                                        <td>@Model[i].UserName</td>
+                                        <td class='hidden-480'>
+                                            <a href='@Url.Action("UpdateAdmin", "Admin", new { adminID = Model[i].AdminID })' class="btn" rel="tooltip" title="Sửa">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteAdmin('@Model[i].AdminID')">
+                                                <i class="fa fa-times"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }*@
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="t9">
+                        <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
+                               data-column_filter_types="null,text,text,text,daterange,text,null,null,null"
+                               data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
+                            <thead>
+                                <tr>
+                                    <th class='with-checkbox'>
+                                        <input type="checkbox" name="check_all" class="dataTable-checkall">
+                                    </th>
+                                    <th>Họ</th>
+                                    <th>Tên</th>
+                                    <th>Email</th>
+                                    <th class='hidden-1024'>Ngày Sinh</th>
+                                    <th>Số Điện Thoại</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Tên Đăng Nhập</th>
+                                    <th class='hidden-480'>Tùy Chọn</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @*for (int i = 0; i < Model.Count; i++)
+                                {
+                                    <tr id="@Model[i].AdminID">
+                                        <td class="with-checkbox">
+                                            <input type="checkbox" name="check" value="@Model[i].AdminID">
+                                        </td>
+                                        <td>@Model[i].FirstName</td>
+                                        <td>@Model[i].LastName</td>
+                                        <td>@Model[i].Email</td>
+                                        <td class='hidden-1024'>@Model[i].BirthDate.ToShortDateString()</td>
+                                        <td>@Model[i].Phone</td>
+                                        <td>@(Model[i].Locked ? "Đã Khóa" : "Đã Kích Hoạt")</td>
+                                        <td>@Model[i].UserName</td>
+                                        <td class='hidden-480'>
+                                            <a href='@Url.Action("UpdateAdmin", "Admin", new { adminID = Model[i].AdminID })' class="btn" rel="tooltip" title="Sửa">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteAdmin('@Model[i].AdminID')">
+                                                <i class="fa fa-times"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }*@
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
