@@ -47,6 +47,7 @@
     <Compile Include="Enum\ErrorCode.cs" />
     <Compile Include="Enum\Language.cs" />
     <Compile Include="Enum\MenuType.cs" />
+    <Compile Include="Enum\RoleType.cs" />
     <Compile Include="Model\AdminModel.cs" />
     <Compile Include="Model\AlbumModel.cs" />
     <Compile Include="Model\ArticleModel.cs" />
@@ -56,6 +57,8 @@
     <Compile Include="Model\NewsModel.cs" />
     <Compile Include="Model\PhotoModel.cs" />
     <Compile Include="Model\PresentationModel.cs" />
+    <Compile Include="Model\ResourceModel.cs" />
+    <Compile Include="Model\RoleModel.cs" />
     <Compile Include="Model\SearchModel.cs" />
     <Compile Include="Model\SubscriberModel.cs" />
     <Compile Include="Model\UploadModel.cs" />
