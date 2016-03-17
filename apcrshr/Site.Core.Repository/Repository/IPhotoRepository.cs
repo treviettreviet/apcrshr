@@ -10,7 +10,7 @@ namespace Site.Core.Repository.Repository
     {
         Photo FindByActionURL(string actionURL);
         Tuple<int, IList<Photo>> FindAll(int pageSize, int pageIndex);
-        Tuple<int, IList<Photo>> FindAllRelated(string AlbumID, DateTime date, int pageSize, int pageIndex);
+        Tuple<int, IList<Photo>> FindByAlbum(string AlbumID, int pageSize, int pageIndex);
         IList<Photo> Search(string key);
     }
 }

@@ -47,6 +47,7 @@
     <Compile Include="IImportantDeadlineService.cs" />
     <Compile Include="IMenuCategoryService.cs" />
     <Compile Include="INewsService.cs" />
+    <Compile Include="IPhotoService.cs" />
     <Compile Include="IPresentationService.cs" />
     <Compile Include="ISubscriberService.cs" />
     <Compile Include="IUploadService.cs" />
