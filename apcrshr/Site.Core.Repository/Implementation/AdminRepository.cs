@@ -37,6 +37,7 @@ namespace Site.Core.Repository.Implementation
                     admin.Password = string.IsNullOrEmpty(item.Password) ? admin.Password : Encryption.ComputeHash(item.Password, Algorithm.SHA384, null);
                     admin.Phone = item.Phone;
                     admin.UserName = item.UserName;
+                    admin.Type = item.Type;
 
                     context.SaveChanges();
                 }
@@ -67,48 +68,45 @@ namespace Site.Core.Repository.Implementation
 
         public Admin FindByID(object id)
         {
-            using (APCRSHREntities context = new APCRSHREntities())
-            {
-                var _id = id.ToString();
-                return context.Admins.Where(a => a.AdminID.Equals(_id)).SingleOrDefault();
-            }
+            APCRSHREntities context = new APCRSHREntities();
+            var _id = id.ToString();
+            return context.Admins.Where(a => a.AdminID.Equals(_id)).SingleOrDefault();
         }
 
         public IList<Admin> FindAll()
         {
-            using (APCRSHREntities context = new APCRSHREntities())
-            {
-                return context.Admins.ToList();
-            }
+            APCRSHREntities context = new APCRSHREntities();
+            return context.Admins.ToList();
         }
 
         public Admin Login(string username, string password)
         {
-            using (APCRSHREntities context = new APCRSHREntities())
+            APCRSHREntities context = new APCRSHREntities();
+            Admin admin = context.Admins.Where(a => a.UserName == username).SingleOrDefault();
+            if (admin != null && Encryption.VerifyHash(password, Algorithm.SHA384, admin.Password) && admin.Locked == false)
             {
-                Admin admin = context.Admins.Where(a => a.UserName == username).SingleOrDefault();
-                if (admin != null && Encryption.VerifyHash(password, Algorithm.SHA384, admin.Password) && admin.Locked == false)
-                {
-                    return admin;
-                }
-                return null;
+                return admin;
             }
+            return null;
         }
 
         public IList<Admin> GetAdminsExceptMe(string adminID)
         {
-            using (APCRSHREntities context = new APCRSHREntities())
-            {
-                return context.Admins.Where(a => !a.AdminID.Equals(adminID) && !a.UserName.Equals("administrator", StringComparison.OrdinalIgnoreCase)).ToList();
-            }   
+            APCRSHREntities context = new APCRSHREntities();
+            return context.Admins.Where(a => !a.AdminID.Equals(adminID) && !a.UserName.Equals("administrator", StringComparison.OrdinalIgnoreCase) && a.Type != 1).ToList();
         }
 
         public Admin FindByUserName(string username)
         {
-            using (APCRSHREntities context = new APCRSHREntities())
-            {
-                return context.Admins.Where(a => a.UserName.Equals(username)).SingleOrDefault();
-            }
+            APCRSHREntities context = new APCRSHREntities();
+            return context.Admins.Where(a => a.UserName.Equals(username)).SingleOrDefault();
+        }
+
+
+        public IList<Admin> FindStandardAdmins()
+        {
+            APCRSHREntities context = new APCRSHREntities();
+            return context.Admins.Where(a => a.Type != 1).ToList();
         }
     }
 }

@@ -24,6 +24,7 @@ namespace Site.Core.DataModel.Model
         public string UserName { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
+        public int Type { get; set; }
         public virtual ICollection<RoleModel> Roles { get; set; }
     }
 }

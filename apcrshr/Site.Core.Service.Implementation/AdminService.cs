@@ -262,5 +262,41 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindAllItemReponse<AdminModel> GetStandardAdmins()
+        {
+            try
+            {
+                IAdminRepository adminRepository = RepositoryClassFactory.GetInstance().GetAdminRepository();
+                IList<Admin> admins = adminRepository.FindStandardAdmins();
+                var _admin = admins.Select(n => MapperUtil.CreateMapper().Mapper.Map<Admin, AdminModel>(n)).ToList();
+                return new FindAllItemReponse<AdminModel>
+                {
+                    Items = _admin,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindAllItemReponse<AdminModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
+
+
+        public FindAllItemReponse<RoleModel> GetRoles()
+        {
+            throw new NotImplementedException();
+        }
+
+        public FindAllItemReponse<RoleModel> GetAvailableRoles()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

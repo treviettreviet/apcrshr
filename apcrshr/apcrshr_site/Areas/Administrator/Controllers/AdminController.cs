@@ -116,6 +116,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             if (ModelState.IsValid)
             {
                 admin.AdminID = Guid.NewGuid().ToString();
+                admin.Type = (int) AccountType.Standard;
                 BaseResponse response = _adminService.CreateAdmin(admin);
 
                 ViewBag.Message = response;

@@ -68,3 +68,7 @@ GO
 ALTER TABLE [dbo].[AdminRole] CHECK CONSTRAINT [FK_AdminRole_Role]
 
 GO
+
+ALTER TABLE [Admin] ADD [Type] INT NOT NULL DEFAULT(0)
+
+GO
