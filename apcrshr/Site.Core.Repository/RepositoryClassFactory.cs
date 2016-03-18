@@ -82,5 +82,9 @@ namespace Site.Core.Repository
         {
             return new AlbumRepository();
         }
+        public IPhotoRepository GetPhotoRepository()
+        {
+            return new PhotoRepository();
+        }
     }
 }
