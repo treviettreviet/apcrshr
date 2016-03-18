@@ -70,6 +70,15 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cần xóa hết ảnh trong album trước.
+        /// </summary>
+        internal static string msg_notEmptyAlbum {
+            get {
+                return ResourceManager.GetString("msg_notEmptyAlbum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hết thời gian phiên làm việc..
         /// </summary>
         internal static string msg_sessionInvalid {

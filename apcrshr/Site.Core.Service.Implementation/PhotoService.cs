@@ -120,7 +120,29 @@ namespace Site.Core.Service.Implementation
 
         public FindAllItemReponse<PhotoModel> GetPhoto()
         {
-            throw new NotImplementedException();
+            try
+            {
+                IPhotoRepository photoRepository = RepositoryClassFactory.GetInstance().GetPhotoRepository();
+                IList<Photo> photo = photoRepository.FindAll();
+                var _photo = photo.Select(n => MapperUtil.CreateMapper().Mapper.Map<Photo, PhotoModel>(n)).ToList();
+                return new FindAllItemReponse<PhotoModel>
+                {
+                    Items = _photo,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+
+
+            }
+            catch (Exception ex)
+            {
+
+                return new FindAllItemReponse<PhotoModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
         }
 
         public FindAllItemReponse<PhotoModel> GetPhoto(int pageSize, int pageIndex)
