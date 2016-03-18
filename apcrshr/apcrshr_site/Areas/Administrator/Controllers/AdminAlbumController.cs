@@ -19,10 +19,13 @@ namespace apcrshr_site.Areas.Administrator.Controllers
     {
 
         private IAlbumService _albumService;
+        private IPhotoService _photoService;
+
         public AdminAlbumController()
         {
             ViewBag.CurrentNode = "AdminAlbum";
             this._albumService = new AlbumService();
+            this._photoService = new PhotoService();
         }
         //
         // GET: /Administrator/AdminAlbum/
@@ -105,9 +108,17 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         [HttpGet]
         public JsonResult DeleteAlbum(string albumID)
         {
-            FindItemReponse<AlbumModel> albumResponse = _albumService.FindAlbumByID(albumID);
-            BaseResponse response = _albumService.DeleteAlbum(albumID);
-            return Json(new { ErrorCode = response.ErrorCode, Message = response.Message }, JsonRequestBehavior.AllowGet);
+            FindItemReponse<AlbumModel> albumResponse = _albumService.FindAlbumByID(albumID); 
+
+            var albumActionURL = albumResponse.Item.ActionURL;
+            FindAllItemReponse<PhotoModel> photoResponse = _photoService.GetPhotoByAlbum(albumActionURL, 1, 1);
+            if (photoResponse.Items.Count == 0)
+            {
+                BaseResponse response = _albumService.DeleteAlbum(albumID);
+                return Json(new { ErrorCode = response.ErrorCode, Message = response.Message }, JsonRequestBehavior.AllowGet);
+            }
+            
+            return Json(new { ErrorCode = (int)ErrorCode.Redirect, Message = Resources.AdminResource.msg_notEmptyAlbum }, JsonRequestBehavior.AllowGet);
         }
     }
 }

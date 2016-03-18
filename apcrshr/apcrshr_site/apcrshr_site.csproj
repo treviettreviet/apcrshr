@@ -210,6 +210,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\AlbumHelper.cs" />
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="Helper\DataHelper.cs" />
     <Compile Include="Helper\HtmlExtension.cs" />
@@ -743,6 +744,9 @@
     <Content Include="Areas\Administrator\Views\AdminAlbum\UpdateAlbum.cshtml" />
     <Content Include="Areas\Administrator\Views\AdminRole\Index.cshtml" />
     <Content Include="Areas\Administrator\Views\AdminRole\AssignRole.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdminPhoto\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdminPhoto\CreatePhoto.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdminPhoto\UpdatePhoto.cshtml" />
     <None Include="Properties\PublishProfiles\apcrshr.hvtec.vn - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />

@@ -1,23 +1,22 @@
-﻿@model IList<Site.Core.DataModel.Model.AlbumModel>
+﻿@model IList<Site.Core.DataModel.Model.PhotoModel>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Ảnh";
     Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
 }
 
 <div class="row">
     <div class="col-sm-12">
-        <!--Alert-->
         <div class="box box-color box-bordered">
             <br />
-            <a href='@Url.Action("CreateAlbum", "AdminAlbum")' class="btn btn-blue">Thêm Mới</a>
+            <a href='@Url.Action("CreatePhoto", "AdminPhoto")' class="btn btn-blue">Thêm Mới</a>
             <div class="box-title">
                 <h3>
-                    <i class="fa fa-th-list"></i>Danh Sách Album
+                    <i class="fa fa-th-list"></i>Danh Sách Ảnh
                 </h3>
             </div>
             <div class="box-content nopadding">
-                <table id="tableAlbum" class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
-                       data-column_filter_types="null,text,text,daterange,text,null"
+                <table id="tablePhoto" class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
+                       data-column_filter_types="null,text,text,text,null,daterange,text,null"
                        data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
                     <thead>
                         <tr>
@@ -26,7 +25,9 @@
                             </th>
                             <th>Tiêu Đề</th>
                             <th>Mô Tả</th>
-                            <th>Ngày Tạo</th>
+                            <th>Tên Album</th>
+                            <th>Ảnh</th>
+                            <th class='hidden-1024'>Ngày Tạo</th>
                             <th>Người Tạo</th>
                             <th class='hidden-480'>Tùy Chọn</th>
                         </tr>
@@ -36,23 +37,34 @@
                         {
                             for (int i = 0; i < Model.Count; i++)
                             {
-                                <tr id="@Model[i].AlbumID">
+                                <tr id="@Model[i].PhotoID">
                                     <td class="with-checkbox">
-                                        <input type="checkbox" name="check" value="@Model[i].AlbumID">
+                                        <input type="checkbox" name="check" value="@Model[i].PhotoID">
                                     </td>
                                     <td>
                                         @Model[i].Title
                                     </td>
+                                    @if (!string.IsNullOrEmpty(Model[i].Description))
+                                    {
+                                        <td>@(Model[i].Description.Length > 50 ? Model[i].Description.Substring(0, 50) : Model[i].Description)</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@Model[i].Description</td>
+                                    }
+
+                                    <td>@(apcrshr_site.Helper.AlbumHelper.GetAlbumName(Model[i].AlbumID))</td>
+
                                     <td>
-                                        @Model[i].Description
+                                        <img class="thumbnail" src="@Model[i].ImageURL" style="width: 200px; height: 150px;">
                                     </td>
                                     <td class='hidden-1024'>@Model[i].CreatedDate.ToShortDateString()</td>
                                     <td>@apcrshr_site.Helper.UserHelper.GetAdminName(Model[i].CreatedBy)</td>
                                     <td class='hidden-480'>
-                                        <a href='@Url.Action("UpdateAlbum", "AdminAlbum", new { AlbumID = Model[i].AlbumID })' class="btn" rel="tooltip" title="Sửa">
+                                        <a href='@Url.Action("UpdatePhoto", "AdminPhoto", new { photoID = Model[i].PhotoID })' class="btn" rel="tooltip" title="Sửa">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                        <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteAlbum('@Model[i].AlbumID')">
+                                        <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deletePhoto('@Model[i].PhotoID')">
                                             <i class="fa fa-times"></i>
                                         </a>
                                     </td>
@@ -66,21 +78,21 @@
     </div>
 </div>
 <script type="text/javascript">
-    function deleteAlbum(AlbumID) {
+    function deletePhoto(PhotoID) {
         bootbox.confirm("Bạn có chắc chắn muốn xóa bản ghi này?", function (result) {
             if (result) {
                 $.ajax({
                     type: 'GET',
                     contentType: 'application/json',
-                    url: '@Url.Action("DeleteAlbum", "AdminAlbum")',
-                    data: { AlbumID: AlbumID },
+                    url: '@Url.Action("DeletePhoto", "AdminPhoto")',
+                    data: { PhotoID: PhotoID },
                     success: function (data) {
                         if (data.ErrorCode == 0) {
-                            $('#' + AlbumID + '').remove();
-                            $('table#tableAlbum tr#' + AlbumID + '').remove();
+                            $('#' + PhotoID + '').remove();
+                            $('table#tablePhoto tr#' + PhotoID + '').remove();
                             bootbox.hideAll();
                         } else {
-                            bootbox.alert(data.Message, function () {
+                            bootbox.lert(data.Message, function () {
                                 bootbox.hideAll();
                             });
                         }
