@@ -86,5 +86,13 @@ namespace Site.Core.Repository
         {
             return new PhotoRepository();
         }
+        public IRoleRepository GetRoleRepository()
+        {
+            return new RoleRepository();
+        }
+        public IResourceRepository GetResourceRepository()
+        {
+            return new ResourceRepository();
+        }
     }
 }

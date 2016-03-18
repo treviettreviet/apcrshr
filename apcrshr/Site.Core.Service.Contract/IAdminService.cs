@@ -81,5 +81,11 @@ namespace Site.Core.Service.Contract
         /// </summary>
         /// <returns></returns>
         FindAllItemReponse<RoleModel> GetAvailableRoles();
+
+        /// <summary>
+        /// Find all resources
+        /// </summary>
+        /// <returns></returns>
+        FindAllItemReponse<ResourceModel> GetResources();
     }
 }
