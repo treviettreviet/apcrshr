@@ -8,5 +8,6 @@ namespace Site.Core.Repository.Repository
 {
     public interface IRoleRepository : IRepository<Role>
     {
+        IList<Role> FindAllAvailables(string adminID);
     }
 }

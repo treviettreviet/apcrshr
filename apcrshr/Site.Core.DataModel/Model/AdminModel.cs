@@ -9,11 +9,6 @@ namespace Site.Core.DataModel.Model
 {
     public class AdminModel
     {
-        public AdminModel()
-        {
-            this.Roles = new HashSet<RoleModel>();
-        }
-    
         public string AdminID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -26,6 +21,5 @@ namespace Site.Core.DataModel.Model
         public string ConfirmPassword { get; set; }
         public int Type { get; set; }
         public bool RememberMe { get; set; }
-        public virtual ICollection<RoleModel> Roles { get; set; }
     }
 }

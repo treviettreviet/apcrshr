@@ -342,5 +342,109 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindAllItemReponse<RoleModel> GetAvailableRoles(string adminID)
+        {
+            try
+            {
+                IRoleRepository roleRepository = RepositoryClassFactory.GetInstance().GetRoleRepository();
+                IList<Role> roles = roleRepository.FindAllAvailables(adminID);
+                var _roles = roles.Select(n => MapperUtil.CreateMapper().Mapper.Map<Role, RoleModel>(n)).ToList();
+                return new FindAllItemReponse<RoleModel>
+                {
+                    Items = _roles,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindAllItemReponse<RoleModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
+
+
+        public FindAllItemReponse<RoleModel> GetAssignedRoles(string adminID)
+        {
+            try
+            {
+                IAdminRepository adminRepository = RepositoryClassFactory.GetInstance().GetAdminRepository();
+                Admin admin = adminRepository.FindByID(adminID);
+                if (admin != null)
+                {
+                    IList<Role> roles = admin.Roles.ToList();
+                    var _roles = roles.Select(n => MapperUtil.CreateMapper().Mapper.Map<Role, RoleModel>(n)).ToList();
+                    return new FindAllItemReponse<RoleModel>
+                    {
+                        Items = _roles,
+                        ErrorCode = (int)ErrorCode.None,
+                        Message = string.Empty
+                    };
+                }
+                else
+                {
+                    return new FindAllItemReponse<RoleModel>
+                    {
+                        ErrorCode = (int)ErrorCode.Error,
+                        Message = string.Format(Resources.Resource.text_itemNotFound, adminID, "Admin")
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new FindAllItemReponse<RoleModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
+
+
+        public BaseResponse AssignRoles(IList<string> roleIds, string adminID)
+        {
+            try
+            {
+                IAdminRepository adminRepository = RepositoryClassFactory.GetInstance().GetAdminRepository();
+                Admin _admin = adminRepository.FindByID(adminID);
+
+                if (_admin != null)
+                {
+                    IRoleRepository roleRepository = RepositoryClassFactory.GetInstance().GetRoleRepository();
+                    foreach (var id in roleIds)
+                    {
+                        Role role = roleRepository.FindByID(id);
+                        _admin.Roles.Add(role);
+                    }
+                    adminRepository.Update(_admin);
+                    return new BaseResponse
+                    {
+                        ErrorCode = (int)ErrorCode.None,
+                        Message = string.Empty
+                    };
+                }
+                else
+                {
+                    return new FindAllItemReponse<RoleModel>
+                    {
+                        ErrorCode = (int)ErrorCode.Error,
+                        Message = string.Format(Resources.Resource.text_itemNotFound, adminID, "Admin")
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }

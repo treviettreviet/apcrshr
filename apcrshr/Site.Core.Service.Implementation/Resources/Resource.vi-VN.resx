@@ -147,6 +147,9 @@
   <data name="text_category_title" xml:space="preserve">
     <value>Tiêu đề</value>
   </data>
+  <data name="text_itemNotFound" xml:space="preserve">
+    <value>Không có bản ghi nào cho "{0}" trong "{}".</value>
+  </data>
   <data name="text_searchNotFound" xml:space="preserve">
     <value>Không tìm thấy kết quả nào với từ khóa "{0}".</value>
   </data>

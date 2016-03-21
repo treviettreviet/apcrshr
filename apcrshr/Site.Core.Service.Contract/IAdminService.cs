@@ -83,6 +83,28 @@ namespace Site.Core.Service.Contract
         FindAllItemReponse<RoleModel> GetAvailableRoles();
 
         /// <summary>
+        /// Get all role that not assigned to the specific admin
+        /// </summary>
+        /// <param name="adminID"></param>
+        /// <returns></returns>
+        FindAllItemReponse<RoleModel> GetAvailableRoles(string adminID);
+
+        /// <summary>
+        /// Get all assigned role for specific admin
+        /// </summary>
+        /// <param name="adminID"></param>
+        /// <returns></returns>
+        FindAllItemReponse<RoleModel> GetAssignedRoles(string adminID);
+
+        /// <summary>
+        /// Assign roles for specific admin
+        /// </summary>
+        /// <param name="roleIds"></param>
+        /// <param name="adminID"></param>
+        /// <returns></returns>
+        BaseResponse AssignRoles(IList<string> roleIds, string adminID);
+
+        /// <summary>
         /// Find all resources
         /// </summary>
         /// <returns></returns>

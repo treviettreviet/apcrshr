@@ -28,11 +28,16 @@
                         </div>
                     </div>
                     <ul class="list-group">
-                        <li class="list-group-item">bootstrap-duallist <a href="https://github.com/bbilginn/bootstrap-duallist" target="_blank">github</a></li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Morbi leo risus</li>
-                        <li class="list-group-item">Porta ac consectetur ac</li>
-                        <li class="list-group-item">Vestibulum at eros</li>
+                        @{
+                            if (ViewBag.AvailableRoles != null)
+                            {
+                                IList<Site.Core.DataModel.Model.RoleModel> roles = (IList<Site.Core.DataModel.Model.RoleModel>)ViewBag.AvailableRoles;
+                                foreach (var item in roles)
+                                {
+                                    <li class="list-group-item" id="@item.RoleID">@item.Name</li>
+                                }
+                            }   
+                        }
                     </ul>
                 </div>
             </div>
@@ -72,11 +77,16 @@
                         </div>
                     </div>
                     <ul class="list-group">
-                        <li class="list-group-item">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Morbi leo risus</li>
-                        <li class="list-group-item">Porta ac consectetur ac</li>
-                        <li class="list-group-item">Vestibulum at eros</li>
+                        @{
+                            if (ViewBag.AssignedRoles != null)
+                            {
+                                IList<Site.Core.DataModel.Model.RoleModel> roles = (IList<Site.Core.DataModel.Model.RoleModel>)ViewBag.AssignedRoles;
+                                foreach (var item in roles)
+                                {
+                                    <li class="list-group-item" id="@item.RoleID">@item.Name</li>
+                                }
+                            }
+                        }
                     </ul>
                 </div>
             </div>
@@ -92,16 +102,54 @@
             $(this).toggleClass('active');
         });
         $('.list-arrows button').click(function () {
+            $.blockUI({ message: $('#spinner') });
+            var array = new Array();
+            var assign = true;
             var $button = $(this), actives = '';
             if ($button.hasClass('move-left')) {
+                //Remove roles
                 actives = $('.list-right ul li.active');
                 actives.clone().appendTo('.list-left ul');
                 actives.remove();
+                $(actives).each(function (index) {
+                    array.push($(this).attr("id"));
+                });
+                assign = false;
             } else if ($button.hasClass('move-right')) {
+                //Assign roles
                 actives = $('.list-left ul li.active');
                 actives.clone().appendTo('.list-right ul');
                 actives.remove();
+                $(actives).each(function (index) {
+                    array.push($(this).attr("id"));
+                });
             }
+
+            $.ajax({
+                type: 'POST',
+                contentType: 'application/json',
+                url: '@Url.Action("SaveRoles", "AdminRole")',
+                data: JSON.stringify({ roles: array, assign: assign, adminID: appUtil.utility.getURLParameter("adminID") }),
+                dataType: "json",
+                success: function (data) {
+                    $.unblockUI();
+                    if (data.errorCode != 0) {
+                        if (data.errorCode == 2) {
+                            //Timeout
+                            if (response.errorCode == 2) {
+                                window.location = "/Administrator/AdminHome/Login";
+                            }
+                        } else {
+                            bootbox.alert(data.message, function () {
+                                bootbox.hideAll();
+                            });
+                        }
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $.unblockUI();
+                }
+            });
         });
         $('.dual-list .selector').click(function () {
             var $checkBox = $(this);
