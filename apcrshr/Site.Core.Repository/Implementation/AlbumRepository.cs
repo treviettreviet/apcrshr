@@ -85,5 +85,16 @@ namespace Site.Core.Repository.Implementation
                 return context.Albums.OrderByDescending(n => n.CreatedDate).ToList();
             }
         }
+
+
+        public Tuple<int, IList<Album>> FindAll(int pageSize, int pageIndex)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                var count = context.ConferenceDeclarations.Count();
+                var albums = context.Albums.OrderByDescending(n => n.CreatedDate).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+                return Tuple.Create<int, IList<Album>>(count, albums);
+            }
+        }
     }
 }

@@ -169,5 +169,34 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindAllItemReponse<AlbumModel> GetAlbum(int pageSize, int pageIndex)
+        {
+            try
+            {
+                IAlbumRepository albumRepository = RepositoryClassFactory.GetInstance().GetAlbumRepository();
+                var result = albumRepository.FindAll(pageSize, pageIndex);
+                var _con = result.Item2.Select(n => MapperUtil.CreateMapper().Mapper.Map<Album, AlbumModel>(n)).ToList();
+                return new FindAllItemReponse<AlbumModel>
+                {
+                    Count = result.Item1,
+                    Items = _con,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+
+
+            }
+            catch (Exception ex)
+            {
+
+                return new FindAllItemReponse<AlbumModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }

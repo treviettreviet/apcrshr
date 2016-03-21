@@ -9,5 +9,6 @@ namespace Site.Core.Repository.Repository
     public interface IAlbumRepository : IRepository<Album>
     {
         Album FindByActionURL(string actionURL);
+        Tuple<int, IList<Album>> FindAll(int pageSize, int pageIndex);
     }
 }

@@ -195,11 +195,13 @@
     <Compile Include="Areas\Administrator\Controllers\AdminVideoController.cs" />
     <Compile Include="Areas\Administrator\Controllers\ArticleController.cs" />
     <Compile Include="Constants\Constants.cs" />
+    <Compile Include="Controllers\AlbumController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ConferenceDeclarationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportantDeadlineController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\PresentationController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -843,6 +845,8 @@
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\Presentation\Index.cshtml" />
     <Content Include="Views\Presentation\ViewPresentation.cshtml" />
+    <Content Include="Views\Album\Index.cshtml" />
+    <Content Include="Views\Photo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

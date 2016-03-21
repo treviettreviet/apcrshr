@@ -1,0 +1,49 @@
+﻿@using apcrshr_site.Helper
+@model Site.Core.DataModel.Response.FindAllItemReponse<Site.Core.DataModel.Model.PhotoModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<div class="col-md-9 page-content">
+    @if (Model.Items.Count > 0)
+    {
+        int i = 0;
+
+        <div class="latest-posts-classic">
+
+            <h2>@ViewBag.AlbumTitle</h2><br />
+
+            @for (; i < Model.Items.Count; i++)
+            {
+                        <!-- Post 1 -->
+                <div class="post-row animated fadeIn delay-01" data-animation="fadeIn" data-animation-delay="01">
+                    @if (!string.IsNullOrEmpty(Model.Items[i].ImageURL))
+                    {
+                        <div class="left-meta-post">
+                            <img class="img-thumbnail image-text" style="float:left; width:150px;" alt="" src="@Model.Items[i].ImageURL">
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="left-meta-post">
+                            <img class="img-thumbnail image-text" style="float:left; width:150px;" alt="Empty Image" src="">
+                        </div>
+                    }
+
+                </div>
+            }
+        </div>
+    }
+
+    @*Start Pagination*@
+    <div id="pagination">
+        @Html.PagingUtil("Index", "Photo", Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("ActionURL")).SingleOrDefault().Value.ToString(), Model.Count, apcrshr_site.Constants.Constants.PAGE_SIZE,
+    Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("pageIndex")).SingleOrDefault())
+    </div>
+    @*End Pagination*@
+</div>
+
+
+
+
+

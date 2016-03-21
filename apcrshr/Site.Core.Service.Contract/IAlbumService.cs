@@ -50,5 +50,13 @@ namespace Site.Core.Service.Contract
         /// </summary>
         /// <returns></returns>
         FindAllItemReponse<AlbumModel> GetAlbum();
+
+        /// <summary>
+        /// Get Album with paging
+        /// </summary>
+        /// <param name="pageSize">int</param>
+        /// <param name="pageIndex">int</param>
+        /// <returns></returns>
+        FindAllItemReponse<AlbumModel> GetAlbum(int pageSize, int pageIndex);
     }
 }
