@@ -36,5 +36,7 @@ namespace Site.Core.DataModel.Model
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         
         public bool Locked { get; set; }
+
+        public bool RememberMe { get; set; }
     }
 }

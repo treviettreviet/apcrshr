@@ -291,12 +291,56 @@ namespace Site.Core.Service.Implementation
 
         public FindAllItemReponse<RoleModel> GetRoles()
         {
-            throw new NotImplementedException();
+            try
+            {
+                IRoleRepository roleRepository = RepositoryClassFactory.GetInstance().GetRoleRepository();
+                IList<Role> roles = roleRepository.FindAll();
+                var _roles = roles.Select(n => MapperUtil.CreateMapper().Mapper.Map<Role, RoleModel>(n)).ToList();
+                return new FindAllItemReponse<RoleModel>
+                {
+                    Items = _roles,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindAllItemReponse<RoleModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
         }
 
         public FindAllItemReponse<RoleModel> GetAvailableRoles()
         {
             throw new NotImplementedException();
+        }
+
+
+        public FindAllItemReponse<ResourceModel> GetResources()
+        {
+            try
+            {
+                IResourceRepository resourceRepository = RepositoryClassFactory.GetInstance().GetResourceRepository();
+                IList<Resource> resources = resourceRepository.FindAll();
+                var _resources = resources.Select(n => MapperUtil.CreateMapper().Mapper.Map<Resource, ResourceModel>(n)).ToList();
+                return new FindAllItemReponse<ResourceModel>
+                {
+                    Items = _resources,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindAllItemReponse<ResourceModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
         }
     }
 }

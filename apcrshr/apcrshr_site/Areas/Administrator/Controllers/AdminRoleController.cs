@@ -24,10 +24,15 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         // GET: /Administrator/AdminRole/
         [HttpGet]
         [SessionFilter]
+        [AuthorizationFilter]
         public ActionResult Index()
         {
-            FindAllItemReponse<AdminModel> response = _adminService.GetStandardAdmins();
-            ViewBag.AdminList = response.Items;
+            FindAllItemReponse<AdminModel> adminResponse = _adminService.GetStandardAdmins();
+            FindAllItemReponse<RoleModel> roleResponse = _adminService.GetRoles();
+            FindAllItemReponse<ResourceModel> resourceResponse = _adminService.GetResources();
+            ViewBag.AdminList = adminResponse.Items;
+            ViewBag.RoleList = roleResponse.Items;
+            ViewBag.ResourceList = resourceResponse.Items;
             return View();
         }
 
