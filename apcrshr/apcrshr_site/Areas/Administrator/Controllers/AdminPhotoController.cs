@@ -79,7 +79,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             photo.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(photo.Title), UrlSlugger.Get8Digits());
             photo.CreatedDate = DateTime.Now;
             photo.PhotoID = Guid.NewGuid().ToString();
-            photo.ImageURL = "aa";
+            photo.ImageURL = "";
             photo.CreatedBy = userSession != null ? userSession.UserID : string.Empty;
 
             response = _photoService.CreatePhoto(photo);
