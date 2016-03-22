@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Phân quyền quản trị";
+    ViewBag.Title = "Gán tài nguyên truy cập";
     Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,7 +9,7 @@
         <div class="box box-color box-bordered">
             <div class="box-title">
                 <h3>
-                    <i class="fa fa-th-list"></i>Quyền chưa cấp
+                    <i class="fa fa-th-list"></i>Tài nguyên chưa cấp
                 </h3>
             </div>
             <div class="box-content nopadding">
@@ -29,14 +29,14 @@
                     </div>
                     <ul class="list-group">
                         @{
-                            if (ViewBag.AvailableRoles != null)
+                            if (ViewBag.AvailableResources != null)
                             {
-                                IList<Site.Core.DataModel.Model.RoleModel> roles = (IList<Site.Core.DataModel.Model.RoleModel>)ViewBag.AvailableRoles;
-                                foreach (var item in roles)
+                                IList<Site.Core.DataModel.Model.ResourceModel> resources = (IList<Site.Core.DataModel.Model.ResourceModel>)ViewBag.AvailableResources;
+                                foreach (var item in resources)
                                 {
-                                    <li class="list-group-item" id="@item.RoleID">@item.Name</li>
+                                    <li class="list-group-item" id="@item.ResourceID">@item.Title</li>
                                 }
-                            }   
+                            }
                         }
                     </ul>
                 </div>
@@ -58,7 +58,7 @@
         <div class="box box-color box-bordered">
             <div class="box-title">
                 <h3>
-                    <i class="fa fa-th-list"></i>Quyền người dùng
+                    <i class="fa fa-th-list"></i>Tài nguyên đã cấp
                 </h3>
             </div>
             <div class="box-content nopadding">
@@ -78,12 +78,12 @@
                     </div>
                     <ul class="list-group">
                         @{
-                            if (ViewBag.AssignedRoles != null)
+                            if (ViewBag.AssignedResources != null)
                             {
-                                IList<Site.Core.DataModel.Model.RoleModel> roles = (IList<Site.Core.DataModel.Model.RoleModel>)ViewBag.AssignedRoles;
-                                foreach (var item in roles)
+                                IList<Site.Core.DataModel.Model.ResourceModel> resources = (IList<Site.Core.DataModel.Model.ResourceModel>)ViewBag.AssignedResources;
+                                foreach (var item in resources)
                                 {
-                                    <li class="list-group-item" id="@item.RoleID">@item.Name</li>
+                                    <li class="list-group-item" id="@item.ResourceID">@item.Title</li>
                                 }
                             }
                         }
@@ -128,8 +128,8 @@
             $.ajax({
                 type: 'POST',
                 contentType: 'application/json',
-                url: '@Url.Action("SaveRoles", "AdminRole")',
-                data: JSON.stringify({ roles: array, assign: assign, adminID: appUtil.utility.getURLParameter("adminID") }),
+                url: '@Url.Action("SaveResources", "AdminRole")',
+                data: JSON.stringify({ resources: array, assign: assign, roleID: appUtil.utility.getURLParameter("roleID") }),
                 dataType: "json",
                 success: function (data) {
                     $.unblockUI();

@@ -147,6 +147,9 @@
   <data name="text_category_title" xml:space="preserve">
     <value>Title</value>
   </data>
+  <data name="text_itemNotFound" xml:space="preserve">
+    <value>No record for "{0}" in the "{}".</value>
+  </data>
   <data name="text_searchNotFound" xml:space="preserve">
     <value>No result for this word "{0}".</value>
   </data>

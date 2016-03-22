@@ -74,5 +74,21 @@ namespace Site.Core.Repository.Implementation
                 return context.Resources.ToList();
             }
         }
+
+        public IList<Resource> FindAllAvailables(string roleID)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Resources.SqlQuery("SELECT * FROM [Resource] WHERE [ResourceID] NOT IN (SELECT [ResourceID] FROM [RoleResource] WHERE [RoleID] = @p0)", roleID).ToList();
+            }
+        }
+
+        public IList<Resource> FindAllAssignedResources(string roleID)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Resources.SqlQuery("SELECT * FROM [Resource] WHERE [ResourceID] IN (SELECT [ResourceID] FROM [RoleResource] WHERE [RoleID] = @p0)", roleID).ToList();
+            }
+        }
     }
 }

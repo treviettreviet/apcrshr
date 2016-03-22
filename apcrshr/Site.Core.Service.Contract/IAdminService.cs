@@ -83,6 +83,66 @@ namespace Site.Core.Service.Contract
         FindAllItemReponse<RoleModel> GetAvailableRoles();
 
         /// <summary>
+        /// Get all role that not assigned to the specific admin
+        /// </summary>
+        /// <param name="adminID"></param>
+        /// <returns></returns>
+        FindAllItemReponse<RoleModel> GetAvailableRoles(string adminID);
+
+        /// <summary>
+        /// Get all assigned role for specific admin
+        /// </summary>
+        /// <param name="adminID"></param>
+        /// <returns></returns>
+        FindAllItemReponse<RoleModel> GetAssignedRoles(string adminID);
+
+        /// <summary>
+        /// Get all resource not assigned to the specific role
+        /// </summary>
+        /// <param name="roleID"></param>
+        /// <returns></returns>
+        FindAllItemReponse<ResourceModel> GetAvailableResources(string roleID);
+
+        /// <summary>
+        /// Get all assigned resources for specific role
+        /// </summary>
+        /// <param name="roleID"></param>
+        /// <returns></returns>
+        FindAllItemReponse<ResourceModel> GetAssignedResources(string roleID);
+
+        /// <summary>
+        /// Assign roles for specific admin
+        /// </summary>
+        /// <param name="roleIds"></param>
+        /// <param name="adminID"></param>
+        /// <returns></returns>
+        BaseResponse AssignRoles(IList<string> roleIds, string adminID);
+
+        /// <summary>
+        /// Remove roles for specific admin
+        /// </summary>
+        /// <param name="roleIds"></param>
+        /// <param name="adminID"></param>
+        /// <returns></returns>
+        BaseResponse RemoveRoles(IList<string> roleIds, string adminID);
+
+        /// <summary>
+        /// Assign resources for specific role
+        /// </summary>
+        /// <param name="resourceIds"></param>
+        /// <param name="roleID"></param>
+        /// <returns></returns>
+        BaseResponse AssignResources(IList<string> resourceIds, string roleID);
+
+        /// <summary>
+        /// Remove resources for specific role
+        /// </summary>
+        /// <param name="resourceIds"></param>
+        /// <param name="roleID"></param>
+        /// <returns></returns>
+        BaseResponse RemoveResources(IList<string> resourceIds, string roleID);
+
+        /// <summary>
         /// Find all resources
         /// </summary>
         /// <returns></returns>

@@ -8,5 +8,7 @@ namespace Site.Core.Repository.Repository
 {
     public interface IResourceRepository : IRepository<Resource>
     {
+        IList<Resource> FindAllAvailables(string roleID);
+        IList<Resource> FindAllAssignedResources(string roleID);
     }
 }

@@ -8,11 +8,6 @@ namespace Site.Core.DataModel.Model
 {
     public class RoleModel
     {
-        public RoleModel()
-        {
-            this.Resources = new HashSet<ResourceModel>();
-        }
-    
         public string RoleID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -21,6 +16,5 @@ namespace Site.Core.DataModel.Model
         public System.DateTime CreatedDate { get; set; }
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public virtual ICollection<ResourceModel> Resources { get; set; }
     }
 }

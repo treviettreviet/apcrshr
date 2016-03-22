@@ -151,6 +151,15 @@ namespace Site.Core.Service.Implementation.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No record for &quot;{0}&quot; in the &quot;{}&quot;..
+        /// </summary>
+        internal static string text_itemNotFound {
+            get {
+                return ResourceManager.GetString("text_itemNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No result for this word &quot;{0}&quot;..
         /// </summary>
         internal static string text_searchNotFound {

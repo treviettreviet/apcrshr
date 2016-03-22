@@ -9,6 +9,7 @@ namespace Site.Core.Repository.Implementation
 {
     public class RoleRepository : IRoleRepository
     {
+        private static readonly string ADMINISTRATOR_ROLE_ID = "2ea7fd43-7704-430f-add6-4082c8a95d8d";
         public object Insert(Role item)
         {
             using (APCRSHREntities context = new APCRSHREntities())
@@ -61,15 +62,45 @@ namespace Site.Core.Repository.Implementation
 
         public Role FindByID(object id)
         {
-            APCRSHREntities context = new APCRSHREntities();
-            var _id = id.ToString();
-            return context.Roles.Where(a => a.RoleID.Equals(_id)).SingleOrDefault();
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                var _id = id.ToString();
+                return context.Roles.Where(a => a.RoleID.Equals(_id)).SingleOrDefault();
+            }
         }
 
         public IList<Role> FindAll()
         {
-            APCRSHREntities context = new APCRSHREntities();
-            return context.Roles.ToList();
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Roles.ToList();
+            }
+        }
+
+        public IList<Role> FindAllAvailables(string adminID)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Roles.SqlQuery("SELECT * FROM [Role] WHERE [RoleID] NOT IN (SELECT [RoleID] FROM [AdminRole] WHERE [AdminID] = @p0) AND [RoleID] != @p1", adminID, ADMINISTRATOR_ROLE_ID).ToList();
+            }
+        }
+
+
+        public IList<Role> FindAllAssignedRoles(string adminID)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Roles.SqlQuery("SELECT * FROM [Role] WHERE [RoleID] IN (SELECT [RoleID] FROM [AdminRole] WHERE [AdminID] = @p0) AND [RoleID] != @p1", adminID, ADMINISTRATOR_ROLE_ID).ToList();
+            }
+        }
+
+
+        public IList<Role> FindAllExceptAdministrator()
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Roles.Where(r => !r.RoleID.Equals(ADMINISTRATOR_ROLE_ID)).ToList();
+            }
         }
     }
 }

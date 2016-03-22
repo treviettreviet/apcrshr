@@ -68,45 +68,57 @@ namespace Site.Core.Repository.Implementation
 
         public Admin FindByID(object id)
         {
-            APCRSHREntities context = new APCRSHREntities();
-            var _id = id.ToString();
-            return context.Admins.Where(a => a.AdminID.Equals(_id)).SingleOrDefault();
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                var _id = id.ToString();
+                return context.Admins.Where(a => a.AdminID.Equals(_id)).SingleOrDefault();
+            }
         }
 
         public IList<Admin> FindAll()
         {
-            APCRSHREntities context = new APCRSHREntities();
-            return context.Admins.ToList();
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Admins.ToList();
+            }
         }
 
         public Admin Login(string username, string password)
         {
-            APCRSHREntities context = new APCRSHREntities();
-            Admin admin = context.Admins.Where(a => a.UserName == username).SingleOrDefault();
-            if (admin != null && Encryption.VerifyHash(password, Algorithm.SHA384, admin.Password) && admin.Locked == false)
+            using (APCRSHREntities context = new APCRSHREntities())
             {
-                return admin;
+                Admin admin = context.Admins.Where(a => a.UserName == username).SingleOrDefault();
+                if (admin != null && Encryption.VerifyHash(password, Algorithm.SHA384, admin.Password) && admin.Locked == false)
+                {
+                    return admin;
+                }
+                return null;
             }
-            return null;
         }
 
         public IList<Admin> GetAdminsExceptMe(string adminID)
         {
-            APCRSHREntities context = new APCRSHREntities();
-            return context.Admins.Where(a => !a.AdminID.Equals(adminID) && !a.UserName.Equals("administrator", StringComparison.OrdinalIgnoreCase) && a.Type != 1).ToList();
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Admins.Where(a => !a.AdminID.Equals(adminID) && !a.UserName.Equals("administrator", StringComparison.OrdinalIgnoreCase) && a.Type != 1).ToList();
+            }
         }
 
         public Admin FindByUserName(string username)
         {
-            APCRSHREntities context = new APCRSHREntities();
-            return context.Admins.Where(a => a.UserName.Equals(username)).SingleOrDefault();
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Admins.Where(a => a.UserName.Equals(username)).SingleOrDefault();
+            }
         }
 
 
         public IList<Admin> FindStandardAdmins()
         {
-            APCRSHREntities context = new APCRSHREntities();
-            return context.Admins.Where(a => a.Type != 1).ToList();
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Admins.Where(a => a.Type != 1).ToList();
+            }
         }
     }
 }
