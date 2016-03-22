@@ -93,5 +93,14 @@ namespace Site.Core.Repository.Implementation
                 return context.Roles.SqlQuery("SELECT * FROM [Role] WHERE [RoleID] IN (SELECT [RoleID] FROM [AdminRole] WHERE [AdminID] = @p0) AND [RoleID] != @p1", adminID, ADMINISTRATOR_ROLE_ID).ToList();
             }
         }
+
+
+        public IList<Role> FindAllExceptAdministrator()
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Roles.Where(r => !r.RoleID.Equals(ADMINISTRATOR_ROLE_ID)).ToList();
+            }
+        }
     }
 }

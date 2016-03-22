@@ -105,7 +105,7 @@
                                                 <td>@roles[i].Description</td>
                                                 <td>@Enum.GetName(typeof(Site.Core.DataModel.Enum.RoleType), roles[i].Type)</td>
                                                 <td class='hidden-480'>
-                                                    <a href='@Url.Action("UpdateRole", "AdminRole", new { adminID = roles[i].RoleID })' class="btn" rel="tooltip" title="Sửa">
+                                                    <a href='@Url.Action("AssignResource", "AdminRole", new { roleID = roles[i].RoleID })' class="btn" rel="tooltip" title="Gán tài nguyên truy cập">
                                                         <i class="fa fa-key"></i>
                                                     </a>
                                                 </td>

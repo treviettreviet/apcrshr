@@ -92,6 +92,7 @@
     <Compile Include="Implementation\PresentationRepository.cs" />
     <Compile Include="Implementation\ResourceRepository.cs" />
     <Compile Include="Implementation\RoleRepository.cs" />
+    <Compile Include="Implementation\RoleResourceRepository.cs" />
     <Compile Include="Implementation\SubscriberRepository.cs" />
     <Compile Include="Implementation\UploadRepository.cs" />
     <Compile Include="Implementation\UserRepository.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\IResourceRepository.cs" />
     <Compile Include="Repository\IRoleRepository.cs" />
+    <Compile Include="Repository\IRoleResourceRepository.cs" />
     <Compile Include="Repository\ISubscriberRepository.cs" />
     <Compile Include="Repository\IUploadRepository.cs" />
     <Compile Include="Repository\IUserRepository.cs" />

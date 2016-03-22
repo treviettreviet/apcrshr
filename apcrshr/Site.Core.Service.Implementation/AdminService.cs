@@ -294,7 +294,7 @@ namespace Site.Core.Service.Implementation
             try
             {
                 IRoleRepository roleRepository = RepositoryClassFactory.GetInstance().GetRoleRepository();
-                IList<Role> roles = roleRepository.FindAll();
+                IList<Role> roles = roleRepository.FindAllExceptAdministrator();
                 var _roles = roles.Select(n => MapperUtil.CreateMapper().Mapper.Map<Role, RoleModel>(n)).ToList();
                 return new FindAllItemReponse<RoleModel>
                 {
@@ -416,7 +416,7 @@ namespace Site.Core.Service.Implementation
                 }
                 else
                 {
-                    return new FindAllItemReponse<RoleModel>
+                    return new BaseResponse
                     {
                         ErrorCode = (int)ErrorCode.Error,
                         Message = string.Format(Resources.Resource.text_itemNotFound, adminID, "Admin")
@@ -457,10 +457,139 @@ namespace Site.Core.Service.Implementation
                 }
                 else
                 {
-                    return new FindAllItemReponse<RoleModel>
+                    return new BaseResponse
                     {
                         ErrorCode = (int)ErrorCode.Error,
                         Message = string.Format(Resources.Resource.text_itemNotFound, adminID, "Admin")
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
+
+
+        public FindAllItemReponse<ResourceModel> GetAvailableResources(string roleID)
+        {
+            try
+            {
+                IResourceRepository resourceRepository = RepositoryClassFactory.GetInstance().GetResourceRepository();
+                IList<Resource> resources = resourceRepository.FindAllAvailables(roleID);
+                var _resources = resources.Select(n => MapperUtil.CreateMapper().Mapper.Map<Resource, ResourceModel>(n)).ToList();
+                return new FindAllItemReponse<ResourceModel>
+                {
+                    Items = _resources,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindAllItemReponse<ResourceModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
+
+        public FindAllItemReponse<ResourceModel> GetAssignedResources(string roleID)
+        {
+            try
+            {
+                IResourceRepository resourceRepository = RepositoryClassFactory.GetInstance().GetResourceRepository();
+                IList<Resource> resources = resourceRepository.FindAllAssignedResources(roleID);
+                var _resources = resources.Select(n => MapperUtil.CreateMapper().Mapper.Map<Resource, ResourceModel>(n)).ToList();
+                return new FindAllItemReponse<ResourceModel>
+                {
+                    Items = _resources,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindAllItemReponse<ResourceModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
+
+
+        public BaseResponse AssignResources(IList<string> resourceIds, string roleID)
+        {
+            try
+            {
+                IRoleRepository roleRepository = RepositoryClassFactory.GetInstance().GetRoleRepository();
+                Role _role = roleRepository.FindByID(roleID);
+
+                if (_role != null)
+                {
+                    IRoleResourceRepository roleResourceRepository = RepositoryClassFactory.GetInstance().GetRoleResourceRepository();
+                    foreach (var id in resourceIds)
+                    {
+                        roleResourceRepository.Insert(new RoleResource { ResourceID = id, RoleID = roleID });
+                    }
+                    return new BaseResponse
+                    {
+                        ErrorCode = (int)ErrorCode.None,
+                        Message = string.Empty
+                    };
+                }
+                else
+                {
+                    return new BaseResponse
+                    {
+                        ErrorCode = (int)ErrorCode.Error,
+                        Message = string.Format(Resources.Resource.text_itemNotFound, roleID, "Role")
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
+
+        public BaseResponse RemoveResources(IList<string> resourceIds, string roleID)
+        {
+            try
+            {
+                IRoleRepository roleRepository = RepositoryClassFactory.GetInstance().GetRoleRepository();
+                Role _role = roleRepository.FindByID(roleID);
+
+                if (_role != null)
+                {
+                    IRoleResourceRepository roleResourceRepository = RepositoryClassFactory.GetInstance().GetRoleResourceRepository();
+                    foreach (var id in resourceIds)
+                    {
+                        roleResourceRepository.Delete(id, roleID);
+
+                    }
+                    return new BaseResponse
+                    {
+                        ErrorCode = (int)ErrorCode.None,
+                        Message = string.Empty
+                    };
+                }
+                else
+                {
+                    return new BaseResponse
+                    {
+                        ErrorCode = (int)ErrorCode.Error,
+                        Message = string.Format(Resources.Resource.text_itemNotFound, roleID, "Role")
                     };
                 }
             }

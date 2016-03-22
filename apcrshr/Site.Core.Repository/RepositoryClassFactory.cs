@@ -98,5 +98,9 @@ namespace Site.Core.Repository
         {
             return new AdminRoleRepository();
         }
+        public IRoleResourceRepository GetRoleResourceRepository()
+        {
+            return new RoleResourceRepository();
+        }
     }
 }

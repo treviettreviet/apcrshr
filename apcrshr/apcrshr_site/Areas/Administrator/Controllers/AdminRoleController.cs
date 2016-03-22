@@ -80,5 +80,45 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             return Json(new { errorCode = response.ErrorCode, message = response.Message }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        [SessionFilter]
+        public ActionResult AssignResource(string roleID)
+        {
+            //Find available resources
+            FindAllItemReponse<ResourceModel> availableResources = _adminService.GetAvailableResources(roleID);
+            //Find assigned resources
+            FindAllItemReponse<ResourceModel> assignedResources = _adminService.GetAssignedResources(roleID);
+            ViewBag.AvailableResources = availableResources.Items;
+            ViewBag.AssignedResources = assignedResources.Items;
+            return View();
+        }
+
+        [HttpPost]
+        [SessionFilter]
+        public JsonResult SaveResources(IList<string> resources, bool assign, string roleID)
+        {
+            var sessionId = this.Session["SessionID"].ToString();
+            IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository();
+            UserSession userSession = userSessionRepository.FindByID(sessionId);
+
+            if (userSession == null)
+            {
+                return Json(new { errorCode = (int)ErrorCode.Redirect, message = Resources.AdminResource.msg_sessionInvalid }, JsonRequestBehavior.AllowGet);
+            }
+
+            BaseResponse response = new BaseResponse();
+
+            //If assign
+            if (assign)
+            {
+                response = _adminService.AssignResources(resources, roleID);
+            }
+            else
+            {
+                response = _adminService.RemoveResources(resources, roleID);
+            }
+
+            return Json(new { errorCode = response.ErrorCode, message = response.Message }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

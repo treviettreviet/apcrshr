@@ -10,5 +10,6 @@ namespace Site.Core.Repository.Repository
     {
         IList<Role> FindAllAvailables(string adminID);
         IList<Role> FindAllAssignedRoles(string adminID);
+        IList<Role> FindAllExceptAdministrator();
     }
 }

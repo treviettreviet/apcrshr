@@ -1,0 +1,177 @@
+﻿@{
+    ViewBag.Title = "Gán tài nguyên truy cập";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+    <div class="dual-list list-left col-md-5">
+        <div class="box box-color box-bordered">
+            <div class="box-title">
+                <h3>
+                    <i class="fa fa-th-list"></i>Tài nguyên chưa cấp
+                </h3>
+            </div>
+            <div class="box-content nopadding">
+                <div class="well text-right">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <span class="input-group-addon glyphicon glyphicon-search"></span>
+                                <input type="text" name="SearchDualList" class="form-control" placeholder="search" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="btn-group">
+                                <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="list-group">
+                        @{
+                            if (ViewBag.AvailableResources != null)
+                            {
+                                IList<Site.Core.DataModel.Model.ResourceModel> resources = (IList<Site.Core.DataModel.Model.ResourceModel>)ViewBag.AvailableResources;
+                                foreach (var item in resources)
+                                {
+                                    <li class="list-group-item" id="@item.ResourceID">@item.Title</li>
+                                }
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="list-arrows col-md-1 text-center">
+        <button class="btn btn-default btn-sm move-left">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </button>
+
+        <button class="btn btn-default btn-sm move-right">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </button>
+    </div>
+
+    <div class="dual-list list-right col-md-5">
+        <div class="box box-color box-bordered">
+            <div class="box-title">
+                <h3>
+                    <i class="fa fa-th-list"></i>Tài nguyên đã cấp
+                </h3>
+            </div>
+            <div class="box-content nopadding">
+                <div class="well">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="btn-group">
+                                <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <input type="text" name="SearchDualList" class="form-control" placeholder="search" />
+                                <span class="input-group-addon glyphicon glyphicon-search"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="list-group">
+                        @{
+                            if (ViewBag.AssignedResources != null)
+                            {
+                                IList<Site.Core.DataModel.Model.ResourceModel> resources = (IList<Site.Core.DataModel.Model.ResourceModel>)ViewBag.AssignedResources;
+                                foreach (var item in resources)
+                                {
+                                    <li class="list-group-item" id="@item.ResourceID">@item.Title</li>
+                                }
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $(function () {
+
+        $('body').on('click', '.list-group .list-group-item', function () {
+            $(this).toggleClass('active');
+        });
+        $('.list-arrows button').click(function () {
+            $.blockUI({ message: $('#spinner') });
+            var array = new Array();
+            var assign = true;
+            var $button = $(this), actives = '';
+            if ($button.hasClass('move-left')) {
+                //Remove roles
+                actives = $('.list-right ul li.active');
+                actives.clone().appendTo('.list-left ul');
+                actives.remove();
+                $(actives).each(function (index) {
+                    array.push($(this).attr("id"));
+                });
+                assign = false;
+            } else if ($button.hasClass('move-right')) {
+                //Assign roles
+                actives = $('.list-left ul li.active');
+                actives.clone().appendTo('.list-right ul');
+                actives.remove();
+                $(actives).each(function (index) {
+                    array.push($(this).attr("id"));
+                });
+            }
+
+            $.ajax({
+                type: 'POST',
+                contentType: 'application/json',
+                url: '@Url.Action("SaveResources", "AdminRole")',
+                data: JSON.stringify({ resources: array, assign: assign, roleID: appUtil.utility.getURLParameter("roleID") }),
+                dataType: "json",
+                success: function (data) {
+                    $.unblockUI();
+                    if (data.errorCode != 0) {
+                        if (data.errorCode == 2) {
+                            //Timeout
+                            if (response.errorCode == 2) {
+                                window.location = "/Administrator/AdminHome/Login";
+                            }
+                        } else {
+                            bootbox.alert(data.message, function () {
+                                bootbox.hideAll();
+                            });
+                        }
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $.unblockUI();
+                }
+            });
+        });
+        $('.dual-list .selector').click(function () {
+            var $checkBox = $(this);
+            if (!$checkBox.hasClass('selected')) {
+                $checkBox.addClass('selected').closest('.well').find('ul li:not(.active)').addClass('active');
+                $checkBox.children('i').removeClass('glyphicon-unchecked').addClass('glyphicon-check');
+            } else {
+                $checkBox.removeClass('selected').closest('.well').find('ul li.active').removeClass('active');
+                $checkBox.children('i').removeClass('glyphicon-check').addClass('glyphicon-unchecked');
+            }
+        });
+        $('[name="SearchDualList"]').keyup(function (e) {
+            var code = e.keyCode || e.which;
+            if (code == '9') return;
+            if (code == '27') $(this).val(null);
+            var $rows = $(this).closest('.dual-list').find('.list-group li');
+            var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+            $rows.show().filter(function () {
+                var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+                return !~text.indexOf(val);
+            }).hide();
+        });
+
+    });
+</script>
