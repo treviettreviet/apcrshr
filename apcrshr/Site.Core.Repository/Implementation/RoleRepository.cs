@@ -71,14 +71,27 @@ namespace Site.Core.Repository.Implementation
 
         public IList<Role> FindAll()
         {
-            APCRSHREntities context = new APCRSHREntities();
-            return context.Roles.ToList();
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Roles.ToList();
+            }
         }
 
         public IList<Role> FindAllAvailables(string adminID)
         {
-            APCRSHREntities context = new APCRSHREntities();
-            return context.Roles.SqlQuery("SELECT * FROM [Role] WHERE [RoleID] NOT IN (SELECT [RoleID] FROM [AdminRole] WHERE [AdminID] = @p0) AND [RoleID] != @p1", adminID, ADMINISTRATOR_ROLE_ID).ToList();
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Roles.SqlQuery("SELECT * FROM [Role] WHERE [RoleID] NOT IN (SELECT [RoleID] FROM [AdminRole] WHERE [AdminID] = @p0) AND [RoleID] != @p1", adminID, ADMINISTRATOR_ROLE_ID).ToList();
+            }
+        }
+
+
+        public IList<Role> FindAllAssignedRoles(string adminID)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Roles.SqlQuery("SELECT * FROM [Role] WHERE [RoleID] IN (SELECT [RoleID] FROM [AdminRole] WHERE [AdminID] = @p0) AND [RoleID] != @p1", adminID, ADMINISTRATOR_ROLE_ID).ToList();
+            }
         }
     }
 }

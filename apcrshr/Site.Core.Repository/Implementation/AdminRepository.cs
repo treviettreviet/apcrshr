@@ -38,7 +38,6 @@ namespace Site.Core.Repository.Implementation
                     admin.Phone = item.Phone;
                     admin.UserName = item.UserName;
                     admin.Type = item.Type;
-                    admin.Roles = item.Roles;
 
                     context.SaveChanges();
                 }

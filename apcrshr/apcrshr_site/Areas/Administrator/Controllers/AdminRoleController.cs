@@ -74,7 +74,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             }
             else
             {
-
+                response = _adminService.RemoveRoles(roles, adminId);
             }
 
             return Json(new { errorCode = response.ErrorCode, message = response.Message }, JsonRequestBehavior.AllowGet);

@@ -373,27 +373,15 @@ namespace Site.Core.Service.Implementation
         {
             try
             {
-                IAdminRepository adminRepository = RepositoryClassFactory.GetInstance().GetAdminRepository();
-                Admin admin = adminRepository.FindByID(adminID);
-                if (admin != null)
+                IRoleRepository roleRepository = RepositoryClassFactory.GetInstance().GetRoleRepository();
+                IList<Role> roles = roleRepository.FindAllAssignedRoles(adminID);
+                var _roles = roles.Select(n => MapperUtil.CreateMapper().Mapper.Map<Role, RoleModel>(n)).ToList();
+                return new FindAllItemReponse<RoleModel>
                 {
-                    IList<Role> roles = admin.Roles.ToList();
-                    var _roles = roles.Select(n => MapperUtil.CreateMapper().Mapper.Map<Role, RoleModel>(n)).ToList();
-                    return new FindAllItemReponse<RoleModel>
-                    {
-                        Items = _roles,
-                        ErrorCode = (int)ErrorCode.None,
-                        Message = string.Empty
-                    };
-                }
-                else
-                {
-                    return new FindAllItemReponse<RoleModel>
-                    {
-                        ErrorCode = (int)ErrorCode.Error,
-                        Message = string.Format(Resources.Resource.text_itemNotFound, adminID, "Admin")
-                    };
-                }
+                    Items = _roles,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
             }
             catch (Exception ex)
             {
@@ -415,13 +403,52 @@ namespace Site.Core.Service.Implementation
 
                 if (_admin != null)
                 {
-                    IRoleRepository roleRepository = RepositoryClassFactory.GetInstance().GetRoleRepository();
+                    IAdminRoleRepository adminRoleRepository = RepositoryClassFactory.GetInstance().GetAdminRoleRepository();
                     foreach (var id in roleIds)
                     {
-                        Role role = roleRepository.FindByID(id);
-                        _admin.Roles.Add(role);
+                        adminRoleRepository.Insert(new AdminRole { AdminID = adminID, RoleID = id });
                     }
-                    adminRepository.Update(_admin);
+                    return new BaseResponse
+                    {
+                        ErrorCode = (int)ErrorCode.None,
+                        Message = string.Empty
+                    };
+                }
+                else
+                {
+                    return new FindAllItemReponse<RoleModel>
+                    {
+                        ErrorCode = (int)ErrorCode.Error,
+                        Message = string.Format(Resources.Resource.text_itemNotFound, adminID, "Admin")
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
+
+
+        public BaseResponse RemoveRoles(IList<string> roleIds, string adminID)
+        {
+            try
+            {
+                IAdminRepository adminRepository = RepositoryClassFactory.GetInstance().GetAdminRepository();
+                Admin _admin = adminRepository.FindByID(adminID);
+
+                if (_admin != null)
+                {
+                    IAdminRoleRepository adminRoleRepository = RepositoryClassFactory.GetInstance().GetAdminRoleRepository();
+                    foreach (var id in roleIds)
+                    {
+                        adminRoleRepository.Delete(adminID, id);
+                        
+                    }
                     return new BaseResponse
                     {
                         ErrorCode = (int)ErrorCode.None,

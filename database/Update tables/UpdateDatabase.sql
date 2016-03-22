@@ -72,3 +72,28 @@ GO
 ALTER TABLE [Admin] ADD [Type] INT NOT NULL DEFAULT(0)
 
 GO
+
+ALTER TABLE [Presentation]
+ADD CONSTRAINT pk_PresentationID PRIMARY KEY (PresentationID)
+
+GO
+
+ALTER TABLE [AdminRole] 
+DROP CONSTRAINT FK_AdminRole_Admin
+
+GO
+
+ALTER TABLE [AdminRole] 
+DROP CONSTRAINT FK_AdminRole_Role
+
+GO
+
+ALTER TABLE [RoleResource] 
+DROP CONSTRAINT FK_RoleResource_Resource
+
+GO
+
+ALTER TABLE [RoleResource] 
+DROP CONSTRAINT FK_RoleResource_Role
+
+GO

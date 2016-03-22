@@ -105,6 +105,14 @@ namespace Site.Core.Service.Contract
         BaseResponse AssignRoles(IList<string> roleIds, string adminID);
 
         /// <summary>
+        /// Remove roles for specific admin
+        /// </summary>
+        /// <param name="roleIds"></param>
+        /// <param name="adminID"></param>
+        /// <returns></returns>
+        BaseResponse RemoveRoles(IList<string> roleIds, string adminID);
+
+        /// <summary>
         /// Find all resources
         /// </summary>
         /// <returns></returns>
