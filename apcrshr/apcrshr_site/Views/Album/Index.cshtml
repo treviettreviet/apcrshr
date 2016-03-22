@@ -1,46 +1,41 @@
 ﻿@using apcrshr_site.Helper
 @model Site.Core.DataModel.Response.FindAllItemReponse<Site.Core.DataModel.Model.AlbumModel>
 @{
-    ViewBag.Title = "Index";
+    
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 
-@if (Model.Items.Count > 0)
-{
-    int i = 0;
+<div class="col-md-9 page-content">
+    <!-- Classic Heading -->
+    <h4 class="classic-title"><span>@ViewBag.Title</span></h4>
 
-    <div class="recent_album">
-        @for (; i < Model.Items.Count; i++)
+    @if (Model.Items != null && Model.Items.Count > 0)
+    {
+        for (int i = 0; i < Model.Items.Count; i++)
         {
-            <dl class="album blog-album style_2 dl-horizontal">
-                <dt>
-                    <div class="dt">
-                        <span class="date">@Model.Items[i].CreatedDate.Day</span>
-                        <span class="month">@Model.Items[i].CreatedDate.ToString("MMM")</span>
-                        <span class="year">@Model.Items[i].CreatedDate.Year</span>
-                    </div>
-                    <div class="icon_"><i class="moon-pencil"></i></div>
-                </dt>
-                <dd>
-                    <h5><a href='@Url.Action("Index", "Photo", new { ActionURL = Model.Items[i].ActionURL, AlbumTitle = Model.Items[i].Title })'>@Model.Items[i].Title</a></h5>
-                    @if (!string.IsNullOrEmpty(Model.Items[i].Description))
-                    {
-                        <p>@Html.Raw(Model.Items[i].Description.Length > 260 ? Model.Items[i].Description.Substring(0, 260) + "..." : Model.Items[i].Description)</p>
-                    }
-
-                    <a href='@Url.Action("Index", "Photo", new { ActionURL = Model.Items[i].ActionURL, AlbumTitle = Model.Items[i].Title })' class="read_m"><span>read more</span> <span class="direct_btn"><i class="moon-arrow-right-2"></i></span></a>
-                </dd>
-            </dl>
+            <div class="blog-post standard-post">
+                <!-- Post Content -->
+                <div class="post-content-nopadding">
+                    <h2><a href="@Url.Action("Index", "Photo", new { ActionURL = Model.Items[i].ActionURL, AlbumTitle  = Model.Items[i].Title})">@Model.Items[i].Title</a></h2>
+                    @(Model.Items[i].Description.Length > 260 ? Model.Items[i].Description.Substring(0, 260) + "..." : Model.Items[i].Description)
+                    <br />
+                    <ul class="post-meta">
+                        <li>@Model.Items[i].CreatedDate.ToString("dddd, d MMMM, yyyy", new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.Name))</li>
+                        <li><a href="#">Posted by</a>, <a href="#">@apcrshr_site.Helper.UserHelper.GetAdminName(Model.Items[i].CreatedBy)</a></li>
+                    </ul>
+                </div>
+            </div>
         }
-    </div>
-}
+    }
 
-    @*Start Pagination*@
+    <!-- Start Pagination -->
     <div id="pagination">
         @Html.PagingUtil("Index", "Album", Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("ActionURL")).SingleOrDefault().Value.ToString(), Model.Count, apcrshr_site.Constants.Constants.PAGE_SIZE,
-    Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("pageIndex")).SingleOrDefault())
+                Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("pageIndex")).SingleOrDefault())
     </div>
-    @*End Pagination*@
+    <!-- End Pagination -->
+
+</div>
 
 
 

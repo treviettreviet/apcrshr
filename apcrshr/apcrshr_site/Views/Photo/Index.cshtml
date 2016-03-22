@@ -4,45 +4,53 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
+
 <div class="col-md-9 page-content">
-    @if (Model.Items.Count > 0)
+    <!-- Classic Heading -->
+    <h2 class="classic-title"><span>@ViewBag.AlbumTitle</span></h2>
+
+    @if (Model.Items != null && Model.Items.Count > 0)
     {
-        int i = 0;
-
-        <div class="latest-posts-classic">
-
-            <h2>@ViewBag.AlbumTitle</h2><br />
-
-            @for (; i < Model.Items.Count; i++)
-            {
-                        <!-- Post 1 -->
-                <div class="post-row animated fadeIn delay-01" data-animation="fadeIn" data-animation-delay="01">
-                    @if (!string.IsNullOrEmpty(Model.Items[i].ImageURL))
-                    {
-                        <div class="left-meta-post">
-                            <img class="img-thumbnail image-text" style="float:left; width:150px;" alt="" src="@Model.Items[i].ImageURL">
+        for (int i = 0; i < Model.Items.Count; i++)
+        {
+            <div class="blog-post standard-post">
+                <!-- Post Content -->
+                <div class="post-content-nopadding">
+                    <!-- Start Post -->
+                    <div class="blog-post image-post">
+                        <!-- Post Thumb -->
+                        <div class="post-head">
+                            <a class="lightbox" title="@Model.Items[i].Title" href="@Model.Items[i].ImageURL">
+                                <div class="thumb-overlay"><i class="icon-resize-full"></i></div>
+                                <img alt="" src="@Model.Items[i].ImageURL">
+                            </a>
                         </div>
-                    }
-                    else
-                    {
-                        <div class="left-meta-post">
-                            <img class="img-thumbnail image-text" style="float:left; width:150px;" alt="Empty Image" src="">
+                        <!-- Post Content -->
+                        <div class="post-content">
+                            <div class="post-type"><i class="icon-picture-3"></i></div>
+                            <h2><a href="#">@Model.Items[i].Title</a></h2>
+                            <ul class="post-meta">
+                                <li>By <a href="#">@apcrshr_site.Helper.UserHelper.GetAdminName(Model.Items[i].CreatedBy)</a></li>
+                                <li>@Model.Items[i].CreatedDate.ToString("dddd, d MMMM, yyyy", new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.Name))</li>
+                            </ul>
+                            <p>@(Model.Items[i].Description.Length > 260 ? Model.Items[i].Description.Substring(0, 260) + "..." : Model.Items[i].Description)</p>
+                            
                         </div>
-                    }
-
+                    </div>
+                    <!-- End Post -->
                 </div>
-            }
-        </div>
+            </div>
+        }
     }
 
-    @*Start Pagination*@
+    <!-- Start Pagination -->
     <div id="pagination">
         @Html.PagingUtil("Index", "Photo", Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("ActionURL")).SingleOrDefault().Value.ToString(), Model.Count, apcrshr_site.Constants.Constants.PAGE_SIZE,
-    Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("pageIndex")).SingleOrDefault())
+                Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("pageIndex")).SingleOrDefault())
     </div>
-    @*End Pagination*@
-</div>
+    <!-- End Pagination -->
 
+</div>
 
 
 

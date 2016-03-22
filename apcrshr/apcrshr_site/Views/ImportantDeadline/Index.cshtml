@@ -8,7 +8,7 @@
 @if (Model.Items.Count > 0)
 {
     int i = 1;
-    <div class="themeple_sc"><div class="header"><h3>@Model.Items[0].Title</h3><span class="border_style_color"></span></div></div>
+    <div class="themeple_sc"><div class="header"><h3><a href='@Url.Action("ViewImportantDeadline", new { ActionURL = Model.Items[i].ActionURL })'>@Model.Items[i].Title</a></h3><span class="border_style_color"></span></div></div>
     <article class="post type-post status-publish format-standard hentry category-uncategorized category-web-design row-fluid blog-article v2 normal">
         <div class="span12">
             @Html.Raw(Model.Items[0].Contents)
