@@ -10,5 +10,6 @@ namespace Site.Core.Repository.Repository
     {
         Album FindByActionURL(string actionURL);
         Tuple<int, IList<Album>> FindAll(int pageSize, int pageIndex);
+        IList<Album> Search(string key);
     }
 }

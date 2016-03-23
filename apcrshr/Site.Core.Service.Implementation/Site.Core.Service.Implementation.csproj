@@ -63,6 +63,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="SliderService.cs" />
     <Compile Include="SubscriberService.cs" />
     <Compile Include="UploadService.cs" />
     <Compile Include="UserService.cs" />

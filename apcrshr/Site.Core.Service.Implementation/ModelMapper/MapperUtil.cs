@@ -56,6 +56,7 @@ namespace Site.Core.Service.Implementation.ModelMapper
                 cfg.CreateMap<PhotoModel, Photo>();
                 cfg.CreateMap<RoleModel, Role>();
                 cfg.CreateMap<ResourceModel, Resource>();
+                cfg.CreateMap<SliderModel, Slider>();
 
                 //Entity model mapper
                 cfg.CreateMap<Admin, AdminModel>();
@@ -75,6 +76,7 @@ namespace Site.Core.Service.Implementation.ModelMapper
                 cfg.CreateMap<Photo, PhotoModel>();
                 cfg.CreateMap<Role, RoleModel>();
                 cfg.CreateMap<Resource, ResourceModel>();
+                cfg.CreateMap<Slider, SliderModel>();
             });
 
             mapper = config.CreateMapper();

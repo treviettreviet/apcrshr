@@ -13,5 +13,6 @@ namespace Site.Core.Repository.Repository
         Tuple<int, IList<Article>> FindAll(int pageSize, int pageIndex);
         Tuple<int, IList<Article>> FindAll(int pageSize, int pageIndex, string language);
         Tuple<int, IList<Article>> FindAll(int pageSize, int pageIndex, string language, string menuID);
+        IList<Article> Search(string key);
     }
 }

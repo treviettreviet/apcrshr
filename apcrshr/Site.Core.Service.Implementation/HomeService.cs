@@ -66,6 +66,159 @@ namespace Site.Core.Service.Implementation
                     });
                 }
 
+                //Search Conference
+                IConferenceDeclarationRepository conRepository = RepositoryClassFactory.GetInstance().GetConferenceDeclarationRepository();
+                IList<ConferenceDeclaration> cons = conRepository.Search(keyword);
+                foreach (var item in cons)
+                {
+                    list.Add(new SearchModel()
+                    {
+                        Action = "ConferenceDeclarationDetail",
+                        ActionURL = item.ActionURL,
+                        Controller = "ConferenceDeclaration",
+                        CreatedDate = item.CreatedDate,
+                        ImageURL = item.ImageURL,
+                        ShortContent = item.ShortContent,
+                        Title = item.Title
+                    });
+                }
+
+                //Search Deadline
+                IImportantDeadlineRepository deadlineRepository = RepositoryClassFactory.GetInstance().GetImportantDeadlineRepository();
+                IList<ImportantDeadline> deadlines = deadlineRepository.Search(keyword);
+                foreach (var item in deadlines)
+                {
+                    list.Add(new SearchModel()
+                    {
+                        Action = "ImportantDeadlineDetail",
+                        ActionURL = item.ActionURL,
+                        Controller = "ImportantDeadline",
+                        CreatedDate = item.CreatedDate,
+                        ImageURL = string.Empty,
+                        ShortContent = item.ShortContent,
+                        Title = item.Title
+                    });
+                }
+
+                //Search Article
+                IArticleRepository articleRepository = RepositoryClassFactory.GetInstance().GetArticleRepository();
+                IList<Article> articles = articleRepository.Search(keyword);
+                foreach (var item in articles)
+                {
+                    list.Add(new SearchModel()
+                    {
+                        Action = "ArticleDetail",
+                        ActionURL = item.ActionURL,
+                        Controller = string.Empty,
+                        CreatedDate = item.CreatedDate,
+                        ImageURL = string.Empty,
+                        ShortContent = item.ShortContent,
+                        Title = item.Title
+                    });
+                }
+
+                //Search Photo
+                IPhotoRepository photoRepository = RepositoryClassFactory.GetInstance().GetPhotoRepository();
+                IList<Photo> photos = photoRepository.Search(keyword);
+                foreach (var item in deadlines)
+                {
+                    list.Add(new SearchModel()
+                    {
+                        Action = "PhotoDetail",
+                        ActionURL = item.ActionURL,
+                        Controller = "Photo",
+                        CreatedDate = item.CreatedDate,
+                        ImageURL = string.Empty,
+                        ShortContent = item.ShortContent,
+                        Title = item.Title
+                    });
+                }
+
+                //Search Album
+                IAlbumRepository albumRepository = RepositoryClassFactory.GetInstance().GetAlbumRepository();
+                IList<Album> albums = albumRepository.Search(keyword);
+                foreach (var item in albums)
+                {
+                    list.Add(new SearchModel()
+                    {
+                        Action = "AlbumDetail",
+                        ActionURL = item.ActionURL,
+                        Controller = "Album",
+                        CreatedDate = item.CreatedDate,
+                        ImageURL = string.Empty,
+                        ShortContent = item.Title,
+                        Title = item.Title
+                    });
+                }
+
+                //Search Presentation
+                IPresentationRepository presentationRepository = RepositoryClassFactory.GetInstance().GetPresentationRepository();
+                IList<Presentation> pres = presentationRepository.Search(keyword);
+                foreach (var item in pres)
+                {
+                    list.Add(new SearchModel()
+                    {
+                        Action = "PresentationDetail",
+                        ActionURL = item.ActionURL,
+                        Controller = "Presentation",
+                        CreatedDate = item.CreatedDate,
+                        ImageURL = item.ImageURL,
+                        ShortContent = item.ShortContent,
+                        Title = item.Title
+                    });
+                }
+
+                //Search Resource
+                IResourceRepository resourceRepository = RepositoryClassFactory.GetInstance().GetResourceRepository();
+                IList<Resource> res = resourceRepository.Search(keyword);
+                foreach (var item in res)
+                {
+                    list.Add(new SearchModel()
+                    {
+                        Action = "ResourceDetail",
+                        ActionURL = item.URL,
+                        Controller = string.Empty,
+                        CreatedDate = item.CreatedDate,
+                        ImageURL = string.Empty,
+                        ShortContent = item.Title,
+                        Title = item.Title
+                    });
+                }
+
+                //Search Video
+                IVideoRepository videoRepository = RepositoryClassFactory.GetInstance().GetVideoRepository();
+                IList<Video> vids = videoRepository.Search(keyword);
+                foreach (var item in vids)
+                {
+                    list.Add(new SearchModel()
+                    {
+                        Action = "VideoDetail",
+                        ActionURL = item.ActionURL,
+                        Controller = "Video",
+                        CreatedDate = item.CreatedDate,
+                        ImageURL = string.Empty,
+                        ShortContent = item.ShortContent,
+                        Title = item.Title
+                    });
+                }
+
+                //Search Slider
+                //ISliderRepository sliderRepository = RepositoryClassFactory.GetInstance().GetSliderRepository();
+                //IList<Slider> sliders = sliderRepository.Search(keyword);
+                //foreach (var item in sliders)
+                //{
+                //    list.Add(new SearchModel()
+                //    {
+                //        Action = "VideoDetail",
+                //        ActionURL = item.ActionURL,
+                //        Controller = "Video",
+                //        CreatedDate = item.CreatedDate,
+                //        ImageURL = string.Empty,
+                //        ShortContent = item.ShortContent,
+                //        Title = item.Title
+                //    });
+                //}
+
                 response.Count = list.Count;
                 response.Result = list.OrderByDescending(n => n.CreatedDate).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList(); ;
 

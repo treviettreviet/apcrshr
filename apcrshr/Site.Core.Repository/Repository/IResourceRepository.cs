@@ -11,5 +11,6 @@ namespace Site.Core.Repository.Repository
         IList<Resource> FindAllAvailables(string roleID);
         IList<Resource> FindAllAssignedResources(string roleID);
         Resource FindAuthorizedResource(string adminID, string resourceURL);
+        IList<Resource> Search(string key);
     }
 }

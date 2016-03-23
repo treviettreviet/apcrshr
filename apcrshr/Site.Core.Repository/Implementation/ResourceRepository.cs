@@ -1,6 +1,7 @@
 ﻿using Site.Core.Repository.Repository;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -97,6 +98,18 @@ namespace Site.Core.Repository.Implementation
             using (APCRSHREntities context = new APCRSHREntities())
             {
                 return context.Resources.SqlQuery("SELECT * FROM [Resource] WHERE [ResourceID] IN (SELECT [ResourceID] FROM [RoleResource] WHERE [RoleID] IN (SELECT [RoleID] FROM [AdminRole] WHERE [AdminID] = @p0)) AND [URL] = @p1", adminID, resourceURL).SingleOrDefault();
+            }
+        }
+
+
+        public IList<Resource> Search(string key)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Resources.SqlQuery("exec sp_FindStringInTable @stringToFind,@schema,@table",
+                new SqlParameter("@stringToFind", key),
+                new SqlParameter("@schema", "dbo"),
+                new SqlParameter("@table", "Resource")).ToList();
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using Site.Core.Repository.Repository;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -123,6 +124,18 @@ namespace Site.Core.Repository.Implementation
             using (APCRSHREntities context = new APCRSHREntities())
             {
                 return context.Articles.Where(a => a.MenuID.Equals(menuID)).ToList();
+            }
+        }
+
+
+        public IList<Article> Search(string key)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Articles.SqlQuery("exec sp_FindStringInTable @stringToFind,@schema,@table",
+                new SqlParameter("@stringToFind", key),
+                new SqlParameter("@schema", "dbo"),
+                new SqlParameter("@table", "Article")).ToList();
             }
         }
     }

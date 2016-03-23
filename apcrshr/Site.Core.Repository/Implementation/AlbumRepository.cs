@@ -1,6 +1,7 @@
 ﻿using Site.Core.Repository.Repository;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -94,6 +95,18 @@ namespace Site.Core.Repository.Implementation
                 var count = context.ConferenceDeclarations.Count();
                 var albums = context.Albums.OrderByDescending(n => n.CreatedDate).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
                 return Tuple.Create<int, IList<Album>>(count, albums);
+            }
+        }
+
+
+        public IList<Album> Search(string key)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Albums.SqlQuery("exec sp_FindStringInTable @stringToFind,@schema,@table",
+                new SqlParameter("@stringToFind", key),
+                new SqlParameter("@schema", "dbo"),
+                new SqlParameter("@table", "Album")).ToList();
             }
         }
     }

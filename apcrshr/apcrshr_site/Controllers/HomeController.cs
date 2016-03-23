@@ -17,6 +17,7 @@ namespace apcrshr_site.Controllers
         private INewsService _newsService;
         private IVideoService _videoService;
         private IUserService _userService;
+        private IHomeService _homeService;
 
         public HomeController()
         {
@@ -24,6 +25,7 @@ namespace apcrshr_site.Controllers
             this._newsService = new NewsService();
             this._videoService = new VideoService();
             this._userService = new UserService();
+            this._homeService = new HomeService();
         }
 
         [HttpGet]
@@ -61,5 +63,15 @@ namespace apcrshr_site.Controllers
             }
             return View(new FindAllItemReponse<ArticleModel>());
         }
+
+        [HttpPost]
+        public ActionResult Search(string KeyWord, int pageIndex = 1)
+        {
+            SearchResultResponse response = _homeService.Search(string.Format("%{0}%", KeyWord), Constants.Constants.PAGE_SIZE, pageIndex);
+            response.KeySearch = KeyWord;
+            response.PageIndex = pageIndex;
+            return View(response);
+        }
+
     }
 }
