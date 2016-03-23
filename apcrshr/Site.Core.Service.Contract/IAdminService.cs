@@ -25,6 +25,13 @@ namespace Site.Core.Service.Contract
         FindItemReponse<AdminModel> FindAdminByID(string id);
 
         /// <summary>
+        /// Get admin by user name
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        FindItemReponse<AdminModel> FindAdminByUsername(string username);
+
+        /// <summary>
         /// Delete admin by ID
         /// </summary>
         /// <param name="id"></param>
@@ -147,5 +154,13 @@ namespace Site.Core.Service.Contract
         /// </summary>
         /// <returns></returns>
         FindAllItemReponse<ResourceModel> GetResources();
+
+        /// <summary>
+        /// Find authorized resource
+        /// </summary>
+        /// <param name="adminID"></param>
+        /// <param name="resourceURL"></param>
+        /// <returns></returns>
+        FindItemReponse<ResourceModel> GetAuthorizedResource(string adminID, string resourceURL);
     }
 }

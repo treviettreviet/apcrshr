@@ -30,12 +30,14 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         // GET: /Administrator/AdminPhoto/
 
         [SessionFilter]
+        [AuthorizationFilter]
         public ActionResult Index()
         {
             FindAllItemReponse<PhotoModel> response = _photoService.GetPhoto();
             return View(response.Items);
         }
 
+        [AuthorizationFilter]
         [SessionFilter]
         public ActionResult CreatePhoto()
         {
@@ -111,6 +113,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [SessionFilter]
         [HttpGet]
+        [AuthorizationFilter]
         public ActionResult UpdatePhoto(string photoID)
         {
             var albumResponse = _albumService.GetAlbum();

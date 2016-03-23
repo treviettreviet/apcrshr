@@ -90,5 +90,14 @@ namespace Site.Core.Repository.Implementation
                 return context.Resources.SqlQuery("SELECT * FROM [Resource] WHERE [ResourceID] IN (SELECT [ResourceID] FROM [RoleResource] WHERE [RoleID] = @p0)", roleID).ToList();
             }
         }
+
+
+        public Resource FindAuthorizedResource(string adminID, string resourceURL)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Resources.SqlQuery("SELECT * FROM [Resource] WHERE [ResourceID] IN (SELECT [ResourceID] FROM [RoleResource] WHERE [RoleID] IN (SELECT [RoleID] FROM [AdminRole] WHERE [AdminID] = @p0)) AND [URL] = @p1", adminID, resourceURL).SingleOrDefault();
+            }
+        }
     }
 }

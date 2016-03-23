@@ -29,13 +29,14 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
         //
         // GET: /Administrator/AdminAlbum/
-
+        [AuthorizationFilter]
         public ActionResult Index()
         {
             FindAllItemReponse<AlbumModel> response = _albumService.GetAlbum();
             return View(response.Items);
         }
 
+        [AuthorizationFilter]
         [SessionFilter]
         public ActionResult CreateAlbum()
         {
@@ -76,6 +77,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             return Json(new { errorCode = response.ErrorCode, message = response.Message }, JsonRequestBehavior.AllowGet);
         }
 
+        [AuthorizationFilter]
         [SessionFilter]
         [HttpGet]
         public ActionResult UpdateAlbum(string AlbumID)

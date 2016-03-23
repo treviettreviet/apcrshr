@@ -28,6 +28,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         //
         // GET: /Administrator/AdminConferenceDeclare/
         [SessionFilter]
+        [AuthorizationFilter]
         public ActionResult Index()
         {
             FindAllItemReponse<ConferenceDeclarationModel> response = _conferenceService.GetConference();
@@ -35,6 +36,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [SessionFilter]
+        [AuthorizationFilter]
         public ActionResult CreateConference()
         {
             return View();
@@ -115,6 +117,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         
         [SessionFilter]
         [HttpGet]
+        [AuthorizationFilter]
         public ActionResult UpdateConference(string conferenceID)
         {
             FindItemReponse<ConferenceDeclarationModel> response = _conferenceService.FindConferenceByID(conferenceID);

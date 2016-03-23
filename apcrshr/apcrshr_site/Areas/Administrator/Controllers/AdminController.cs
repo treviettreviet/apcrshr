@@ -37,6 +37,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [SessionFilter]
+        [AuthorizationFilter]
         public ActionResult Index()
         {
             var sessionId = this.Session["SessionID"].ToString();
@@ -88,6 +89,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [SessionFilter]
+        [AuthorizationFilter]
         public ActionResult AdminList()
         {
             var sessionId = this.Session["SessionID"].ToString();
@@ -103,6 +105,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [SessionFilter]
+        [AuthorizationFilter]
         public ActionResult AddNewAdmin()
         {
             return View();
@@ -110,6 +113,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [SessionFilter]
         [HttpPost]
+        [AuthorizationFilter]
         [ValidateAntiForgeryToken]
         public ActionResult CreateAdmin(AdminModel admin)
         {
@@ -125,6 +129,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [SessionFilter]
+        [AuthorizationFilter]
         [HttpGet]
         public ActionResult UpdateAdmin(string adminID)
         {
@@ -135,6 +140,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [SessionFilter]
         [HttpGet]
+        [AuthorizationFilter]
         public ActionResult UpdateProfile(string adminID)
         {
             FindItemReponse<AdminModel> response = _adminService.FindAdminByID(adminID);
@@ -144,6 +150,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [SessionFilter]
         [HttpPost]
+        [AuthorizationFilter]
         [ValidateAntiForgeryToken]
         public ActionResult SaveUpdateProfileAdmin(AdminModel admin)
         {
@@ -157,6 +164,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [SessionFilter]
         [HttpPost]
+        [AuthorizationFilter]
         [ValidateAntiForgeryToken]
         public ActionResult SaveUpdateAdmin(AdminModel admin)
         {
@@ -175,6 +183,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             return Json(new { ErrorCode = response.ErrorCode, Message = response.Message }, JsonRequestBehavior.AllowGet);
         }
 
+        [AuthorizationFilter]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateCategoryMenu(MenuModel menu, string parentTitle)
@@ -281,12 +290,14 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [HttpGet]
+        [AuthorizationFilter]
         public ActionResult UpdateCategory(string id)
         {
             FindItemReponse<MenuModel> response = _menuCategoryService.FindByID(id);
             return View(response.Item);
         }
 
+        [AuthorizationFilter]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult UpdateCategoryMenu(MenuModel menu)

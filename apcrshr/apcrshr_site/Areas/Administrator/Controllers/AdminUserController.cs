@@ -25,6 +25,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [SessionFilter]
+        [AuthorizationFilter]
         public ActionResult Index()
         {
             FindAllItemReponse<UserModel> response = _userService.GetUsers();
@@ -36,6 +37,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [SessionFilter]
+        [AuthorizationFilter]
         [HttpGet]
         public ActionResult UpdateUser(string userId)
         {
@@ -54,6 +56,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [SessionFilter]
+        [AuthorizationFilter]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SaveUpdateUser(UserModel user)

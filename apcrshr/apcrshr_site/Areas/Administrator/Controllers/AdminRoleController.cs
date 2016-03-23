@@ -40,6 +40,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [HttpGet]
+        [AuthorizationFilter]
         [SessionFilter]
         public ActionResult AssignRole(string adminID)
         {
@@ -81,6 +82,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [HttpGet]
+        [AuthorizationFilter]
         [SessionFilter]
         public ActionResult AssignResource(string roleID)
         {

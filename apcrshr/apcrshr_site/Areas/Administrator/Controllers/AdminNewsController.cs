@@ -29,6 +29,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         //
         // GET: /Administrator/AdminNews/
         [SessionFilter]
+        [AuthorizationFilter]
         public ActionResult Index()
         {
             FindAllItemReponse<NewsModel> response = _newsService.GetNews();
@@ -36,6 +37,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [SessionFilter]
+        [AuthorizationFilter]
         public ActionResult CreateNews()
         {
             return View();
@@ -112,6 +114,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [SessionFilter]
+        [AuthorizationFilter]
         [HttpGet]
         public ActionResult UpdateNews(string newsID)
         {

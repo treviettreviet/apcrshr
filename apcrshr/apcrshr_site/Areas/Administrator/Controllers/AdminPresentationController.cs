@@ -29,6 +29,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         //
         // GET: /Administrator/AdminPresentation/
         [SessionFilter]
+        [AuthorizationFilter]
         public ActionResult Index()
         {
             FindAllItemReponse<PresentationModel> response = _presentationService.GetPresentation();
@@ -36,6 +37,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [SessionFilter]
+        [AuthorizationFilter]
         public ActionResult CreatePresentation()
         {
             return View();
@@ -116,6 +118,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [SessionFilter]
         [HttpGet]
+        [AuthorizationFilter]
         public ActionResult UpdatePresentation(string presentationID)
         {
             FindItemReponse<PresentationModel> response = _presentationService.FindPresentationByID(presentationID);

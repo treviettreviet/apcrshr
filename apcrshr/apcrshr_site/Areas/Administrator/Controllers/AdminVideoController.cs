@@ -28,6 +28,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         //
         // GET: /Administrator/AdminVideo/
         [SessionFilter]
+        [AuthorizationFilter]
         public ActionResult Index()
         {
             FindAllItemReponse<VideoModel> response = _videoService.GetVideo();
@@ -35,6 +36,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [SessionFilter]
+        [AuthorizationFilter]
         public ActionResult CreateVideo()
         {
             return View();
@@ -74,6 +76,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [SessionFilter]
         [HttpGet]
+        [AuthorizationFilter]
         public ActionResult UpdateVideo(string videoID)
         {
             FindItemReponse<VideoModel> response = _videoService.FindVideoByID(videoID);

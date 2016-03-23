@@ -25,6 +25,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             this._importantDeadline = new ImportantDeadlineService();
         }
 
+        [AuthorizationFilter]
         [SessionFilter]
         public ActionResult Index()
         {
@@ -36,11 +37,13 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             return View(response.Items);
         }
 
+        [AuthorizationFilter]
         [SessionFilter]
         public ActionResult CreateImportantDeadline()
         {
             return View();
         }
+
         [SessionFilter]
         [ValidateAntiForgeryToken]
         public JsonResult SaveImportantDeadline(ImportantDeadlineModel importantDeadline)
@@ -78,6 +81,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [SessionFilter]
         [HttpGet]
+        [AuthorizationFilter]
         public ActionResult UpdateImportantDeadline(string deadlineID)
         {
             FindItemReponse<ImportantDeadlineModel> response = _importantDeadline.FindImportantByID(deadlineID);

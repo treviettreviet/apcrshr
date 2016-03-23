@@ -30,6 +30,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         //
         // GET: /Administrator/Article/
         [SessionFilter]
+        [AuthorizationFilter]
         public ActionResult Index()
         {
             FindAllItemReponse<ArticleModel> response = _articleService.GetArticles();
@@ -37,6 +38,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [SessionFilter]
+        [AuthorizationFilter]
         public ActionResult CreateArticle(string menuTitle)
         {
             FindItemReponse<MenuModel> findParentMenu = _menuCategoryService.FindByTitle(menuTitle);
@@ -93,6 +95,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [SessionFilter]
+        [AuthorizationFilter]
         [HttpGet]
         public ActionResult UpdateArticle(string articleID)
         {

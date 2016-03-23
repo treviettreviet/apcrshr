@@ -602,5 +602,55 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindItemReponse<AdminModel> FindAdminByUsername(string username)
+        {
+            try
+            {
+                IAdminRepository adminRepository = RepositoryClassFactory.GetInstance().GetAdminRepository();
+                Admin admin = adminRepository.FindByUserName(username);
+                var _admin = MapperUtil.CreateMapper().Mapper.Map<Admin, AdminModel>(admin);
+                return new FindItemReponse<AdminModel>
+                {
+                    Item = _admin,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindItemReponse<AdminModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
+
+
+        public FindItemReponse<ResourceModel> GetAuthorizedResource(string adminID, string resourceURL)
+        {
+            try
+            {
+                IResourceRepository resourceRepository = RepositoryClassFactory.GetInstance().GetResourceRepository();
+                Resource resource = resourceRepository.FindAuthorizedResource(adminID, resourceURL);
+                var _resource = MapperUtil.CreateMapper().Mapper.Map<Resource, ResourceModel>(resource);
+                return new FindItemReponse<ResourceModel>
+                {
+                    Item = _resource,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindItemReponse<ResourceModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }
