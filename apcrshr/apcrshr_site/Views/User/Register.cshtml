@@ -29,7 +29,7 @@
             { 
                 @Html.AntiForgeryToken()
                 <div class="form-group">
-                    <label for="firstname" class="control-label col-sm-3">Title <span class="validation-span-required">(*)</span></label>
+                    <label for="firstname" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_title_label <span class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
                         <select name="Title" id="Title" data-rule-required="true">
                             <option value="">-- Chose one --</option>
@@ -42,13 +42,13 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="anotherelem" class="control-label col-sm-3">Full name <span class="validation-span-required">(*)</span></label>
+                    <label for="anotherelem" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_fullname_label <span class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
                         <input type="text" name="FullName" id="FullName" class="form-control" data-rule-required="true">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="additionalfield" class="control-label col-sm-3">Sex <span class="validation-span-required">(*)</span></label>
+                    <label for="additionalfield" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_sex_label <span class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
                         <select name="Sex" id="Sex" data-rule-required="true">
                             <option value="">-- Chose one --</option>
@@ -59,51 +59,51 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="anotherelem" class="control-label col-sm-3">Email address <span class="validation-span-required">(*)</span></label>
+                    <label for="anotherelem" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_email_label <span class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
                         <input type="text" name="Email" id="Email" class="form-control" data-rule-required="true" data-rule-email="true">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="anotherelem" class="control-label col-sm-3">Other email address</label>
+                    <label for="anotherelem" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_otherEmail_label</label>
                     <div class="col-sm-9">
                         <input type="text" name="OtherEmail" id="OtherEmail" class="form-control" data-rule-email="true">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="anotherelem" class="control-label col-sm-3">Date of birth <span class="validation-span-required">(*)</span></label>
+                    <label for="anotherelem" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_dateOfBirth_label <span class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
                         <input type="text" name="DateOfBirth" id="DateOfBirth" class="form-control mask_date" data-rule-required="true" data-rule-date="true">
-                        <i>(yyy/mm/dd)</i>
+                        <i>(yyyy/mm/dd)</i>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="anotherelem" class="control-label col-sm-3">Phone number <span class="validation-span-required">(*)</span></label>
+                    <label for="anotherelem" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_phoneNumber_label <span class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
                         <input type="text" name="PhoneNumber" id="PhoneNumber" class="form-control" data-rule-required="true" data-rule-number="true" data-rule-minlength="8">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="textfield" class="control-label col-sm-3">User Name</label>
+                    <label for="textfield" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_username_label</label>
                     <div class="col-sm-9">
                         <input type="text" name="UserName" id="UserName" class="form-control" data-rule-required="true" data-rule-minlength="6">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="textfield" class="control-label col-sm-3">Password</label>
+                    <label for="textfield" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_password_label</label>
                     <div class="col-sm-9">
                         <input type="password" name="Password" id="Password" class="form-control" data-rule-required="true" data-rule-minlength="6">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="textfield" class="control-label col-sm-3">Confirm password</label>
+                    <label for="textfield" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_confirmPassword_label</label>
                     <div class="col-sm-9">
                         <input type="password" name="ConfirmPassword" id="ConfirmPassword" class="form-control" data-rule-equalto="#Password">
                     </div>
                 </div>
                 <div class="form-actions col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-primary">Login</button>
-                    <a href='/' class="btn btn-info">Cancel</a>
+                    <button type="submit" class="btn btn-primary">@apcrshr_site.Resources.Resource.button_register</button>
+                    <a href='/' class="btn btn-info">@apcrshr_site.Resources.Resource.button_cancel</a>
                 </div>
                 if (ViewBag.Response != null)
                 {
