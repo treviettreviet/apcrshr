@@ -43,6 +43,7 @@ namespace apcrshr_site.Controllers
                 UserLoginResponse response = _userService.Login(user.UserName, user.Password);
                 if (response.ErrorCode == (int)ErrorCode.None)
                 {
+                    this.Session["User-UserID"] = response.UserId;
                     this.Session["User-SessionID"] = response.SessionId;
                     this.Session["User-UserName"] = response.UserName;
                     return RedirectToAction("Index", "Home");
@@ -115,7 +116,22 @@ namespace apcrshr_site.Controllers
             BaseResponse response = _userService.Logout(sessionId);
             this.Session["User-SessionID"] = null;
             this.Session["User-UserName"] = null;
+            this.Session["User-UserID"] = null;
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public ActionResult ViewProfile()
+        {
+            if (this.Session["User-UserID"] != null)
+            {
+                FindItemReponse<UserModel> response = _userService.FindUserByID(Session["User-UserID"].ToString());
+                return View(response.Item);
+            }
+            else
+            {
+                return RedirectToAction("Login", "User");
+            }
         }
     }
 }

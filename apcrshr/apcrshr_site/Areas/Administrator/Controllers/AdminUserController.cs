@@ -42,17 +42,11 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         public ActionResult UpdateUser(string userId)
         {
             FindItemReponse<UserModel> response = _userService.FindUserByID(userId);
-            if (response.ErrorCode == (int)ErrorCode.None)
+            if (response.ErrorCode != 0)
             {
-                if (response.Item != null)
-                {
-                    return View(response.Item);
-                }
-                response.ErrorCode = (int)ErrorCode.Redirect;
-                response.Message = "Người Dùng Không Tồn Tại.";
+                ViewBag.Message = new BaseResponse { ErrorCode = response.ErrorCode, Message = response.Message };
             }
-            TempData["Message"] = response;
-            return RedirectToAction("Index");
+            return View(response.Item);
         }
 
         [SessionFilter]
@@ -63,14 +57,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         {
             if (ModelState.IsValid)
             {
-                var sessionId = this.Session["SessionID"].ToString();
-                IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository();
                 BaseResponse response = _userService.UpdateUser(user);
-                if (response.ErrorCode == (int)ErrorCode.None)
-                {
-                    TempData["Message"] = response.Message;
-                    return RedirectToAction("Index");
-                }
                 ViewBag.Message = response;
             }
             return View("UpdateUser", user);

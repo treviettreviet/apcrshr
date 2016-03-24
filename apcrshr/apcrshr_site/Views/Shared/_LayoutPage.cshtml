@@ -105,11 +105,10 @@
 
                         <!-- Search Widget -->
                         <div class="widget widget-search">
-                            @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @id = "search-form" }))
-                            {
-                                <input type="text" placeholder="Enter Keywords..." id="KeyWord" name="KeyWord" />
+                            <form action="/Home/Search" method="post" class="form-validate">
+                                <input type="search" name="KeyWord" placeholder="Enter Keywords..." data-rule-required="true" />
                                 <button class="search-btn" type="submit"><i class="icon-search-1"></i></button>
-                            }
+                            </form>
                         </div>
 
                         <!-- Categories Widget -->

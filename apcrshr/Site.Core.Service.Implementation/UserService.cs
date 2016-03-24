@@ -140,6 +140,19 @@ namespace Site.Core.Service.Implementation
             try
             {
                 IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
+                User _user = userRepository.FindByUserName(username);
+                if (_user != null)
+                {
+                    if (_user.Locked)
+                    {
+                        return new UserLoginResponse
+                        {
+                            ErrorCode = (int)ErrorCode.Error,
+                            Message = Resources.Resource.msg_account_locked
+                        };
+                    }
+                }
+
                 IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository();
                 User user = userRepository.Login(username, password);
 

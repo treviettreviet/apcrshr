@@ -854,6 +854,8 @@
     <Content Include="Views\Presentation\ViewPresentation.cshtml" />
     <Content Include="Views\Album\Index.cshtml" />
     <Content Include="Views\Photo\Index.cshtml" />
+    <Content Include="Views\User\ViewProfile.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

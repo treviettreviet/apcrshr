@@ -178,7 +178,7 @@
     <value>This email has registered by another user.</value>
   </data>
   <data name="msg_username_exist" xml:space="preserve">
-    <value>The user has registered by another user.</value>
+    <value>This user name has registered by another user.</value>
   </data>
   <data name="title_postedBy" xml:space="preserve">
     <value>Posted by</value>
@@ -218,5 +218,8 @@
   </data>
   <data name="field_username_label" xml:space="preserve">
     <value>User Name</value>
+  </data>
+  <data name="title_searchResulf" xml:space="preserve">
+    <value>Search resulf</value>
   </data>
 </root>
