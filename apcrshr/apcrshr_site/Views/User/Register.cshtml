@@ -31,7 +31,7 @@
                 <div class="form-group">
                     <label for="firstname" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_title_label <span class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
-                        <select name="Title" id="Title" data-rule-required="true">
+                        <select name="Title" id="Title" onchange="popupSelectInput(this, 'Title')" data-rule-required="true">
                             <option value="">-- Chose one --</option>
                             <option value="Dr">Dr</option>
                             <option value="Mr">Mr</option>
@@ -92,13 +92,13 @@
                 <div class="form-group">
                     <label for="textfield" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_password_label</label>
                     <div class="col-sm-9">
-                        <input type="password" name="Password" id="Password" class="form-control" data-rule-required="true" data-rule-minlength="6">
+                        <input type="password" name="Password" id="Password" placeholder="*********" class="form-control" data-rule-required="true" data-rule-minlength="6">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="textfield" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_confirmPassword_label</label>
                     <div class="col-sm-9">
-                        <input type="password" name="ConfirmPassword" id="ConfirmPassword" class="form-control" data-rule-equalto="#Password">
+                        <input type="password" name="ConfirmPassword" id="ConfirmPassword" placeholder="*********" class="form-control" data-rule-equalto="#Password">
                     </div>
                 </div>
                 <div class="form-actions col-sm-offset-2 col-sm-10">
@@ -115,3 +115,20 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    function popupSelectInput(select, field) {
+        var value = $(select).find(":selected").val();
+        if (value == "Others") {
+            bootbox.prompt("Please input your " + field + "?", function (result) {
+                if (result === null) {
+                    $(select).prop("selectedIndex", 0);
+                } else {
+                    var option = "<option value='" + result + "'>" + result + "</option>";
+                    $(select).append(option);
+                    $(select).val(result);
+                }
+            });
+        }
+    }
+</script>
