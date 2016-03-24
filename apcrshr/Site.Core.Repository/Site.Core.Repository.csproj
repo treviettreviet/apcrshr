@@ -93,6 +93,7 @@
     <Compile Include="Implementation\ResourceRepository.cs" />
     <Compile Include="Implementation\RoleRepository.cs" />
     <Compile Include="Implementation\RoleResourceRepository.cs" />
+    <Compile Include="Implementation\SliderRepository.cs" />
     <Compile Include="Implementation\SubscriberRepository.cs" />
     <Compile Include="Implementation\UploadRepository.cs" />
     <Compile Include="Implementation\UserRepository.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Repository\IResourceRepository.cs" />
     <Compile Include="Repository\IRoleRepository.cs" />
     <Compile Include="Repository\IRoleResourceRepository.cs" />
+    <Compile Include="Repository\ISliderRepository.cs" />
     <Compile Include="Repository\ISubscriberRepository.cs" />
     <Compile Include="Repository\IUploadRepository.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
@@ -173,18 +175,8 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>APCRSHRModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="APCRSHRModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>APCRSHRModel.edmx</DependentUpon>
-      <LastGenOutput>APCRSHRModel.Context.cs</LastGenOutput>
-    </None>
     <None Include="APCRSHRModel.edmx.diagram">
       <DependentUpon>APCRSHRModel.edmx</DependentUpon>
-    </None>
-    <None Include="APCRSHRModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>APCRSHRModel.edmx</DependentUpon>
-      <LastGenOutput>APCRSHRModel.cs</LastGenOutput>
     </None>
     <None Include="App.Config" />
     <None Include="packages.config" />
@@ -197,6 +189,18 @@
       <Project>{930cede8-c490-460c-9ca4-47b84bfe0ff7}</Project>
       <Name>Site.Core.Common.Ultil</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="APCRSHRModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>APCRSHRModel.edmx</DependentUpon>
+      <LastGenOutput>APCRSHRModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="APCRSHRModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>APCRSHRModel.edmx</DependentUpon>
+      <LastGenOutput>APCRSHRModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

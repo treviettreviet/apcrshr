@@ -102,5 +102,9 @@ namespace Site.Core.Repository
         {
             return new RoleResourceRepository();
         }
+        public ISliderRepository GetSliderRepository()
+        {
+            return new SliderRepository();
+        }
     }
 }
