@@ -107,13 +107,8 @@
                         <div class="widget widget-search">
                             @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @id = "search-form" }))
                             {
-
-                                <div class="input-append">
-                                    <input type="text" placeholder="Enter Keywords..." id="KeyWord" name="KeyWord" />
-                                    <button class="search-btn" type="submit"><i class="icon-search-1"></i></button>
-                                </div>
-                                @Html.Hidden("pageIndex", 1)
-
+                                <input type="text" placeholder="Enter Keywords..." id="KeyWord" name="KeyWord" />
+                                <button class="search-btn" type="submit"><i class="icon-search-1"></i></button>
                             }
                         </div>
 
