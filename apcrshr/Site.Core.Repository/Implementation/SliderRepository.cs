@@ -26,11 +26,11 @@ namespace Site.Core.Repository.Implementation
             }
         }
 
-        public IList<Slider> FindTop(int top)
+        public IList<Slider> FindTop(int top, string language)
         {
             using (APCRSHREntities context = new APCRSHREntities())
             {
-                return context.Sliders.OrderByDescending(i => i.CreatedDate).Take(top).ToList();
+                return context.Sliders.Where(n => n.Language.Equals(language)).OrderByDescending(i => i.CreatedDate).Take(top).ToList();
             }
         }
 

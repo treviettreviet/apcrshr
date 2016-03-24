@@ -1,0 +1,160 @@
+﻿@using apcrshr_site.Helper
+@model Site.Core.DataModel.Model.SliderModel
+@{
+    ViewBag.Title = "Create Slider";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <!--Alert-->
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <br />
+            <div class="alert alert-danger"><a class="close" data-dismiss="alert" href="#">×</a><strong></strong> @ViewBag.ErrorMessage</div>
+        }
+
+        <div class="box box-bordered box-color">
+            <div class="box-title">
+                <h3>
+                    <i class="fa fa-edit"></i>Thêm Slider
+                </h3>
+            </div>
+            <div class="box-content nopadding">
+                @using (Html.BeginForm("SaveSlider", "AdminSlider", FormMethod.Post, new { @class = "form-horizontal form-bordered", @id = "frmSaveSlider", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Tiêu Đề <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(Model => Model.Title, new { @id = "Title", @class = "form-control" })
+                            @Html.ValidationMessageFor(Model => Model.Title)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="file" class="control-label col-sm-2">
+                            Ảnh <span class="validation-span-required">(*)</span>
+                            <small>Kích Cỡ Lớn Nhất: 10MB</small>
+                        </label>
+                        <div class="col-sm-10">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                                <div>
+                                    <span class="btn btn-default btn-file">
+                                        <span class="fileinput-new">Chọn Ảnh</span>
+                                        <span class="fileinput-exists">Thay Đổi</span>
+                                        <input type="file" name="imageFile" id="imageFile" data-filesize="1048576" data-filesize-error="Kích Cỡ Lớn Nhất: 10MB">
+                                    </span>
+                                    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Xóa Bỏ</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Ngôn Ngữ</label>
+                        <div class="col-sm-10">
+                            <div class="check-demo-col">
+                                <div class="check-line">
+                                    <input type="radio" name="Language" id="Language-EN" class='icheck-me' data-skin="square" data-color="blue" value="EN" checked>
+                                    <label class='inline' for="Language">English</label>
+                                </div>
+                                <div class="check-line">
+                                    <input type="radio" name="Language" id="Language-VN" class='icheck-me' data-skin="square" data-color="blue" value="VN">
+                                    <label class='inline' for="Language">Tiếng Việt</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions col-sm-offset-2 col-sm-10">
+                        <button type="button" onclick="submitForm()" class="btn btn-primary">Lưu Thông Tin</button>
+                        <button type="button" onclick="resetForm()" class="btn">Khởi tạo lại</button>
+                        <a href='@Url.Action("Index")' class="btn btn-info">Hủy Bỏ</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#Contents").Editor({ name: "Editor-Contents" });
+    });
+
+    function submitForm() {
+        if (!validateForm()) {
+            bootbox.alert("Cần phải nhập dữ liệu những trường bắt buộc.", function () {
+                bootbox.hideAll();
+            });
+            return false;
+        }
+        if (!validateImages()) {
+            bootbox.alert("Hãy chọn file!", function () {
+                bootbox.hideAll();
+            });
+            return false;
+        }
+
+        $.blockUI({ message: $('#spinner') });
+        var formData = new FormData();
+        formData.append("Title", $("#Title").val());
+        formData.append("Language", $("input[name=Language]:checked").val());
+        formData.append("imageFile", $('#imageFile').get(0).files[0]);
+        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveSlider", "AdminSlider")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $.unblockUI();
+                bootbox.alert(response.message, function () {
+                    bootbox.hideAll();
+                });
+                //Timeout
+                if (response.errorCode == 2) {
+                    window.location = "/Administrator/AdminHome/Login";
+                }
+                if (response.errorCode == 0) {
+                    resetForm();
+                }
+            },
+            error: function (error) {
+                $.unblockUI();
+                bootbox.alert(error, function () {
+                    bootbox.hideAll();
+                });
+            }
+        });
+    }
+
+    function validateForm() {
+        if ($("#Title").val() == null || $("#Title").val() == "") {
+            $("#Title").focus();
+            return false;
+        }
+        return true;
+    }
+
+    function validateImages() {
+        if ($('#imageFile').get(0).files.length === 0) {
+            return false;
+        }
+        return true;
+    }
+
+    function resetForm() {
+        $("#Title").val("");
+        $("#imageFile").closest('form').trigger('reset');
+    }
+
+    function setControlCss(control) {
+        $(control).css({ "background-color": "#ffafb3" });
+    }
+</script>
+
+

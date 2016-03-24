@@ -1,0 +1,135 @@
+﻿@model IList<Site.Core.DataModel.Model.SliderModel>
+@{
+    ViewBag.Title = "Quản trị slide";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <!--Alert-->
+        @if (TempData["Message"] != null)
+        {
+            Site.Core.DataModel.Response.BaseResponse responseMsg = (Site.Core.DataModel.Response.BaseResponse)TempData["Message"];
+            <br />
+            <div class="alert @(responseMsg.ErrorCode == (int)Site.Core.DataModel.Enum.ErrorCode.None ? " alert-info" : " alert-danger")"><a class="close" data-dismiss="alert" href="#">×</a><strong></strong> @responseMsg.Message</div>
+        }
+
+        <div class="box box-color box-bordered">
+            <br />
+            <a href='@Url.Action("CreateSlider", "AdminSlider")' class="btn btn-blue">Thêm Mới</a>
+            <div class="box-title">
+                <h3>
+                    <i class="fa fa-th-list"></i>Danh Sách Slider
+                </h3>
+            </div>
+            <div class="box-content nopadding">
+                <table id="tableSlider" class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
+                       data-column_filter_types="null,text,null,text,text,null,null,null"
+                       data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
+                    <thead>
+                        <tr>
+                            <th class='with-checkbox'>
+                                <input type="checkbox" name="check_all" class="dataTable-checkall">
+                            </th>
+                            <th>Tiêu Đề</th>
+                            <th>Ảnh</th>
+                            <th class='hidden-1024'>Ngày Tạo</th>
+                            <th>Người Tạo</th>
+                            <th>Tiếng Việt</th>
+                            <th>Tiếng Anh</th>
+                            <th class='hidden-480'>Tùy Chọn</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            for (int i = 0; i < Model.Count; i++)
+                            {
+                                <tr id="@Model[i].SliderID">
+                                    <td class="with-checkbox">
+                                        <input type="checkbox" name="check" value="@Model[i].SliderID">
+                                    </td>
+                                    <td>@Model[i].Title</td>
+                                    <td>
+                                        <img class="thumbnail" src="@Model[i].ImageURL" style="width: 200px; height: 150px;">
+                                    </td>
+                                    <td class='hidden-1024'>@Model[i].CreatedDate.ToShortDateString()</td>
+                                    <td>@apcrshr_site.Helper.UserHelper.GetAdminName(Model[i].CreatedBy)</td>
+                                    <td>
+                                        @if (Model[i].Language.Equals("VN"))
+                                        {
+                                            <a href="#" class="btn" rel="tooltip" title="Đã Thêm">
+                                                <i class="fa fa-check"></i>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="#" class="btn" rel="tooltip" title="Chưa Thêm">
+                                                <i class="fa fa-question-circle"></i>
+                                            </a>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model[i].Language.Equals("EN"))
+                                        {
+                                            <a href="#" class="btn" rel="tooltip" title="Đã Thêm">
+                                                <i class="fa fa-check"></i>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="#" class="btn" rel="tooltip" title="Chưa Thêm">
+                                                <i class="fa fa-question-circle"></i>
+                                            </a>
+                                        }
+                                    </td>
+                                    <td class='hidden-480'>
+                                        <a href='@Url.Action("UpdateSlider", "AdminSlider", new { SliderID = Model[i].SliderID })' class="btn" rel="tooltip" class="btn" rel="tooltip" title="Sửa">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteSlider('@Model[i].SliderID')">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function deleteSlider(SliderID) {
+        bootbox.confirm("Bạn có chắc chắn muốn xóa bản ghi này?", function (result) {
+            if (result) {
+                $.ajax({
+                    type: 'GET',
+                    contentType: 'application/json',
+                    url: '@Url.Action("DeleteSlider", "AdminSlider")',
+                    data: { SliderID: SliderID },
+                    success: function (data) {
+                        if (data.ErrorCode == 0) {
+                            $('#' + SliderID + '').remove();
+                            $('table#tableSlider tr#' + SliderID + '').remove();
+                            bootbox.hideAll();
+                        } else {
+                            bootbox.lert(data.Message, function () {
+                                bootbox.hideAll();
+                            });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        bootbox.hideAll();
+                    }
+                });
+                return true;
+            } else {
+                bootbox.hideAll();
+                return false;
+            }
+        });
+    }
+
+</script>

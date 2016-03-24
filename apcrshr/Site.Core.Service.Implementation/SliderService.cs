@@ -205,12 +205,12 @@ namespace Site.Core.Service.Implementation
             }
         }
 
-        public DataModel.Response.FindAllItemReponse<DataModel.Model.SliderModel> GetTopSlider(int top)
+        public DataModel.Response.FindAllItemReponse<DataModel.Model.SliderModel> GetTopSlider(int top, string language)
         {
             try
             {
                 ISliderRepository sliderRepository = RepositoryClassFactory.GetInstance().GetSliderRepository();
-                IList<Slider> result = sliderRepository.FindTop(top);
+                IList<Slider> result = sliderRepository.FindTop(top, language);
                 var _slider = result.Select(i => MapperUtil.CreateMapper().Mapper.Map<Slider, SliderModel>(i)).ToList();
                 return new FindAllItemReponse<SliderModel>
                 {

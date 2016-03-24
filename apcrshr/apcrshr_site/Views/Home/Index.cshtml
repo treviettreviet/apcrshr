@@ -3,10 +3,20 @@
 }
 
 <!-- Start slider -->
-<div class="touch-slider" data-slider-navigation="true" data-slider-pagination="true">
-    <div class="item"><img alt="" src="~/Content/upload/images/my_khe.jpg" style="width:100%; height:371px;"></div>
-    <div class="item"><img alt="" src="~/Content/upload/images/hoi_an.jpg" style="width:100%; height:371px;"></div>
-</div>
+@if (ViewBag.TopNews != null)
+{
+    IList<Site.Core.DataModel.Model.SliderModel> sliders = (IList<Site.Core.DataModel.Model.SliderModel>)ViewBag.TopSlider;
+
+    <div class="touch-slider" data-slider-navigation="true" data-slider-pagination="true">
+        @foreach (var item in sliders)
+        {
+            <div class="item">
+                <img alt="" src="@item.ImageURL" style="width:100%; height:371px;">
+            </div>
+        }
+    </div>
+
+}
 <!-- End slider -->
 <!-- Divider Style 1 -->
 <div class="hr1" style="margin-bottom:40px;"></div>

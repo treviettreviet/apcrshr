@@ -62,6 +62,11 @@
                     </li>
                 </ul>
             </li>
+            <li class='@(ViewBag.CurrentNode == "AdminSlider" ? "active" : "")'>
+                <a href="@Url.Action("Index", "AdminSlider")">
+                    <span>Slider</span>
+                </a>
+            </li>
         </ul>
         <div class="user">
             <div class="dropdown">

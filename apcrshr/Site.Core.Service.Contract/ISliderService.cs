@@ -63,7 +63,7 @@ namespace Site.Core.Service.Contract
         /// </summary>
         /// <param name="top"></param>
         /// <returns></returns>
-        FindAllItemReponse<SliderModel> GetTopSlider(int top);
+        FindAllItemReponse<SliderModel> GetTopSlider(int top, string language);
         /// <summary>
         /// Get all related Slider by date
         /// </summary>

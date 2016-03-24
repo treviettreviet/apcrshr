@@ -10,7 +10,7 @@ namespace Site.Core.Repository.Repository
     {
         Slider FindByActionURL(string URL);
         Slider FindByTitle(string title);
-        IList<Slider> FindTop(int top);
+        IList<Slider> FindTop(int top, string language);
         Tuple<int, IList<Slider>> FindAll(int pageSize, int pageIndex);
         Tuple<int, IList<Slider>> FindAllRelated(DateTime date, int pageSize, int pageIndex);
         IList<Slider> Search(string key);

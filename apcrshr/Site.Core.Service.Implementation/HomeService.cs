@@ -168,23 +168,6 @@ namespace Site.Core.Service.Implementation
                     });
                 }
 
-                //Search Resource
-                IResourceRepository resourceRepository = RepositoryClassFactory.GetInstance().GetResourceRepository();
-                IList<Resource> res = resourceRepository.Search(keyword);
-                foreach (var item in res)
-                {
-                    list.Add(new SearchModel()
-                    {
-                        Action = "ResourceDetail",
-                        ActionURL = item.URL,
-                        Controller = string.Empty,
-                        CreatedDate = item.CreatedDate,
-                        ImageURL = string.Empty,
-                        ShortContent = item.Title,
-                        Title = item.Title
-                    });
-                }
-
                 //Search Video
                 IVideoRepository videoRepository = RepositoryClassFactory.GetInstance().GetVideoRepository();
                 IList<Video> vids = videoRepository.Search(keyword);
@@ -201,23 +184,6 @@ namespace Site.Core.Service.Implementation
                         Title = item.Title
                     });
                 }
-
-                //Search Slider
-                //ISliderRepository sliderRepository = RepositoryClassFactory.GetInstance().GetSliderRepository();
-                //IList<Slider> sliders = sliderRepository.Search(keyword);
-                //foreach (var item in sliders)
-                //{
-                //    list.Add(new SearchModel()
-                //    {
-                //        Action = "VideoDetail",
-                //        ActionURL = item.ActionURL,
-                //        Controller = "Video",
-                //        CreatedDate = item.CreatedDate,
-                //        ImageURL = string.Empty,
-                //        ShortContent = item.ShortContent,
-                //        Title = item.Title
-                //    });
-                //}
 
                 response.Count = list.Count;
                 response.Result = list.OrderByDescending(n => n.CreatedDate).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList(); ;

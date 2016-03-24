@@ -18,6 +18,7 @@ namespace apcrshr_site.Controllers
         private IVideoService _videoService;
         private IUserService _userService;
         private IHomeService _homeService;
+        private ISliderService _sliderService;
 
         public HomeController()
         {
@@ -26,6 +27,7 @@ namespace apcrshr_site.Controllers
             this._videoService = new VideoService();
             this._userService = new UserService();
             this._homeService = new HomeService();
+            this._sliderService = new SliderService();
         }
 
         [HttpGet]
@@ -37,6 +39,9 @@ namespace apcrshr_site.Controllers
 
             FindAllItemReponse<VideoModel> videoReponse = _videoService.GetTopVideo(1, this.culture);
             ViewBag.TopVideo = videoReponse.Items;
+
+            FindAllItemReponse<SliderModel> SliderReponse = _sliderService.GetTopSlider(2, this.culture);
+            ViewBag.TopSlider = SliderReponse.Items;
             return View();
         }
 
@@ -72,6 +77,7 @@ namespace apcrshr_site.Controllers
             response.PageIndex = pageIndex;
             return View(response);
         }
+
 
     }
 }
