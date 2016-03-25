@@ -17,5 +17,6 @@ namespace Site.Core.DataModel.Model
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public string Description { get; set; }
+        public IList<PhotoModel> Photos { get; set; }
     }
 }

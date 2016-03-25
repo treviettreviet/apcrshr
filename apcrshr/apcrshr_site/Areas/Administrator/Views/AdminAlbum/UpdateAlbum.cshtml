@@ -80,9 +80,6 @@
                 if (response.errorCode == 2) {
                     window.location = "/Administrator/AdminHome/Login";
                 }
-                if (response.errorCode == 0) {
-                    resetForm();
-                }
             },
             error: function (error) {
                 $.unblockUI();
@@ -99,11 +96,6 @@
             return false;
         }
         return true;
-    }
-
-    function resetForm() {
-        $("#Title").val("");
-        $("#Description").val("");
     }
 
     function setControlCss(control) {

@@ -97,3 +97,12 @@ ALTER TABLE [RoleResource]
 DROP CONSTRAINT FK_RoleResource_Role
 
 GO
+
+ALTER TABLE [dbo].[Photo]  WITH CHECK ADD  CONSTRAINT [FK_Photo_Album] FOREIGN KEY([AlbumID])
+REFERENCES [dbo].[Album] ([AlbumID])
+
+GO
+
+ALTER TABLE [dbo].[Photo] CHECK CONSTRAINT [FK_Photo_Album]
+
+GO

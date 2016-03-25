@@ -72,7 +72,8 @@ namespace Site.Core.Service.Implementation.ModelMapper
                 cfg.CreateMap<ImportantDeadline, ImportantDeadlineModel>();
                 cfg.CreateMap<Video, VideoModel>();
                 cfg.CreateMap<Presentation, PresentationModel>();
-                cfg.CreateMap<Album, AlbumModel>();
+                cfg.CreateMap<Album, AlbumModel>()
+                    .ForMember(a => a.Photos, c => c.MapFrom(a => a.Photos));
                 cfg.CreateMap<Photo, PhotoModel>();
                 cfg.CreateMap<Role, RoleModel>();
                 cfg.CreateMap<Resource, ResourceModel>();

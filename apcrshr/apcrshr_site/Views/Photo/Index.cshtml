@@ -33,7 +33,7 @@
                                 <li>By <a href="#">@apcrshr_site.Helper.UserHelper.GetAdminName(Model.Items[i].CreatedBy)</a></li>
                                 <li>@Model.Items[i].CreatedDate.ToString("dddd, d MMMM, yyyy", new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.Name))</li>
                             </ul>
-                            <p>@(Model.Items[i].Description.Length > 260 ? Model.Items[i].Description.Substring(0, 260) + "..." : Model.Items[i].Description)</p>
+                            <p>@(Model.Items[i].Description != null && Model.Items[i].Description.Length > 260 ? Model.Items[i].Description.Substring(0, 260) + "..." : Model.Items[i].Description)</p>
                             
                         </div>
                     </div>

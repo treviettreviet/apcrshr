@@ -222,4 +222,7 @@
   <data name="title_searchResulf" xml:space="preserve">
     <value>Search resulf</value>
   </data>
+  <data name="title_albumImage" xml:space="preserve">
+    <value>Album images</value>
+  </data>
 </root>

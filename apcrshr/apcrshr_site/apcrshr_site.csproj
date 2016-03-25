@@ -532,6 +532,7 @@
     <Content Include="Content\images\icons\grabbing.png" />
     <Content Include="Content\images\icons\loader.gif" />
     <Content Include="Content\images\icons\switcher.png" />
+    <Content Include="Content\images\Images-icon.png" />
     <Content Include="Content\images\lightbox\close%402x.png" />
     <Content Include="Content\images\lightbox\close.png" />
     <Content Include="Content\images\lightbox\loading%402x.html" />

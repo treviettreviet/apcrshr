@@ -268,6 +268,15 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Album images.
+        /// </summary>
+        public static string title_albumImage {
+            get {
+                return ResourceManager.GetString("title_albumImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Conference Details.
         /// </summary>
         public static string title_conferenceDetail {

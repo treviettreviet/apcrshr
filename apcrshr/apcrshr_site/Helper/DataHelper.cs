@@ -62,15 +62,15 @@ namespace apcrshr_site.Helper
             if (language.Equals("VN"))
             {
                 links.Add("Mẫu đăng ký", "/Registration/RegistrationForm");
-                links.Add("Tham gia hội nghị", "/ConferenceDeclaration/Index");
-                links.Add("Dữ liệu trình vày", "/Presentation/Index");
+                //links.Add("Tham gia hội nghị", "/ConferenceDeclaration/Index");
+                //links.Add("Dữ liệu trình vày", "/Presentation/Index");
                 links.Add("Ảnh", "/Album/Index");
             }
             else
             {
                 links.Add("Registration Form", "/Registration/RegistrationForm");
-                links.Add("Conference Declaration", "/ConferenceDeclaration/Index");
-                links.Add("Presentation", "/Presentation/Index");
+                //links.Add("Conference Declaration", "/ConferenceDeclaration/Index");
+                //links.Add("Presentation", "/Presentation/Index");
                 links.Add("Photo", "/Album/Index");
             }
         }

@@ -20,14 +20,9 @@ namespace apcrshr_site.Controllers
         //
         // GET: /Album/
 
-        public ActionResult Index(int pageIndex = 1)
+        public ActionResult Index(int ActionURL = 1)
         {
-
-            FindAllItemReponse<AlbumModel> response = _albumService.GetAlbum(Constants.Constants.PAGE_SIZE, pageIndex);
-            if (response.Items == null)
-            {
-                response.Items = new List<AlbumModel>();
-            }
+            FindAllItemReponse<AlbumModel> response = _albumService.GetAlbum(Constants.Constants.ALBUM_PAGE_SIZE, ActionURL);
             ViewBag.CurrentNode = "Album";
             return View(response);
         }

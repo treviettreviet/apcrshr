@@ -32,22 +32,22 @@
 
                 </a>
             </li>
-            <li class='@(ViewBag.CurrentNode == "AdminConferenceDelaration" ? "active" : "")'>
+            @*<li class='@(ViewBag.CurrentNode == "AdminConferenceDelaration" ? "active" : "")'>
                 <a href="@Url.Action("Index", "AdminConferenceDeclare")">
                     <span>Hội Nghị</span>
 
                 </a>
-            </li>
+            </li>*@
             <li class='@(ViewBag.CurrentNode == "AdminVideo" ? "active" : "")'>
                 <a href="@Url.Action("Index", "AdminVideo")">
                     <span>Video</span>
                 </a>
             </li>
-            <li class='@(ViewBag.CurrentNode == "AdminPresentation" ? "active" : "")'>
+            @*<li class='@(ViewBag.CurrentNode == "AdminPresentation" ? "active" : "")'>
                 <a href="@Url.Action("Index", "AdminPresentation")">
                     <span>Thuyết Trình</span>
                 </a>
-            </li>
+            </li>*@
             <li>
                 <a href='@Url.Action("Index", "AdminPhoto")' data-toggle="dropdown" class='dropdown-toggle'>
                     <span>Ảnh</span>

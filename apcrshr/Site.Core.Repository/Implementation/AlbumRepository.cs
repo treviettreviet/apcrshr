@@ -12,10 +12,8 @@ namespace Site.Core.Repository.Implementation
     {
         public Album FindByActionURL(string actionURL)
         {
-            using (APCRSHREntities context = new APCRSHREntities())
-            {
-                return context.Albums.Where(a => a.ActionURL.Equals(actionURL)).SingleOrDefault();
-            }
+            APCRSHREntities context = new APCRSHREntities();
+            return context.Albums.Where(a => a.ActionURL.Equals(actionURL)).SingleOrDefault();
         }
 
         public object Insert(Album item)
@@ -72,42 +70,34 @@ namespace Site.Core.Repository.Implementation
 
         public Album FindByID(object id)
         {
-            using (APCRSHREntities context = new APCRSHREntities())
-            {
-                var _id = id.ToString();
-                return context.Albums.Where(a => a.AlbumID.Equals(_id)).SingleOrDefault();
-            }
+            APCRSHREntities context = new APCRSHREntities();
+            var _id = id.ToString();
+            return context.Albums.Where(a => a.AlbumID.Equals(_id)).SingleOrDefault();
         }
 
         public IList<Album> FindAll()
         {
-            using (APCRSHREntities context = new APCRSHREntities())
-            {
-                return context.Albums.OrderByDescending(n => n.CreatedDate).ToList();
-            }
+            APCRSHREntities context = new APCRSHREntities();
+            return context.Albums.OrderByDescending(n => n.CreatedDate).ToList();
         }
 
 
         public Tuple<int, IList<Album>> FindAll(int pageSize, int pageIndex)
         {
-            using (APCRSHREntities context = new APCRSHREntities())
-            {
-                var count = context.ConferenceDeclarations.Count();
-                var albums = context.Albums.OrderByDescending(n => n.CreatedDate).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
-                return Tuple.Create<int, IList<Album>>(count, albums);
-            }
+            APCRSHREntities context = new APCRSHREntities();
+            var count = context.Albums.Count();
+            var albums = context.Albums.OrderByDescending(n => n.CreatedDate).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+            return Tuple.Create<int, IList<Album>>(count, albums);
         }
 
 
         public IList<Album> Search(string key)
         {
-            using (APCRSHREntities context = new APCRSHREntities())
-            {
-                return context.Albums.SqlQuery("exec sp_FindStringInTable @stringToFind,@schema,@table",
-                new SqlParameter("@stringToFind", key),
-                new SqlParameter("@schema", "dbo"),
-                new SqlParameter("@table", "Album")).ToList();
-            }
+            APCRSHREntities context = new APCRSHREntities();
+            return context.Albums.SqlQuery("exec sp_FindStringInTable @stringToFind,@schema,@table",
+            new SqlParameter("@stringToFind", key),
+            new SqlParameter("@schema", "dbo"),
+            new SqlParameter("@table", "Album")).ToList();
         }
     }
 }

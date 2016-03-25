@@ -74,7 +74,7 @@ namespace apcrshr_site.Helper
 
             int totalPage = (count / pageSize) + 1;
             int pageIndex = 1;
-            if (index.Value == null)
+            if (index.Value == null || string.IsNullOrEmpty(index.Value.ToString()))
             {
                 pageIndex = 1;
             }
@@ -165,7 +165,7 @@ namespace apcrshr_site.Helper
 
             int totalPage = (count / pageSize) + 1;
             int pageIndex = 1;
-            if (index.Value == null)
+            if (index.Value == null || string.IsNullOrEmpty(index.Value.ToString()))
             {
                 pageIndex = 1;
             }
