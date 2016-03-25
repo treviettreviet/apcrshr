@@ -11,6 +11,12 @@
 <script src="~/Areas/Administrator/js/plugins/form/jquery.form.min.js"></script>
 <!-- Wizard -->
 <script src="~/Areas/Administrator/js/plugins/wizard/jquery.form.wizard.min.js"></script>
+<!-- Bootbox -->
+<script src="~/Areas/Administrator/js/plugins/bootbox/jquery.bootbox.js"></script>
+<script src="~/Areas/Administrator/js/plugins/validation/jquery.validate.min.js"></script>
+<script src="~/Areas/Administrator/js/plugins/validation/additional-methods.min.js"></script>
+<!-- Masked inputs -->
+<script src="~/Areas/Administrator/js/plugins/maskedinput/jquery.maskedinput.min.js"></script>
 
 <div class="col-sm-9">
     @if (Session["User-UserName"] == null)
@@ -30,7 +36,7 @@
             </h3>
         </div>
         <div class="box-content nopadding">
-            <form action="#" method="POST" class='form-horizontal form-wizard' id="ss">
+            <form action="#" method="POST" class='form-horizontal form-wizard form-validate' id="ss">
                 <div class="step" id="firstStep">
                     <ul class="wizard-steps steps-3">
                         <li class='active'>
@@ -68,7 +74,7 @@
                     <div class="form-group">
                         <label for="firstname" class="control-label col-sm-3">Title <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-9">
-                            <select name="Title" id="Title">
+                            <select name="Title" id="Title" onchange="popupSelectInput(this, 'Title')" data-rule-required="true">
                                 <option value="">-- Chose one --</option>
                                 <option value="Dr">Dr</option>
                                 <option value="Mr">Mr</option>
@@ -81,13 +87,13 @@
                     <div class="form-group">
                         <label for="anotherelem" class="control-label col-sm-3">Full name <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-9">
-                            <input type="text" name="FullName" id="FullName" class="form-control">
+                            <input type="text" name="FullName" id="FullName" class="form-control" data-rule-required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="additionalfield" class="control-label col-sm-3">Sex <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-9">
-                            <select name="Sex" id="Sex">
+                            <select name="Sex" id="Sex" onchange="popupSelectInput(this, 'Sex')" data-rule-required="true">
                                 <option value="">-- Chose one --</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
@@ -98,7 +104,7 @@
                     <div class="form-group">
                         <label for="additionalfield" class="control-label col-sm-3">Meal preference <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-9">
-                            <select name="MealPreference" id="MealPreference">
+                            <select name="MealPreference" id="MealPreference" data-rule-required="true">
                                 <option value="">-- Chose one --</option>
                                 <option value="Vegetarian">Vegetarian</option>
                                 <option value="Non- vegetarian">Non- vegetarian</option>
@@ -108,7 +114,7 @@
                     <div class="form-group">
                         <label for="anotherelem" class="control-label col-sm-3">Disability or special treatment</label>
                         <div class="col-sm-9">
-                            <input type="text" name="DisabilityOrTreatment" id="DisabilityOrTreatment" class="form-control">
+                            <input type="text" name="DisabilityOrTreatment" id="DisabilityOrTreatment" class="form-control" data-rule-required="true">
                         </div>
                     </div>
                 </div>
@@ -153,37 +159,37 @@
                     <div class="form-group">
                         <label for="anotherelem" class="control-label col-sm-3">Email address <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-9">
-                            <input type="text" name="Email" id="Email" class="form-control">
+                            <input type="text" name="Email" id="Email" class="form-control" data-rule-required="true" data-rule-email="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="anotherelem" class="control-label col-sm-3">Other email address</label>
                         <div class="col-sm-9">
-                            <input type="text" name="OtherEmail" id="OtherEmail" class="form-control">
+                            <input type="text" name="OtherEmail" id="OtherEmail" class="form-control" data-rule-email="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="anotherelem" class="control-label col-sm-3">Phone number <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-9">
-                            <input type="text" name="Phone" id="Phone" class="form-control">
+                            <input type="text" name="Phone" id="Phone" class="form-control" data-rule-required="true" data-rule-number="true" data-rule-minlength="8">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="anotherelem" class="control-label col-sm-3">Address <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-9">
-                            <input type="text" name="Address" id="Address" class="form-control">
+                            <input type="text" name="Address" id="Address" class="form-control" data-rule-required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="anotherelem" class="control-label col-sm-3">City <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-9">
-                            <input type="text" name="City" id="City" class="form-control">
+                            <input type="text" name="City" id="City" class="form-control" data-rule-required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="text" class="control-label col-sm-3">Country <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-9">
-                            <select name="Country" id="Country">
+                            <select name="Country" id="Country" data-rule-required="true">
                                 <option value="">-- Chose one --</option>
                                 <option value="vietnam">Viet Name</option>
                                 <option value="usa">USA</option>
@@ -253,7 +259,7 @@
                     <div class="form-group">
                         <label for="additionalfield" class="control-label col-sm-3">Participant type <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-9">
-                            <select name="ParticipantType" id="ParticipantType">
+                            <select name="ParticipantType" id="ParticipantType" data-rule-required="true">
                                 <option value="">-- Chose one --</option>
                                 <option value="VIP">VIP</option>
                                 <option value="Plenary Speaker">Plenary Speaker</option>
@@ -288,32 +294,32 @@
                     <div class="form-group">
                         <label for="anotherelem" class="control-label col-sm-3">Date of birth <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-9">
-                            <input type="text" name="DateOfBirth" id="DateOfBirth" class="form-control">
-                            <i>(dd/mm/yyyy)</i>
+                            <input type="text" name="DateOfBirth" id="DateOfBirth" class="form-control mask_date" data-rule-required="true" data-rule-date="true">
+                            <i>(yyyy/mm/dd)</i>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="anotherelem" class="control-label col-sm-3">Original nationality <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-9">
-                            <input type="text" name="OriginalNationality" id="OriginalNationality" class="form-control">
+                            <input type="text" name="OriginalNationality" id="OriginalNationality" class="form-control" data-rule-required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="anotherelem" class="control-label col-sm-3">Current nationality <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-9">
-                            <input type="text" name="CurrentNationality" id="CurrentNationality" class="form-control">
+                            <input type="text" name="CurrentNationality" id="CurrentNationality" class="form-control" data-rule-required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="anotherelem" class="control-label col-sm-3">Passport number <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-9">
-                            <input type="text" name="PassportNumber" id="PassportNumber" class="form-control">
+                            <input type="text" name="PassportNumber" id="PassportNumber" class="form-control" data-rule-required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="additionalfield" class="control-label col-sm-3">Type of passport <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-9">
-                            <select name="TypeOfPassport" id="TypeOfPassport">
+                            <select name="TypeOfPassport" id="TypeOfPassport" data-rule-required="true">
                                 <option value="">-- Chose one --</option>
                                 <option value="Regular">Regular</option>
                                 <option value="Official">Official</option>
@@ -324,27 +330,27 @@
                     <div class="form-group">
                         <label for="anotherelem" class="control-label col-sm-3">Occupation <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-9">
-                            <input type="text" name="Occupation" id="Occupation" class="form-control">
+                            <input type="text" name="Occupation" id="Occupation" class="form-control" data-rule-required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="anotherelem" class="control-label col-sm-3">Date of Passport issue <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-9">
-                            <input type="text" name="DateOfPassportIssue" id="DateOfPassportIssue" class="form-control">
-                            <i>(dd/mm/yyyy)</i>
+                            <input type="text" name="DateOfPassportIssue" id="DateOfPassportIssue" class="form-control mask_date" data-rule-required="true" data-rule-date="true">
+                            <i>(yyyy/mm/dd)</i>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="anotherelem" class="control-label col-sm-3">Date of Passport expiry <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-9">
-                            <input type="text" name="DateOfPassportExpiry" id="DateOfPassportExpiry" class="form-control">
-                            <i>(dd/mm/yyyy)</i>
+                            <input type="text" name="DateOfPassportExpiry" id="DateOfPassportExpiry" class="form-control mask_date" data-rule-required="true" data-rule-date="true">
+                            <i>(yyyy/mm/dd)</i>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="file" class="control-label col-sm-3">Photocopies of the first 3 pages of the passport <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-9">
-                            <input type="file" name="file" id="file" class="form-control">
+                            <input type="file" name="file" id="file" class="form-control" data-rule-required="true">
                             <span class="help-block">Only .jpg, .png (Max Size: 100MB)</span>
                         </div>
                     </div>
@@ -364,3 +370,23 @@
     </div>
     }
 </div>
+<script type="text/javascript">
+    function popupSelectInput(select, field) {
+        var value = $(select).find(":selected").val();
+        if (value == "Others") {
+            bootbox.prompt("Please input your '" + field + "'?", function (result) {
+                if (result === null) {
+                    $(select).prop("selectedIndex", 0);
+                } else {
+                    if ($(select).find("option[value=" + result + "]").val() != null) {
+                        $(select).val(result);
+                    } else {
+                        var option = "<option value='" + result + "'>" + result + "</option>";
+                        $(select).find("option[value=Others]").before(option);
+                        $(select).val(result);
+                    }
+                }
+            });
+        }
+    }
+</script>
