@@ -13,23 +13,29 @@ namespace apcrshr_site.Controllers
     public class PhotoController : BaseController
     {
         private IPhotoService _photoService;
+        private IAlbumService _albumService;
+
         public PhotoController()
         {
             this._photoService = new PhotoService();
+            this._albumService = new AlbumService();
         }
         //
         // GET: /Photo/
 
-        public ActionResult Index(string ActionURL, string AlbumTitle, int pageIndex = 1)
+        public ActionResult Index(string ActionURL, int pageIndex = 1)
         {
-
-            FindAllItemReponse<PhotoModel> response = _photoService.GetPhotoByAlbum(ActionURL,Constants.Constants.PAGE_SIZE, pageIndex);
+            FindItemReponse<AlbumModel> albumResponse = _albumService.FindAlbumByActionURL(ActionURL);
+            if (albumResponse.Item != null)
+            {
+                ViewBag.Title = albumResponse.Item.Title;
+            }
+            FindAllItemReponse<PhotoModel> response = _photoService.GetPhotoByAlbum(ActionURL,Constants.Constants.PHOTO_PAGE_SIZE, pageIndex);
             if (response.Items == null)
             {
                 response.Items = new List<PhotoModel>();
             }
             ViewBag.CurrentNode = "Photo";
-            ViewBag.AlbumTitle = AlbumTitle;
             return View(response);
         }
 

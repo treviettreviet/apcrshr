@@ -1,52 +1,55 @@
 ﻿@using apcrshr_site.Helper
 @model Site.Core.DataModel.Response.FindAllItemReponse<Site.Core.DataModel.Model.PhotoModel>
 @{
-    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 
 <div class="col-md-9 page-content">
     <!-- Classic Heading -->
-    <h2 class="classic-title"><span>@ViewBag.AlbumTitle</span></h2>
+    <h2 class="classic-title"><span>@ViewBag.Title</span></h2>
 
-    @if (Model.Items != null && Model.Items.Count > 0)
-    {
-        for (int i = 0; i < Model.Items.Count; i++)
-        {
-            <div class="blog-post standard-post">
-                <!-- Post Content -->
-                <div class="post-content-nopadding">
-                    <!-- Start Post -->
-                    <div class="blog-post image-post">
-                        <!-- Post Thumb -->
-                        <div class="post-head">
-                            <a class="lightbox" title="@Model.Items[i].Title" href="@Model.Items[i].ImageURL">
+    <div class="row portfolio-page">
+
+        <!-- Start Portfolio Items -->
+        <div id="portfolio" class="portfolio-4">
+
+            @foreach (var item in Model.Items)
+            {
+                <!-- Start Portfolio Item -->
+                <div class="portfolio-item logo animation col-md-3">
+                    <div class="portfolio-border">
+                        <!-- Start Portfolio Item Thumb -->
+                        <div class="portfolio-thumb">
+                            <a class="lightbox" title="@item.Title" href="@item.ImageURL">
                                 <div class="thumb-overlay"><i class="icon-resize-full"></i></div>
-                                <img alt="" src="@Model.Items[i].ImageURL">
+                                <img alt="@item.Title" src="@item.ImageURL" />
                             </a>
                         </div>
-                        <!-- Post Content -->
-                        <div class="post-content">
-                            <div class="post-type"><i class="icon-picture-3"></i></div>
-                            <h2><a href="#">@Model.Items[i].Title</a></h2>
-                            <ul class="post-meta">
-                                <li>By <a href="#">@apcrshr_site.Helper.UserHelper.GetAdminName(Model.Items[i].CreatedBy)</a></li>
-                                <li>@Model.Items[i].CreatedDate.ToString("dddd, d MMMM, yyyy", new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.Name))</li>
-                            </ul>
-                            <p>@(Model.Items[i].Description != null && Model.Items[i].Description.Length > 260 ? Model.Items[i].Description.Substring(0, 260) + "..." : Model.Items[i].Description)</p>
-                            
+                        <!-- End Portfolio Item Thumb -->
+                        <!-- Start Portfolio Item Details -->
+                        <div class="portfolio-details">
+                            <a href="#">
+                                <span>Lorem Ipsum Dolor</span>
+                            </a>
                         </div>
+                        <!-- End Portfolio Item Details -->
                     </div>
-                    <!-- End Post -->
                 </div>
-            </div>
-        }
-    }
+                <!-- End Portfolio Item -->
+            }
+
+        </div>
+        <!-- End Portfolio Items -->
+
+    </div>
 
     <!-- Start Pagination -->
     <div id="pagination">
-        @Html.PagingUtil("Index", "Photo", Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("ActionURL")).SingleOrDefault().Value.ToString(), Model.Count, apcrshr_site.Constants.Constants.PAGE_SIZE,
-                Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("pageIndex")).SingleOrDefault())
+        @Html.PagingUtil("Index", "Photo",
+                      Model.Count, apcrshr_site.Constants.Constants.PHOTO_PAGE_SIZE,
+            (Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("pageIndex")).SingleOrDefault().Value == null ?
+            Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("ActionURL")).SingleOrDefault() :
+            Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("pageIndex")).SingleOrDefault()))
     </div>
     <!-- End Pagination -->
 

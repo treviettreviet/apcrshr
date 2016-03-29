@@ -21,7 +21,7 @@
                     <div class="portfolio-border">
                         <!-- Start Portfolio Item Thumb -->
                         <div class="portfolio-thumb">
-                            <a href='@Url.Action("Index", "Photo", new { ActionURL = item.ActionURL, AlbumTitle = item.Title })'>
+                            <a href='@Url.Action("Index", "Photo", new { ActionURL = item.ActionURL })'>
                                 <div class="thumb-overlay"><i class="icon-link-1"></i></div>
                                 @if (item.Photos == null || item.Photos.Count == 0)
                                 {
@@ -40,7 +40,7 @@
                         <!-- End Portfolio Item Thumb -->
                         <!-- Start Portfolio Item Details -->
                         <div class="portfolio-details">
-                            <a href='@Url.Action("Index", "Photo", new { ActionURL = item.ActionURL, AlbumTitle = item.Title })'>
+                            <a href='@Url.Action("Index", "Photo", new { ActionURL = item.ActionURL })'>
                                 <h4>@item.Title</h4>
                             </a>
                             <a href="#" class="like-link"><i class="icon-heart-1"></i><span>@item.Photos.Count</span></a>
