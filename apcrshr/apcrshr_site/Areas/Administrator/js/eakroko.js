@@ -286,7 +286,7 @@ $(document).ready(function () {
 			var $el = $(this);
 			$el.pluploadQueue({
 				runtimes           : 'html5,flash,silverlight,html4',
-				url                : 'js/plupload/upload.php',
+				url                : '/Administrator/AdminPhoto/Upload',
 				max_file_size      : '10mb',
 				chunk_size         : '1mb',
 				unique_names       : true,
@@ -302,8 +302,8 @@ $(document).ready(function () {
 					title     : "Zip files",
 					extensions: "zip"
 				}],
-				flash_swf_url      : 'js/plupload/Moxie.swf',
-				silverlight_xap_url: 'js/plupload/Moxie.xap'
+				flash_swf_url: '/Areas/Administrator/js/plugins/plupload/Moxie.swf',
+				silverlight_xap_url: '/Areas/Administrator/js/plugins/plupload/Moxie.xap'
 			});
 			var upload = $el.pluploadQueue();
 			$(".plupload_header").remove();

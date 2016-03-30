@@ -10,6 +10,19 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="box box-bordered box-color">
+            <div class="highlight-toolbar">
+                <div class="pull-left">
+                </div>
+                <div class="pull-right">
+                    <div class="btn-toolbar">
+                        <div class="btn-group">
+                            <a href='@Url.Action("CreatePhoto", "AdminPhoto", new { AlbumID = Request["AlbumID"] })' class="btn btn-danger" rel="tooltip" title="Tải ảnh">
+                                <i class="fa fa-cloud-upload"></i>Tải ảnh
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="box-title">
                 <h3>
                     <i class="fa fa-edit"></i>Cập Nhập Album
@@ -46,10 +59,6 @@
     </div>
 </div>
 <script>
-    $(document).ready(function () {
-        $("#Contents").Editor({ name: "Editor-Contents" });
-    });
-
     function submitForm() {
         if (!validateForm()) {
             bootbox.alert("Cần phải nhập dữ liệu những trường bắt buộc.", function () {

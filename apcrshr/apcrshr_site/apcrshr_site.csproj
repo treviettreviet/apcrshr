@@ -371,6 +371,13 @@
     <Content Include="Areas\Administrator\img\plugins\chosen\chosen-sprite%402x.png" />
     <Content Include="Areas\Administrator\img\plugins\chosen\chosen-sprite.png" />
     <Content Include="Areas\Administrator\img\plugins\pageguide\pageguide_arrow.png" />
+    <Content Include="Areas\Administrator\img\plugins\plupload\backgrounds.gif" />
+    <Content Include="Areas\Administrator\img\plugins\plupload\buttons-disabled.png" />
+    <Content Include="Areas\Administrator\img\plugins\plupload\buttons.png" />
+    <Content Include="Areas\Administrator\img\plugins\plupload\delete.gif" />
+    <Content Include="Areas\Administrator\img\plugins\plupload\done.gif" />
+    <Content Include="Areas\Administrator\img\plugins\plupload\error.gif" />
+    <Content Include="Areas\Administrator\img\plugins\plupload\transp50.png" />
     <Content Include="Areas\Administrator\img\plugins\select2\select2-spinner.gif" />
     <Content Include="Areas\Administrator\img\plugins\select2\select2.png" />
     <Content Include="Areas\Administrator\img\plugins\select2\select2x2.png" />
@@ -457,6 +464,8 @@
     <Content Include="Areas\Administrator\js\plugins\nicescroll\jquery.nicescroll.min.js" />
     <Content Include="Areas\Administrator\js\plugins\pageguide\jquery.pageguide.js" />
     <Content Include="Areas\Administrator\js\plugins\plupload\jquery.plupload.queue\jquery.plupload.queue.min.js" />
+    <Content Include="Areas\Administrator\js\plugins\plupload\Moxie.swf" />
+    <Content Include="Areas\Administrator\js\plugins\plupload\Moxie.xap" />
     <Content Include="Areas\Administrator\js\plugins\plupload\plupload.full.min.js" />
     <Content Include="Areas\Administrator\js\plugins\select2\select2.min.js" />
     <Content Include="Areas\Administrator\js\plugins\slimscroll\jquery.slimscroll.min.js" />

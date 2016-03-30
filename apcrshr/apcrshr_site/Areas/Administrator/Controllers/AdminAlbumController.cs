@@ -120,7 +120,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
                 return Json(new { ErrorCode = response.ErrorCode, Message = response.Message }, JsonRequestBehavior.AllowGet);
             }
             
-            return Json(new { ErrorCode = (int)ErrorCode.Redirect, Message = Resources.AdminResource.msg_notEmptyAlbum }, JsonRequestBehavior.AllowGet);
+            return Json(new { ErrorCode = (int)ErrorCode.Error, Message = Resources.AdminResource.msg_notEmptyAlbum }, JsonRequestBehavior.AllowGet);
         }
     }
 }

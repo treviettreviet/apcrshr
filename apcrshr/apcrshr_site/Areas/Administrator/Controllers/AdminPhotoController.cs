@@ -54,6 +54,14 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             return RedirectToAction("Index");
         }
 
+        [AuthorizationFilter]
+        [SessionFilter]
+        [HttpGet]
+        public ActionResult CreatePhoto(string AlbumID)
+        {
+            return View();
+        }
+
         [SessionFilter]
         [ValidateAntiForgeryToken]
         public JsonResult SavePhoto(PhotoModel photo, HttpPostedFileBase imageFile)
@@ -190,6 +198,84 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             }
             BaseResponse response = _photoService.DeletePhoto(photoID);
             return Json(new { ErrorCode = response.ErrorCode, Message = response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
+        [SessionFilter]
+        [HttpPost]
+        public ActionResult Upload(int? chunk, string name, string AlbumID)
+        {
+            FindItemReponse<AlbumModel> albumResponse = _albumService.FindAlbumByID(AlbumID);
+            if (albumResponse.Item == null)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+
+            var sessionId = this.Session["SessionID"].ToString();
+            IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository();
+            UserSession userSession = userSessionRepository.FindByID(sessionId);
+
+            if (userSession == null)
+            {
+                return Json(new { errorCode = (int)ErrorCode.Redirect, message = Resources.AdminResource.msg_sessionInvalid }, JsonRequestBehavior.AllowGet);
+            }
+
+            chunk = chunk ?? 0;
+
+            InsertResponse response = new InsertResponse();
+
+            PhotoModel photo = new PhotoModel();
+
+            if (chunk == 0)
+            {
+                photo.Title = name.Length > 200 ? name.Substring(0, 100) + "..." : name;
+                photo.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(photo.Title), UrlSlugger.Get8Digits());
+                photo.CreatedDate = DateTime.Now;
+                photo.PhotoID = Guid.NewGuid().ToString();
+                photo.ImageURL = "";
+                photo.CreatedBy = userSession != null ? userSession.UserID : string.Empty;
+                photo.AlbumID = AlbumID;
+
+                response = _photoService.CreatePhoto(photo);
+            }
+
+            if (response.ErrorCode == (int)ErrorCode.None)
+            {
+                var fileUpload = Request.Files[0];
+
+                //Image
+                if (fileUpload != null)
+                {
+                    //Create Folder
+                    try
+                    {
+                        if (!System.IO.File.Exists(Server.MapPath("~/Content/upload/images/Photo/")))
+                        {
+                            Directory.CreateDirectory(Server.MapPath("~/Content/upload/images/Photo/"));
+                        }
+                    }
+                    catch (Exception) { }
+
+                    var uploadPath = Server.MapPath("~/Content/upload/images/Photo/");
+                    string extension = name.Substring(name.LastIndexOf("."));
+                    string filename = name.Substring(0, name.LastIndexOf(".")).Replace(" ", "-");
+                    filename = string.Format("{0}-{1}", filename, UrlSlugger.Get8Digits());
+
+                    using (var fs = new FileStream(Path.Combine(uploadPath, string.Format("{0}{1}", filename, extension)), chunk == 0 ? FileMode.Create : FileMode.Append))
+                    {
+                        var buffer = new byte[fileUpload.InputStream.Length];
+                        fileUpload.InputStream.Read(buffer, 0, buffer.Length);
+                        fs.Write(buffer, 0, buffer.Length);
+                    }
+
+                    if (chunk == 0)
+                    {
+                        photo.ImageURL = "/Content/upload/images/Photo/" + filename + extension;
+                        _photoService.UpdatePhoto(photo);
+                    }
+                }
+
+            }
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
     }
 }

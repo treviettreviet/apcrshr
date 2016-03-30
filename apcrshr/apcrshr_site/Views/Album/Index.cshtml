@@ -32,7 +32,7 @@
                                     for (int i = 0; i < item.Photos.Count; i++)
                                     {
                                         if (i == 3) { break; }
-                                        <img alt="@item.Photos[i].Title" class='@(i == 0 ? "under" : "over-" + i)' style="width:185px; height:185px;" src="@item.Photos[i].ImageURL" />   
+                                        <img alt="@item.Photos[i].Title" class='@("over-" + i)' style="width:185px; height:185px;" src="@item.Photos[i].ImageURL" />   
                                     }
                                 }
                             </a>
