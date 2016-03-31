@@ -7,8 +7,36 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="box box-color box-bordered">
-            <br />
-            <a href='@Url.Action("CreatePhoto", "AdminPhoto")' class="btn btn-blue">Thêm Mới</a>
+            <div class="highlight-toolbar">
+                <div class="pull-left">
+                    <div class="btn-toolbar">
+                        <div class="btn-group">
+                            <div class="input-xlarge">
+                                <select name="select" id="selectAlbum" onchange="selectAlbum(this)" class='chosen-select form-control'>
+                                    @if (ViewBag.AlbumList != null)
+                                    {
+                                        IList<Site.Core.DataModel.Model.AlbumModel> albums = (IList<Site.Core.DataModel.Model.AlbumModel>)ViewBag.AlbumList;
+                                        foreach (var item in albums)
+                                        {
+                                            <option value="@item.AlbumID">@item.Title</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <!-- /.input-medium -->
+                        </div>
+                    </div>
+                </div>
+                <div class="pull-right">
+                    <div class="btn-toolbar">
+                        <div class="btn-group">
+                            <a id="linkCreatePhoto" href='@Url.Action("CreatePhoto", "AdminPhoto", new { AlbumID = Request["AlbumID"] })' class="btn btn-danger" rel="tooltip" title="Tải ảnh">
+                                <i class="fa fa-cloud-upload"></i>Tải ảnh
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="box-title">
                 <h3>
                     <i class="fa fa-th-list"></i>Danh Sách Ảnh
@@ -16,16 +44,16 @@
             </div>
             <div class="box-content nopadding">
                 <table id="tablePhoto" class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
-                       data-column_filter_types="null,text,text,text,null,daterange,text,null"
+                       data-column_filter_types="null,select,text,text,null,daterange,text,null"
                        data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
                     <thead>
                         <tr>
                             <th class='with-checkbox'>
                                 <input type="checkbox" name="check_all" class="dataTable-checkall">
                             </th>
+                            <th>Tên Album</th>
                             <th>Tiêu Đề</th>
                             <th>Mô Tả</th>
-                            <th>Tên Album</th>
                             <th>Ảnh</th>
                             <th class='hidden-1024'>Ngày Tạo</th>
                             <th>Người Tạo</th>
@@ -41,6 +69,7 @@
                                     <td class="with-checkbox">
                                         <input type="checkbox" name="check" value="@Model[i].PhotoID">
                                     </td>
+                                    <td>@(apcrshr_site.Helper.AlbumHelper.GetAlbumName(Model[i].AlbumID))</td>
                                     <td>
                                         @Model[i].Title
                                     </td>
@@ -52,9 +81,6 @@
                                     {
                                         <td>@Model[i].Description</td>
                                     }
-
-                                    <td>@(apcrshr_site.Helper.AlbumHelper.GetAlbumName(Model[i].AlbumID))</td>
-
                                     <td>
                                         <img class="thumbnail" src="@Model[i].ImageURL" style="width: 200px; height: 150px;">
                                     </td>
@@ -78,6 +104,19 @@
     </div>
 </div>
 <script type="text/javascript">
+    $(document).ready(function () {
+        selectAlbum($("#selectAlbum"));
+    });
+    function selectAlbum(select) {
+        var albumID = $(select).find(":selected").val();
+        var href = $("#linkCreatePhoto").attr("href");
+        if (href.lastIndexOf("AlbumID") > 0) {
+            href = href.substring(0, href.lastIndexOf("?"));
+        }
+        var href = href + "?AlbumID=" + albumID;
+        $("#linkCreatePhoto").attr("href", href);
+    }
+
     function deletePhoto(PhotoID) {
         bootbox.confirm("Bạn có chắc chắn muốn xóa bản ghi này?", function (result) {
             if (result) {

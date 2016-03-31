@@ -43,6 +43,9 @@
                             </a>
                             <div class="extras">
                                 <div class="extras-inner">
+                                    <a href="#" class="colorbox-image cboxElement" rel="group-1">
+                                        <i>@(Model[i].Title.Length > 15 ? Model[i].Title.Substring(0, 12) + "..." : Model[i].Title)</i>
+                                    </a>
                                     <a href='@Url.Action("UpdateAlbum", "AdminAlbum", new { AlbumID = Model[i].AlbumID })'>
                                         <i class="fa fa-pencil"></i>
                                     </a>
