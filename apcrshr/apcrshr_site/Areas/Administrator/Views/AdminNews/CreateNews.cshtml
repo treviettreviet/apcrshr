@@ -103,12 +103,7 @@
             });
             return false;
         }
-        if (!validateImages()) {
-            bootbox.alert("Hãy chọn file!", function () {
-                bootbox.hideAll();
-            });
-            return false;
-        }
+        
 
         $.blockUI({ message: $('#spinner') });
         var formData = new FormData();
@@ -163,12 +158,7 @@
         return true;
     }
 
-    function validateImages() {
-        if ($('#imageFile').get(0).files.length === 0) {
-            return false;
-        }
-        return true;
-    }
+    
 
     function resertForm() {
         $("#Title").val("");
