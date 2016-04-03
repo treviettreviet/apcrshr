@@ -295,6 +295,15 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Important Deadlines.
+        /// </summary>
+        public static string title_importantDeadline {
+            get {
+                return ResourceManager.GetString("title_importantDeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to News Details.
         /// </summary>
         public static string title_newDetail {

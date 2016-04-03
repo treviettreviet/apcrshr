@@ -225,4 +225,7 @@
   <data name="title_albumImage" xml:space="preserve">
     <value>Album images</value>
   </data>
+  <data name="title_importantDeadline" xml:space="preserve">
+    <value>Important Deadlines</value>
+  </data>
 </root>
