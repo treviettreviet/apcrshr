@@ -228,4 +228,16 @@
   <data name="title_importantDeadline" xml:space="preserve">
     <value>Important Deadlines</value>
   </data>
+  <data name="btn_reset_password" xml:space="preserve">
+    <value>Gửi Yêu Cầu</value>
+  </data>
+  <data name="msg_invalidEmail" xml:space="preserve">
+    <value>Email Không Hợp Lệ.</value>
+  </data>
+  <data name="text_reset_password" xml:space="preserve">
+    <value>Vui lòng nhập vào địa chỉ email mà bạn đã đăng ký</value>
+  </data>
+  <data name="title_forgotPassword" xml:space="preserve">
+    <value>Quên Mật Khẩu</value>
+  </data>
 </root>

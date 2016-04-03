@@ -61,6 +61,15 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gửi Yêu Cầu.
+        /// </summary>
+        public static string btn_reset_password {
+            get {
+                return ResourceManager.GetString("btn_reset_password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string button_cancel {
@@ -223,6 +232,15 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email Không Hợp Lệ..
+        /// </summary>
+        public static string msg_invalidEmail {
+            get {
+                return ResourceManager.GetString("msg_invalidEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This user name has registered by another user..
         /// </summary>
         public static string msg_username_exist {
@@ -268,6 +286,15 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vui lòng nhập vào địa chỉ email mà bạn đã đăng ký.
+        /// </summary>
+        public static string text_reset_password {
+            get {
+                return ResourceManager.GetString("text_reset_password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Album images.
         /// </summary>
         public static string title_albumImage {
@@ -291,6 +318,15 @@ namespace apcrshr_site.Resources {
         public static string title_DeadlineDetail {
             get {
                 return ResourceManager.GetString("title_DeadlineDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quên Mật Khẩu.
+        /// </summary>
+        public static string title_forgotPassword {
+            get {
+                return ResourceManager.GetString("title_forgotPassword", resourceCulture);
             }
         }
         

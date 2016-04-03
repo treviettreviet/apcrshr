@@ -6,6 +6,7 @@ using Site.Core.Service.Implementation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 
@@ -132,6 +133,85 @@ namespace apcrshr_site.Controllers
             {
                 return RedirectToAction("Login", "User");
             }
+        }
+
+        public ActionResult ForgetPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SendPassword(string email)
+        {
+            FindItemReponse<UserModel> user = null;
+            if (email != null)
+            {
+                user = _userService.FindUserByEmail(email);
+                if (user.Item != null)
+                {
+                    string password = Guid.NewGuid().ToString("D").Substring(1, 6);
+
+                    if (ModelState.IsValid)
+                    {
+                        var mail = new System.Net.Mail.MailMessage();
+                        mail.To.Add(new MailAddress(email));
+                        mail.From = new MailAddress("thudientu2102@gmail.com");
+                        mail.Subject = "Đổi mật khẩu APCRSHR";
+                        string body = "Thay đổi mật khẩu. Mật khẩu mới cảu bạn là: " + password;
+                        mail.Body = body;
+                        mail.IsBodyHtml = true;
+                        SmtpClient smtp = new SmtpClient();
+                        smtp.Host = "smtp.gmail.com";
+                        smtp.Port = 587;
+                        smtp.UseDefaultCredentials = false;
+                        smtp.Credentials = new System.Net.NetworkCredential
+                        ("thudientu2102@gmail.com", "Lamatkhau");// Enter seders User name and password
+                        smtp.EnableSsl = true;
+                        try
+                        {
+                            smtp.Send(mail);
+                        }
+                        catch (SmtpFailedRecipientsException ex)
+                        {
+                            for (int i = 0; i < ex.InnerExceptions.Length; i++)
+                            {
+                                SmtpStatusCode status = ex.InnerExceptions[i].StatusCode;
+                                if (status == SmtpStatusCode.MailboxBusy ||
+                                    status == SmtpStatusCode.MailboxUnavailable)
+                                {
+                                    Console.WriteLine("Delivery failed - retrying in 5 seconds.");
+                                    System.Threading.Thread.Sleep(5000);
+                                    smtp.Send(mail);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Failed to deliver message to {0}",
+                                        ex.InnerExceptions[i].FailedRecipient);
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Exception caught in RetryIfBusy(): {0}",
+                                    ex.ToString());
+                        }
+                    }
+                    UserModel _user = user.Item;
+                    _user.UpdatedDate = DateTime.Now;
+                    _user.Password = password;
+                    //_user.Password = Encryption.ComputeHash(password, Algorithm.SHA384, null);
+                    BaseResponse response = _userService.UpdateUser(_user);
+                    ViewBag.Message = response.Message;
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ViewBag.Error = "Email Không Tồn Tại.";
+                    return View("ForgetPassword");
+                }
+            }
+            ViewBag.Error = "";
+            return View("ForgetPassword");
         }
     }
 }
