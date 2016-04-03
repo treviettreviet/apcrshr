@@ -34,6 +34,12 @@ namespace Site.Core.Service.Contract
         /// <returns></returns>
         FindAllItemReponse<ImportantDeadlineModel> GetImportantDeadlines();
         /// <summary>
+        /// Get top important deadline
+        /// </summary>
+        /// <param name="top"></param>
+        /// <returns></returns>
+        FindAllItemReponse<ImportantDeadlineModel> GetImportantDeadlines(int top);
+        /// <summary>
         /// Get all important pagging
         /// </summary>
         /// <param name="pageSize"></param>

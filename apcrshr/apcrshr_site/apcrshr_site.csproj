@@ -201,7 +201,6 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ConferenceDeclarationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ImportantDeadlineController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\PresentationController.cs" />
@@ -854,8 +853,6 @@
     <Content Include="Views\Registration\RegistrationForm.cshtml" />
     <Content Include="Views\ConferenceDeclaration\ViewConference.cshtml" />
     <Content Include="Views\ConferenceDeclaration\Index.cshtml" />
-    <Content Include="Views\ImportantDeadline\Index.cshtml" />
-    <Content Include="Views\ImportantDeadline\ViewImportantDeadline.cshtml" />
     <Content Include="Views\Video\Index.cshtml" />
     <Content Include="Views\Video\ViewVideo.cshtml" />
     <Content Include="Views\User\Login.cshtml" />

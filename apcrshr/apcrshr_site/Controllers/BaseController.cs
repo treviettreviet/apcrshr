@@ -16,10 +16,12 @@ namespace apcrshr_site.Controllers
         protected string culture = "EN";
 
         protected IMenuCategoryService _menuCategoryService;
+        protected IImportantDeadlineService _importantDeadlineService;
 
         protected BaseController()
         {
             this._menuCategoryService = new MenuCategoryService();
+            this._importantDeadlineService = new ImportantDeadlineService();
         }
 
         protected override void ExecuteCore()
@@ -54,5 +56,10 @@ namespace apcrshr_site.Controllers
             return menuReponse.Items;
         }
 
+        public IList<ImportantDeadlineModel> GetImportantDeadlines(int top)
+        {
+            FindAllItemReponse<ImportantDeadlineModel> importantDeadlineResponse = _importantDeadlineService.GetImportantDeadlines(top);
+            return importantDeadlineResponse.Items;
+        }
     }
 }

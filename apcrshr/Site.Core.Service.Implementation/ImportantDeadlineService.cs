@@ -256,5 +256,30 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindAllItemReponse<ImportantDeadlineModel> GetImportantDeadlines(int top)
+        {
+            try
+            {
+                IImportantDeadlineRepository importantDeadlineRepository = RepositoryClassFactory.GetInstance().GetImportantDeadlineRepository();
+                IList<ImportantDeadline> importantDeadline = importantDeadlineRepository.FindTop(top);
+                var _importantDeadline = importantDeadline.Select(i => MapperUtil.CreateMapper().Mapper.Map<ImportantDeadline, ImportantDeadlineModel>(i)).ToList();
+                return new FindAllItemReponse<ImportantDeadlineModel>
+                {
+                    Items = _importantDeadline,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindAllItemReponse<ImportantDeadlineModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }
