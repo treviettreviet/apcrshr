@@ -120,5 +120,14 @@ namespace Site.Core.Repository.Implementation
                 return context.Admins.Where(a => a.Type != 1).ToList();
             }
         }
+
+
+        public Admin FindAdminByEmail(string email)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Admins.Where(a => a.Email.Equals(email)).SingleOrDefault();
+            }
+        }
     }
 }

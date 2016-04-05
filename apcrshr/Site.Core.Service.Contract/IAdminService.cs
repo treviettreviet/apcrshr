@@ -162,5 +162,11 @@ namespace Site.Core.Service.Contract
         /// <param name="resourceURL"></param>
         /// <returns></returns>
         FindItemReponse<ResourceModel> GetAuthorizedResource(string adminID, string resourceURL);
+        /// <summary>
+        /// Get admin by user name
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        FindItemReponse<AdminModel> FindAdminByEmail(string email);
     }
 }

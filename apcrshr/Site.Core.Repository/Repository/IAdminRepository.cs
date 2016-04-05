@@ -12,5 +12,6 @@ namespace Site.Core.Repository.Repository
         Admin Login(string username, string password);
         IList<Admin> GetAdminsExceptMe(string adminID);
         IList<Admin> FindStandardAdmins();
+        Admin FindAdminByEmail(string email);
     }
 }

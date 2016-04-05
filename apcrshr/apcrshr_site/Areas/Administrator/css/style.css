@@ -7729,6 +7729,15 @@ body.error .wrapper .buttons {
   padding: 2px 0;
   text-decoration: none;
 }
+.login .wrapper h2 > p {
+  color: #fff;
+  display: block;
+  font-weight: 300;
+  font-size: 28px;
+  text-align: center;
+  padding: 2px 0;
+  text-decoration: none;
+}
 .login .wrapper h1 > a img {
   margin-right: 20px;
   margin-top: -8px;
@@ -7739,6 +7748,13 @@ body.error .wrapper .buttons {
 }
 .login .wrapper .login-body form {
   padding: 0 30px;
+}
+.login .wrapper .forgot-password-body {
+  margin-top: 20px;
+  background: #fff;
+}
+.login .wrapper .forgot-password-body form {
+  padding: 30px;
 }
 .login .wrapper .login-body h2 {
   font-weight: 300;

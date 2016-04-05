@@ -157,7 +157,7 @@ namespace apcrshr_site.Controllers
                         mail.To.Add(new MailAddress(email));
                         mail.From = new MailAddress("thudientu2102@gmail.com");
                         mail.Subject = "Đổi mật khẩu APCRSHR";
-                        string body = "Thay đổi mật khẩu. Mật khẩu mới cảu bạn là: " + password;
+                        string body = "Thay đổi mật khẩu. Mật khẩu mới của bạn là: " + password;
                         mail.Body = body;
                         mail.IsBodyHtml = true;
                         SmtpClient smtp = new SmtpClient();

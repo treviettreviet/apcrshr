@@ -652,5 +652,30 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindItemReponse<AdminModel> FindAdminByEmail(string email)
+        {
+            try
+            {
+                IAdminRepository adminRepository = RepositoryClassFactory.GetInstance().GetAdminRepository();
+                Admin admin = adminRepository.FindAdminByEmail(email);
+                var _admin = MapperUtil.CreateMapper().Mapper.Map<Admin, AdminModel>(admin);
+                return new FindItemReponse<AdminModel>
+                {
+                    Item = _admin,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindItemReponse<AdminModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }
