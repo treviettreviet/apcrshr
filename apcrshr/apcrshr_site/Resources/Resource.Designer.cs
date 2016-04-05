@@ -61,7 +61,7 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gửi Yêu Cầu.
+        ///   Looks up a localized string similar to Send request.
         /// </summary>
         public static string btn_reset_password {
             get {
@@ -232,7 +232,16 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email Không Hợp Lệ..
+        ///   Looks up a localized string similar to A new password has sent to your registration email..
+        /// </summary>
+        public static string msg_forgotPassword_emailSend {
+            get {
+                return ResourceManager.GetString("msg_forgotPassword_emailSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email is invalid..
         /// </summary>
         public static string msg_invalidEmail {
             get {
@@ -286,7 +295,7 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vui lòng nhập vào địa chỉ email mà bạn đã đăng ký.
+        ///   Looks up a localized string similar to Please input your registration email..
         /// </summary>
         public static string text_reset_password {
             get {
@@ -322,7 +331,7 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quên Mật Khẩu.
+        ///   Looks up a localized string similar to Forgot password.
         /// </summary>
         public static string title_forgotPassword {
             get {

@@ -51,7 +51,7 @@
                                 <a href='@Url.Action("UpdateAdmin", "Admin", new { adminID = Model[i].AdminID })' class="btn" rel="tooltip" title="Sửa">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                                <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteAdmin('@Model[i].AdminID')">
+                                <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteAdmin('@Model[i].AdminID')" id="btn_@Model[i].AdminID">
                                     <i class="fa fa-times"></i>
                                 </a>
                             </td>
@@ -74,7 +74,11 @@
                     data: { adminID: adminID },
                     success: function (data) {
                         if (data.ErrorCode == 0) {
-                            $('#' + adminID + '').remove();
+                            var $el = $("#btn_" + adminID);
+                            var $parent = $el.parents("tr");
+                            $parent.fadeOut(400, function () {
+                                $parent.remove();
+                            });
                             bootbox.hideAll();
                         } else {
                             bootbox.alert(data.Message, function () {

@@ -91,7 +91,7 @@
                                         <a href='@Url.Action("UpdateVideo", "AdminVideo", new { videoID = Model[i].VideoID })' class="btn" rel="tooltip" title="Sửa">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                        <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteVideo('@Model[i].VideoID')">
+                                        <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteVideo('@Model[i].VideoID')" id="btn_@Model[i].VideoID">
                                             <i class="fa fa-times"></i>
                                         </a>
                                     </td>
@@ -115,8 +115,11 @@
                     data: { VideoID: VideoID },
                     success: function (data) {
                         if (data.ErrorCode == 0) {
-                            $('#' + VideoID + '').remove();
-                            $('table#tableVideo tr#' + VideoID + '').remove();
+                            var $el = $("#btn_" + VideoID);
+                            var $parent = $el.parents("tr");
+                            $parent.fadeOut(400, function () {
+                                $parent.remove();
+                            });
                             bootbox.hideAll();
                         } else {
                             bootbox.lert(data.Message, function () {

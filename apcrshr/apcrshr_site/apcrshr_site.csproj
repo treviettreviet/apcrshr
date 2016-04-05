@@ -215,8 +215,11 @@
     </Compile>
     <Compile Include="Helper\AlbumHelper.cs" />
     <Compile Include="Helper\CultureHelper.cs" />
+    <Compile Include="Helper\CustomDateBinder.cs" />
+    <Compile Include="Helper\CustomModelBindersConfig.cs" />
     <Compile Include="Helper\DataHelper.cs" />
     <Compile Include="Helper\HtmlExtension.cs" />
+    <Compile Include="Helper\NullableCustomDateBinder.cs" />
     <Compile Include="Helper\SessionUtil.cs" />
     <Compile Include="Helper\TokenHtmlExtension.cs" />
     <Compile Include="Helper\UrlSlugger.cs" />

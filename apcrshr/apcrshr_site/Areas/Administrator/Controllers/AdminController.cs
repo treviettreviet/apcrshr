@@ -17,6 +17,7 @@ using System.Web.Mvc;
 using apcrshr_site.Filters;
 using apcrshr_site.Helper;
 using Site.Core.Service.Implementation;
+using System.Globalization;
 
 namespace apcrshr_site.Areas.Administrator.Controllers
 {
@@ -34,6 +35,22 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             this._menuCategoryService = new MenuCategoryService();
             this._uploadService = new UploadService();
             this._articleService = new ArticleService();
+
+            //Culture
+            DefaultCulture();
+        }
+
+        private void DefaultCulture()
+        {
+            CultureInfo cInf = new CultureInfo("en-US", false);
+            // NOTE: change the culture name en-ZA to whatever culture suits your needs
+
+            cInf.DateTimeFormat.DateSeparator = "/";
+            cInf.DateTimeFormat.ShortDatePattern = "yyyy/MM/dd";
+            cInf.DateTimeFormat.LongDatePattern = "yyyy/MM/dd hh:mm:ss tt";
+
+            System.Threading.Thread.CurrentThread.CurrentCulture = cInf;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = cInf;
         }
 
         [SessionFilter]

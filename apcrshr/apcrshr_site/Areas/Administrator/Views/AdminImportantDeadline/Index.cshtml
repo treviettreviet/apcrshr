@@ -66,7 +66,7 @@
                                         <a href='@Url.Action("UpdateImportantDeadline", "AdminImportantDeadline", new { deadlineID = Model[i].DeadlineID })' class="btn" rel="tooltip" title="Sửa">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                        <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteImportantDeadline('@Model[i].DeadlineID')">
+                                        <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteImportantDeadline('@Model[i].DeadlineID')" id="btn_@Model[i].DeadlineID">
                                             <i class="fa fa-times"></i>
                                         </a>
                                     </td>
@@ -90,8 +90,11 @@
                     data: { deadlineID: deadlineID },
                     success: function (data) {
                         if (data.ErrorCode == 0) {
-                            $('#' + deadlineID + '').remove();
-                            $('table#tableImportantDeadline tr#' + deadlineID + '').remove();
+                            var $el = $("#btn_" + deadlineID);
+                            var $parent = $el.parents("tr");
+                            $parent.fadeOut(400, function () {
+                                $parent.remove();
+                            });
                             bootbox.hideAll();
                         } else {
                             bootbox.lert(data.Message, function () {

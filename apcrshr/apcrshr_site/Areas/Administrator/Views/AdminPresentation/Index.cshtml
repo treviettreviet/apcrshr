@@ -65,7 +65,7 @@
                                         <a href='@Url.Action("UpdatePresentation", "AdminPresentation", new { presentationID = Model[i].PresentationID })' class="btn" rel="tooltip" title="Sửa">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                        <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deletePresentation('@Model[i].PresentationID')">
+                                        <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deletePresentation('@Model[i].PresentationID')" id="btn_@Model[i].PresentationID">
                                             <i class="fa fa-times"></i>
                                         </a>
                                     </td>
@@ -89,8 +89,11 @@
                     data: { presentationID: presentationID },
                     success: function (data) {
                         if (data.ErrorCode == 0) {
-                            $('#' + conferenceID + '').remove();
-                            $('table#tablePresentation tr#' + presentationID + '').remove();
+                            var $el = $("#btn_" + presentationID);
+                            var $parent = $el.parents("tr");
+                            $parent.fadeOut(400, function () {
+                                $parent.remove();
+                            });
                             bootbox.hideAll();
                         } else {
                             bootbox.lert(data.Message, function () {
