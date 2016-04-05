@@ -84,6 +84,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         public ActionResult SendPassword(string email)
         {
             FindItemReponse<AdminModel> user = null;
+            BaseResponse baseResponse = new BaseResponse();
             if (email != null)
             {
                 user = _adminService.FindAdminByEmail(email);
@@ -132,24 +133,26 @@ namespace apcrshr_site.Areas.Administrator.Controllers
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine("Exception caught in RetryIfBusy(): {0}",
-                                    ex.ToString());
+                            baseResponse = new BaseResponse { ErrorCode = (int)ErrorCode.Error, Message = ex.Message };
+                            ViewBag.Message = baseResponse;
+                            return View("ForgetPassword");
                         }
                     }
                     AdminModel _user = user.Item;
                     _user.Password = password;
-                    //_user.Password = Encryption.ComputeHash(password, Algorithm.SHA384, null);
-                    BaseResponse response = _adminService.UpdateAdmin(_user);
-                    ViewBag.Message = response.Message;
-                    return RedirectToAction("Login", "AdminHome");
+                    baseResponse = _adminService.UpdateAdmin(_user);
+                    if (baseResponse.ErrorCode == (int)ErrorCode.None)
+                    {
+                        baseResponse.Message = Resources.Resource.msg_forgotPassword_emailSend;
+                    }
+                    ViewBag.Message = baseResponse;
                 }
                 else
                 {
-                    ViewBag.Error = "Email Không Tồn Tại.";
-                    return View("ForgetPassword");
+                    baseResponse = new BaseResponse { ErrorCode = (int)ErrorCode.Error, Message = Resources.Resource.msg_invalidEmail };
                 }
             }
-            ViewBag.Error = "";
+            ViewBag.Message = baseResponse;
             return View("ForgetPassword");
         }
     }
