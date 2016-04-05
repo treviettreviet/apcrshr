@@ -5556,3 +5556,8 @@ a.elemadded:hover {
     color: #f81212;
     font-weight: bold;
 }
+
+.alert-info{
+    color: #FFF;
+    background-color: #04870f;
+}

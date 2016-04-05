@@ -206,7 +206,6 @@ namespace apcrshr_site.Controllers
                     {
                         response.Message = Resources.Resource.msg_forgotPassword_emailSend;
                     }
-                    ViewBag.Message = response;
                 }
                 else
                 {
