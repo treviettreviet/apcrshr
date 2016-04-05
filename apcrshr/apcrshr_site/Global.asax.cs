@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using apcrshr_site.Helper;
 
 namespace apcrshr_site
 {
@@ -27,6 +28,9 @@ namespace apcrshr_site
 
             //Register mapper
             MapperUtil.CreateMapper();
+
+            //Custom binders
+            CustomModelBindersConfig.RegisterCustomModelBinders();
         }
     }
 }
