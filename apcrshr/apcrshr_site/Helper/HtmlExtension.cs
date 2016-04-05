@@ -81,6 +81,10 @@ namespace apcrshr_site.Helper
             else
             {
                 int.TryParse(index.Value.ToString(), out pageIndex);
+                if (pageIndex == 0)
+                {
+                    pageIndex = 1;
+                }
             }
 
             if (totalPage > 1)
@@ -172,6 +176,10 @@ namespace apcrshr_site.Helper
             else
             {
                 int.TryParse(index.Value.ToString(), out pageIndex);
+                if (pageIndex == 0)
+                {
+                    pageIndex = 1;
+                }
             }
 
             if (totalPage > 1)

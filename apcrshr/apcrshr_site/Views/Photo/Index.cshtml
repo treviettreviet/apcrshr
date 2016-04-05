@@ -45,11 +45,10 @@
 
     <!-- Start Pagination -->
     <div id="pagination">
-        @Html.PagingUtil("Index", "Photo",
-                      Model.Count, apcrshr_site.Constants.Constants.PHOTO_PAGE_SIZE,
-            (Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("pageIndex")).SingleOrDefault().Value == null ?
-            Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("ActionURL")).SingleOrDefault() :
-            Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("pageIndex")).SingleOrDefault()))
+        @Html.PagingUtil("Index", "Photo", 
+            Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("ActionURL")).SingleOrDefault().Value.ToString(),
+            Model.Count, apcrshr_site.Constants.Constants.PHOTO_PAGE_SIZE,
+            Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("pageIndex")).SingleOrDefault())
     </div>
     <!-- End Pagination -->
 
