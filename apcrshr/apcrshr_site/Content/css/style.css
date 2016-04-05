@@ -5550,3 +5550,9 @@ a.elemadded:hover {
     z-index: 300;
     box-shadow: -3px -2px 5px rgba(0, 0, 0, 0.25);
 }
+
+/*Validation error*/
+.has-error .help-block, .has-error .control-label, .error {
+    color: #f81212;
+    font-weight: bold;
+}
