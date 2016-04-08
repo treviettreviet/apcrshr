@@ -1,0 +1,140 @@
+﻿@using apcrshr_site.Resources
+@model Site.Core.DataModel.Model.UserModel
+@{
+    ViewBag.Title = "UpdateUser";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<!-- Color CSS -->
+<link rel="stylesheet" href="~/Areas/Administrator/css/themes.css">
+<link rel="stylesheet" href="~/Content/form.css">
+<!-- jQuery UI -->
+<script src="~/Areas/Administrator/js/plugins/jquery-ui/jquery-ui.js"></script>
+<!-- Form -->
+<script src="~/Areas/Administrator/js/plugins/form/jquery.form.min.js"></script>
+<!-- Bootbox -->
+<script src="~/Areas/Administrator/js/plugins/bootbox/jquery.bootbox.js"></script>
+<script src="~/Areas/Administrator/js/plugins/validation/jquery.validate.min.js"></script>
+<script src="~/Areas/Administrator/js/plugins/validation/additional-methods.min.js"></script>
+<!-- Masked inputs -->
+<script src="~/Areas/Administrator/js/plugins/maskedinput/jquery.maskedinput.min.js"></script>
+<div class="col-sm-9 page-content">
+    <div class="box box-bordered box-color">
+        <div class="box-title">
+            <h3>
+                <i class="fa fa-edit"></i>Update User
+            </h3>
+        </div>
+        <div class="box-content nopadding">
+            @if (ViewBag.Message != null)
+            {
+                Site.Core.DataModel.Response.BaseResponse responseMsg = (Site.Core.DataModel.Response.BaseResponse)ViewBag.Message;
+                <br />
+                <div class="alert @(responseMsg.ErrorCode == (int)Site.Core.DataModel.Enum.ErrorCode.None ? " alert-info" : " alert-danger")"><a class="close" data-dismiss="alert" href="#">×</a><strong></strong> @responseMsg.Message</div>
+            }
+            @using (Html.BeginForm("SaveUpdateUser", "User", FormMethod.Post, new { @id = "frmUserLogin", @class = "form-horizontal form-bordered form-validate" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label for="firstname" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_title_label <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <select name="Title" onchange="popupSelectInput(this, 'Title')" data-rule-required="true">
+                            <option value="">-- Chose one --</option>
+                            <option value="Dr">Dr</option>
+                            <option value="Mr">Mr</option>
+                            <option value="Mrs">Mrs</option>
+                            <option value="Ms">Ms</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_fullname_label <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" value="@Model.FullName" name="FullName" id="FullName" class="form-control" data-rule-required="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="additionalfield" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_sex_label <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <select name="Sex" id="Sex" onchange="popupSelectInput(this, 'Sex')" data-rule-required="true">
+                            <option value="">-- Chose one --</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_email_label <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" value="@Model.Email" name="Email" id="Email" class="form-control" data-rule-required="true" data-rule-email="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_otherEmail_label</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="OtherEmail" id="OtherEmail" class="form-control" data-rule-email="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_dateOfBirth_label <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" value="@Model.DateOfBirth.ToString("yyyy/MM/dd")" name="DateOfBirth" id="DateOfBirth" class="form-control mask_date" data-rule-required="true" data-rule-date="true">
+                        <i>(yyyy/mm/dd)</i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_phoneNumber_label <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" value="@Model.PhoneNumber" name="PhoneNumber" id="PhoneNumber" class="form-control" data-rule-required="true" data-rule-number="true" data-rule-minlength="8">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="textfield" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_username_label</label>
+                    <div class="col-sm-9">
+                        <input type="text" value="@Model.UserName" name="UserName" id="UserName" class="form-control" data-rule-required="true" data-rule-minlength="6">
+                        
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="textfield" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_password_label</label>
+                    <div class="col-sm-9">
+                        <input type="password" name="Password" id="Password" placeholder="*********" class="form-control" data-rule-required="true" data-rule-minlength="6">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="textfield" class="control-label col-sm-3">@apcrshr_site.Resources.Resource.field_confirmPassword_label</label>
+                    <div class="col-sm-9">
+                        <input type="password" name="ConfirmPassword" id="ConfirmPassword" placeholder="*********" class="form-control" data-rule-equalto="#Password">
+                    </div>
+                </div>
+                <div class="form-actions col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">@apcrshr_site.Resources.Resource.button_save</button>
+                    <a href='/' class="btn btn-info">@apcrshr_site.Resources.Resource.button_cancel</a>
+                </div>
+                
+            }
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function popupSelectInput(select, field) {
+        var value = $(select).find(":selected").val();
+        if (value == "Others") {
+            bootbox.prompt("Please input your '" + field + "'?", function (result) {
+                if (result === null) {
+                    $(select).prop("selectedIndex", 0);
+                } else {
+                    if ($(select).find("option[value=" + result + "]").val() != null) {
+                        $(select).val(result);
+                    } else {
+                        var option = "<option value='" + result + "'>" + result + "</option>";
+                        $(select).find("option[value=Others]").before(option);
+                        $(select).val(result);
+                    }
+                }
+            });
+        }
+    }
+</script>

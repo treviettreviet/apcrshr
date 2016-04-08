@@ -1,4 +1,5 @@
-﻿using Site.Core.DataModel.Enum;
+﻿using apcrshr_site.Filters;
+using Site.Core.DataModel.Enum;
 using Site.Core.DataModel.Model;
 using Site.Core.DataModel.Response;
 using Site.Core.Service.Contract;
@@ -215,5 +216,32 @@ namespace apcrshr_site.Controllers
             ViewBag.Message = response;
             return View("ForgetPassword");
         }
+
+        [SessionFilter]
+        public ActionResult UpdateUser()
+        {
+            if (this.Session["User-SessionID"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            else
+            {
+                FindItemReponse<UserModel> response = _userService.FindUserByID(this.Session["User-UserID"].ToString());
+                return View(response.Item);
+            }
+        }
+
+        [SessionFilter]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveUpdateUser(UserModel user)
+        {
+            user.UpdatedDate = DateTime.Now;
+            user.UserID = Session["User-UserID"].ToString();
+            BaseResponse response = _userService.UpdateUser(user);
+            ViewBag.Message = response;
+            return View("UpdateUser", user);
+        }
+
     }
 }

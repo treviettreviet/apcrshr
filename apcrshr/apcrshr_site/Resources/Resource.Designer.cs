@@ -124,6 +124,15 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save Change.
+        /// </summary>
+        public static string button_save {
+            get {
+                return ResourceManager.GetString("button_save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account.
         /// </summary>
         public static string button_viewProfile {
@@ -268,6 +277,33 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date of Birth.
+        /// </summary>
+        public static string text_DoB {
+            get {
+                return ResourceManager.GetString("text_DoB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string text_email {
+            get {
+                return ResourceManager.GetString("text_email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Full Name.
+        /// </summary>
+        public static string text_fullName {
+            get {
+                return ResourceManager.GetString("text_fullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile.
         /// </summary>
         public static string text_myProfile {
@@ -304,11 +340,38 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sex.
+        /// </summary>
+        public static string text_sex {
+            get {
+                return ResourceManager.GetString("text_sex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Name.
+        /// </summary>
+        public static string text_username {
+            get {
+                return ResourceManager.GetString("text_username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Album images.
         /// </summary>
         public static string title_albumImage {
             get {
                 return ResourceManager.GetString("title_albumImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Conference Presentation.
+        /// </summary>
+        public static string title_conference {
+            get {
+                return ResourceManager.GetString("title_conference", resourceCulture);
             }
         }
         
@@ -363,6 +426,15 @@ namespace apcrshr_site.Resources {
         public static string title_postedBy {
             get {
                 return ResourceManager.GetString("title_postedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Presentation.
+        /// </summary>
+        public static string title_presentation {
+            get {
+                return ResourceManager.GetString("title_presentation", resourceCulture);
             }
         }
         
@@ -426,6 +498,15 @@ namespace apcrshr_site.Resources {
         public static string title_searchResulf {
             get {
                 return ResourceManager.GetString("title_searchResulf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string title_video {
+            get {
+                return ResourceManager.GetString("title_video", resourceCulture);
             }
         }
         

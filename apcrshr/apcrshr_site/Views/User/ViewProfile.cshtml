@@ -1,9 +1,68 @@
-﻿@model Site.Core.DataModel.Model.UserModel
+﻿@using apcrshr_site.Resources
+@model Site.Core.DataModel.Model.UserModel
 @{
     ViewBag.Title = "ViewProfile";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 
 <div class="col-sm-9 page-content">
-    
+    <div id="categories-3" class="widget widget_categories profile">
+        <div class="btn_style bg1">
+            <h4>Thông Tin Người Dùng</h4>
+        </div>
+        <div class="profile-box">
+            <div class="profile-update-user">
+                <div class="row span10" id="display_user">
+                    <div class="span2">
+                        <img src="~/Content/images/default-avatar.png" />
+                    </div>
+                    <div class="box box-bordered box-color span6">
+                        <div class="form-group span4">
+                            <label for="textfield" class="control-label span2">@apcrshr_site.Resources.Resource.text_username</label>
+                            
+                            <div class="span3">
+                                @Html.DisplayFor(Model => Model.UserName, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group span6">
+                            <label for="textfield" class="control-label span2">@apcrshr_site.Resources.Resource.text_fullName</label>
+                            
+                            <div class="span3">
+                                @Html.DisplayFor(Model => Model.FullName, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group span6">
+                            <label for="textfield" class="control-label span2">@apcrshr_site.Resources.Resource.text_email</label>
+                            
+                            <div class="span3">
+                                @Html.DisplayFor(Model => Model.Email, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group span6">
+                            <label for="textfield" class="control-label span2">@apcrshr_site.Resources.Resource.text_DoB</label>
+                            
+                            <div class="span3">
+                                <span>@this.Model.DateOfBirth.ToString("MMMM dd, yyyy")</span>
+                                
+                            </div>
+                        </div>
+                        <div class="form-group span6">
+                            <label for="textfield" class="control-label span2">@apcrshr_site.Resources.Resource.text_sex</label>
+                            
+                            <div class="span3">
+                                @Html.DisplayFor(Model => Model.Sex, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="span3"></div>
+                <div class="span4" id="view_profile">
+                    @using (Html.BeginForm("UpdateUser", "User", FormMethod.Get, new { @class = "form-validate" }))
+                    {
+                        <input type="submit" name="submit" value="@apcrshr_site.Resources.Resource.button_editProfile" class='button' />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
