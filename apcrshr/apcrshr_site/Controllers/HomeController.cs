@@ -40,7 +40,7 @@ namespace apcrshr_site.Controllers
             FindAllItemReponse<VideoModel> videoReponse = _videoService.GetTopVideo(1, this.culture);
             ViewBag.TopVideo = videoReponse.Items;
 
-            FindAllItemReponse<SliderModel> SliderReponse = _sliderService.GetTopSlider(2, this.culture);
+            FindAllItemReponse<SliderModel> SliderReponse = _sliderService.GetTopSlider(9, this.culture);
             ViewBag.TopSlider = SliderReponse.Items;
             return View();
         }
