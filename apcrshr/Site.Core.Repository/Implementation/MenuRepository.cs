@@ -62,6 +62,7 @@ namespace Site.Core.Repository.Implementation
 
         public Menu FindByID(object id)
         {
+            if (id == null) return null;
             APCRSHREntities context = new APCRSHREntities();
             var _id = id.ToString();
             return context.Menus.Where(a => a.MenuID.Equals(_id)).SingleOrDefault();

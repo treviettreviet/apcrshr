@@ -66,6 +66,19 @@ namespace apcrshr_site.Controllers
                 FindAllItemReponse<ArticleModel> articleResponse = _articleService.GetArticles(Constants.Constants.PAGE_SIZE, pageIndex, culture, response.Item.MenuID);
                 return View(articleResponse);
             }
+            else
+            {
+                //Try to find acrticle
+                FindItemReponse<ArticleModel> articleResponse = _articleService.FindArticleByActionURL(ActionURL);
+                if (articleResponse.Item != null)
+                {
+                    FindAllItemReponse<ArticleModel> listReponse = new FindAllItemReponse<ArticleModel>();
+                    listReponse.Items = new List<ArticleModel>();
+                    listReponse.Items.Add(articleResponse.Item);
+                    listReponse.Count = 1;
+                    return View(listReponse);
+                }
+            }
             return View(new FindAllItemReponse<ArticleModel>());
         }
 

@@ -39,12 +39,15 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [SessionFilter]
         [AuthorizationFilter]
-        public ActionResult CreateArticle(string menuTitle)
+        public ActionResult CreateArticle(string menuTitle = "")
         {
-            FindItemReponse<MenuModel> findParentMenu = _menuCategoryService.FindByTitle(menuTitle);
-            if (findParentMenu.Item == null)
+            if (!string.IsNullOrEmpty(menuTitle))
             {
-                ViewBag.ErrorMessage = string.Format(Resources.AdminResource.msg_menuCategoryNotFound, menuTitle);
+                FindItemReponse<MenuModel> findParentMenu = _menuCategoryService.FindByTitle(menuTitle);
+                if (findParentMenu.Item == null)
+                {
+                    ViewBag.ErrorMessage = string.Format(Resources.AdminResource.msg_menuCategoryNotFound, menuTitle);
+                }
             }
             return View();
         }
@@ -64,27 +67,42 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
             InsertResponse response = new InsertResponse();
 
-            FindItemReponse<MenuModel> findParentMenu = _menuCategoryService.FindByTitle(menuTitle);
-            if (findParentMenu.Item == null)
-            {
-                return Json(new { errorCode = (int)ErrorCode.Error, message = string.Format(Resources.AdminResource.msg_menuCategoryNotFound, menuTitle) }, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                article.Title = article.Title.Length > 200 ? article.Title.Substring(0, 100) + "..." : article.Title;
-                if (article.ShortContent != null)
-                {
-                    article.ShortContent = article.ShortContent.Length > 300 ? article.ShortContent.Substring(0, 296) + "..." : article.ShortContent;
-                }
-                article.ArticleID = Guid.NewGuid().ToString();
-                article.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(article.Title), UrlSlugger.Get8Digits());
-                article.CreatedDate = DateTime.Now;
-                article.CreatedBy = userSession.UserID;
-                article.MenuID = findParentMenu.Item.MenuID;
+            string menuID = null;
+            string url = string.Empty;
 
-                response = _articleService.CreateArticle(article);
+            if (!string.IsNullOrEmpty(menuTitle))
+            {
+                FindItemReponse<MenuModel> findParentMenu = _menuCategoryService.FindByTitle(menuTitle);
+                if (findParentMenu.Item == null)
+                {
+                    return Json(new { errorCode = (int)ErrorCode.Error, message = string.Format(Resources.AdminResource.msg_menuCategoryNotFound, menuTitle) }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    menuID = findParentMenu.Item.MenuID;
+                }
             }
-            return Json(new { errorCode = response.ErrorCode, message = response.Message }, JsonRequestBehavior.AllowGet);
+
+            //Create article
+            article.Title = article.Title.Length > 200 ? article.Title.Substring(0, 100) + "..." : article.Title;
+            if (article.ShortContent != null)
+            {
+                article.ShortContent = article.ShortContent.Length > 300 ? article.ShortContent.Substring(0, 296) + "..." : article.ShortContent;
+            }
+            article.ArticleID = Guid.NewGuid().ToString();
+            article.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(article.Title), UrlSlugger.Get8Digits());
+            article.CreatedDate = DateTime.Now;
+            article.CreatedBy = userSession.UserID;
+            article.MenuID = menuID;
+
+            if (string.IsNullOrEmpty(menuID))
+            {
+                url = string.Format("{0}://{1}:{2}/Home/ArticleView/{3}", Request.Url.Scheme, Request.Url.Host, Request.Url.Port,article.ActionURL );
+            }
+
+            response = _articleService.CreateArticle(article);
+            
+            return Json(new { errorCode = response.ErrorCode, message = response.Message, url = url }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

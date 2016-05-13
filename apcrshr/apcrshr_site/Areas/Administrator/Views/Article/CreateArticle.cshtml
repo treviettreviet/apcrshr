@@ -89,12 +89,14 @@
         }
 
         $.blockUI({ message: $('#spinner') });
+        var menuTitle = appUtil.utility.getURLParameter("menuTitle");
+        if (menuTitle == null) menuTitle = "";
         var formData = new FormData();
         formData.append("Title", $("#Title").val());
         formData.append("ShortContent", $("#ShortContent").val());
         formData.append("Contents", $("#Editor-Contents").html());
         formData.append("Language", $("input[name=Language]:checked").val());
-        formData.append("menuTitle", appUtil.utility.getURLParameter("menuTitle"));
+        formData.append("menuTitle", menuTitle);
         formData.append(@Html.AntiForgeryTokenForAjaxPost());
         $.ajax({
             type: "POST",
@@ -114,6 +116,20 @@
                 }
                 if (response.errorCode == 0) {
                     resertForm();
+                    if (response.url != "") {
+                        bootbox.prompt({
+                            title: "Đường dẫn bài viết",
+                            value: response.url,
+                            callback: function (result) {
+                                if (result != null) {
+                                    clipboard.copy(result);
+                                    bootbox.hideAll();
+                                } else {
+                                    bootbox.hideAll();
+                                }
+                            }
+                        });
+                    }
                 }
             },
             error: function (error) {
