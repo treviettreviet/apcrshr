@@ -135,7 +135,10 @@ namespace apcrshr_site.Areas.Administrator.Controllers
                 return Json(new { errorCode = (int)ErrorCode.Redirect, message = Resources.AdminResource.msg_sessionInvalid }, JsonRequestBehavior.AllowGet);
             }
 
-            article.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(article.Title), UrlSlugger.Get8Digits());
+            if (!string.IsNullOrEmpty(article.MenuID))
+            {
+                article.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(article.Title), UrlSlugger.Get8Digits());
+            }
             article.UpdatedBy = userSession.UserID;
             BaseResponse response = _articleService.UpdateArticle(article);
 

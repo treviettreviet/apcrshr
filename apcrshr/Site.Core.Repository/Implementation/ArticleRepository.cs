@@ -27,7 +27,10 @@ namespace Site.Core.Repository.Implementation
                 var article = context.Articles.Where(a => a.ArticleID.Equals(item.ArticleID)).SingleOrDefault();
                 if (article != null)
                 {
-                    article.ActionURL = item.ActionURL;
+                    if (!string.IsNullOrEmpty(item.ActionURL))
+                    {
+                        article.ActionURL = item.ActionURL;
+                    }
                     article.Contents = item.Contents;
                     article.Language = item.Language;
                     article.MenuID = item.MenuID;
