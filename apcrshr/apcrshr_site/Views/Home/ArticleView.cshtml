@@ -20,7 +20,7 @@
                     <br />
                     <ul class="post-meta">
                         <li>@Model.Items[0].CreatedDate.ToString("dddd, d MMMM, yyyy", new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.Name))</li>
-                        <li><a href="#">Posted by</a>, <a href="#">ACPRSHR</a></li>
+                        <li><a href="#">Posted by</a>, <a href="#">@apcrshr_site.Helper.UserHelper.GetAdminName(Model.Items[0].CreatedBy)</a></li>
                     </ul>
                 </div>
             </div>
