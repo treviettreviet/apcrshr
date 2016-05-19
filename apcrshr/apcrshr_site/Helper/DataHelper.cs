@@ -74,5 +74,14 @@ namespace apcrshr_site.Helper
                 links.Add("Photo", "/Album/Index");
             }
         }
+
+        public string GetArticleURLByAction(HttpRequestBase request, string actionURL)
+        {
+            if (!string.IsNullOrEmpty(actionURL))
+            {
+                return string.Format("{0}://{1}:{2}/Home/ArticleView/{3}", request.Url.Scheme, request.Url.Host, request.Url.Port, actionURL);
+            }
+            return string.Empty;
+        }
     }
 }

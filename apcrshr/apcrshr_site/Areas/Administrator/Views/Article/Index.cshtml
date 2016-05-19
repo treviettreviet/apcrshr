@@ -16,7 +16,7 @@
             </div>
             <div class="box-content nopadding">
                 <table id="tableArticle" class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
-                       data-column_filter_types="null,select,text,text,daterange,text,null,null,null"
+                       data-column_filter_types="null,select,text,text,daterange,text,text,null,null,null"
                        data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
                     <thead>
                         <tr>
@@ -28,6 +28,7 @@
                             <th>Tóm Tắt</th>
                             <th class='hidden-1024'>Ngày Tạo</th>
                             <th>Người Tạo</th>
+                            <th>URL</th>
                             <th>Tiếng Việt</th>
                             <th>Tiếng Anh</th>
                             <th class='hidden-480'>Tùy Chọn</th>
@@ -51,6 +52,7 @@
                                     <td>@(Model[i].ShortContent != null && Model[i].ShortContent.Length > 50 ? Model[i].ShortContent.Substring(0, 50) : Model[i].ShortContent)</td>
                                     <td class='hidden-1024'>@Model[i].CreatedDate.ToShortDateString()</td>
                                     <td>@apcrshr_site.Helper.UserHelper.GetAdminName(Model[i].CreatedBy)</td>
+                                    <td>@apcrshr_site.Helper.DataHelper.GetInstance().GetArticleURLByAction(Request, Model[i].ActionURL)</td>
                                     <td>
                                         @if (Model[i].Language.Equals("VN"))
                                         {
