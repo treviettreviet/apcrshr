@@ -13,7 +13,7 @@ namespace apcrshr_site.Helper
         {
             IAdminRepository adminRepository = RepositoryClassFactory.GetInstance().GetAdminRepository();
             Admin admin = adminRepository.FindByID(adminId);
-            return admin != null ? string.Format("{0} {1}", admin.FirstName, admin.LastName) : adminId;
+            return admin != null ?  !string.IsNullOrEmpty(admin.LastName) ? admin.LastName : admin.FirstName : adminId;
         }
     }
 }
