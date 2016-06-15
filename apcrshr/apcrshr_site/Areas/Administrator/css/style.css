@@ -9418,3 +9418,5 @@ input[type="checkbox"].input-validation-error {
 .list-arrows button {
     margin-bottom: 20px;
 }
+
+.div-hidden{ display: none;}

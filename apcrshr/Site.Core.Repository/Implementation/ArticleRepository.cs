@@ -31,6 +31,10 @@ namespace Site.Core.Repository.Implementation
                     {
                         article.ActionURL = item.ActionURL;
                     }
+                    if (!string.IsNullOrEmpty(item.ImageURL))
+                    {
+                        article.ImageURL = item.ImageURL;
+                    }
                     article.Contents = item.Contents;
                     article.Language = item.Language;
                     article.MenuID = item.MenuID;
@@ -38,6 +42,7 @@ namespace Site.Core.Repository.Implementation
                     article.Title = item.Title;
                     article.UpdatedBy = item.UpdatedBy;
                     article.UpdatedDate = DateTime.Now;
+                    article.HomeDisplay = item.HomeDisplay;
 
                     context.SaveChanges();
                 }

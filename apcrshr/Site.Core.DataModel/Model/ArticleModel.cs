@@ -22,5 +22,7 @@ namespace Site.Core.DataModel.Model
         public string MenuID { get; set; }
         public string ShortContent { get; set; }
         public string URL { get; set; }
+        public string ImageURL { get; set; }
+        public bool HomeDisplay { get; set; }
     }
 }

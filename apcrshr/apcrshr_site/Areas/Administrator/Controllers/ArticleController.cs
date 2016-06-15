@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
 
 namespace apcrshr_site.Areas.Administrator.Controllers
 {
@@ -54,7 +55,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [SessionFilter]
         [ValidateAntiForgeryToken]
-        public JsonResult SaveArticle(ArticleModel article, string menuTitle)
+        public JsonResult SaveArticle(ArticleModel article, string menuTitle, HttpPostedFileBase file)
         {
             var sessionId = this.Session["SessionID"].ToString();
             IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository();
@@ -101,7 +102,32 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             }
 
             response = _articleService.CreateArticle(article);
-            
+
+            if (response.ErrorCode == (int)ErrorCode.None)
+            {
+                //Image
+                if (file != null)
+                {
+                    //Create folder
+                    try
+                    {
+                        if (!System.IO.File.Exists(Server.MapPath("~/Content/upload/images/article/")))
+                        {
+                            Directory.CreateDirectory(Server.MapPath("~/Content/upload/images/article/"));
+                        }
+                    }
+                    catch (Exception) { }
+
+                    string extension = file.FileName.Substring(file.FileName.LastIndexOf("."));
+                    string filename = file.FileName.Substring(0, file.FileName.LastIndexOf(".")).Replace(" ", "-");
+                    filename = string.Format("{0}-{1}", filename, UrlSlugger.Get8Digits());
+                    file.SaveAs(Server.MapPath("~/Content/upload/images/article/" + filename + extension));
+
+                    article.ImageURL = "/Content/upload/images/article/" + filename + extension;
+                    _articleService.UpdateArticle(article);
+                }
+            }
+
             return Json(new { errorCode = response.ErrorCode, message = response.Message, url = url }, JsonRequestBehavior.AllowGet);
         }
 
