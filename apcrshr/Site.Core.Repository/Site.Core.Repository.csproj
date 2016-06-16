@@ -90,6 +90,7 @@
     <Compile Include="Implementation\NewsRepository.cs" />
     <Compile Include="Implementation\PhotoRepository.cs" />
     <Compile Include="Implementation\PresentationRepository.cs" />
+    <Compile Include="Implementation\QueryRepository.cs" />
     <Compile Include="Implementation\ResourceRepository.cs" />
     <Compile Include="Implementation\RoleRepository.cs" />
     <Compile Include="Implementation\RoleResourceRepository.cs" />

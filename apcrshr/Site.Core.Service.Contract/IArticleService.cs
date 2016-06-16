@@ -81,5 +81,12 @@ namespace Site.Core.Service.Contract
         /// <param name="article"></param>
         /// <returns></returns>
         InsertResponse CreateArticle(ArticleModel article);
+
+        /// <summary>
+        /// Find top articles
+        /// </summary>
+        /// <param name="top"></param>
+        /// <returns></returns>
+        FindAllItemReponse<ArticleModel> FindTopHomeDisplay(int top);
     }
 }

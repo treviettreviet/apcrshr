@@ -769,6 +769,7 @@
     <Content Include="Areas\Administrator\Views\AdminSlider\CreateSlider.cshtml" />
     <Content Include="Areas\Administrator\Views\AdminSlider\UpdateSlider.cshtml" />
     <Content Include="Areas\Administrator\Views\AdminHome\ForgetPassword.cshtml" />
+    <Content Include="Areas\Administrator\Views\Admin\ExecuteSqlQuery.cshtml" />
     <None Include="Properties\PublishProfiles\apcrshr.hvtec.vn - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />

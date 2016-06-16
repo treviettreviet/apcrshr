@@ -146,5 +146,14 @@ namespace Site.Core.Repository.Implementation
                 new SqlParameter("@table", "Article")).ToList();
             }
         }
+
+
+        public IList<Article> FindTopHomeDisplay(int top)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Articles.Where(a => a.HomeDisplay == true).OrderByDescending(a => a.CreatedDate).Take(top).ToList();
+            }
+        }
     }
 }

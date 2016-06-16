@@ -362,5 +362,34 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             MenuDisplayResponse response = _menuCategoryService.GetMaxDisplayOrder(title, id);
             return Json(new { errorCode = response.ErrorCode, title = response.Title, displayOrder = response.DisplayOrder }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        [SessionFilter]
+        public ActionResult ExecuteSqlQuery()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [SessionFilter]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveSqlQuery(string query)
+        {
+            var msg = "Successed";
+            ErrorCode error = ErrorCode.None;
+            Site.Core.Repository.Implementation.QueryRepository queryRepository = new Site.Core.Repository.Implementation.QueryRepository();
+            try
+            {
+                queryRepository.ExecuteQuery(query);
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+                error = ErrorCode.Error;
+            }
+            ViewBag.Message = msg;
+            ViewBag.ErrorCode = error;
+            return View("ExecuteSqlQuery");
+        }
     }
 }

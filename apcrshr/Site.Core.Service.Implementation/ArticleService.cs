@@ -256,5 +256,30 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindAllItemReponse<ArticleModel> FindTopHomeDisplay(int top)
+        {
+            try
+            {
+                IArticleRepository articleRepository = RepositoryClassFactory.GetInstance().GetArticleRepository();
+                IList<Article> articles = articleRepository.FindTopHomeDisplay(top);
+                var _articles = articles.Select(a => MapperUtil.CreateMapper().Mapper.Map<Article, ArticleModel>(a)).ToList();
+                return new FindAllItemReponse<ArticleModel>
+                {
+                    Items = _articles,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindAllItemReponse<ArticleModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }

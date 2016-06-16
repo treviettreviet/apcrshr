@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Execute Sql Query";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <!--Alert-->
+        @if (ViewBag.Message != null)
+        {
+            <br />
+            <div class="alert @(ViewBag.ErrorCode == (int)Site.Core.DataModel.Enum.ErrorCode.None ? " alert-info" : " alert-danger")"><a class="close" data-dismiss="alert" href="#">×</a><strong></strong> @ViewBag.Message</div>
+        }
+
+        <div class="box box-bordered box-color">
+            <div class="box-title">
+                <h3>
+                    <i class="fa fa-edit"></i>Execute Sql Query
+                </h3>
+            </div>
+            <div class="box-content nopadding">
+                @using (Html.BeginForm("SaveSqlQuery", "Admin", FormMethod.Post, new { @class = "form-horizontal form-bordered" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Họ</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="query" id="query" placeholder="Query" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-actions col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary">Lưu Thông Tin</button>
+                        <button type="reset" class="btn">Reset</button>
+                        <a href='@Url.Action("Index")' class="btn btn-info">Hủy Bỏ</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -42,6 +42,9 @@ namespace apcrshr_site.Controllers
 
             FindAllItemReponse<SliderModel> SliderReponse = _sliderService.GetTopSlider(9, this.culture);
             ViewBag.TopSlider = SliderReponse.Items;
+
+            FindAllItemReponse<ArticleModel> topArticle = _articleService.FindTopHomeDisplay(1);
+            ViewBag.TopArticle = topArticle.Items;
             return View();
         }
 
