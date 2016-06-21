@@ -206,7 +206,6 @@
     <Compile Include="Controllers\PresentationController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="Filters\AuthorizationFilter.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Filters\SessionFilter.cs" />
@@ -858,8 +857,6 @@
     <Content Include="Views\Registration\RegistrationForm.cshtml" />
     <Content Include="Views\ConferenceDeclaration\ViewConference.cshtml" />
     <Content Include="Views\ConferenceDeclaration\Index.cshtml" />
-    <Content Include="Views\Video\Index.cshtml" />
-    <Content Include="Views\Video\ViewVideo.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\Presentation\Index.cshtml" />
