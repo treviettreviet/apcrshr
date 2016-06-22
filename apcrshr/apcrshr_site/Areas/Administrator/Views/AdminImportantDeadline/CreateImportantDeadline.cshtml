@@ -100,8 +100,8 @@
             });
             return false;
         }
-        if (!validateDateline()) {
-            bootbox.alert("Ngày kết thúc không được phép lớn hơn hạn chót.", function () {
+        if (!validateDeadline()) {
+            bootbox.alert("Hạn chót đăng ký không được phép lớn hơn ngày kết thúc.", function () {
                 bootbox.hideAll();
             });
             return false;
@@ -165,18 +165,25 @@
         return true;
     }
     function validateDatetime() {
-        if ($("#StartDate").val() > $("#EndDate").val()) {
+        var startDate = new Date($("#StartDate").val());
+        var endDate = new Date($("#EndDate").val());
+        var deadline = new Date($("#Deadline").val());
+
+        if (startDate > endDate) {
             $("#StartDate").focus();
             return false;
         }
-        if ($("#StartDate").val() > $("#Deadline").val()) {
+        if (startDate > endDate) {
             $("#StartDate").focus();
             return false;
         }
         return true;
     }
-    function validateDateline() {
-        if ($("#EndDate").val() > $("#Deadline").val()) {
+    function validateDeadline() {
+        var endDate = new Date($("#EndDate").val());
+        var deadline = new Date($("#Deadline").val());
+
+        if (endDate < deadline) {
             $("#EndDate").focus();
             return false;
         }
@@ -187,9 +194,10 @@
         $("#Title").val("");
         $("#ShortContent").val("");
         $("#Editor-Contents").html("");
-        $("#StartDate").val("");
-        $("#EndDate").val("");
-        $("#Deadline").val("");
+
+        $('#StartDate').datepicker({ dateFormat: 'mm/dd/yy' }).datepicker("setDate", new Date());
+        $('#EndDate').datepicker({ dateFormat: 'mm/dd/yy' }).datepicker("setDate", new Date());
+        $('#Deadline').datepicker({ dateFormat: 'mm/dd/yy' }).datepicker("setDate", new Date());
     }
 
     function setControlCss(control) {
