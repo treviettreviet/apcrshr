@@ -102,5 +102,14 @@ namespace Site.Core.Repository.Implementation
                 return context.Roles.Where(r => !r.RoleID.Equals(ADMINISTRATOR_ROLE_ID)).ToList();
             }
         }
+
+
+        public Role FindByName(string name)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Roles.Where(a => a.Name.Equals(name)).SingleOrDefault();
+            }
+        }
     }
 }

@@ -29,6 +29,10 @@ namespace Site.Core.DataModel.Enum
         /// <summary>
         /// All resources
         /// </summary>
-        Administrator = 2
+        Administrator = 2,
+        /// <summary>
+        /// Custom role
+        /// </summary>
+        Custom = 3
     }
 }

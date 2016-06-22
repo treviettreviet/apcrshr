@@ -1,4 +1,5 @@
-﻿@{
+﻿@using apcrshr_site.Helper
+@{
     ViewBag.Title = "Quản lý quyền người dùng";
     Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
 }
@@ -7,6 +8,19 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="box box-color">
+            <div class="highlight-toolbar">
+                <div class="pull-left">
+                </div>
+                <div class="pull-right">
+                    <div class="btn-toolbar">
+                        <div class="btn-group">
+                            <a href='javascript:void(0);' onclick="addRole();" class="btn btn-blue" rel="tooltip" title="Thêm mới quyền">
+                                <i class="fa fa-plus"></i>&nbsp; Thêm mới quyền
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="box-title">
                 <h3>
                     <i class="fa fa-bars"></i>
@@ -76,7 +90,7 @@
                         </table>
                     </div>
                     <div class="tab-pane" id="t8">
-                        <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
+                        <table id="tblRole" class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
                                data-column_filter_types="null,text,text,text,null"
                                data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
                             <thead>
@@ -108,6 +122,14 @@
                                                     <a href='@Url.Action("AssignResource", "AdminRole", new { roleID = roles[i].RoleID })' class="btn" rel="tooltip" title="Gán tài nguyên truy cập">
                                                         <i class="fa fa-key"></i>
                                                     </a>
+                                                    @if (roles[i].Type != (int)Site.Core.DataModel.Enum.RoleType.ConferenceManager 
+                                                        && roles[i].Type != (int)Site.Core.DataModel.Enum.RoleType.ResourceManager
+                                                        && roles[i].Type != (int)Site.Core.DataModel.Enum.RoleType.Administrator)
+                                                    {
+                                                        <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteRole('@roles[i].RoleID')" id="btn_@roles[i].RoleID">
+                                                            <i class="fa fa-times"></i>
+                                                        </a>
+                                                    }
                                                 </td>
                                             </tr>
                                         }
@@ -154,3 +176,129 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function deleteRole(roleID) {
+        bootbox.confirm("Bạn có chắc chắn muốn xóa bản ghi này?", function (result) {
+            if (result) {
+                $.ajax({
+                    type: 'GET',
+                    contentType: 'application/json',
+                    url: '@Url.Action("DeleteRole", "AdminRole")',
+                    data: { roleID: roleID },
+                    success: function (data) {
+                        if (data.ErrorCode == 0) {
+                            var $el = $("#btn_" + roleID);
+                            var $parent = $el.parents("tr");
+                            $parent.fadeOut(400, function () {
+                                $parent.remove();
+                            });
+                            bootbox.hideAll();
+                        } else {
+                            bootbox.alert(data.Message, function () {
+                                bootbox.hideAll();
+                            });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        bootbox.hideAll();
+                    }
+                });
+                return true;
+            } else {
+                bootbox.hideAll();
+                return false;
+            }
+        });
+    }
+
+    var html = [
+        '<div class="row">',
+            '<div class="col-sm-12">',
+                '<div class="box box-bordered box-color">',
+                    '<div class="box-title">',
+                    '</div>',
+                    '<div class="box-content nopadding">',
+                        '<form class="form-horizontal form-bordered">',
+                            '<div class="form-group">',
+                                '<label for="textfield" class="control-label col-sm-2">Tên Quyền <span class="validation-span-required">(*)</span></label>',
+                                '<div class="col-sm-10">',
+                                    '<input type="text" id="Name" name="Name" style="width: 90%;"/>',
+                                '</div>',
+                            '</div>',
+                            '<div class="form-group">',
+                                '<label for="textfield" class="control-label col-sm-2">Mô Tả</label>',
+                                '<div class="col-sm-10">',
+                                    '<input type="text" id="Description" name="Description" style="width: 90%;"/>',
+                                '</div>',
+                            '</div>',
+                        '</form>',
+                    '</div>',
+                '</div>',
+            '</div>',
+        '</div>',
+    ].join('\n');
+
+    function addRole() {
+        bootbox.dialog({
+            message: html,
+            title: "Thêm Mới Quyền",
+            buttons: {
+                success: {
+                    label: "Lưu",
+                    className: "btn-primary",
+                    callback: function (e) {
+                        $.blockUI({ message: $('#spinner') });
+                        $.ajax({
+                            type: 'POST',
+                            contentType: 'application/json',
+                            url: '@Url.Action("SaveRole", "AdminRole")',
+                            data: JSON.stringify({ Name: $("#Name").val() , Description: $("#Description").val()}),
+                            dataType: "json",
+                            success: function (data) {
+                                $.unblockUI();
+                                if (data.errorCode != 0) {
+                                    if (data.errorCode == 2) {
+                                        //Timeout
+                                        if (response.errorCode == 2) {
+                                            window.location = "/Administrator/AdminHome/Login";
+                                        }
+                                    } else {
+                                        bootbox.alert(data.message, function () {
+                                            bootbox.hideAll();
+                                        });
+                                    }
+                                } else {
+                                    var table = $('#tblRole').DataTable();
+                                    var url = "/Administrator/AdminRole/AssignResource?roleID=" + data.roleid;
+                                    var row = table.row.add([
+                                        '<input type="checkbox" name="check" value="' + data.roleid + '">',
+                                        $("#Name").val(),
+                                        $("#Description").val(),
+                                        data.roleName,
+                                        '<a href="' + url + '" class="btn" rel="tooltip" title="Gán tài nguyên truy cập"><i class="fa fa-key"></i></a>'
+                                        + '<a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteRole(\'' + data.roleid + '\')" id="btn_' + data.roleid + '"><i class="fa fa-times"></i></a>'
+                                    ]).draw().node();
+                                    $(row).attr('id', data.roleid);
+
+                                    bootbox.alert(data.message, function () {
+                                        bootbox.hideAll();
+                                    });
+                                }
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                $.unblockUI();
+                            }
+                        });
+                    }
+                },
+                danger: {
+                    label: "Hủy bỏ",
+                    className: "btn-danger",
+                    callback: function () {
+                        bootbox.hideAll();
+                    }
+                }
+            }
+        });
+    }
+</script>

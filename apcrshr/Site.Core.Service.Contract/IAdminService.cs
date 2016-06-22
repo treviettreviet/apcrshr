@@ -168,5 +168,19 @@ namespace Site.Core.Service.Contract
         /// <param name="username"></param>
         /// <returns></returns>
         FindItemReponse<AdminModel> FindAdminByEmail(string email);
+
+        /// <summary>
+        /// Create new role
+        /// </summary>
+        /// <param name="role"></param>
+        /// <returns></returns>
+        InsertResponse CreateRole(RoleModel role);
+
+        /// <summary>
+        /// Delete specific role
+        /// </summary>
+        /// <param name="roleID"></param>
+        /// <returns></returns>
+        BaseResponse DeleteRole(string roleID);
     }
 }

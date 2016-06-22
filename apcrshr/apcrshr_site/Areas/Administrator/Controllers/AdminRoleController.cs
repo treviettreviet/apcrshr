@@ -122,5 +122,35 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
             return Json(new { errorCode = response.ErrorCode, message = response.Message }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        [SessionFilter]
+        public JsonResult SaveRole(RoleModel role)
+        {
+            var sessionId = this.Session["SessionID"].ToString();
+            IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository();
+            UserSession userSession = userSessionRepository.FindByID(sessionId);
+
+            if (userSession == null)
+            {
+                return Json(new { errorCode = (int)ErrorCode.Redirect, message = Resources.AdminResource.msg_sessionInvalid }, JsonRequestBehavior.AllowGet);
+            }
+
+            role.RoleID = Guid.NewGuid().ToString();
+            role.CreatedBy = userSession.UserID;
+            role.CreatedDate = DateTime.Now;
+            role.Type = (int) RoleType.Custom;
+
+            InsertResponse response = _adminService.CreateRole(role);
+
+            return Json(new { errorCode = response.ErrorCode, message = response.Message, roleid = response.InsertID, roleName = Enum.GetName(typeof(RoleType), role.Type) }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult DeleteRole(string roleID)
+        {
+            BaseResponse response = _adminService.DeleteRole(roleID);
+            return Json(new { ErrorCode = response.ErrorCode, Message = response.Message }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

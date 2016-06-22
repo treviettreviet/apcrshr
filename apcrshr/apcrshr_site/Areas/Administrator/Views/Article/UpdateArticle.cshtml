@@ -18,6 +18,7 @@
                 {
                     @Html.HiddenFor(model => model.ArticleID, new { @id = "ArticleID" })
                     @Html.HiddenFor(model => model.MenuID, new { @id = "MenuID" })
+                    @Html.HiddenFor(model => model.HomeDisplay, new { @id = "HomeDisplay" })
                     <div class="form-group">
                         <label for="textfield" class="control-label col-sm-2">Tiêu Đề</label>
                         <div class="col-sm-10">
@@ -37,6 +38,32 @@
                         <div class="col-sm-10">
                             @Html.TextBoxFor(model => model.Contents, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Contents)
+                        </div>
+                    </div>
+                    <div class="form-group div-hidden" id="divShowHomeArticle">
+                        <label for="textfield" class="control-label col-sm-2">Trang Chủ</label>
+                        <div class="col-sm-10">
+                            <input type="checkbox" name="HomeDisplay" class='icheck-me' data-skin="square" data-color="blue" id="HomeDisplay" value="true" @(Model.HomeDisplay == true ? "checked" : "")>
+                            <label for="HomeDisplay">Hiển Thị Trên Trang Chủ</label>
+                        </div>
+                    </div>
+                    <div class="form-group div-hidden" id="divHomeDisplay">
+                        <label for="file" class="control-label col-sm-2">
+                            Ảnh
+                            <small>Kích Cỡ Lớn Nhất: 10MB</small>
+                        </label>
+                        <div class="col-sm-10">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                                <div>
+                                    <span class="btn btn-default btn-file">
+                                        <span class="fileinput-new">Chọn Ảnh</span>
+                                        <span class="fileinput-exists">Thay Đổi</span>
+                                        <input type="file" name="imageFile" id="imageFile" data-filesize="1048576" data-filesize-error="Kích Cỡ Lớn Nhất: 10MB">
+                                    </span>
+                                    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Xóa Bỏ</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -64,11 +91,60 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $('input').on('ifChecked', function (event) {
+        var isChecked = $(this).is(":checked");
+        if (isChecked) {
+            if ($("#divHomeDisplay").hasClass("div-hidden")) {
+                $("#divHomeDisplay").removeClass("div-hidden");
+            }
+        } else {
+            if (!$("#divHomeDisplay").hasClass("div-hidden")) {
+                $("#divHomeDisplay").addClass("div-hidden");
+            }
+        }
+    });
 
+    $('input').on('ifUnchecked', function (event) {
+        var isChecked = $(this).is(":checked");
+        if (isChecked) {
+            if ($("#divHomeDisplay").hasClass("div-hidden")) {
+                $("#divHomeDisplay").removeClass("div-hidden");
+            }
+        } else {
+            if (!$("#divHomeDisplay").hasClass("div-hidden")) {
+                $("#divHomeDisplay").addClass("div-hidden");
+            }
+        }
+    });
+    $('input[type=checkbox]').each(function () {
+        //Check ID & checked state
+        var isChecked = $(this).is(":checked");
+        if (isChecked) {
+            if ($("#divHomeDisplay").hasClass("div-hidden")) {
+                $("#divHomeDisplay").removeClass("div-hidden");
+            }
+        } else {
+            if (!$("#divHomeDisplay").hasClass("div-hidden")) {
+                $("#divHomeDisplay").addClass("div-hidden");
+            }
+        }
+    });
+</script>
 <script>
     $(document).ready(function () {
         $("#Contents").Editor({ name: "Editor-Contents" });
         $("#Editor-Contents").html($("#Contents").val());
+        var isChecked = $("#HomeDisplay").val();
+        if (isChecked == "True") {
+            if ($("#divShowHomeArticle").hasClass("div-hidden")) {
+                $("#divShowHomeArticle").removeClass("div-hidden");
+            }
+        } else {
+            if (!$("#divShowHomeArticle").hasClass("div-hidden")) {
+                $("#divShowHomeArticle").addClass("div-hidden");
+            }
+        }
     });
 
     function submitForm() {
@@ -83,6 +159,7 @@
         var formData = new FormData();
         formData.append("ArticleID", $("#ArticleID").val());
         formData.append("MenuID", $("#MenuID").val());
+        formData.append("HomeDisplay", $("#HomeDisplay").val());
         formData.append("Title", $("#Title").val());
         formData.append("ShortContent", $("#ShortContent").val());
         formData.append("Contents", $("#Editor-Contents").html());

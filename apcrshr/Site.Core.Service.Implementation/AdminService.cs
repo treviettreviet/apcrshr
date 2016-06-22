@@ -677,5 +677,61 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public InsertResponse CreateRole(RoleModel role)
+        {
+            try
+            {
+                IRoleRepository roleRepository = RepositoryClassFactory.GetInstance().GetRoleRepository();
+                Role _role = roleRepository.FindByName(role.Name);
+                if (_role != null)
+                {
+                    return new InsertResponse
+                    {
+                        ErrorCode = (int)ErrorCode.Error,
+                        Message = string.Format(Resources.Resource.msg_insert_exists, "Role", role.Name)
+                    };
+                }
+                object id = roleRepository.Insert(MapperUtil.CreateMapper().Mapper.Map<RoleModel, Role>(role));
+                return new InsertResponse
+                {
+                    InsertID = id.ToString(),
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = Resources.Resource.msg_create_success
+                };
+            }
+            catch (Exception ex)
+            {
+                return new InsertResponse
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
+
+
+        public BaseResponse DeleteRole(string roleID)
+        {
+            try
+            {
+                IRoleRepository roleRepository = RepositoryClassFactory.GetInstance().GetRoleRepository();
+                roleRepository.Delete(roleID);
+                return new BaseResponse
+                {
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = Resources.Resource.msg_delete_success
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }
