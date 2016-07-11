@@ -42,7 +42,7 @@
                     <div class="form-group">
                         <label for="textfield" class="control-label col-sm-2">Mô Tả <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-10">
-                            @Html.TextAreaFor(Model => Model.Contents, new { @id = "Contents", @class = "form-control" })
+                            @Html.TextAreaFor(Model => Model.Contents, new { @id = "editor", @class = "form-control" })
                             @Html.ValidationMessageFor(Model => Model.Contents)
                         </div>
                     </div>
@@ -128,7 +128,6 @@
 
 <script>
     $(document).ready(function () {
-        $("#Contents").Editor({ name: "Editor-Contents" });
         var menuTitle = appUtil.utility.getURLParameter("menuTitle");
         if (menuTitle == null) {
             if ($("#divShowHomeArticle").hasClass("div-hidden")) {
@@ -159,7 +158,7 @@
         var formData = new FormData();
         formData.append("Title", $("#Title").val());
         formData.append("ShortContent", $("#ShortContent").val());
-        formData.append("Contents", $("#Editor-Contents").html());
+        formData.append("Contents", CKEDITOR.instances['editor'].getData());
         formData.append("Language", $("input[name=Language]:checked").val());
         formData.append("HomeDisplay", $("input[name=HomeDisplay]:checked").val());
         formData.append("menuTitle", menuTitle);
@@ -213,8 +212,8 @@
             $("#Title").focus();
             return false;
         }
-        if ($("#Editor-Contents").html() == null || $("#Editor-Contents").html() == "") {
-            $("#Editor-Contents").focus();
+        if (CKEDITOR.instances['editor'].getData() == null || CKEDITOR.instances['editor'].getData() == "") {
+            CKEDITOR.instances['editor'].focus();
             return false;
         }
         return true;
@@ -223,7 +222,7 @@
     function resertForm() {
         $("#Title").val("");
         $("#ShortContent").val("");
-        $("#Editor-Contents").html("");
+        CKEDITOR.instances['editor'].setData("");
     }
 
     function setControlCss(control) {

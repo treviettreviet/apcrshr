@@ -42,7 +42,7 @@
                     <div class="form-group">
                         <label for="textfield" class="control-label col-sm-2">Mô Tả <span class="validation-span-required"></span></label>
                         <div class="col-sm-10">
-                            @Html.TextAreaFor(Model => Model.Contents, new { @id = "Contents", @class = "form-control" })
+                            @Html.TextAreaFor(Model => Model.Contents, new { @id = "editor", @class = "form-control" })
                             @Html.ValidationMessageFor(Model => Model.Contents)
                         </div>
                     </div>
@@ -81,7 +81,6 @@
 
 <script>
     $(document).ready(function () {
-        $("#Contents").Editor({ name: "Editor-Contents" });
         $('#StartDate').datepicker({ dateFormat: 'mm/dd/yy' }).datepicker("setDate", new Date());
         $('#EndDate').datepicker({ dateFormat: 'mm/dd/yy' }).datepicker("setDate", new Date());
         $('#Deadline').datepicker({ dateFormat: 'mm/dd/yy' }).datepicker("setDate", new Date());
@@ -111,7 +110,7 @@
         var formData = new FormData();
         formData.append("Title", $("#Title").val());
         formData.append("ShortContent", $("#ShortContent").val());
-        formData.append("Contents", $("#Editor-Contents").html());
+        formData.append("Contents", CKEDITOR.instances['editor'].getData());
         formData.append("StartDate", $("#StartDate").val());
         formData.append("EndDate", $("#EndDate").val());
         formData.append("Deadline", $("#Deadline").val());
@@ -193,7 +192,7 @@
     function resetForm() {
         $("#Title").val("");
         $("#ShortContent").val("");
-        $("#Editor-Contents").html("");
+        CKEDITOR.instances['editor'].setData("");
 
         $('#StartDate').datepicker({ dateFormat: 'mm/dd/yy' }).datepicker("setDate", new Date());
         $('#EndDate').datepicker({ dateFormat: 'mm/dd/yy' }).datepicker("setDate", new Date());
