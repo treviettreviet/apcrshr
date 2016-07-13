@@ -159,6 +159,10 @@ ALTER TABLE [User] ADD [RegistrationStatus] INT NOT NULL DEFAULT(0)
 
 GO
 
+ALTER TABLE [User] ADD [EmailDuplicationCode] VARCHAR(100) NULL
+
+GO
+
 ALTER TABLE [MailingAddress] DROP COLUMN [AddressLine1]
 
 GO
