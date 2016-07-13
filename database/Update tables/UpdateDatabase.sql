@@ -155,6 +155,10 @@ ALTER TABLE [User] ADD [Organization] NVARCHAR(200) NULL
 
 GO
 
+ALTER TABLE [User] ADD [RegistrationStatus] INT NOT NULL DEFAULT(0)
+
+GO
+
 ALTER TABLE [MailingAddress] DROP COLUMN [AddressLine1]
 
 GO
