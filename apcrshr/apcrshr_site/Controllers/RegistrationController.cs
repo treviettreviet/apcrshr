@@ -21,5 +21,10 @@ namespace apcrshr_site.Controllers
             return View();
         }
 
+        [HttpPost]
+        public JsonResult RegistrationWizard(string Title)
+        {
+            return Json(new { }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

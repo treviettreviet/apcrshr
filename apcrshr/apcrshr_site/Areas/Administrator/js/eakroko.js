@@ -320,7 +320,7 @@ $(document).ready(function () {
 	}
 
 	// Wizard
-	if ($(".form-wizard").length > 0) {
+	/*if ($(".form-wizard").length > 0) {
 		$(".form-wizard").formwizard({
 			formPluginEnabled: true,
 			validationEnabled: true,
@@ -352,7 +352,7 @@ $(document).ready(function () {
 				resetForm: true
 			}
 		});
-	}
+	}*/
 
 	// Validation
 	if ($('.form-validate').length > 0) {
