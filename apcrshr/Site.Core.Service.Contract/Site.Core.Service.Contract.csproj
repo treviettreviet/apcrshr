@@ -54,6 +54,7 @@
     <Compile Include="IUploadService.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="IVideoService.cs" />
+    <Compile Include="IMailingAddressService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

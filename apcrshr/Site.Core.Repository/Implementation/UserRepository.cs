@@ -29,17 +29,25 @@ namespace Site.Core.Repository.Implementation
                 var user = context.Users.Where(u => u.UserID.Equals(item.UserID)).SingleOrDefault();
                 if (user != null)
                 {
-                    user.Email = item.Email;
+                    //user.Email = item.Email;
                     user.DateOfBirth = item.DateOfBirth;
                     user.FullName = item.FullName;
                     user.Locked = item.Locked;
                     user.OtherEmail = item.OtherEmail;
                     user.Password = string.IsNullOrEmpty(item.Password) ? user.Password : Encryption.ComputeHash(item.Password, Algorithm.SHA384, null);
-                    user.UserName = item.UserName;
+                    //user.UserName = item.UserName;
                     user.UpdatedDate = DateTime.Now;
                     user.Sex = item.Sex;
                     user.PhoneNumber = item.PhoneNumber;
                     user.Title = item.Title;
+                    user.MealPreference = item.MealPreference;
+                    user.DisabilitySpecialTreatment = item.DisabilitySpecialTreatment;
+                    user.Address = item.Address;
+                    user.City = item.City;
+                    user.Country = item.Country;
+                    user.WorkAddress = item.WorkAddress;
+                    user.Organization = item.Organization;
+                    user.RegistrationStatus = item.RegistrationStatus;
 
                     context.SaveChanges();
                 }

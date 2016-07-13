@@ -54,6 +54,7 @@
     <Compile Include="Model\ArticleModel.cs" />
     <Compile Include="Model\ConferenceDeclarationModel.cs" />
     <Compile Include="Model\ImportantDeadlineModel.cs" />
+    <Compile Include="Model\MailingAddressModel.cs" />
     <Compile Include="Model\MenuModel.cs" />
     <Compile Include="Model\NewsModel.cs" />
     <Compile Include="Model\PhotoModel.cs" />

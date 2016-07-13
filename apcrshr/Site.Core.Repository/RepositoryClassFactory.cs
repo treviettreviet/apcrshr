@@ -106,5 +106,9 @@ namespace Site.Core.Repository
         {
             return new SliderRepository();
         }
+        public IMailingAddressRepository GetMailingAddressRepository()
+        {
+            return new MailingAddressRepository();
+        }
     }
 }
