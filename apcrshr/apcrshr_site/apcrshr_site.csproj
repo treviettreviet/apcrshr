@@ -224,6 +224,7 @@
     <Compile Include="Helper\UrlSlugger.cs" />
     <Compile Include="Helper\UserHelper.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\RegistrationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AdminResource.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -21,16 +21,12 @@ namespace Site.Core.DataModel.Enum
         /// </summary>
         RegisterCompleted = 2,
         /// <summary>
-        /// Account actived with confimation email confirmed
-        /// </summary>
-        Actived = 3,
-        /// <summary>
-        /// Account is locked
-        /// </summary>
-        Locked = 4,
-        /// <summary>
         /// Email duplicated need to be confirmed
         /// </summary>
-        EmailDuplicated = 5
+        EmailDuplicated = 3,
+        /// <summary>
+        /// Account actived with confimation email confirmed
+        /// </summary>
+        Actived = 4
     }
 }
