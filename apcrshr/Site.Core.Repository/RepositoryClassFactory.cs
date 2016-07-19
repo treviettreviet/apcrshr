@@ -110,5 +110,10 @@ namespace Site.Core.Repository
         {
             return new MailingAddressRepository();
         }
+
+        public ISessionRepository GetSessionRepository()
+        {
+            return new SessionRepository();
+        }
     }
 }

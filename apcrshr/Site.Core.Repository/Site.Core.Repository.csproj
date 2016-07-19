@@ -95,6 +95,7 @@
     <Compile Include="Implementation\ResourceRepository.cs" />
     <Compile Include="Implementation\RoleRepository.cs" />
     <Compile Include="Implementation\RoleResourceRepository.cs" />
+    <Compile Include="Implementation\SessionRepository.cs" />
     <Compile Include="Implementation\SliderRepository.cs" />
     <Compile Include="Implementation\SubscriberRepository.cs" />
     <Compile Include="Implementation\UploadRepository.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Repository\IResourceRepository.cs" />
     <Compile Include="Repository\IRoleRepository.cs" />
     <Compile Include="Repository\IRoleResourceRepository.cs" />
+    <Compile Include="Repository\ISessionRepository.cs" />
     <Compile Include="Repository\ISliderRepository.cs" />
     <Compile Include="Repository\ISubscriberRepository.cs" />
     <Compile Include="Repository\IUploadRepository.cs" />
@@ -149,6 +151,9 @@
       <DependentUpon>APCRSHRModel.tt</DependentUpon>
     </Compile>
     <Compile Include="RoleResource.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Session.cs">
       <DependentUpon>APCRSHRModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Slider.cs">

@@ -58,6 +58,7 @@ namespace Site.Core.Service.Implementation.ModelMapper
                 cfg.CreateMap<ResourceModel, Resource>();
                 cfg.CreateMap<SliderModel, Slider>();
                 cfg.CreateMap<MailingAddressModel, MailingAddress>();
+                cfg.CreateMap<SessionModel, Session>();
 
                 //Entity model mapper
                 cfg.CreateMap<Admin, AdminModel>();
@@ -80,6 +81,7 @@ namespace Site.Core.Service.Implementation.ModelMapper
                 cfg.CreateMap<Resource, ResourceModel>();
                 cfg.CreateMap<Slider, SliderModel>();
                 cfg.CreateMap<MailingAddress, MailingAddressModel>();
+                cfg.CreateMap<Session, SessionModel>();
             });
 
             mapper = config.CreateMapper();

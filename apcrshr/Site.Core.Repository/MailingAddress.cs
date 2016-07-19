@@ -20,6 +20,7 @@ namespace Site.Core.Repository
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public string ParticipantType { get; set; }
         public string ParticipateYouth { get; set; }
+        public bool VisaSupport { get; set; }
         public System.DateTime DateOfBirth { get; set; }
         public string OriginalNationality { get; set; }
         public string CurrentNationality { get; set; }
@@ -32,6 +33,8 @@ namespace Site.Core.Repository
         public string PassportPhoto2 { get; set; }
         public string PassportPhoto3 { get; set; }
         public string DetailOfEmbassy { get; set; }
+        public bool NeedVisaSupport { get; set; }
+        public string ActivationCode { get; set; }
     
         public virtual User User { get; set; }
     }
