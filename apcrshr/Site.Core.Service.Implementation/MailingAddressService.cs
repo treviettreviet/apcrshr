@@ -154,5 +154,30 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindAllItemReponse<MailingAddressModel> GetMailingAddresses(string activationCode)
+        {
+            try
+            {
+                IMailingAddressRepository mailingRepository = RepositoryClassFactory.GetInstance().GetMailingAddressRepository();
+                IList<MailingAddress> mailings = mailingRepository.FindByActivation(activationCode);
+                var _mailings = mailings.Select(n => MapperUtil.CreateMapper().Mapper.Map<MailingAddress, MailingAddressModel>(n)).ToList();
+                return new FindAllItemReponse<MailingAddressModel>
+                {
+                    Items = _mailings,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindAllItemReponse<MailingAddressModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }

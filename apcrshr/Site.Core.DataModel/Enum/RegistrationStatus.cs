@@ -13,20 +13,8 @@ namespace Site.Core.DataModel.Enum
         /// </summary>
         Created = 0,
         /// <summary>
-        /// Accounted created with mailing infomation
-        /// </summary>
-        MailingCreated = 1,
-        /// <summary>
-        /// Account created with registration email sent
-        /// </summary>
-        RegisterCompleted = 2,
-        /// <summary>
-        /// Email duplicated need to be confirmed
-        /// </summary>
-        EmailDuplicated = 3,
-        /// <summary>
         /// Account actived with confimation email confirmed
         /// </summary>
-        Actived = 4
+        Actived = 1
     }
 }

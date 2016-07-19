@@ -96,5 +96,14 @@ namespace Site.Core.Repository.Implementation
                 return context.MailingAddresses.Where(m => m.UserID.Equals(userID)).ToList();
             }
         }
+
+
+        public IList<MailingAddress> FindByActivation(string activationCode)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.MailingAddresses.Where(m => m.ActivationCode.Equals(activationCode)).ToList();
+            }
+        }
     }
 }

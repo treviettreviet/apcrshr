@@ -12,5 +12,7 @@ namespace Site.Core.DataModel.Model
         public string Options { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public int Step { get; set; }
+        public bool Completed { get; set; }
     }
 }

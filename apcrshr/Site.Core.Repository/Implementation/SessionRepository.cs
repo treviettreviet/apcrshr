@@ -28,6 +28,8 @@ namespace Site.Core.Repository.Implementation
                 {
                     session.Options = item.Options;
                     session.UpdatedDate = DateTime.Now;
+                    session.Step = item.Step;
+                    session.Completed = item.Completed;
 
                     context.SaveChanges();
                 }

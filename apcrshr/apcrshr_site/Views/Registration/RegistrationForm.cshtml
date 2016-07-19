@@ -72,6 +72,7 @@
                         </li>
                     </ul>
                     <input type="hidden" name="CurrentStep" value="1" />
+                    <input type="hidden" class="hidSession" name="hidSession" value="" />
                     <div class="form-group">
                         <label for="firstname" class="control-label col-sm-3">Title <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-9">
@@ -158,6 +159,7 @@
                         </li>
                     </ul>
                     <input type="hidden" name="CurrentStep" value="2" />
+                    <input type="hidden" class="hidSession" name="hidSession" value="" />
                     <div class="form-group">
                         <label for="anotherelem" class="control-label col-sm-3">Email address <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-9">
@@ -352,6 +354,7 @@
                         </li>
                     </ul>
                     <input type="hidden" name="CurrentStep" value="3" />
+                    <input type="hidden" class="hidSession" name="hidSession" value="" />
                     <div class="form-group">
                         <label for="additionalfield" class="control-label col-sm-3">Participant type <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-9">
@@ -524,15 +527,20 @@
                 url: "@Url.Action("RegistrationWizard", "Registration")",
                 dataType: 'json',
                 beforeSubmit: function (data) {
-                    $("#data").html("data sent to the server: " + $.param(data))
+                    //$("#data").html("data sent to the server: " + $.param(data))
+                    $.blockUI({ message: $('#spinner') });
                 },
                 success: function (data) {
+                    $.unblockUI();
                     if (data) {
-                        $("#data").append("    .... store done successfully");
-                    } else {
-                        alert("Server-side validation returned errors, nothing was stored.");
+                        if (data.SessionID != null && data.SessionID != "") {
+                            $(".hidSession").val(data.SessionID);
+                        }
+                        if (data.MailingID != null && data.MailingID != "") {
+                            window.location = "/Registration/RegistrationCompleted";
+                            return false;
+                        }
                     }
-
                     //return true to make the wizard move to the next step, false will cause the wizard to stay on the CV step (change this in store_in_database.html)
                     return data;
                 }

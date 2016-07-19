@@ -18,11 +18,13 @@ namespace apcrshr_site.Controllers
         private static readonly string REGISTRATION_SUBJECT = "You have successfully registered for the 9th Asia- Pacific Conference on Reproductive and Sexual Health and Rights.";
         private IUserService _userService;
         private IMailingAddressService _mailingService;
+        private ISessionService _sessionService;
 
         public RegistrationController()
         {
             this._userService = new UserService();
             this._mailingService = new MailingAddressService();
+            this._sessionService = new SessionService();
         }
 
         //
@@ -40,29 +42,58 @@ namespace apcrshr_site.Controllers
 
         public ActionResult ActiveAccount(string activationCode)
         {
+            FindAllItemReponse<MailingAddressModel> mailingResponse = _mailingService.GetMailingAddresses(activationCode);
+            if (mailingResponse.Items != null)
+            {
+                foreach (var mailing in mailingResponse.Items)
+                {
+                    FindItemReponse<UserModel> userReponse = _userService.FindUserByID(mailing.UserID);
+                    if (userReponse.Item != null)
+                    {
+                        var user = userReponse.Item;
+                        user.Locked = false;
+                        //Prevent password will be updated
+                        user.Password = null;
+                        _userService.UpdateUser(user);
+                    }
+                }
+            }
+            return View();
+        }
+
+        public ActionResult RegistrationCompleted()
+        {
             return View();
         }
 
         [HttpPost]
-        public JsonResult RegistrationWizard(RegistrationModel registration, HttpPostedFileBase file)
+        public JsonResult RegistrationWizard(RegistrationModel registration, string hidSession)
         {
-            InsertResponse response = new InsertResponse();
             FindItemReponse<UserModel> userResponse = new FindItemReponse<UserModel>();
             RegistrationModel temp = null;
-            if (Session["Registration"] == null)
+            FindItemReponse<SessionModel> sessionResponse = null;
+            SessionModel session = null;
+            string sessionId = string.Empty;
+            string mailingId = string.Empty;
+            if (!string.IsNullOrEmpty(hidSession))
             {
-                Session["Registration"] = registration;
+                sessionResponse = _sessionService.FindID(hidSession);
+                if (sessionResponse.Item != null && sessionResponse.Item.Options != null)
+                {
+                    temp = XmlSerializerUltil.Deserialize<RegistrationModel>(sessionResponse.Item.Options);
+                    if (sessionResponse.Item.Completed)
+                    {
+                        //Just skip
+                        return Json(new { }, JsonRequestBehavior.AllowGet);
+                    }
+                }
             }
             else
             {
-                temp = (RegistrationModel)Session["Registration"];
+                temp = new RegistrationModel();
             }
             if (registration != null)
             {
-                if (temp == null)
-                {
-                    temp = new RegistrationModel();
-                }
                 if (!string.IsNullOrEmpty(temp.Email))
                 {
                     userResponse = _userService.FindUserByEmail(temp.Email);
@@ -90,9 +121,26 @@ namespace apcrshr_site.Controllers
                         {
                             temp.DisabilityOrTreatment = registration.DisabilityOrTreatment;
                         }
-                        temp.CurrentStep = 1;
-                        Session["Registration"] = temp;
-                        break;
+                        if (sessionResponse != null && sessionResponse.Item != null)
+                        {
+                            session = sessionResponse.Item;
+                            session.Step = registration.CurrentStep;
+                            session.UpdatedDate = DateTime.Now;
+                            session.Options = XmlSerializerUltil.Serialize<RegistrationModel>(temp);
+                            _sessionService.Update(session);
+                            sessionId = hidSession;
+                        }
+                        else
+                        {
+                            session = new SessionModel();
+                            session.SessionID = Guid.NewGuid().ToString();
+                            session.CreatedDate = DateTime.Now;
+                            session.Step = registration.CurrentStep;
+                            session.Options = XmlSerializerUltil.Serialize<RegistrationModel>(temp);
+                            InsertResponse insertSession = _sessionService.Create(session);
+                            sessionId = insertSession.InsertID;
+                        }
+                        return Json(new { SessionID = sessionId, MailingID = mailingId }, JsonRequestBehavior.AllowGet);
                     case 2:
                         if (!string.IsNullOrEmpty(registration.Email))
                         {
@@ -126,15 +174,16 @@ namespace apcrshr_site.Controllers
                         {
                             temp.Organization = registration.Organization;
                         }
-                        temp.CurrentStep = 2;
                         temp.RegistrationStatus = (int)RegistrationStatus.Created;
-                        response = CreateUser(temp);
-                        if (response.ErrorCode == (int)ErrorCode.None)
-                        {
-                            temp.UserID = response.InsertID;
-                        }
-                        Session["Registration"] = temp;
-                        break;
+                        
+                        session = sessionResponse.Item;
+                        session.Step = registration.CurrentStep;
+                        session.UpdatedDate = DateTime.Now;
+                        session.Options = XmlSerializerUltil.Serialize<RegistrationModel>(temp);
+                        _sessionService.Update(session);
+
+                        sessionId = hidSession;
+                        return Json(new { SessionID = sessionId, MailingID = mailingId }, JsonRequestBehavior.AllowGet);
                     case 3:
                         if (!string.IsNullOrEmpty(registration.ParticipantType))
                         {
@@ -172,15 +221,30 @@ namespace apcrshr_site.Controllers
                         {
                             temp.DetailOfEmbassy = registration.DetailOfEmbassy;
                         }
-                        response = CreateMailing(temp);
-                        if (response.ErrorCode == (int)ErrorCode.None)
+
+                        session = sessionResponse.Item;
+                        session.Step = registration.CurrentStep;
+                        session.UpdatedDate = DateTime.Now;
+                        session.Completed = true;
+                        session.Options = XmlSerializerUltil.Serialize<RegistrationModel>(temp);
+                        _sessionService.Update(session);
+
+                        //Create user
+                        InsertResponse insertUserResponse = CreateUser(temp);
+                        if (insertUserResponse.ErrorCode == (int)ErrorCode.None)
                         {
-                            temp.MailingAddressID = response.InsertID;
+                            temp.UserID = insertUserResponse.InsertID;
+                            InsertResponse insertMailingResponse = CreateMailing(temp);
+                            if (insertMailingResponse.ErrorCode == (int)ErrorCode.None)
+                            {
+                                mailingId = insertMailingResponse.InsertID;
+                            }
                         }
-                        Session["Registration"] = temp;
-                        break;
-                    default:
-                        break;
+
+                        //Delete session
+                        _sessionService.Delete(sessionId);
+                        sessionId = hidSession;
+                        return Json(new { SessionID = sessionId, MailingID = mailingId }, JsonRequestBehavior.AllowGet);
                 }
             }
             return Json(new { }, JsonRequestBehavior.AllowGet);
@@ -220,6 +284,7 @@ namespace apcrshr_site.Controllers
             user.CreatedDate = DateTime.Now;
             user.Password = System.Web.Security.Membership.GeneratePassword(10, 3);
             user.UserName = user.Email;
+            user.RegistrationStatus = (int)RegistrationStatus.Created;
 
             InsertResponse response = _userService.CreateUser(user);
 

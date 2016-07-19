@@ -50,5 +50,12 @@ namespace Site.Core.Service.Contract
         /// </summary>
         /// <returns></returns>
         FindAllItemReponse<MailingAddressModel> GetMailingAddresses();
+
+        /// <summary>
+        /// Find mailing by activation code
+        /// </summary>
+        /// <param name="activationCode"></param>
+        /// <returns></returns>
+        FindAllItemReponse<MailingAddressModel> GetMailingAddresses(string activationCode);
     }
 }

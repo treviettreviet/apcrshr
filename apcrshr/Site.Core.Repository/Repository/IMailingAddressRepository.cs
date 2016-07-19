@@ -9,5 +9,6 @@ namespace Site.Core.Repository.Repository
     public interface IMailingAddressRepository : IRepository<MailingAddress>
     {
         IList<MailingAddress> FindByUserID(string userID);
+        IList<MailingAddress> FindByActivation(string activationCode);
     }
 }

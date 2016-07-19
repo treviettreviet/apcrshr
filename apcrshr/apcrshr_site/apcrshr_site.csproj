@@ -223,6 +223,7 @@
     <Compile Include="Helper\TokenHtmlExtension.cs" />
     <Compile Include="Helper\UrlSlugger.cs" />
     <Compile Include="Helper\UserHelper.cs" />
+    <Compile Include="Helper\XmlSerializerUltil.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\RegistrationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1262,6 +1263,7 @@
     <Content Include="Views\User\ForgetPassword.cshtml" />
     <Content Include="Views\User\UpdateUser.cshtml" />
     <Content Include="Views\Registration\ActiveAccount.cshtml" />
+    <Content Include="Views\Registration\RegistrationCompleted.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
