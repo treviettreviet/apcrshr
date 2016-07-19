@@ -8,6 +8,7 @@ namespace apcrshr_site.Models
     public class RegistrationModel
     {
         public string UserID { get; set; }
+        public string MailingAddressID { get; set; }
         public int CurrentStep { get; set; }
         public string Title { get; set; }
         public string FullName { get; set; }
@@ -23,9 +24,9 @@ namespace apcrshr_site.Models
         public string WorkAddress { get; set; }
         public string Organization { get; set; }
         public string ParticipantType { get; set; }
-        public bool YouthConference { get; set; }
+        public string YouthConference { get; set; }
         public bool NeedVisaSupport { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public Nullable<System.DateTime> DateOfBirth { get; set; }
         public string OriginalNationality { get; set; }
         public string CurrentNationality { get; set; }
         public string PassportNumber { get; set; }
@@ -40,5 +41,8 @@ namespace apcrshr_site.Models
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public string Password { get; set; }
         public string UserName { get; set; }
+        public string PassportPhoto1 { get; set; }
+        public string PassportPhoto2 { get; set; }
+        public string PassportPhoto3 { get; set; }
     }
 }

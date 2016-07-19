@@ -242,3 +242,23 @@ GO
 ALTER TABLE [MailingAddress] ADD [DetailOfEmbassy] NVARCHAR(MAX) NULL
 
 GO
+
+ALTER TABLE [MailingAddress] ADD [NeedVisaSupport] BIT NOT NULL DEFAULT(0)
+
+GO
+
+ALTER TABLE [MailingAddress] ALTER COLUMN [PassportPhoto1] NVARCHAR(200) NULL
+
+GO
+
+ALTER TABLE [MailingAddress] ALTER COLUMN [PassportPhoto2] NVARCHAR(200) NULL
+
+GO
+
+ALTER TABLE [MailingAddress] ALTER COLUMN [PassportPhoto3] NVARCHAR(200) NULL
+
+GO
+
+ALTER TABLE [MailingAddress] ADD [ActivationCode] VARCHAR(50) NULL
+
+GO

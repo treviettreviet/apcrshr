@@ -8,12 +8,19 @@ using Site.Core.Service.Contract;
 using Site.Core.Service.Implementation;
 using Site.Core.Repository.Repository;
 using Site.Core.Repository;
+using System.Net.Mail;
+using Site.Core.Common.Ultil.Security;
+using System.Text;
 
 namespace apcrshr_site.Helper
 {
     public class DataHelper
     {
-
+        private static readonly string EMAIL = "abstract.apcrshr9vn@gmail.com";
+        private static readonly string PASSWORD = "kjKJSDIFU8sf7*U*&FJDkfskdfjdjfhyT%$%^sgfdjsnflksflkM%%$#VBskmf;ls,fpl_-sfKKLFN)(F*s9f8s98fosnflkJFisf89sufdflkdmflkdmfkdfjUY*UFdjfnKJHyts76%&D*y8768y78FdkjfF98sufj==";
+        private static readonly string CIPHER = "z3HMcf1v7/r+g4FqNPL0CqwoKQbdvwofhpcbDL6vyFK1ZPZ/ZM9n/rbiigd+r037d2VtcgRRh/HQ53Hx1dsuUUOf/nAgL8RX5YYaER/HbyQJc1+2LbsfcP8ygoWkvdM/";
+        private static readonly string HOST = "smtp.gmail.com"; 
+        private static readonly int PORT = 587;
         private static DataHelper _instance;
 
         private DataHelper()
@@ -82,6 +89,65 @@ namespace apcrshr_site.Helper
                 return string.Format("{0}://{1}:{2}/Home/ArticleView/{3}", request.Url.Scheme, request.Url.Host, request.Url.Port, actionURL);
             }
             return string.Empty;
+        }
+
+        public string BuildMessage(string username, string password, string activeUrl)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("<p>You have successfully registered for the 9th Asia- Pacific Conference on Reproductive and Sexual Health and Rights. Below is your account information:</p></br>");
+            builder.Append(string.Format("<p>User name: <b>{0}</b></p></br>", username));
+            builder.Append(string.Format("<p>Password: <b>{0}</b></p></br>", password));
+            builder.Append("<p>Please click on the link below to activate your account:</p></br>");
+            builder.Append(string.Format("<a href='{0}'>Active Your Account</a></br>", activeUrl));
+            builder.Append("<p>You can log in to your account on the website <a href='http://apcrshr9vn.org/User/Login'>Login</a> to submit abstracts and apply for a conference scholarship. You can edit your information, abstract and application before the closing date of each submission.</p></br>");
+            builder.Append("<p>If you have any question relating to your account or logistic issues, please contact us via email at: <a href='mailto:Secretariate@apcrshr9vn.org'><span>Secretariate@apcrshr9vn.org</span></a></p></br></br>");
+            builder.Append("<b>Thank you and welcome to the conference.</b>");
+            return builder.ToString();
+        }
+
+        public void SendEmail(string destinationEmail, string subject, string body)
+        {
+            var mail = new System.Net.Mail.MailMessage();
+            mail.To.Add(new MailAddress(destinationEmail));
+            mail.From = new MailAddress(EMAIL);
+            mail.Subject = subject;
+            mail.Body = body;
+            mail.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = HOST;
+            smtp.Port = PORT;
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new System.Net.NetworkCredential
+            (EMAIL, StringCipher.Decrypt(CIPHER, PASSWORD));
+            smtp.EnableSsl = true;
+            try
+            {
+                smtp.Send(mail);
+            }
+            catch (SmtpFailedRecipientsException ex)
+            {
+                for (int i = 0; i < ex.InnerExceptions.Length; i++)
+                {
+                    SmtpStatusCode status = ex.InnerExceptions[i].StatusCode;
+                    if (status == SmtpStatusCode.MailboxBusy ||
+                        status == SmtpStatusCode.MailboxUnavailable)
+                    {
+                        Console.WriteLine("Delivery failed - retrying in 5 seconds.");
+                        System.Threading.Thread.Sleep(5000);
+                        smtp.Send(mail);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Failed to deliver message to {0}",
+                            ex.InnerExceptions[i].FailedRecipient);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception caught in RetryIfBusy(): {0}",
+                        ex.ToString());
+            }
         }
     }
 }

@@ -42,6 +42,8 @@ namespace Site.Core.Repository.Implementation
                     mailing.PassportPhoto2 = item.PassportPhoto2;
                     mailing.PassportPhoto3 = item.PassportPhoto3;
                     mailing.DetailOfEmbassy = item.DetailOfEmbassy;
+                    mailing.NeedVisaSupport = item.NeedVisaSupport;
+                    mailing.ActivationCode = item.ActivationCode;
 
                     context.SaveChanges();
                 }
