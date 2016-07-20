@@ -519,6 +519,60 @@
             }
         });
 
+        $("#Email").change(function () {
+            if ($(this).val() != null && $(this).val() != "") {
+                $.blockUI({ message: $('#spinner') });
+                var formData = new FormData();
+                formData.append("email", $(this).val());
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("EmailValidation", "Registration")',
+                    data: formData,
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    async: true,
+                    success: function (response) {
+                        $.unblockUI();
+                        if (response.ErrorCode != null && response.ErrorCode != 0) {
+                            alert(response.Message);
+                            $("#Email").val("");
+                        }
+                    },
+                    error: function (error) {
+                        $.unblockUI();
+                    }
+                });
+            }
+        });
+
+        $("#OtherEmail").change(function () {
+            if ($(this).val() != null && $(this).val() != "") {
+                $.blockUI({ message: $('#spinner') });
+                var formData = new FormData();
+                formData.append("email", $(this).val());
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("EmailValidation", "Registration")',
+                    data: formData,
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    async: true,
+                    success: function (response) {
+                        $.unblockUI();
+                        if (response.ErrorCode != null && response.ErrorCode != 0) {
+                            alert(response.Message);
+                            $("#OtherEmail").val("");
+                        }
+                    },
+                    error: function (error) {
+                        $.unblockUI();
+                    }
+                });
+            }
+        });
+
         var remoteAjax = {};
 
         $("#frmRegistration .step").each(function () { // for each step in the wizard, add an option to the remoteAjax object...
@@ -527,30 +581,6 @@
                 dataType: 'json',
                 beforeSubmit: function (data) {
                     $.blockUI({ message: $('#spinner') });
-                    $.each(data, function (index, value) {
-                        if (value.name == "Email" && value.value != null && value.value != "") {
-                            var formData = new FormData();
-                            formData.append("email", value.value);
-                            $.ajax({
-                                type: "POST",
-                                url: '@Url.Action("EmailValidation", "Registration")',
-                                data: formData,
-                                dataType: 'json',
-                                contentType: false,
-                                processData: false,
-                                async: true,
-                                success: function (response) {
-                                    $.unblockUI();
-                                    if (response.ErrorCode != null && response.ErrorCode != 0) {
-                                        return false;
-                                    }
-                                },
-                                error: function (error) {
-                                    $.unblockUI();
-                                }
-                            });
-                        }
-                    });
                 },
                 success: function (data) {
                     $.unblockUI();

@@ -259,6 +259,15 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} &quot;{1}&quot; is existed..
+        /// </summary>
+        public static string msg_item_exists {
+            get {
+                return ResourceManager.GetString("msg_item_exists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This user name has registered by another user..
         /// </summary>
         public static string msg_username_exist {
@@ -502,7 +511,7 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Video.
         /// </summary>
         public static string title_video {
             get {

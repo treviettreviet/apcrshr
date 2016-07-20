@@ -71,7 +71,7 @@ namespace apcrshr_site.Controllers
         {
             FindItemReponse<UserModel> response = _userService.FindUserByEmail(email);
             if(response.Item != null){
-                return Json(new { ErrorCode = (int)ErrorCode.Error }, JsonRequestBehavior.AllowGet);
+                return Json(new { ErrorCode = (int)ErrorCode.Error, Message = string.Format(Resources.Resource.msg_item_exists, "Email", email) }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { }, JsonRequestBehavior.AllowGet);
         }
