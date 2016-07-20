@@ -67,6 +67,16 @@ namespace apcrshr_site.Controllers
         }
 
         [HttpPost]
+        public JsonResult EmailValidation(string email)
+        {
+            FindItemReponse<UserModel> response = _userService.FindUserByEmail(email);
+            if(response.Item != null){
+                return Json(new { ErrorCode = (int)ErrorCode.Error }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
         public JsonResult RegistrationWizard(RegistrationModel registration, string hidSession)
         {
             FindItemReponse<UserModel> userResponse = new FindItemReponse<UserModel>();
@@ -94,10 +104,6 @@ namespace apcrshr_site.Controllers
             }
             if (registration != null)
             {
-                if (!string.IsNullOrEmpty(temp.Email))
-                {
-                    userResponse = _userService.FindUserByEmail(temp.Email);
-                }
                 switch (registration.CurrentStep)
                 {
                     case 1:
@@ -240,10 +246,20 @@ namespace apcrshr_site.Controllers
                                 mailingId = insertMailingResponse.InsertID;
                             }
                         }
+                        else
+                        {
+                            session = sessionResponse.Item;
+                            session.Step = registration.CurrentStep;
+                            session.UpdatedDate = DateTime.Now;
+                            session.Completed = false;
+                            session.Options = XmlSerializerUltil.Serialize<RegistrationModel>(temp);
+                            _sessionService.Update(session);
+                            return Json(new { SessionID = sessionId, MailingID = mailingId, ErrorCode = insertUserResponse.ErrorCode, Message = insertUserResponse.Message }, JsonRequestBehavior.AllowGet);
+                        }
 
+                        sessionId = hidSession;
                         //Delete session
                         _sessionService.Delete(sessionId);
-                        sessionId = hidSession;
                         return Json(new { SessionID = sessionId, MailingID = mailingId }, JsonRequestBehavior.AllowGet);
                 }
             }

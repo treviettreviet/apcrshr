@@ -512,7 +512,6 @@
                 },
                 highlight: function (label) {
                     $(label).closest('.form-group').removeClass('has-error has-success').addClass('has-error');
-                    console.log('aaa');
                 },
                 success: function (label) {
                     label.addClass('valid').closest('.form-group').removeClass('has-error has-success').addClass('has-success');
@@ -527,8 +526,31 @@
                 url: "@Url.Action("RegistrationWizard", "Registration")",
                 dataType: 'json',
                 beforeSubmit: function (data) {
-                    //$("#data").html("data sent to the server: " + $.param(data))
                     $.blockUI({ message: $('#spinner') });
+                    $.each(data, function (index, value) {
+                        if (value.name == "Email" && value.value != null && value.value != "") {
+                            var formData = new FormData();
+                            formData.append("email", value.value);
+                            $.ajax({
+                                type: "POST",
+                                url: '@Url.Action("EmailValidation", "Registration")',
+                                data: formData,
+                                dataType: 'json',
+                                contentType: false,
+                                processData: false,
+                                async: true,
+                                success: function (response) {
+                                    $.unblockUI();
+                                    if (response.ErrorCode != null && response.ErrorCode != 0) {
+                                        return false;
+                                    }
+                                },
+                                error: function (error) {
+                                    $.unblockUI();
+                                }
+                            });
+                        }
+                    });
                 },
                 success: function (data) {
                     $.unblockUI();
@@ -540,8 +562,10 @@
                             window.location = "/Registration/RegistrationCompleted";
                             return false;
                         }
+                        if (data.ErrorCode != null && data.ErrorCode != 0) {
+                            alert(data.Message);
+                        }
                     }
-                    //return true to make the wizard move to the next step, false will cause the wizard to stay on the CV step (change this in store_in_database.html)
                     return data;
                 }
             };

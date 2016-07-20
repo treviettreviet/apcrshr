@@ -117,6 +117,15 @@ namespace Site.Core.Service.Implementation
             try
             {
                 IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
+                User _user = userRepository.FindByUserName(user.UserName);
+                if (_user != null)
+                {
+                    return new InsertResponse
+                    {
+                        ErrorCode = (int)ErrorCode.Error,
+                        Message = string.Format(Resources.Resource.msg_insert_exists, "Email", user.Email)
+                    };
+                }
                 object id = userRepository.Insert(MapperUtil.CreateMapper().Mapper.Map<UserModel, User>(user));
                 return new InsertResponse
                 {
