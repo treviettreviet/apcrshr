@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using apcrshr_site.Helper;
@@ -405,6 +408,81 @@ namespace apcrshr_site.Controllers
             registration.TypeOfPassport = mailing.TypeOfPassport;
 
             return registration;
+        }
+
+        [HttpPost]
+        public JsonResult Upload(string SessionID)
+        {
+            try
+            {
+                RegistrationModel temp = null;
+                FindItemReponse<SessionModel> sessionResponse = null;
+                SessionModel session = null;
+                if (!string.IsNullOrEmpty(SessionID))
+                {
+                    sessionResponse = _sessionService.FindID(SessionID);
+                    if (sessionResponse.Item != null && sessionResponse.Item.Options != null)
+                    {
+                        temp = XmlSerializerUltil.Deserialize<RegistrationModel>(sessionResponse.Item.Options);
+                        if (sessionResponse.Item.Completed)
+                        {
+                            //Just skip
+                            return Json(new { }, JsonRequestBehavior.AllowGet);
+                        }
+                    }
+                }
+                else
+                {
+                    temp = new RegistrationModel();
+                }
+                int i = 0;
+                foreach (string file in Request.Files)
+                {
+                    var fileContent = Request.Files[file];
+                    if (fileContent != null && fileContent.ContentLength > 0)
+                    {
+                        //Create Folder
+                        try
+                        {
+                            if (!System.IO.File.Exists(Server.MapPath("~/Content/upload/images/passport/")))
+                            {
+                                Directory.CreateDirectory(Server.MapPath("~/Content/upload/images/passport/"));
+                            }
+                        }
+                        catch (Exception) { }
+
+                        string extension = fileContent.FileName.Substring(fileContent.FileName.LastIndexOf("."));
+                        string filename = fileContent.FileName.Substring(0, fileContent.FileName.LastIndexOf(".")).Replace(" ", "-");
+                        filename = string.Format("{0}-{1}", filename, UrlSlugger.Get8Digits());
+                        fileContent.SaveAs(Server.MapPath("~/Content/upload/images/passport/" + filename + extension));
+                        switch (i)
+                        {
+                            case 0:
+                                temp.PassportPhoto1 = "/Content/upload/images/passport/" + filename + extension;
+                                break;
+                            case 1:
+                                temp.PassportPhoto2 = "/Content/upload/images/passport/" + filename + extension;
+                                break;
+                            case 2:
+                                temp.PassportPhoto3 = "/Content/upload/images/passport/" + filename + extension;
+                                break;
+                            default:
+                                return Json("File uploaded successfully");
+                        }
+                        i++;
+                        session = sessionResponse.Item;
+                        session.UpdatedDate = DateTime.Now;
+                        session.Options = XmlSerializerUltil.Serialize<RegistrationModel>(temp);
+                        _sessionService.Update(session);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("Upload failed");
+            }
+            return Json("File uploaded successfully");
         }
     }
 }

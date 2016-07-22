@@ -273,4 +273,7 @@
   <data name="msg_item_exists" xml:space="preserve">
     <value>{0} "{1}" is existed.</value>
   </data>
+  <data name="title_loginProfile" xml:space="preserve">
+    <value>{0} Profile</value>
+  </data>
 </root>

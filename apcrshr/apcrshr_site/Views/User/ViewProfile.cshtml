@@ -6,63 +6,295 @@
 }
 
 <div class="col-sm-9 page-content">
-    <div id="categories-3" class="widget widget_categories profile">
-        <div class="btn_style bg1">
-            <h4>Thông Tin Người Dùng</h4>
-        </div>
-        <div class="profile-box">
-            <div class="profile-update-user">
-                <div class="row span10" id="display_user">
-                    <div class="span2">
-                        <img src="~/Content/images/default-avatar.png" />
-                    </div>
-                    <div class="box box-bordered box-color span6">
-                        <div class="form-group span4">
-                            <label for="textfield" class="control-label span2">@apcrshr_site.Resources.Resource.text_username</label>
-                            
-                            <div class="span3">
-                                @Html.DisplayFor(Model => Model.UserName, new { @class = "form-control", @readonly = "readonly" })
-                            </div>
-                        </div>
-                        <div class="form-group span6">
-                            <label for="textfield" class="control-label span2">@apcrshr_site.Resources.Resource.text_fullName</label>
-                            
-                            <div class="span3">
-                                @Html.DisplayFor(Model => Model.FullName, new { @class = "form-control", @readonly = "readonly" })
-                            </div>
-                        </div>
-                        <div class="form-group span6">
-                            <label for="textfield" class="control-label span2">@apcrshr_site.Resources.Resource.text_email</label>
-                            
-                            <div class="span3">
-                                @Html.DisplayFor(Model => Model.Email, new { @class = "form-control", @readonly = "readonly" })
-                            </div>
-                        </div>
-                        <div class="form-group span6">
-                            <label for="textfield" class="control-label span2">@apcrshr_site.Resources.Resource.text_DoB</label>
-                            
-                            <div class="span3">
-                                <span>@this.Model.DateOfBirth.Value.ToString("MMMM dd, yyyy")</span>
-                                
-                            </div>
-                        </div>
-                        <div class="form-group span6">
-                            <label for="textfield" class="control-label span2">@apcrshr_site.Resources.Resource.text_sex</label>
-                            
-                            <div class="span3">
-                                @Html.DisplayFor(Model => Model.Sex, new { @class = "form-control", @readonly = "readonly" })
-                            </div>
-                        </div>
-                    </div>
+    
+    <div class="row">
+
+        <h4 class="classic-title"><span>@string.Format(Resource.title_loginProfile, Model.UserName)</span></h4>
+
+        <!-- Accordion -->
+        <div class="panel-group" id="accordion">
+
+            <!-- Start Accordion 1 -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-4">
+                            <i class="icon-down-open-1 control-icon"></i>
+                            <i class="icon-user-4"></i> Personal Information
+                        </a>
+                    </h4>
                 </div>
-                <div class="span3"></div>
-                <div class="span4" id="view_profile">
-                    @using (Html.BeginForm("UpdateUser", "User", FormMethod.Get, new { @class = "form-validate" }))
-                    {
-                        <input type="submit" name="submit" value="@apcrshr_site.Resources.Resource.button_editProfile" class='button' />
-                    }
+                <div id="collapse-4" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <!-- Start Contact Form -->
+                        <div class="box-content nopadding">
+                            <form action="#" class='form-horizontal form-wizard form-validate' id="frmProfile" method="post">
+                                <div class="form-group">
+                                    <label for="firstname" class="control-label col-sm-3">Title <span class="validation-span-required">(*)</span></label>
+                                    <div class="col-sm-9">
+                                        <select name="Title" id="Title" onchange="popupSelectInput(this, 'Title')" data-rule-required="true">
+                                            <option value="">-- Chose one --</option>
+                                            <option value="Dr">Dr</option>
+                                            <option value="Mr">Mr</option>
+                                            <option value="Mrs">Mrs</option>
+                                            <option value="Ms">Ms</option>
+                                            <option value="Others">Others</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="anotherelem" class="control-label col-sm-3">Full name <span class="validation-span-required">(*)</span></label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="FullName" id="FullName" class="form-control" data-rule-required="true">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="additionalfield" class="control-label col-sm-3">Sex <span class="validation-span-required">(*)</span></label>
+                                    <div class="col-sm-9">
+                                        <select name="Sex" id="Sex" onchange="popupSelectInput(this, 'Sex')" data-rule-required="true">
+                                            <option value="">-- Chose one --</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Others">Others</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="additionalfield" class="control-label col-sm-3">Meal preference <span class="validation-span-required">(*)</span></label>
+                                    <div class="col-sm-9">
+                                        <select name="MealPreference" id="MealPreference" data-rule-required="true">
+                                            <option value="">-- Chose one --</option>
+                                            <option value="Vegetarian">Vegetarian</option>
+                                            <option value="Non- vegetarian">Non- vegetarian</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="anotherelem" class="control-label col-sm-3">Disability or special treatment</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="DisabilityOrTreatment" id="DisabilityOrTreatment" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="anotherelem" class="control-label col-sm-3">Email address <span class="validation-span-required">(*)</span></label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="Email" id="Email" class="form-control" data-rule-required="true" data-rule-email="true">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="anotherelem" class="control-label col-sm-3">Other email address</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="OtherEmail" id="OtherEmail" class="form-control" data-rule-email="true">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="anotherelem" class="control-label col-sm-3">Phone number <span class="validation-span-required">(*)</span></label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="Phone" id="Phone" class="form-control" data-rule-required="true" data-rule-number="true" data-rule-minlength="8">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="anotherelem" class="control-label col-sm-3">Address <span class="validation-span-required">(*)</span></label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="Address" id="Address" class="form-control" data-rule-required="true">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="anotherelem" class="control-label col-sm-3">City <span class="validation-span-required">(*)</span></label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="City" id="City" class="form-control" data-rule-required="true">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="text" class="control-label col-sm-3">Country <span class="validation-span-required">(*)</span></label>
+                                    <div class="col-sm-9">
+                                        <select name="Country" id="Country" data-rule-required="true">
+                                            <option value="">-- Chose one --</option>
+                                            <option value="Afghanistan">Afghanistan</option>
+                                            <option value="Albania">Albania</option>
+                                            <option value="Algeria">Algeria</option>
+                                            <option value="Angola">Angola</option>
+                                            <option value="Argentina">Argentina</option>
+                                            <option value="Armenia">Armenia</option>
+                                            <option value="Australia">Australia</option>
+                                            <option value="Azerbaijan">Azerbaijan</option>
+                                            <option value="Bangladesh">Bangladesh</option>
+                                            <option value="Bolivia">Bolivia</option>
+                                            <option value="Brazil">Brazil</option>
+                                            <option value="Brunei">Brunei</option>
+                                            <option value="Bulgaria">Bulgaria</option>
+                                            <option value="Cameroon">Cameroon</option>
+                                            <option value="Canada">Canada</option>
+                                            <option value="Chile">Chile</option>
+                                            <option value="China">China</option>
+                                            <option value="Colombia">Colombia</option>
+                                            <option value="Congo">Congo</option>
+                                            <option value="Costa Rica">Costa Rica</option>
+                                            <option value="Croatia">Croatia</option>
+                                            <option value="Cuba">Cuba</option>
+                                            <option value="Czech">Czech</option>
+                                            <option value="Dominica">Dominica</option>
+                                            <option value="Ecuador">Ecuador</option>
+                                            <option value="Egypt">Egypt</option>
+                                            <option value="France">France</option>
+                                            <option value="Georgia">Georgia</option>
+                                            <option value="Germany">Germany</option>
+                                            <option value="Ghana">Ghana</option>
+                                            <option value="Greece">Greece</option>
+                                            <option value="Haiti">Haiti</option>
+                                            <option value="Hungary">Hungary</option>
+                                            <option value="Iceland">Iceland</option>
+                                            <option value="India">India</option>
+                                            <option value="Indonesia">Indonesia</option>
+                                            <option value="Iran">Iran</option>
+                                            <option value="Ireland">Ireland</option>
+                                            <option value="Israel">Israel</option>
+                                            <option value="Italy">Italy</option>
+                                            <option value="Jamaica">Jamaica</option>
+                                            <option value="Japan">Japan</option>
+                                            <option value="Jordan">Jordan</option>
+                                            <option value="Kazakhstan">Kazakhstan</option>
+                                            <option value="Kuwait">Kuwait</option>
+                                            <option value="Kyrgyzstan">Kyrgyzstan</option>
+                                            <option value="Laos">Laos</option>
+                                            <option value="Latvia">Latvia</option>
+                                            <option value="Lebanon">Lebanon</option>
+                                            <option value="Liberia">Liberia</option>
+                                            <option value="Libya">Libya</option>
+                                            <option value="Macedonia">Macedonia</option>
+                                            <option value="Malaysia">Malaysia</option>
+                                            <option value="Mali">Mali</option>
+                                            <option value="Mexico">Mexico</option>
+                                            <option value="Myanmar">Myanmar</option>
+                                            <option value="Nepal">Nepal</option>
+                                            <option value="New Zealand">New Zealand</option>
+                                            <option value="Nigeria">Nigeria</option>
+                                            <option value="North Korea">North Korea</option>
+                                            <option value="Pakistan">Pakistan</option>
+                                            <option value="Palestine">Palestine</option>
+                                            <option value="Paraguay">Paraguay</option>
+                                            <option value="Peru">Peru</option>
+                                            <option value="Philippines">Philippines</option>
+                                            <option value="Poland">Poland</option>
+                                            <option value="Portugal">Portugal</option>
+                                            <option value="Romania">Romania</option>
+                                            <option value="Russia">Russia</option>
+                                            <option value="Saudi Arabia">Saudi Arabia</option>
+                                            <option value="Senegal">Senegal</option>
+                                            <option value="Serbia">Serbia</option>
+                                            <option value="Singapore">Singapore</option>
+                                            <option value="Slovenia">Slovenia</option>
+                                            <option value="South Africa">South Africa</option>
+                                            <option value="South Korea">South Korea</option>
+                                            <option value="Spain">Spain</option>
+                                            <option value="Sudan">Sudan</option>
+                                            <option value="Sweden">Sweden</option>
+                                            <option value="Switzerland">Switzerland</option>
+                                            <option value="Syria">Syria</option>
+                                            <option value="Taiwan">Taiwan</option>
+                                            <option value="Tajikistan">Tajikistan</option>
+                                            <option value="Thailand">Thailand</option>
+                                            <option value="Tunisia">Tunisia</option>
+                                            <option value="Turkey">Turkey</option>
+                                            <option value="Ukraine">Ukraine</option>
+                                            <option value="United Kingdom">United Kingdom</option>
+                                            <option value="United States">United States</option>
+                                            <option value="Uruguay">Uruguay</option>
+                                            <option value="Venezuela">Venezuela</option>
+                                            <option value="Vietnam">Vietnam</option>
+                                            <option value="Yemen">Yemen</option>
+                                            <option value="Zambia">Zambia</option>
+                                            <option value="Zimbabwe">Zimbabwe</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="anotherelem" class="control-label col-sm-3">Address</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="WorkAddress" id="WorkAddress" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="anotherelem" class="control-label col-sm-3">Organization <span class="validation-span-required">(*)</span></label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="Organization" id="Organization" class="form-control" data-rule-required="true">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- End Contact Form -->
+                    </div>
                 </div>
             </div>
+            <!-- End Accordion 1 -->
+
+            <!-- Start Accordion 2 -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-5" class="collapsed">
+                            <i class="icon-down-open-1 control-icon"></i>
+                            <i class="icon-gift-1"></i> Abstract submission
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse-5" class="panel-collapse collapse">
+                    <div class="panel-body">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. The point of using Lorem Ipsum is that it has a <strong>more-or-less</strong> normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore...</div>
+                </div>
+            </div>
+            <!-- End Accordion 2 -->
+
+            <!-- Start Accordion 3 -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-6" class="collapsed">
+                            <i class="icon-down-open-1 control-icon"></i>
+                            <i class="icon-box-3"></i> Main conference scholarship application
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse-6" class="panel-collapse collapse">
+                    <div class="panel-body"><strong>Duis</strong> aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore...</div>
+                </div>
+            </div>
+            <!-- End Accordion 3 -->
+
+            <!-- Start Accordion 4 -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-7" class="collapsed">
+                            <i class="icon-down-open-1 control-icon"></i>
+                            <i class="icon-home-1"></i> Youth scholarship application
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse-7" class="panel-collapse collapse">
+                    <div class="panel-body"><strong>Duis</strong> aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore...</div>
+                </div>
+            </div>
+            <!-- End Accordion 4 -->
+
+            <!-- Start Accordion 5 -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-8" class="collapsed">
+                            <i class="icon-down-open-1 control-icon"></i>
+                            <i class="icon-money-1"></i> To pay registration fee
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse-8" class="panel-collapse collapse">
+                    <div class="panel-body"><strong>Duis</strong> aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore...</div>
+                </div>
+            </div>
+            <!-- End Accordion 5 -->
+
         </div>
+        <!-- End Accordion -->
+
     </div>
+
 </div>

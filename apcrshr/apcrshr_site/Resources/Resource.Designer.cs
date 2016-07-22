@@ -421,6 +421,15 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} Profile.
+        /// </summary>
+        public static string title_loginProfile {
+            get {
+                return ResourceManager.GetString("title_loginProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to News Details.
         /// </summary>
         public static string title_newDetail {

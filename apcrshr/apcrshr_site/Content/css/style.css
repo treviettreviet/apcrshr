@@ -43,7 +43,7 @@ body {
 	font-size: 13px;
     line-height: 21px;
 	font-weight: 300;
-	color: #888;
+	/*color: #888;*/
 	background: url(../images/patterns/body_background.png);
     background-repeat: repeat-x;
     background-position: top;
