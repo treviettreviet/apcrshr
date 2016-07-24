@@ -22,6 +22,7 @@ namespace apcrshr_site.Helper
         private static readonly string HOST = "smtp.gmail.com"; 
         private static readonly int PORT = 587;
         private static DataHelper _instance;
+        private Object _lock = new Object();
 
         private DataHelper()
         {
@@ -91,11 +92,12 @@ namespace apcrshr_site.Helper
             return string.Empty;
         }
 
-        public string BuildMessage(string username, string password, string activeUrl)
+        public string BuildMessage(string username, string password, string activeUrl, string registrationNumber)
         {
             StringBuilder builder = new StringBuilder();
             builder.Append("<p>You have successfully registered for the 9th Asia- Pacific Conference on Reproductive and Sexual Health and Rights. Below is your account information:</p></br>");
             builder.Append(string.Format("<p>User name: <b>{0}</b></p></br>", username));
+            builder.Append(string.Format("<p>Registration Number: <b>{0}</b></p></br>", registrationNumber));
             builder.Append(string.Format("<p>Password: <b>{0}</b></p></br>", password));
             builder.Append("<p>Please click on the link below to activate your account:</p></br>");
             builder.Append(string.Format("<a href='{0}'>Active Your Account</a></br>", activeUrl));
@@ -147,6 +149,26 @@ namespace apcrshr_site.Helper
             {
                 Console.WriteLine("Exception caught in RetryIfBusy(): {0}",
                         ex.ToString());
+            }
+        }
+
+        public string GetUniqueNumbers()
+        {
+            lock (_lock)
+            {
+                int A = 0, B = 0;
+                string Output = string.Empty;
+                for (int i = 0; i < 20; i++)
+                {
+                    while (A == B)
+                    {
+                        Random r = new Random();
+                        A = r.Next(1, 6);
+                    }
+                    Output = Output + A;
+                    B = A;
+                }
+                return Output;
             }
         }
     }

@@ -273,9 +273,11 @@ namespace apcrshr_site.Controllers
         {
             MailingAddressModel mailing = ConvertMailing(registration);
             string activationcode = Guid.NewGuid().ToString();
+            string registrationNumber = DataHelper.GetInstance().GetUniqueNumbers();
             mailing.MailingAddressID = Guid.NewGuid().ToString();
             mailing.CreatedDate = DateTime.Now;
             mailing.ActivationCode = activationcode;
+            mailing.RegistrationNumber = registrationNumber;
             InsertResponse response = _mailingService.CreateMailingAddress(mailing);
 
             if (response.ErrorCode == (int)ErrorCode.None)
@@ -287,7 +289,7 @@ namespace apcrshr_site.Controllers
                     user.Password = System.Web.Security.Membership.GeneratePassword(10, 3);
                     _userService.UpdateUser(user);
                     string url = string.Format("{0}://{1}:{2}/Registration/ActiveAccount?activationCode={3}", Request.Url.Scheme, Request.Url.Host, Request.Url.Port, activationcode);
-                    string body = DataHelper.GetInstance().BuildMessage(userresponse.Item.UserName, user.Password, url);
+                    string body = DataHelper.GetInstance().BuildMessage(userresponse.Item.UserName, user.Password, url, registrationNumber);
                     DataHelper.GetInstance().SendEmail(userresponse.Item.Email, REGISTRATION_SUBJECT, body);
                 }
             }

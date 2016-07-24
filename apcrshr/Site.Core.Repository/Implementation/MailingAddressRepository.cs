@@ -44,6 +44,7 @@ namespace Site.Core.Repository.Implementation
                     mailing.DetailOfEmbassy = item.DetailOfEmbassy;
                     mailing.NeedVisaSupport = item.NeedVisaSupport;
                     mailing.ActivationCode = item.ActivationCode;
+                    mailing.RegistrationNumber = item.RegistrationNumber;
 
                     context.SaveChanges();
                 }

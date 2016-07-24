@@ -28,5 +28,6 @@ namespace Site.Core.DataModel.Model
         public string DetailOfEmbassy { get; set; }
         public bool NeedVisaSupport { get; set; }
         public string ActivationCode { get; set; }
+        public string RegistrationNumber { get; set; }
     }
 }

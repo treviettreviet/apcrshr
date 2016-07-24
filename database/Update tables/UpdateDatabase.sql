@@ -263,6 +263,10 @@ ALTER TABLE [MailingAddress] ADD [ActivationCode] VARCHAR(50) NULL
 
 GO
 
+ALTER TABLE [MailingAddress] ADD [RegistrationNumber] VARCHAR(50) NULL
+
+GO
+
 ALTER TABLE [Session] ADD [Step] INT NOT NULL DEFAULT(0)
 
 GO
