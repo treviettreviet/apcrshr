@@ -1,9 +1,12 @@
 ﻿@using apcrshr_site.Resources
-@model Site.Core.DataModel.Model.UserModel
+@model apcrshr_site.Models.RegistrationModel
 @{
     ViewBag.Title = "ViewProfile";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="~/Areas/Administrator/css/boostrap-editable.css">
 
 <div class="col-sm-9 page-content">
     
@@ -27,201 +30,114 @@
                 <div id="collapse-4" class="panel-collapse collapse in">
                     <div class="panel-body">
                         <!-- Start Contact Form -->
-                        <div class="box-content nopadding">
-                            <form action="#" class='form-horizontal form-wizard form-validate' id="frmProfile" method="post">
-                                <div class="form-group">
-                                    <label for="firstname" class="control-label col-sm-3">Title <span class="validation-span-required">(*)</span></label>
-                                    <div class="col-sm-9">
-                                        <select name="Title" id="Title" onchange="popupSelectInput(this, 'Title')" data-rule-required="true">
-                                            <option value="">-- Chose one --</option>
-                                            <option value="Dr">Dr</option>
-                                            <option value="Mr">Mr</option>
-                                            <option value="Mrs">Mrs</option>
-                                            <option value="Ms">Ms</option>
-                                            <option value="Others">Others</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="anotherelem" class="control-label col-sm-3">Full name <span class="validation-span-required">(*)</span></label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="FullName" id="FullName" class="form-control" data-rule-required="true">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="additionalfield" class="control-label col-sm-3">Sex <span class="validation-span-required">(*)</span></label>
-                                    <div class="col-sm-9">
-                                        <select name="Sex" id="Sex" onchange="popupSelectInput(this, 'Sex')" data-rule-required="true">
-                                            <option value="">-- Chose one --</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                            <option value="Others">Others</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="additionalfield" class="control-label col-sm-3">Meal preference <span class="validation-span-required">(*)</span></label>
-                                    <div class="col-sm-9">
-                                        <select name="MealPreference" id="MealPreference" data-rule-required="true">
-                                            <option value="">-- Chose one --</option>
-                                            <option value="Vegetarian">Vegetarian</option>
-                                            <option value="Non- vegetarian">Non- vegetarian</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="anotherelem" class="control-label col-sm-3">Disability or special treatment</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="DisabilityOrTreatment" id="DisabilityOrTreatment" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="anotherelem" class="control-label col-sm-3">Email address <span class="validation-span-required">(*)</span></label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="Email" id="Email" class="form-control" data-rule-required="true" data-rule-email="true">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="anotherelem" class="control-label col-sm-3">Other email address</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="OtherEmail" id="OtherEmail" class="form-control" data-rule-email="true">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="anotherelem" class="control-label col-sm-3">Phone number <span class="validation-span-required">(*)</span></label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="Phone" id="Phone" class="form-control" data-rule-required="true" data-rule-number="true" data-rule-minlength="8">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="anotherelem" class="control-label col-sm-3">Address <span class="validation-span-required">(*)</span></label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="Address" id="Address" class="form-control" data-rule-required="true">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="anotherelem" class="control-label col-sm-3">City <span class="validation-span-required">(*)</span></label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="City" id="City" class="form-control" data-rule-required="true">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="text" class="control-label col-sm-3">Country <span class="validation-span-required">(*)</span></label>
-                                    <div class="col-sm-9">
-                                        <select name="Country" id="Country" data-rule-required="true">
-                                            <option value="">-- Chose one --</option>
-                                            <option value="Afghanistan">Afghanistan</option>
-                                            <option value="Albania">Albania</option>
-                                            <option value="Algeria">Algeria</option>
-                                            <option value="Angola">Angola</option>
-                                            <option value="Argentina">Argentina</option>
-                                            <option value="Armenia">Armenia</option>
-                                            <option value="Australia">Australia</option>
-                                            <option value="Azerbaijan">Azerbaijan</option>
-                                            <option value="Bangladesh">Bangladesh</option>
-                                            <option value="Bolivia">Bolivia</option>
-                                            <option value="Brazil">Brazil</option>
-                                            <option value="Brunei">Brunei</option>
-                                            <option value="Bulgaria">Bulgaria</option>
-                                            <option value="Cameroon">Cameroon</option>
-                                            <option value="Canada">Canada</option>
-                                            <option value="Chile">Chile</option>
-                                            <option value="China">China</option>
-                                            <option value="Colombia">Colombia</option>
-                                            <option value="Congo">Congo</option>
-                                            <option value="Costa Rica">Costa Rica</option>
-                                            <option value="Croatia">Croatia</option>
-                                            <option value="Cuba">Cuba</option>
-                                            <option value="Czech">Czech</option>
-                                            <option value="Dominica">Dominica</option>
-                                            <option value="Ecuador">Ecuador</option>
-                                            <option value="Egypt">Egypt</option>
-                                            <option value="France">France</option>
-                                            <option value="Georgia">Georgia</option>
-                                            <option value="Germany">Germany</option>
-                                            <option value="Ghana">Ghana</option>
-                                            <option value="Greece">Greece</option>
-                                            <option value="Haiti">Haiti</option>
-                                            <option value="Hungary">Hungary</option>
-                                            <option value="Iceland">Iceland</option>
-                                            <option value="India">India</option>
-                                            <option value="Indonesia">Indonesia</option>
-                                            <option value="Iran">Iran</option>
-                                            <option value="Ireland">Ireland</option>
-                                            <option value="Israel">Israel</option>
-                                            <option value="Italy">Italy</option>
-                                            <option value="Jamaica">Jamaica</option>
-                                            <option value="Japan">Japan</option>
-                                            <option value="Jordan">Jordan</option>
-                                            <option value="Kazakhstan">Kazakhstan</option>
-                                            <option value="Kuwait">Kuwait</option>
-                                            <option value="Kyrgyzstan">Kyrgyzstan</option>
-                                            <option value="Laos">Laos</option>
-                                            <option value="Latvia">Latvia</option>
-                                            <option value="Lebanon">Lebanon</option>
-                                            <option value="Liberia">Liberia</option>
-                                            <option value="Libya">Libya</option>
-                                            <option value="Macedonia">Macedonia</option>
-                                            <option value="Malaysia">Malaysia</option>
-                                            <option value="Mali">Mali</option>
-                                            <option value="Mexico">Mexico</option>
-                                            <option value="Myanmar">Myanmar</option>
-                                            <option value="Nepal">Nepal</option>
-                                            <option value="New Zealand">New Zealand</option>
-                                            <option value="Nigeria">Nigeria</option>
-                                            <option value="North Korea">North Korea</option>
-                                            <option value="Pakistan">Pakistan</option>
-                                            <option value="Palestine">Palestine</option>
-                                            <option value="Paraguay">Paraguay</option>
-                                            <option value="Peru">Peru</option>
-                                            <option value="Philippines">Philippines</option>
-                                            <option value="Poland">Poland</option>
-                                            <option value="Portugal">Portugal</option>
-                                            <option value="Romania">Romania</option>
-                                            <option value="Russia">Russia</option>
-                                            <option value="Saudi Arabia">Saudi Arabia</option>
-                                            <option value="Senegal">Senegal</option>
-                                            <option value="Serbia">Serbia</option>
-                                            <option value="Singapore">Singapore</option>
-                                            <option value="Slovenia">Slovenia</option>
-                                            <option value="South Africa">South Africa</option>
-                                            <option value="South Korea">South Korea</option>
-                                            <option value="Spain">Spain</option>
-                                            <option value="Sudan">Sudan</option>
-                                            <option value="Sweden">Sweden</option>
-                                            <option value="Switzerland">Switzerland</option>
-                                            <option value="Syria">Syria</option>
-                                            <option value="Taiwan">Taiwan</option>
-                                            <option value="Tajikistan">Tajikistan</option>
-                                            <option value="Thailand">Thailand</option>
-                                            <option value="Tunisia">Tunisia</option>
-                                            <option value="Turkey">Turkey</option>
-                                            <option value="Ukraine">Ukraine</option>
-                                            <option value="United Kingdom">United Kingdom</option>
-                                            <option value="United States">United States</option>
-                                            <option value="Uruguay">Uruguay</option>
-                                            <option value="Venezuela">Venezuela</option>
-                                            <option value="Vietnam">Vietnam</option>
-                                            <option value="Yemen">Yemen</option>
-                                            <option value="Zambia">Zambia</option>
-                                            <option value="Zimbabwe">Zimbabwe</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="anotherelem" class="control-label col-sm-3">Address</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="WorkAddress" id="WorkAddress" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="anotherelem" class="control-label col-sm-3">Organization <span class="validation-span-required">(*)</span></label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="Organization" id="Organization" class="form-control" data-rule-required="true">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                        <form method="post" action="@Url.Action("SaveUserInfomation", "User")" class="form-horizontal form-bordered form-validate">
+                            @Html.AntiForgeryToken()
+                            <table id="user" class="table table-bordered table-striped table-force-topborder" style="clear: both">
+                                <tbody>
+                                    <tr>
+                                        <td width="25%">Title <span class="validation-span-required">(*)</span></td>
+                                        <td width="75%">
+                                            <a href="#" id="Title" data-type="select" data-pk="1" data-value="@Model.Title" data-source="/title" data-original-title="Select Title">@Model.Title</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Full Name</td>
+                                        <td>
+                                            <label>@Model.FullName</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sex <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="Sex" data-type="select" data-pk="2" data-value="@Model.Sex" data-source="/sex" data-original-title="Select Sex">@Model.Sex</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Meal preference <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="MealPreference" data-type="select" data-pk="3" data-value="@Model.MealPreference" data-source="/mealPreference" data-original-title="Select Meal Preference">@Model.MealPreference</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Disability or special treatment</td>
+                                        <td>
+                                            <a href="#" id="DisabilityOrTreatment" data-type="textarea" data-pk="4" data-placeholder="Your comments here..." data-original-title="Enter comments">@Model.DisabilityOrTreatment</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email address <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="Email" data-type="text" data-pk="5" data-placement="right" data-placeholder="Required" data-original-title="Enter your Email">@Model.Email</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Other email address</td>
+                                        <td>
+                                            <a href="#" id="OtherEmail" data-type="text" data-pk="6" data-placement="right" data-placeholder="Required" data-original-title="Enter your other Email">@Model.OtherEmail</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phone number <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="Phone" data-type="text" data-pk="7" data-placement="right" data-placeholder="Required" data-original-title="Enter your phone">@Model.Phone</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="Address" data-type="textarea" data-pk="8" data-placeholder="Your address..." data-original-title="Enter your address">@Model.Address</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>City <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="City" data-type="text" data-pk="9" data-placement="right" data-placeholder="Required" data-original-title="Enter your city">@Model.City</a>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td>Plan vacation?</td>
+                                        <td>
+                                            <a href="#" id="vacation" data-type="date" data-viewformat="dd.mm.yyyy" data-pk="1" data-placement="right" data-original-title="When you want vacation to start?">25.02.2013</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date of birth</td>
+                                        <td>
+                                            <a href="#" id="dob" data-type="combodate" data-value="1984-05-15" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="1" data-original-title="Select Date of birth"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Setup event</td>
+                                        <td>
+                                            <a href="#" id="event" data-type="combodate" data-template="D MMM YYYY  HH:mm" data-format="YYYY-MM-DD HH:mm" data-viewformat="MMM D, YYYY, HH:mm" data-pk="1" data-original-title="Setup event date and time"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Comments</td>
+                                        <td>
+                                            <a href="#" id="comments" data-type="textarea" data-pk="1" data-placeholder="Your comments here..." data-original-title="Enter comments">
+                                                awesome
+                                                <br>user!
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fresh fruits</td>
+                                        <td>
+                                            <a href="#" id="fruits" data-type="checklist" data-value="2,3" data-original-title="Select fruits"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address</td>
+                                        <td>
+                                            <a href="#" id="address" data-type="address" data-pk="1" data-original-title="Please, fill address"></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
                         <!-- End Contact Form -->
                     </div>
                 </div>
@@ -239,7 +155,7 @@
                     </h4>
                 </div>
                 <div id="collapse-5" class="panel-collapse collapse">
-                    <div class="panel-body">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. The point of using Lorem Ipsum is that it has a <strong>more-or-less</strong> normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore...</div>
+                    <div class="panel-body"><strong>Duis</strong> aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore...</div>
                 </div>
             </div>
             <!-- End Accordion 2 -->
@@ -298,3 +214,181 @@
     </div>
 
 </div>
+
+<script type="text/javascript">
+    $(function () {
+
+        //defaults
+        $.fn.editable.defaults.url = '/post';
+
+        //enable / disable
+        $('#enable').click(function () {
+            $('#user .editable').editable('toggleDisabled');
+        });
+
+        //editables
+        $('#Title').editable({});
+        $('#Sex').editable({});
+        $('#MealPreference').editable({});
+        $('#DisabilityOrTreatment').editable({ showbuttons: true });
+        $('#Email').editable({
+            validate: function (value) {
+                if (!validateEmail(value)) return 'The email is invalid';
+            }
+        });
+        $('#OtherEmail').editable({
+            validate: function (value) {
+                if (!validateEmail(value)) return 'The email is invalid';
+            }
+        });
+        $('#Phone').editable({});
+        $('#Address').editable({ showbuttons: true });
+        $('#City').editable({ showbuttons: true });
+
+
+        $('#status').editable();
+
+        $('#vacation').editable();
+
+        $('#dob').editable();
+
+        $('#event').editable({
+            placement: 'right',
+            combodate: {
+                firstItem: 'name'
+            }
+        });
+
+        $('#comments').editable({
+            showbuttons: true
+        });
+
+        $('#note').editable();
+        $('#pencil').click(function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            $('#note').editable('toggle');
+        });
+
+        $('#state').editable({
+            source: ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Dakota", "North Carolina", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]
+        });
+
+        $('#fruits').editable({
+            pk: 1,
+            limit: 3,
+            source: [
+             { value: 1, text: 'banana' },
+             { value: 2, text: 'peach' },
+             { value: 3, text: 'apple' },
+             { value: 4, text: 'watermelon' },
+             { value: 5, text: 'orange' }
+            ]
+        });
+
+        $('#tags').editable({
+            inputclass: 'input-large',
+            select2: {
+                tags: ['html', 'javascript', 'css', 'ajax'],
+                tokenSeparators: [",", " "]
+            }
+        });
+
+        var countries = [];
+        $.each({ "BD": "Bangladesh", "BE": "Belgium", "BF": "Burkina Faso", "BG": "Bulgaria", "BA": "Bosnia and Herzegovina", "BB": "Barbados", "WF": "Wallis and Futuna", "BL": "Saint Bartelemey", "BM": "Bermuda", "BN": "Brunei Darussalam", "BO": "Bolivia", "BH": "Bahrain", "BI": "Burundi", "BJ": "Benin", "BT": "Bhutan", "JM": "Jamaica", "BV": "Bouvet Island", "BW": "Botswana", "WS": "Samoa", "BR": "Brazil", "BS": "Bahamas", "JE": "Jersey", "BY": "Belarus", "O1": "Other Country", "LV": "Latvia", "RW": "Rwanda", "RS": "Serbia", "TL": "Timor-Leste", "RE": "Reunion", "LU": "Luxembourg", "TJ": "Tajikistan", "RO": "Romania", "PG": "Papua New Guinea", "GW": "Guinea-Bissau", "GU": "Guam", "GT": "Guatemala", "GS": "South Georgia and the South Sandwich Islands", "GR": "Greece", "GQ": "Equatorial Guinea", "GP": "Guadeloupe", "JP": "Japan", "GY": "Guyana", "GG": "Guernsey", "GF": "French Guiana", "GE": "Georgia", "GD": "Grenada", "GB": "United Kingdom", "GA": "Gabon", "SV": "El Salvador", "GN": "Guinea", "GM": "Gambia", "GL": "Greenland", "GI": "Gibraltar", "GH": "Ghana", "OM": "Oman", "TN": "Tunisia", "JO": "Jordan", "HR": "Croatia", "HT": "Haiti", "HU": "Hungary", "HK": "Hong Kong", "HN": "Honduras", "HM": "Heard Island and McDonald Islands", "VE": "Venezuela", "PR": "Puerto Rico", "PS": "Palestinian Territory", "PW": "Palau", "PT": "Portugal", "SJ": "Svalbard and Jan Mayen", "PY": "Paraguay", "IQ": "Iraq", "PA": "Panama", "PF": "French Polynesia", "BZ": "Belize", "PE": "Peru", "PK": "Pakistan", "PH": "Philippines", "PN": "Pitcairn", "TM": "Turkmenistan", "PL": "Poland", "PM": "Saint Pierre and Miquelon", "ZM": "Zambia", "EH": "Western Sahara", "RU": "Russian Federation", "EE": "Estonia", "EG": "Egypt", "TK": "Tokelau", "ZA": "South Africa", "EC": "Ecuador", "IT": "Italy", "VN": "Vietnam", "SB": "Solomon Islands", "EU": "Europe", "ET": "Ethiopia", "SO": "Somalia", "ZW": "Zimbabwe", "SA": "Saudi Arabia", "ES": "Spain", "ER": "Eritrea", "ME": "Montenegro", "MD": "Moldova, Republic of", "MG": "Madagascar", "MF": "Saint Martin", "MA": "Morocco", "MC": "Monaco", "UZ": "Uzbekistan", "MM": "Myanmar", "ML": "Mali", "MO": "Macao", "MN": "Mongolia", "MH": "Marshall Islands", "MK": "Macedonia", "MU": "Mauritius", "MT": "Malta", "MW": "Malawi", "MV": "Maldives", "MQ": "Martinique", "MP": "Northern Mariana Islands", "MS": "Montserrat", "MR": "Mauritania", "IM": "Isle of Man", "UG": "Uganda", "TZ": "Tanzania, United Republic of", "MY": "Malaysia", "MX": "Mexico", "IL": "Israel", "FR": "France", "IO": "British Indian Ocean Territory", "FX": "France, Metropolitan", "SH": "Saint Helena", "FI": "Finland", "FJ": "Fiji", "FK": "Falkland Islands (Malvinas)", "FM": "Micronesia, Federated States of", "FO": "Faroe Islands", "NI": "Nicaragua", "NL": "Netherlands", "NO": "Norway", "NA": "Namibia", "VU": "Vanuatu", "NC": "New Caledonia", "NE": "Niger", "NF": "Norfolk Island", "NG": "Nigeria", "NZ": "New Zealand", "NP": "Nepal", "NR": "Nauru", "NU": "Niue", "CK": "Cook Islands", "CI": "Cote d'Ivoire", "CH": "Switzerland", "CO": "Colombia", "CN": "China", "CM": "Cameroon", "CL": "Chile", "CC": "Cocos (Keeling) Islands", "CA": "Canada", "CG": "Congo", "CF": "Central African Republic", "CD": "Congo, The Democratic Republic of the", "CZ": "Czech Republic", "CY": "Cyprus", "CX": "Christmas Island", "CR": "Costa Rica", "CV": "Cape Verde", "CU": "Cuba", "SZ": "Swaziland", "SY": "Syrian Arab Republic", "KG": "Kyrgyzstan", "KE": "Kenya", "SR": "Suriname", "KI": "Kiribati", "KH": "Cambodia", "KN": "Saint Kitts and Nevis", "KM": "Comoros", "ST": "Sao Tome and Principe", "SK": "Slovakia", "KR": "Korea, Republic of", "SI": "Slovenia", "KP": "Korea, Democratic People's Republic of", "KW": "Kuwait", "SN": "Senegal", "SM": "San Marino", "SL": "Sierra Leone", "SC": "Seychelles", "KZ": "Kazakhstan", "KY": "Cayman Islands", "SG": "Singapore", "SE": "Sweden", "SD": "Sudan", "DO": "Dominican Republic", "DM": "Dominica", "DJ": "Djibouti", "DK": "Denmark", "VG": "Virgin Islands, British", "DE": "Germany", "YE": "Yemen", "DZ": "Algeria", "US": "United States", "UY": "Uruguay", "YT": "Mayotte", "UM": "United States Minor Outlying Islands", "LB": "Lebanon", "LC": "Saint Lucia", "LA": "Lao People's Democratic Republic", "TV": "Tuvalu", "TW": "Taiwan", "TT": "Trinidad and Tobago", "TR": "Turkey", "LK": "Sri Lanka", "LI": "Liechtenstein", "A1": "Anonymous Proxy", "TO": "Tonga", "LT": "Lithuania", "A2": "Satellite Provider", "LR": "Liberia", "LS": "Lesotho", "TH": "Thailand", "TF": "French Southern Territories", "TG": "Togo", "TD": "Chad", "TC": "Turks and Caicos Islands", "LY": "Libyan Arab Jamahiriya", "VA": "Holy See (Vatican City State)", "VC": "Saint Vincent and the Grenadines", "AE": "United Arab Emirates", "AD": "Andorra", "AG": "Antigua and Barbuda", "AF": "Afghanistan", "AI": "Anguilla", "VI": "Virgin Islands, U.S.", "IS": "Iceland", "IR": "Iran, Islamic Republic of", "AM": "Armenia", "AL": "Albania", "AO": "Angola", "AN": "Netherlands Antilles", "AQ": "Antarctica", "AP": "Asia/Pacific Region", "AS": "American Samoa", "AR": "Argentina", "AU": "Australia", "AT": "Austria", "AW": "Aruba", "IN": "India", "AX": "Aland Islands", "AZ": "Azerbaijan", "IE": "Ireland", "ID": "Indonesia", "UA": "Ukraine", "QA": "Qatar", "MZ": "Mozambique" }, function (k, v) {
+            countries.push({ id: k, text: v });
+        });
+        $('#country').editable({
+            inputclass: 'input-large',
+            source: countries
+        });
+
+
+
+        $('#address').editable({
+            url: '/post',
+            value: {
+                city: "Moscow",
+                street: "Lenina",
+                building: "12"
+            },
+            validate: function (value) {
+                if (value.city == '') return 'city is required!';
+            },
+            display: function (value) {
+                if (!value) {
+                    $(this).empty();
+                    return;
+                }
+                var html = '<b>' + $('<div>').text(value.city).html() + '</b>, ' + $('<div>').text(value.street).html() + ' st., bld. ' + $('<div>').text(value.building).html();
+                $(this).html(html);
+            }
+        });
+
+        $('#user .editable').on('hidden', function (e, reason) {
+            if (reason === 'save' || reason === 'nochange') {
+                var $next = $(this).closest('tr').next().find('.editable');
+                if ($('#autoopen').is(':checked')) {
+                    setTimeout(function () {
+                        $next.editable('show');
+                    }, 300);
+                } else {
+                    $next.focus();
+                }
+            }
+        });
+
+        //Loading Title
+        $.mockjax({
+            url: '/title',
+            response: function (settings) {
+                this.responseText = [{
+                    value: 'Dr',
+                    text: 'Dr'
+                }, {
+                    value: 'Mr',
+                    text: 'Mr'
+                }, {
+                    value: 'Mrs',
+                    text: 'Mrs'
+                }, {
+                    value: 'Ms',
+                    text: 'Ms'
+                }];
+            }
+        });
+        //Loading Sex
+        $.mockjax({
+            url: '/sex',
+            response: function (settings) {
+                this.responseText = [{
+                    value: 'Male',
+                    text: 'Male'
+                }, {
+                    value: 'Female',
+                    text: 'Female'
+                }];
+            }
+        });
+        //Loading Sex
+        $.mockjax({
+            url: '/mealPreference',
+            response: function (settings) {
+                this.responseText = [{
+                    value: 'Vegetarian',
+                    text: 'Vegetarian'
+                }, {
+                    value: 'Non - vegetarian',
+                    text: 'Non - vegetarian'
+                }];
+            }
+        });
+
+
+        //Validate
+        function validateEmail(email) {
+            var re = /^[_a-z0-9-A-Z-]+(\.[_a-z0-9-A-Z-]+)*@@[a-z0-9-A-Z-]+(\.[a-z0-9-A-Z-]+)*(\.[a-z]{2,4})$/;
+            return re.test(email);
+        }
+    });
+</script>

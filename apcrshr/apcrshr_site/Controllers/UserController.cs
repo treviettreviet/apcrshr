@@ -10,16 +10,19 @@ using System.Linq;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using apcrshr_site.Models;
 
 namespace apcrshr_site.Controllers
 {
     public class UserController : BaseController
     {
         private IUserService _userService;
+        private IMailingAddressService _mailingService;
 
         public UserController()
         {
             this._userService = new UserService();
+            this._mailingService = new MailingAddressService();
         }
 
 
@@ -127,8 +130,51 @@ namespace apcrshr_site.Controllers
         {
             if (this.Session["User-UserID"] != null)
             {
+                RegistrationModel registration = new RegistrationModel();
                 FindItemReponse<UserModel> response = _userService.FindUserByID(Session["User-UserID"].ToString());
-                return View(response.Item);
+                if (response.Item != null)
+                {
+                    registration.UserID = response.Item.UserID;
+                    registration.Title = response.Item.Title;
+                    registration.FullName = response.Item.FullName;
+                    registration.Sex = response.Item.Sex;
+                    registration.Email = response.Item.Email;
+                    registration.OtherEmail = response.Item.OtherEmail;
+                    registration.DateOfBirth = response.Item.DateOfBirth;
+                    registration.Phone = response.Item.PhoneNumber;
+                    registration.UserName = response.Item.UserName;
+                    registration.MealPreference = response.Item.MealPreference;
+                    registration.DisabilityOrTreatment = response.Item.DisabilitySpecialTreatment;
+                    registration.Address = response.Item.Address;
+                    registration.City = response.Item.City;
+                    registration.Country = response.Item.Country;
+                    registration.WorkAddress = response.Item.WorkAddress;
+                    registration.Organization = response.Item.Organization;
+                }
+                FindAllItemReponse<MailingAddressModel> mailingResponse = _mailingService.FindMailingAddressByUser(Session["User-UserID"].ToString());
+                if (mailingResponse.Items != null)
+                {
+                    var mailing = mailingResponse.Items.SingleOrDefault();
+                    if (mailing != null)
+                    {
+                        registration.MailingAddressID = mailing.MailingAddressID;
+                        registration.ParticipantType = mailing.ParticipantType;
+                        registration.YouthConference = mailing.ParticipateYouth;
+                        registration.OriginalNationality = mailing.OriginalNationality;
+                        registration.CurrentNationality = mailing.CurrentNationality;
+                        registration.PassportNumber = mailing.PassportNumber;
+                        registration.TypeOfPassport = mailing.TypeOfPassport;
+                        registration.Occupation = mailing.Occupation;
+                        registration.DateOfPassportIssue = mailing.DateOfPassportIssue;
+                        registration.DateOfPassportExpiry = mailing.DateOfPassportExpiry;
+                        registration.PassportPhoto1 = mailing.PassportPhoto1;
+                        registration.PassportPhoto2 = mailing.PassportPhoto2;
+                        registration.PassportPhoto3 = mailing.PassportPhoto3;
+                        registration.DetailOfEmbassy = mailing.DetailOfEmbassy;
+                        registration.NeedVisaSupport = mailing.NeedVisaSupport;
+                    }
+                }
+                return View(registration);
             }
             else
             {
@@ -243,5 +289,11 @@ namespace apcrshr_site.Controllers
             return View("UpdateUser", user);
         }
 
+        [SessionFilter]
+        [HttpPost]
+        public JsonResult SaveUserInfomation(RegistrationModel registration)
+        {
+            return Json(new { ErrorCode = (int)ErrorCode.None });
+        }
     }
 }

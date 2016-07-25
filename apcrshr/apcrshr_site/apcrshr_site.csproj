@@ -239,6 +239,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Administrator\css\boostrap-editable.css" />
     <Content Include="Areas\Administrator\css\bootstrap.min.css" />
     <Content Include="Areas\Administrator\css\plugins\chosen\chosen.css" />
     <Content Include="Areas\Administrator\css\plugins\colorbox\colorbox.css" />
