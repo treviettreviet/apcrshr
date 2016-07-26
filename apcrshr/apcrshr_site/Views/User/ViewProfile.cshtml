@@ -1,4 +1,5 @@
 ﻿@using apcrshr_site.Resources
+@using apcrshr_site.Helper
 @model apcrshr_site.Models.RegistrationModel
 @{
     ViewBag.Title = "ViewProfile";
@@ -30,8 +31,23 @@
                 <div id="collapse-4" class="panel-collapse collapse in">
                     <div class="panel-body">
                         <!-- Start Contact Form -->
-                        <form method="post" action="@Url.Action("SaveUserInfomation", "User")" class="form-horizontal form-bordered form-validate">
-                            @Html.AntiForgeryToken()
+                        @using (Ajax.BeginForm("SaveUserInfomation", "User", new AjaxOptions
+                                            {
+                                                InsertionMode = InsertionMode.Replace,
+                                                HttpMethod = "POST",
+                                                OnFailure = "userUpdateFailure",
+                                                OnSuccess = "userUpdateSuccess"
+                                            }, new { @class = "form-horizontal form-bordered form-validate", id = "frmSaveUser" }))
+                        {
+                            @Html.HiddenFor(model => model.UserID, new { @id = "UserID" })
+                            @Html.HiddenFor(model => model.MailingAddressID, new { @id = "MailingAddressID" })
+                            @Html.HiddenFor(model => model.FullName, new { @id = "FullName" })
+                            @Html.HiddenFor(model => model.Email, new { @id = "Email" })
+                            @Html.HiddenFor(model => model.Locked, new { @id = "Locked" })
+                            @Html.HiddenFor(model => model.UserName, new { @id = "UserName" })
+                            @Html.HiddenFor(model => model.DateOfBirth, new { @id = "DateOfBirth" })
+                            @Html.HiddenFor(model => model.DateOfPassportIssue, new { @id = "DateOfPassportIssue" })
+                            @Html.HiddenFor(model => model.DateOfPassportExpiry, new { @id = "DateOfPassportExpiry" })
                             <table id="user" class="table table-bordered table-striped table-force-topborder" style="clear: both">
                                 <tbody>
                                     <tr>
@@ -67,7 +83,7 @@
                                     <tr>
                                         <td>Email address <span class="validation-span-required">(*)</span></td>
                                         <td>
-                                            <a href="#" id="Email" data-type="text" data-pk="5" data-placement="right" data-placeholder="Required" data-original-title="Enter your Email">@Model.Email</a>
+                                            <label>@Model.Email</label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -135,7 +151,7 @@
                                     <tr>
                                         <td>Date of birth <span class="validation-span-required">(*)</span></td>
                                         <td>
-                                            <a href="#" id="DateOfBirth" data-type="combodate" data-value="@Model.DateOfBirth.Value.ToString("yyyy/MM/dd")" data-format="YYYY-MM-DD" data-viewformat="YYYY/MM/DD" data-template="YYYY / MMM / DD" data-pk="14" data-original-title="Select Date of birth"></a>
+                                            <label>@Model.DateOfBirth.Value.ToString("yyyy/MM/dd")</label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -171,13 +187,13 @@
                                     <tr>
                                         <td>Date of Passport issue <span class="validation-span-required">(*)</span></td>
                                         <td>
-                                            <a href="#" id="DateOfPassportIssue" data-type="combodate" data-value="@Model.DateOfPassportIssue.ToString("yyyy/MM/dd")" data-format="YYYY-MM-DD" data-viewformat="YYYY/MM/DD" data-template="YYYY / MMM / DD" data-pk="20" data-original-title="Select date of Passport issue"></a>
+                                            <label>@Model.DateOfPassportIssue</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Date of Passport expiry <span class="validation-span-required">(*)</span></td>
                                         <td>
-                                            <a href="#" id="DateOfPassportExpiry" data-type="combodate" data-value="@Model.DateOfPassportExpiry.ToString("yyyy/MM/dd")" data-format="YYYY-MM-DD" data-viewformat="YYYY/MM/DD" data-template="YYYY / MMM / DD" data-pk="21" data-original-title="Select date of Passport expiry"></a>
+                                            <label>@Model.DateOfPassportExpiry</label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -186,9 +202,14 @@
                                             <a href="#" id="DetailOfEmbassy" data-type="textarea" data-pk="22" data-placeholder="Your embassy..." data-original-title="Enter your embassy">@Model.DetailOfEmbassy</a>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <input type="button" class="btn plupload_add btn-primary" id="btnSave" value="Save Changes" disabled style="position: relative; z-index: 1;" />
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
-                        </form>
+                        }
                         <!-- End Contact Form -->
                     </div>
                 </div>
@@ -272,43 +293,40 @@
         //defaults
         $.fn.editable.defaults.url = '/post';
 
-        //enable / disable
-        $('#enable').click(function () {
-            $('#user .editable').editable('toggleDisabled');
-        });
-
         //editables
-        $('#Title').editable({});
-        $('#Sex').editable({});
-        $('#MealPreference').editable({});
-        $('#DisabilityOrTreatment').editable({ showbuttons: true });
-        $('#Email').editable({
-            validate: function (value) {
-                if (!validateEmail(value)) return 'The email is invalid';
-            }
-        });
+        $('#Title').editable({ url: changedValue });
+        $('#Sex').editable({ url: changedValue });
+        $('#MealPreference').editable({ url: changedValue });
+        $('#DisabilityOrTreatment').editable({ showbuttons: true, url: changedValue });
         $('#OtherEmail').editable({
             validate: function (value) {
                 if (!validateEmail(value)) return 'The email is invalid';
-            }
+            },
+            url: changedValue
         });
-        $('#Phone').editable({});
-        $('#Address').editable({ showbuttons: true });
-        $('#City').editable({ showbuttons: true });
-        $('#Country').editable({});
-        $('#WorkAddress').editable({ showbuttons: true });
-        $('#Organization').editable({ showbuttons: true });
-        $('#ParticipantType').editable({ showbuttons: true });
-        $('#DateOfBirth').editable();
-        $('#OriginalNationality').editable();
-        $('#CurrentNationality').editable();
-        $('#PassportNumber').editable();
-        $('#TypeOfPassport').editable({ showbuttons: true });
+        $('#Phone').editable({ url: changedValue });
+        $('#Address').editable({ showbuttons: true, url: changedValue });
+        $('#City').editable({ showbuttons: true, url: changedValue });
+        $('#Country').editable({ url: changedValue });
+        $('#WorkAddress').editable({ showbuttons: true, url: changedValue });
+        $('#Organization').editable({ showbuttons: true, url: changedValue });
+        $('#ParticipantType').editable({ showbuttons: true, url: changedValue });
+        $('#OriginalNationality').editable({ url: changedValue });
+        $('#CurrentNationality').editable({ url: changedValue });
+        $('#PassportNumber').editable({ url: changedValue });
+        $('#TypeOfPassport').editable({ showbuttons: true, url: changedValue });
         $('#Occupation').editable();
-        $('#DateOfPassportIssue').editable();
-        $('#DateOfPassportExpiry').editable();
-        $('#DetailOfEmbassy').editable();
+        //$('#DateOfPassportIssue').editable({ url: changedValue });
+        //$('#DateOfPassportExpiry').editable({ url: changedValue });
+        $('#DetailOfEmbassy').editable({ url: changedValue });
 
+        function changedValue(params) {
+            var control = $("#" + params.name);
+            var old = $(control).text();
+            if (old != params.value) {
+                $("#btnSave").removeAttr("disabled");
+            }
+        }
         
         $('#address').editable({
             url: '/post',
@@ -722,5 +740,68 @@
             var re = /^[_a-z0-9-A-Z-]+(\.[_a-z0-9-A-Z-]+)*@@[a-z0-9-A-Z-]+(\.[a-z0-9-A-Z-]+)*(\.[a-z]{2,4})$/;
             return re.test(email);
         }
+    });
+</script>
+
+<script type="text/javascript">
+    $("#btnSave").click(function () {
+        $.blockUI({ message: $('#spinner') });
+        var formData = new FormData();
+        formData.append("UserID", $("#UserID").val());
+        formData.append("MailingAddressID", $("#MailingAddressID").val());
+        formData.append("FullName", $("#FullName").val());
+        formData.append("Title", $("#Title").text());
+        formData.append("Email", $("#Email").val());
+        formData.append("Locked", $("#Locked").val());
+        formData.append("UserName", $("#UserName").val());
+        formData.append("Sex", $("#Sex").text());
+        formData.append("MealPreference", $("#MealPreference").text());
+        formData.append("DisabilityOrTreatment", $("#DisabilityOrTreatment").text());
+        formData.append("OtherEmail", $("#OtherEmail").text());
+        formData.append("Phone", $("#Phone").text());
+        formData.append("Address", $("#Address").text());
+        formData.append("City", $("#City").text());
+        formData.append("Country", $("#Country").text());
+        formData.append("WorkAddress", $("#WorkAddress").text());
+        formData.append("Organization", $("#Organization").text());
+        formData.append("ParticipantType", $("#ParticipantType").text());
+        formData.append("YouthConference", $("#frmSaveUser input[name='YouthConference']:checked").val());
+        formData.append("NeedVisaSupport", $("#frmSaveUser input[id='NeedVisaSupport']:checked").val());
+        formData.append("DateOfBirth", $("#DateOfBirth").val());
+        formData.append("OriginalNationality", $("#OriginalNationality").text());
+        formData.append("CurrentNationality", $("#CurrentNationality").text());
+        formData.append("PassportNumber", $("#PassportNumber").text());
+        formData.append("TypeOfPassport", $("#TypeOfPassport").text());
+        formData.append("Occupation", $("#Occupation").text());
+        formData.append("DateOfPassportIssue", $("#DateOfPassportIssue").val());
+        formData.append("DateOfPassportExpiry", $("#DateOfPassportExpiry").val());
+        formData.append("DetailOfEmbassy", $("#DetailOfEmbassy").text());
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveUserInfomation", "User")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $.unblockUI();
+                bootbox.alert(response.message, function () {
+                    bootbox.hideAll();
+                });
+                //Timeout
+                if (response.errorCode == 2) {
+                    window.location = "/Administrator/AdminHome/Login";
+                }
+                if (response.errorCode == 0) {
+                    $("#btnSave").attr("disabled", "disabled");
+                }
+            },
+            error: function (error) {
+                $.unblockUI();
+                bootbox.alert(error, function () {
+                    bootbox.hideAll();
+                });
+            }
+        });
     });
 </script>

@@ -289,7 +289,6 @@ namespace apcrshr_site.Controllers
             return View("UpdateUser", user);
         }
 
-        [SessionFilter]
         [HttpPost]
         public JsonResult SaveUserInfomation(RegistrationModel registration)
         {
