@@ -30,7 +30,7 @@
                 </div>
                 <div class="profile-content">
                     <h2>
-                        @Session["User-UserName"].ToString().ToUpper()
+                        @(Session["User-UserName"].ToString().Length > 10 ? Session["User-UserName"].ToString().Substring(0, 10) + "..." : Session["User-UserName"].ToString())
                     </h2>
                     <div class="row span2" id="btn_action">
                         <a href="@Url.Action("ViewProfile", "User")">@apcrshr_site.Resources.Resource.button_viewProfile</a>

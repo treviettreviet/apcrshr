@@ -94,45 +94,96 @@
                                             <a href="#" id="City" data-type="text" data-pk="9" data-placement="right" data-placeholder="Required" data-original-title="Enter your city">@Model.City</a>
                                         </td>
                                     </tr>
-
-
                                     <tr>
-                                        <td>Plan vacation?</td>
+                                        <td>Country <span class="validation-span-required">(*)</span></td>
                                         <td>
-                                            <a href="#" id="vacation" data-type="date" data-viewformat="dd.mm.yyyy" data-pk="1" data-placement="right" data-original-title="When you want vacation to start?">25.02.2013</a>
+                                            <a href="#" id="Country" data-type="select" data-pk="10" data-value="@Model.Country" data-source="/country" data-original-title="Select Country">@Model.Country</a>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Date of birth</td>
+                                        <td>Work Address</td>
                                         <td>
-                                            <a href="#" id="dob" data-type="combodate" data-value="1984-05-15" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="1" data-original-title="Select Date of birth"></a>
+                                            <a href="#" id="WorkAddress" data-type="text" data-pk="11" data-placeholder="Your work address" data-original-title="Enter your work address">@Model.WorkAddress</a>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Setup event</td>
+                                        <td>Organization <span class="validation-span-required">(*)</span></td>
                                         <td>
-                                            <a href="#" id="event" data-type="combodate" data-template="D MMM YYYY  HH:mm" data-format="YYYY-MM-DD HH:mm" data-viewformat="MMM D, YYYY, HH:mm" data-pk="1" data-original-title="Setup event date and time"></a>
+                                            <a href="#" id="Organization" data-type="text" data-pk="12" data-placeholder="Your organization..." data-original-title="Enter your organization">@Model.Organization</a>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Comments</td>
+                                        <td>Participant type <span class="validation-span-required">(*)</span></td>
                                         <td>
-                                            <a href="#" id="comments" data-type="textarea" data-pk="1" data-placeholder="Your comments here..." data-original-title="Enter comments">
-                                                awesome
-                                                <br>user!
-                                            </a>
+                                            <a href="#" id="ParticipantType" data-type="select" data-pk="13" data-value="@Model.ParticipantType" data-source="/participantType" data-original-title="Select Participant type">@Model.ParticipantType</a>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Fresh fruits</td>
+                                        <td>Participate in Youth conference <span class="validation-span-required">(*)</span></td>
                                         <td>
-                                            <a href="#" id="fruits" data-type="checklist" data-value="2,3" data-original-title="Select fruits"></a>
+                                            <input type="radio" id="YouthConference" name="YouthConference" value="true" data-rule-required="true" @(Model.YouthConference == "true" ? "checked" : "")>Yes
+                                            <input type="radio" id="YouthConference" name="YouthConference" value="false" data-rule-required="true" @(Model.YouthConference == "false" ? "checked" : "")>No
+                                            <i>(Youth age 15-29/ Born in 1988 - 2002)</i>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Address</td>
+                                        <td>Need visa support</td>
                                         <td>
-                                            <a href="#" id="address" data-type="address" data-pk="1" data-original-title="Please, fill address"></a>
+                                            <input type="radio" id="NeedVisaSupport" name="NeedVisaSupport" value="true" data-rule-required="true" @(Model.NeedVisaSupport == true ? "checked" : "")>Yes
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date of birth <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="DateOfBirth" data-type="combodate" data-value="@Model.DateOfBirth.Value.ToString("yyyy/MM/dd")" data-format="YYYY-MM-DD" data-viewformat="YYYY/MM/DD" data-template="YYYY / MMM / DD" data-pk="14" data-original-title="Select Date of birth"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Original nationality <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="OriginalNationality" data-type="text" data-pk="15" data-placeholder="Your original nationality..." data-original-title="Enter your original nationality">@Model.OriginalNationality</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Current nationality <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="CurrentNationality" data-type="text" data-pk="16" data-placeholder="Your current nationality..." data-original-title="Enter your current nationality">@Model.CurrentNationality</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Passport number <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="PassportNumber" data-type="text" data-pk="17" data-placeholder="Your passport number..." data-original-title="Enter your passport number">@Model.PassportNumber</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Type of passport <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="TypeOfPassport" data-type="select" data-pk="18" data-value="@Model.TypeOfPassport" data-source="/typeOfPassport" data-original-title="Select passport type">@Model.TypeOfPassport</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Occupation <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="Occupation" data-type="text" data-pk="19" data-placeholder="Your occupation..." data-original-title="Enter your occupation">@Model.Occupation</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date of Passport issue <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="DateOfPassportIssue" data-type="combodate" data-value="@Model.DateOfPassportIssue.ToString("yyyy/MM/dd")" data-format="YYYY-MM-DD" data-viewformat="YYYY/MM/DD" data-template="YYYY / MMM / DD" data-pk="20" data-original-title="Select date of Passport issue"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date of Passport expiry <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="DateOfPassportExpiry" data-type="combodate" data-value="@Model.DateOfPassportExpiry.ToString("yyyy/MM/dd")" data-format="YYYY-MM-DD" data-viewformat="YYYY/MM/DD" data-template="YYYY / MMM / DD" data-pk="21" data-original-title="Select date of Passport expiry"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Detail address of the Embassy of Viet Nam in your country which you will apply for your Visa to enter Viet Nam (for all delegates who need visa)</td>
+                                        <td>
+                                            <a href="#" id="DetailOfEmbassy" data-type="textarea" data-pk="22" data-placeholder="Your embassy..." data-original-title="Enter your embassy">@Model.DetailOfEmbassy</a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -244,67 +295,21 @@
         $('#Phone').editable({});
         $('#Address').editable({ showbuttons: true });
         $('#City').editable({ showbuttons: true });
+        $('#Country').editable({});
+        $('#WorkAddress').editable({ showbuttons: true });
+        $('#Organization').editable({ showbuttons: true });
+        $('#ParticipantType').editable({ showbuttons: true });
+        $('#DateOfBirth').editable();
+        $('#OriginalNationality').editable();
+        $('#CurrentNationality').editable();
+        $('#PassportNumber').editable();
+        $('#TypeOfPassport').editable({ showbuttons: true });
+        $('#Occupation').editable();
+        $('#DateOfPassportIssue').editable();
+        $('#DateOfPassportExpiry').editable();
+        $('#DetailOfEmbassy').editable();
 
-
-        $('#status').editable();
-
-        $('#vacation').editable();
-
-        $('#dob').editable();
-
-        $('#event').editable({
-            placement: 'right',
-            combodate: {
-                firstItem: 'name'
-            }
-        });
-
-        $('#comments').editable({
-            showbuttons: true
-        });
-
-        $('#note').editable();
-        $('#pencil').click(function (e) {
-            e.stopPropagation();
-            e.preventDefault();
-            $('#note').editable('toggle');
-        });
-
-        $('#state').editable({
-            source: ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Dakota", "North Carolina", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]
-        });
-
-        $('#fruits').editable({
-            pk: 1,
-            limit: 3,
-            source: [
-             { value: 1, text: 'banana' },
-             { value: 2, text: 'peach' },
-             { value: 3, text: 'apple' },
-             { value: 4, text: 'watermelon' },
-             { value: 5, text: 'orange' }
-            ]
-        });
-
-        $('#tags').editable({
-            inputclass: 'input-large',
-            select2: {
-                tags: ['html', 'javascript', 'css', 'ajax'],
-                tokenSeparators: [",", " "]
-            }
-        });
-
-        var countries = [];
-        $.each({ "BD": "Bangladesh", "BE": "Belgium", "BF": "Burkina Faso", "BG": "Bulgaria", "BA": "Bosnia and Herzegovina", "BB": "Barbados", "WF": "Wallis and Futuna", "BL": "Saint Bartelemey", "BM": "Bermuda", "BN": "Brunei Darussalam", "BO": "Bolivia", "BH": "Bahrain", "BI": "Burundi", "BJ": "Benin", "BT": "Bhutan", "JM": "Jamaica", "BV": "Bouvet Island", "BW": "Botswana", "WS": "Samoa", "BR": "Brazil", "BS": "Bahamas", "JE": "Jersey", "BY": "Belarus", "O1": "Other Country", "LV": "Latvia", "RW": "Rwanda", "RS": "Serbia", "TL": "Timor-Leste", "RE": "Reunion", "LU": "Luxembourg", "TJ": "Tajikistan", "RO": "Romania", "PG": "Papua New Guinea", "GW": "Guinea-Bissau", "GU": "Guam", "GT": "Guatemala", "GS": "South Georgia and the South Sandwich Islands", "GR": "Greece", "GQ": "Equatorial Guinea", "GP": "Guadeloupe", "JP": "Japan", "GY": "Guyana", "GG": "Guernsey", "GF": "French Guiana", "GE": "Georgia", "GD": "Grenada", "GB": "United Kingdom", "GA": "Gabon", "SV": "El Salvador", "GN": "Guinea", "GM": "Gambia", "GL": "Greenland", "GI": "Gibraltar", "GH": "Ghana", "OM": "Oman", "TN": "Tunisia", "JO": "Jordan", "HR": "Croatia", "HT": "Haiti", "HU": "Hungary", "HK": "Hong Kong", "HN": "Honduras", "HM": "Heard Island and McDonald Islands", "VE": "Venezuela", "PR": "Puerto Rico", "PS": "Palestinian Territory", "PW": "Palau", "PT": "Portugal", "SJ": "Svalbard and Jan Mayen", "PY": "Paraguay", "IQ": "Iraq", "PA": "Panama", "PF": "French Polynesia", "BZ": "Belize", "PE": "Peru", "PK": "Pakistan", "PH": "Philippines", "PN": "Pitcairn", "TM": "Turkmenistan", "PL": "Poland", "PM": "Saint Pierre and Miquelon", "ZM": "Zambia", "EH": "Western Sahara", "RU": "Russian Federation", "EE": "Estonia", "EG": "Egypt", "TK": "Tokelau", "ZA": "South Africa", "EC": "Ecuador", "IT": "Italy", "VN": "Vietnam", "SB": "Solomon Islands", "EU": "Europe", "ET": "Ethiopia", "SO": "Somalia", "ZW": "Zimbabwe", "SA": "Saudi Arabia", "ES": "Spain", "ER": "Eritrea", "ME": "Montenegro", "MD": "Moldova, Republic of", "MG": "Madagascar", "MF": "Saint Martin", "MA": "Morocco", "MC": "Monaco", "UZ": "Uzbekistan", "MM": "Myanmar", "ML": "Mali", "MO": "Macao", "MN": "Mongolia", "MH": "Marshall Islands", "MK": "Macedonia", "MU": "Mauritius", "MT": "Malta", "MW": "Malawi", "MV": "Maldives", "MQ": "Martinique", "MP": "Northern Mariana Islands", "MS": "Montserrat", "MR": "Mauritania", "IM": "Isle of Man", "UG": "Uganda", "TZ": "Tanzania, United Republic of", "MY": "Malaysia", "MX": "Mexico", "IL": "Israel", "FR": "France", "IO": "British Indian Ocean Territory", "FX": "France, Metropolitan", "SH": "Saint Helena", "FI": "Finland", "FJ": "Fiji", "FK": "Falkland Islands (Malvinas)", "FM": "Micronesia, Federated States of", "FO": "Faroe Islands", "NI": "Nicaragua", "NL": "Netherlands", "NO": "Norway", "NA": "Namibia", "VU": "Vanuatu", "NC": "New Caledonia", "NE": "Niger", "NF": "Norfolk Island", "NG": "Nigeria", "NZ": "New Zealand", "NP": "Nepal", "NR": "Nauru", "NU": "Niue", "CK": "Cook Islands", "CI": "Cote d'Ivoire", "CH": "Switzerland", "CO": "Colombia", "CN": "China", "CM": "Cameroon", "CL": "Chile", "CC": "Cocos (Keeling) Islands", "CA": "Canada", "CG": "Congo", "CF": "Central African Republic", "CD": "Congo, The Democratic Republic of the", "CZ": "Czech Republic", "CY": "Cyprus", "CX": "Christmas Island", "CR": "Costa Rica", "CV": "Cape Verde", "CU": "Cuba", "SZ": "Swaziland", "SY": "Syrian Arab Republic", "KG": "Kyrgyzstan", "KE": "Kenya", "SR": "Suriname", "KI": "Kiribati", "KH": "Cambodia", "KN": "Saint Kitts and Nevis", "KM": "Comoros", "ST": "Sao Tome and Principe", "SK": "Slovakia", "KR": "Korea, Republic of", "SI": "Slovenia", "KP": "Korea, Democratic People's Republic of", "KW": "Kuwait", "SN": "Senegal", "SM": "San Marino", "SL": "Sierra Leone", "SC": "Seychelles", "KZ": "Kazakhstan", "KY": "Cayman Islands", "SG": "Singapore", "SE": "Sweden", "SD": "Sudan", "DO": "Dominican Republic", "DM": "Dominica", "DJ": "Djibouti", "DK": "Denmark", "VG": "Virgin Islands, British", "DE": "Germany", "YE": "Yemen", "DZ": "Algeria", "US": "United States", "UY": "Uruguay", "YT": "Mayotte", "UM": "United States Minor Outlying Islands", "LB": "Lebanon", "LC": "Saint Lucia", "LA": "Lao People's Democratic Republic", "TV": "Tuvalu", "TW": "Taiwan", "TT": "Trinidad and Tobago", "TR": "Turkey", "LK": "Sri Lanka", "LI": "Liechtenstein", "A1": "Anonymous Proxy", "TO": "Tonga", "LT": "Lithuania", "A2": "Satellite Provider", "LR": "Liberia", "LS": "Lesotho", "TH": "Thailand", "TF": "French Southern Territories", "TG": "Togo", "TD": "Chad", "TC": "Turks and Caicos Islands", "LY": "Libyan Arab Jamahiriya", "VA": "Holy See (Vatican City State)", "VC": "Saint Vincent and the Grenadines", "AE": "United Arab Emirates", "AD": "Andorra", "AG": "Antigua and Barbuda", "AF": "Afghanistan", "AI": "Anguilla", "VI": "Virgin Islands, U.S.", "IS": "Iceland", "IR": "Iran, Islamic Republic of", "AM": "Armenia", "AL": "Albania", "AO": "Angola", "AN": "Netherlands Antilles", "AQ": "Antarctica", "AP": "Asia/Pacific Region", "AS": "American Samoa", "AR": "Argentina", "AU": "Australia", "AT": "Austria", "AW": "Aruba", "IN": "India", "AX": "Aland Islands", "AZ": "Azerbaijan", "IE": "Ireland", "ID": "Indonesia", "UA": "Ukraine", "QA": "Qatar", "MZ": "Mozambique" }, function (k, v) {
-            countries.push({ id: k, text: v });
-        });
-        $('#country').editable({
-            inputclass: 'input-large',
-            source: countries
-        });
-
-
-
+        
         $('#address').editable({
             url: '/post',
             value: {
@@ -380,6 +385,333 @@
                 }, {
                     value: 'Non - vegetarian',
                     text: 'Non - vegetarian'
+                }];
+            }
+        });
+        //Loading Country
+        $.mockjax({
+            url: '/country',
+            response: function (settings) {
+                this.responseText = [{
+                    value: 'Afghanistan',
+                    text: 'Afghanistan'
+                }, {
+                    value: 'Albania',
+                    text: 'Albania'
+                }, {
+                    value: 'Algeria',
+                    text: 'Algeria'
+                }, {
+                    value: 'Angola',
+                    text: 'Angola'
+                }, {
+                    value: 'Argentina',
+                    text: 'Argentina'
+                }, {
+                    value: 'Armenia',
+                    text: 'Armenia'
+                }, {
+                    value: 'Australia',
+                    text: 'Australia'
+                }, {
+                    value: 'Azerbaijan',
+                    text: 'Azerbaijan'
+                }, {
+                    value: 'Bangladesh',
+                    text: 'Bangladesh'
+                }, {
+                    value: 'Bolivia',
+                    text: 'Bolivia'
+                }, {
+                    value: 'Brazil',
+                    text: 'Brazil'
+                }, {
+                    value: 'Brunei',
+                    text: 'Brunei'
+                }, {
+                    value: 'Bulgaria',
+                    text: 'Bulgaria'
+                }, {
+                    value: 'Cameroon',
+                    text: 'Cameroon'
+                }, {
+                    value: 'Canada',
+                    text: 'Canada'
+                }, {
+                    value: 'Chile',
+                    text: 'Chile'
+                }, {
+                    value: 'China',
+                    text: 'China'
+                }, {
+                    value: 'Colombia',
+                    text: 'Colombia'
+                }, {
+                    value: 'Congo',
+                    text: 'Congo'
+                }, {
+                    value: 'Costa Rica',
+                    text: 'Costa Rica'
+                }, {
+                    value: 'Croatia',
+                    text: 'Croatia'
+                }, {
+                    value: 'Cuba',
+                    text: 'Cuba'
+                }, {
+                    value: 'Czech',
+                    text: 'Czech'
+                }, {
+                    value: 'Dominica',
+                    text: 'Dominica'
+                }, {
+                    value: 'Ecuador',
+                    text: 'Ecuador'
+                }, {
+                    value: 'Egypt',
+                    text: 'Egypt'
+                }, {
+                    value: 'France',
+                    text: 'France'
+                }, {
+                    value: 'Georgia',
+                    text: 'Georgia'
+                }, {
+                    value: 'Germany',
+                    text: 'Germany'
+                }, {
+                    value: 'Ghana',
+                    text: 'Ghana'
+                }, {
+                    value: 'Greece',
+                    text: 'Greece'
+                }, {
+                    value: 'Haiti',
+                    text: 'Haiti'
+                }, {
+                    value: 'Hungary',
+                    text: 'Hungary'
+                }, {
+                    value: 'Iceland',
+                    text: 'Iceland'
+                }, {
+                    value: 'India',
+                    text: 'India'
+                }, {
+                    value: 'Indonesia',
+                    text: 'Indonesia'
+                }, {
+                    value: 'Iran',
+                    text: 'Iran'
+                }, {
+                    value: 'Ireland',
+                    text: 'Ireland'
+                }, {
+                    value: 'Israel',
+                    text: 'Israel'
+                }, {
+                    value: 'Italy',
+                    text: 'Italy'
+                }, {
+                    value: 'Jamaica',
+                    text: 'Jamaica'
+                }, {
+                    value: 'Japan',
+                    text: 'Japan'
+                }, {
+                    value: 'Jordan',
+                    text: 'Jordan'
+                }, {
+                    value: 'Kazakhstan',
+                    text: 'Kazakhstan'
+                }, {
+                    value: 'Kuwait',
+                    text: 'Kuwait'
+                }, {
+                    value: 'Kyrgyzstan',
+                    text: 'Kyrgyzstan'
+                }, {
+                    value: 'Laos',
+                    text: 'Laos'
+                }, {
+                    value: 'Latvia',
+                    text: 'Latvia'
+                }, {
+                    value: 'Lebanon',
+                    text: 'Lebanon'
+                }, {
+                    value: 'Liberia',
+                    text: 'Liberia'
+                }, {
+                    value: 'Libya',
+                    text: 'Libya'
+                }, {
+                    value: 'Macedonia',
+                    text: 'Macedonia'
+                }, {
+                    value: 'Malaysia',
+                    text: 'Malaysia'
+                }, {
+                    value: 'Mali',
+                    text: 'Mali'
+                }, {
+                    value: 'Mexico',
+                    text: 'Mexico'
+                }, {
+                    value: 'Myanmar',
+                    text: 'Myanmar'
+                }, {
+                    value: 'Nepal',
+                    text: 'Nepal'
+                }, {
+                    value: 'New Zealand',
+                    text: 'New Zealand'
+                }, {
+                    value: 'Nigeria',
+                    text: 'Nigeria'
+                }, {
+                    value: 'North Korea',
+                    text: 'North Korea'
+                }, {
+                    value: 'Pakistan',
+                    text: 'Pakistan'
+                }, {
+                    value: 'Palestine',
+                    text: 'Palestine'
+                }, {
+                    value: 'Paraguay',
+                    text: 'Paraguay'
+                }, {
+                    value: 'Peru',
+                    text: 'Peru'
+                }, {
+                    value: 'Philippines',
+                    text: 'Philippines'
+                }, {
+                    value: 'Poland',
+                    text: 'Poland'
+                }, {
+                    value: 'Portugal',
+                    text: 'Portugal'
+                }, {
+                    value: 'Romania',
+                    text: 'Romania'
+                }, {
+                    value: 'Russia',
+                    text: 'Russia'
+                }, {
+                    value: 'Saudi Arabia',
+                    text: 'Saudi Arabia'
+                }, {
+                    value: 'Senegal',
+                    text: 'Senegal'
+                }, {
+                    value: 'Serbia',
+                    text: 'Serbia'
+                }, {
+                    value: 'Singapore',
+                    text: 'Singapore'
+                }, {
+                    value: 'Slovenia',
+                    text: 'Slovenia'
+                }, {
+                    value: 'South Africa',
+                    text: 'South Africa'
+                }, {
+                    value: 'South Korea',
+                    text: 'South Korea'
+                }, {
+                    value: 'Spain',
+                    text: 'Spain'
+                }, {
+                    value: 'Sudan',
+                    text: 'Sudan'
+                }, {
+                    value: 'Sweden',
+                    text: 'Sweden'
+                }, {
+                    value: 'Switzerland',
+                    text: 'Switzerland'
+                }, {
+                    value: 'Syria',
+                    text: 'Syria'
+                }, {
+                    value: 'Taiwan',
+                    text: 'Taiwan'
+                }, {
+                    value: 'Tajikistan',
+                    text: 'Tajikistan'
+                }, {
+                    value: 'Thailand',
+                    text: 'Thailand'
+                }, {
+                    value: 'Tunisia',
+                    text: 'Tunisia'
+                }, {
+                    value: 'Turkey',
+                    text: 'Turkey'
+                }, {
+                    value: 'Ukraine',
+                    text: 'Ukraine'
+                }, {
+                    value: 'United Kingdom',
+                    text: 'United Kingdom'
+                }, {
+                    value: 'United States',
+                    text: 'United States'
+                }, {
+                    value: 'Uruguay',
+                    text: 'Uruguay'
+                }, {
+                    value: 'Venezuela',
+                    text: 'Venezuela'
+                }, {
+                    value: 'Vietnam',
+                    text: 'Vietnam'
+                }, {
+                    value: 'Yemen',
+                    text: 'Yemen'
+                }, {
+                    value: 'Zambia',
+                    text: 'Zambia'
+                }, {
+                    value: 'Zimbabwe',
+                    text: 'Zimbabwe'
+                }];
+            }
+        });
+        //Loading Participant Type
+        $.mockjax({
+            url: '/participantType',
+            response: function (settings) {
+                this.responseText = [{
+                    value: 'International delegates',
+                    text: 'International delegates'
+                }, {
+                    value: 'Vietnamese delegate',
+                    text: 'Vietnamese delegate'
+                }, {
+                    value: 'International youth',
+                    text: 'International youth'
+                }, {
+                    value: 'Vietnamese youth',
+                    text: 'Vietnamese youth'
+                }];
+            }
+        });
+        //Loading type of passport
+        $.mockjax({
+            url: '/typeOfPassport',
+            response: function (settings) {
+                this.responseText = [{
+                    value: 'Regular',
+                    text: 'Regular'
+                }, {
+                    value: 'Official',
+                    text: 'Official'
+                }, {
+                    value: 'Diplomatic',
+                    text: 'Diplomatic'
                 }];
             }
         });
