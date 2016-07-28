@@ -48,7 +48,25 @@ namespace Site.Core.Service.Implementation
             try
             {
                 IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
-                userRepository.Delete(id);
+                User user = userRepository.FindByID(id);
+                if (user != null)
+                {
+                    IMailingAddressRepository mailingRepository = RepositoryClassFactory.GetInstance().GetMailingAddressRepository();
+                    IList<MailingAddress> mailings = mailingRepository.FindByUserID(id);
+                    foreach (var m in mailings)
+                    {
+                        mailingRepository.Delete(m.MailingAddressID);
+                    }
+                    userRepository.Delete(id);
+                }
+                else
+                {
+                    return new BaseResponse
+                    {
+                        ErrorCode = (int)ErrorCode.None,
+                        Message = string.Format(Resources.Resource.msg_itemNotExist, "User")
+                    };
+                }
                 return new BaseResponse
                 {
                     ErrorCode = (int)ErrorCode.None,

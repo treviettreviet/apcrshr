@@ -115,6 +115,15 @@ namespace Site.Core.Service.Implementation.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} is not existed..
+        /// </summary>
+        internal static string msg_itemNotExist {
+            get {
+                return ResourceManager.GetString("msg_itemNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User name or password invalid..
         /// </summary>
         internal static string msg_login_fail {

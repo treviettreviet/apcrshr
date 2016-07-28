@@ -135,6 +135,9 @@
   <data name="msg_insert_exists" xml:space="preserve">
     <value>{0} "{1}" is existed.</value>
   </data>
+  <data name="msg_itemNotExist" xml:space="preserve">
+    <value>{0} is not existed.</value>
+  </data>
   <data name="msg_login_fail" xml:space="preserve">
     <value>User name or password invalid.</value>
   </data>
