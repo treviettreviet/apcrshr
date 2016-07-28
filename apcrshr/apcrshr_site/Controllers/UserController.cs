@@ -292,7 +292,58 @@ namespace apcrshr_site.Controllers
         [HttpPost]
         public JsonResult SaveUserInfomation(RegistrationModel registration)
         {
-            return Json(new { ErrorCode = (int)ErrorCode.None });
+            if (this.Session["User-SessionID"] == null)
+            {
+                return Json(new { ErrorCode = (int) ErrorCode.Redirect}, JsonRequestBehavior.AllowGet);
+            }
+            BaseResponse response = new BaseResponse();
+            FindItemReponse<UserModel> userResponse = _userService.FindUserByID(registration.UserID);
+            if (userResponse.Item != null)
+            {
+                var user = userResponse.Item;
+                user.Title = registration.Title != "Empty" ? registration.Title : user.Title;
+                user.Sex = registration.Sex != "Empty" ? registration.Sex : user.Sex;
+                user.MealPreference = registration.MealPreference != "Empty" ? registration.MealPreference : user.MealPreference;
+                user.DisabilitySpecialTreatment = registration.DisabilityOrTreatment != "Empty" ? registration.DisabilityOrTreatment : user.DisabilitySpecialTreatment;
+                user.OtherEmail = registration.OtherEmail != "Empty" ? registration.OtherEmail : user.OtherEmail;
+                user.PhoneNumber = registration.Phone != "Empty" ? registration.Phone : user.PhoneNumber;
+                user.Address = registration.Address != "Empty" ? registration.Address : user.Address;
+                user.City = registration.City != "Empty" ? registration.City : user.City;
+                user.Country = registration.Country != "Empty" ? registration.Country : user.Country;
+                user.WorkAddress = registration.WorkAddress != "Empty" ? registration.WorkAddress : user.WorkAddress;
+                user.Organization = registration.Organization != "Empty" ? registration.Organization : user.Organization;
+                //Don't update password
+                user.Password = null;
+
+                //Updare user
+                response = _userService.UpdateUser(user);
+            }
+            else
+            {
+                response.ErrorCode = (int)ErrorCode.Error;
+                response.Message = Resources.Resource.msg_commonError;
+            }
+            FindItemReponse<MailingAddressModel> mailingResponse = _mailingService.FindMailingAddressByID(registration.MailingAddressID);
+            if (mailingResponse.Item != null)
+            {
+                var mailing = mailingResponse.Item;
+                mailing.ParticipantType = registration.ParticipantType != "Empty" ? registration.ParticipantType : mailing.ParticipantType;
+                mailing.ParticipateYouth = registration.YouthConference;
+                mailing.NeedVisaSupport = registration.NeedVisaSupport;
+                mailing.OriginalNationality = registration.OriginalNationality != "Empty" ? registration.OriginalNationality : mailing.OriginalNationality;
+                mailing.CurrentNationality = registration.CurrentNationality != "Empty" ? registration.CurrentNationality : mailing.CurrentNationality;
+                mailing.Occupation = registration.Occupation != "Empty" ? registration.Occupation : mailing.Occupation;
+                mailing.DetailOfEmbassy = registration.DetailOfEmbassy != "Empty" ? registration.DetailOfEmbassy : mailing.DetailOfEmbassy;
+
+                //Update mailing
+                response = _mailingService.UpdateMailingAddress(mailing);
+            }
+            else
+            {
+                response.ErrorCode = (int)ErrorCode.Error;
+                response.Message = Resources.Resource.msg_commonError;
+            }
+            return Json(response, JsonRequestBehavior.AllowGet);
         }
     }
 }

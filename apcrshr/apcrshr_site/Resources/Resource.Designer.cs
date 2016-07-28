@@ -232,6 +232,15 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error has occurred on the server..
+        /// </summary>
+        public static string msg_commonError {
+            get {
+                return ResourceManager.GetString("msg_commonError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This email has registered by another user..
         /// </summary>
         public static string msg_email_exist {

@@ -137,15 +137,15 @@
                                     <tr>
                                         <td>Participate in Youth conference <span class="validation-span-required">(*)</span></td>
                                         <td>
-                                            <input type="radio" id="YouthConference" name="YouthConference" value="true" data-rule-required="true" @(Model.YouthConference == "true" ? "checked" : "")>Yes
-                                            <input type="radio" id="YouthConference" name="YouthConference" value="false" data-rule-required="true" @(Model.YouthConference == "false" ? "checked" : "")>No
+                                            <input type="radio" id="YouthConference" name="YouthConference" value="true" @(Model.YouthConference == "true" ? "checked" : "")>&nbsp;Yes
+                                            <input type="radio" id="YouthConference" name="YouthConference" value="false" @(Model.YouthConference == "false" ? "checked" : "")>&nbsp;No
                                             <i>(Youth age 15-29/ Born in 1988 - 2002)</i>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Need visa support</td>
                                         <td>
-                                            <input type="radio" id="NeedVisaSupport" name="NeedVisaSupport" value="true" data-rule-required="true" @(Model.NeedVisaSupport == true ? "checked" : "")>Yes
+                                            <input type="radio" id="NeedVisaSupport" name="NeedVisaSupport" value="true" @(Model.NeedVisaSupport == true ? "checked" : "")>&nbsp;Yes
                                         </td>
                                     </tr>
                                     <tr>
@@ -169,13 +169,13 @@
                                     <tr>
                                         <td>Passport number <span class="validation-span-required">(*)</span></td>
                                         <td>
-                                            <a href="#" id="PassportNumber" data-type="text" data-pk="17" data-placeholder="Your passport number..." data-original-title="Enter your passport number">@Model.PassportNumber</a>
+                                            <label>@Model.PassportNumber</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Type of passport <span class="validation-span-required">(*)</span></td>
                                         <td>
-                                            <a href="#" id="TypeOfPassport" data-type="select" data-pk="18" data-value="@Model.TypeOfPassport" data-source="/typeOfPassport" data-original-title="Select passport type">@Model.TypeOfPassport</a>
+                                            <label>@Model.TypeOfPassport</label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -313,19 +313,19 @@
         $('#ParticipantType').editable({ showbuttons: true, url: changedValue });
         $('#OriginalNationality').editable({ url: changedValue });
         $('#CurrentNationality').editable({ url: changedValue });
-        $('#PassportNumber').editable({ url: changedValue });
-        $('#TypeOfPassport').editable({ showbuttons: true, url: changedValue });
-        $('#Occupation').editable();
+        //$('#PassportNumber').editable({ url: changedValue });
+        //$('#TypeOfPassport').editable({ showbuttons: true, url: changedValue });
+        $('#Occupation').editable({ url: changedValue });
         //$('#DateOfPassportIssue').editable({ url: changedValue });
         //$('#DateOfPassportExpiry').editable({ url: changedValue });
         $('#DetailOfEmbassy').editable({ url: changedValue });
 
         function changedValue(params) {
-            var control = $("#" + params.name);
-            var old = $(control).text();
-            if (old != params.value) {
+            //var control = $("#" + params.name);
+            //var old = $(control).text();
+            //if (old != params.value) {
                 $("#btnSave").removeAttr("disabled");
-            }
+            //}
         }
         
         $('#address').editable({
@@ -767,14 +767,14 @@
         formData.append("ParticipantType", $("#ParticipantType").text());
         formData.append("YouthConference", $("#frmSaveUser input[name='YouthConference']:checked").val());
         formData.append("NeedVisaSupport", $("#frmSaveUser input[id='NeedVisaSupport']:checked").val());
-        formData.append("DateOfBirth", $("#DateOfBirth").val());
+        //formData.append("DateOfBirth", $("#DateOfBirth").val());
         formData.append("OriginalNationality", $("#OriginalNationality").text());
         formData.append("CurrentNationality", $("#CurrentNationality").text());
-        formData.append("PassportNumber", $("#PassportNumber").text());
-        formData.append("TypeOfPassport", $("#TypeOfPassport").text());
+        //formData.append("PassportNumber", $("#PassportNumber").text());
+        //formData.append("TypeOfPassport", $("#TypeOfPassport").text());
         formData.append("Occupation", $("#Occupation").text());
-        formData.append("DateOfPassportIssue", $("#DateOfPassportIssue").val());
-        formData.append("DateOfPassportExpiry", $("#DateOfPassportExpiry").val());
+        //formData.append("DateOfPassportIssue", $("#DateOfPassportIssue").val());
+        //formData.append("DateOfPassportExpiry", $("#DateOfPassportExpiry").val());
         formData.append("DetailOfEmbassy", $("#DetailOfEmbassy").text());
         $.ajax({
             type: "POST",
@@ -785,14 +785,14 @@
             processData: false,
             success: function (response) {
                 $.unblockUI();
-                bootbox.alert(response.message, function () {
+                bootbox.alert(response.Message, function () {
                     bootbox.hideAll();
                 });
                 //Timeout
-                if (response.errorCode == 2) {
-                    window.location = "/Administrator/AdminHome/Login";
+                if (response.ErrorCode == 2) {
+                    window.location = "/User/Login";
                 }
-                if (response.errorCode == 0) {
+                if (response.ErrorCode == 0) {
                     $("#btnSave").attr("disabled", "disabled");
                 }
             },

@@ -276,4 +276,7 @@
   <data name="title_loginProfile" xml:space="preserve">
     <value>{0} Profile</value>
   </data>
+  <data name="msg_commonError" xml:space="preserve">
+    <value>An error has occurred on the server.</value>
+  </data>
 </root>
