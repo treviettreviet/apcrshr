@@ -227,7 +227,9 @@
                     </h4>
                 </div>
                 <div id="collapse-5" class="panel-collapse collapse">
-                    <div class="panel-body"><strong>Duis</strong> aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore...</div>
+                    <div class="panel-body">
+                        No records
+                    </div>
                 </div>
             </div>
             <!-- End Accordion 2 -->
@@ -243,7 +245,17 @@
                     </h4>
                 </div>
                 <div id="collapse-6" class="panel-collapse collapse">
-                    <div class="panel-body"><strong>Duis</strong> aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore...</div>
+                    <div class="panel-body">
+                        <p>The 9th Asia Pacific Conference on Reproductive and Sexual Health and Rights (APCRSHR) is pleased to invite those delegates who are interested in the field of reproductive and sexual health and rights to apply for scholarships to attend the 9th APCRSHR <a href="http://www.apcrshr9vn.com/" target="_blank">http://www.apcrshr9vn.com/</a>. This opportunity is open to individuals from all over the world whose careers focus on sexual and reproductive health and rights.</p>
+                        <p>The application package will be opened soon.</p>
+                        <div class="call-action call-action-boxed call-action-style1 no-descripton clearfix">
+                            <!-- Call Action Button -->
+                            <div class="button-side"><a href='@Url.Action("MainSholarshipRegistration", "Registration")' class="btn-system border-btn btn-medium">Apply scholarship now</a></div>
+                            <!-- Call Action Text -->
+                            <h2 class="primary"><strong>The application package</strong> should be completed and submitted online at:</h2>
+                        </div>
+                        <p>Awardees will be selected on the basis of applicant’s qualifications and abstract quality. For more information, please direct your inquiries to the 9th APCRSHR at <a href='mailto:scholarship@apcrshr9vn.com'><span>scholarship@apcrshr9vn.com</span></a>.</p>
+                    </div>
                 </div>
             </div>
             <!-- End Accordion 3 -->
@@ -259,7 +271,20 @@
                     </h4>
                 </div>
                 <div id="collapse-7" class="panel-collapse collapse">
-                    <div class="panel-body"><strong>Duis</strong> aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore...</div>
+                    <div class="panel-body">
+                        <p>The 9th Asia Pacific Conference on Reproductive and Sexual Health and Rights (APCRSHR) is pleased to invite youth delegates who are interested in the field of reproductive and sexual health and rights to apply for scholarships to attend the 9th APCRSHR <a href="http://www.apcrshr9vn.com/" target="_blank">http://www.apcrshr9vn.com/</a>. This opportunity is open to individuals from all over the world whose careers focus on sexual and reproductive health and rights. </p>
+                        <p>The application package will be opened soon.</p>
+                        <p>Awardees will be selected on the basis of applicant’s qualifications and abstract quality.</p>
+                        <p>For more information, please direct your inquiries to the 9th APCRSHR at <a href='mailto:scholarship@apcrshr9vn.com'><span>scholarship@apcrshr9vn.com</span></a>. <strong>Scholarship benefit</strong></p>
+                        <div class="call-action call-action-boxed call-action-style1 no-descripton clearfix">
+                            <!-- Call Action Button -->
+                            <div class="button-side"><a href="#" class="btn-system border-btn btn-medium">Apply scholarship now</a></div>
+                            <!-- Call Action Text -->
+                            <h2 class="primary"><strong>The application package</strong> should be completed and submitted online at:</h2>
+                        </div>
+                        <p>Awardees will be selected on the basis of applicant’s qualifications and abstract quality.</p>
+                        <p><strong>The deadline for abstract submission and scholarship application is April 30, 2017.  All applicants will be notified of acceptance status by June 10, 2017.</strong></p>
+                    </div>
                 </div>
             </div>
             <!-- End Accordion 4 -->
@@ -275,7 +300,9 @@
                     </h4>
                 </div>
                 <div id="collapse-8" class="panel-collapse collapse">
-                    <div class="panel-body"><strong>Duis</strong> aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore...</div>
+                    <div class="panel-body">
+                        No records
+                    </div>
                 </div>
             </div>
             <!-- End Accordion 5 -->
@@ -294,9 +321,24 @@
         $.fn.editable.defaults.url = '/post';
 
         //editables
-        $('#Title').editable({ url: changedValue });
-        $('#Sex').editable({ url: changedValue });
-        $('#MealPreference').editable({ url: changedValue });
+        $('#Title').editable({
+            validate: function (value) {
+                if (value == '') return 'Title is required!';
+            },
+            url: changedValue
+        });
+        $('#Sex').editable({
+            validate: function (value) {
+                if (value == '') return 'Sex is required!';
+            },
+            url: changedValue
+        });
+        $('#MealPreference').editable({
+            validate: function (value) {
+                if (value == '') return 'Meal preference is required!';
+            },
+            url: changedValue
+        });
         $('#DisabilityOrTreatment').editable({ showbuttons: true, url: changedValue });
         $('#OtherEmail').editable({
             validate: function (value) {
@@ -304,18 +346,53 @@
             },
             url: changedValue
         });
-        $('#Phone').editable({ url: changedValue });
-        $('#Address').editable({ showbuttons: true, url: changedValue });
-        $('#City').editable({ showbuttons: true, url: changedValue });
+        $('#Phone').editable({
+            validate: function (value) {
+                if (value == '') return 'Phone is required!';
+            },
+            url: changedValue
+        });
+        $('#Address').editable({
+            validate: function (value) {
+                if (value == '') return 'Address is required!';
+            },
+            showbuttons: true, url: changedValue
+        });
+        $('#City').editable({
+            validate: function (value) {
+                if (value == '') return 'City is required!';
+            },
+            showbuttons: true, url: changedValue
+        });
         $('#Country').editable({ url: changedValue });
         $('#WorkAddress').editable({ showbuttons: true, url: changedValue });
-        $('#Organization').editable({ showbuttons: true, url: changedValue });
+        $('#Organization').editable({
+            validate: function (value) {
+                if (value == '') return 'Organization is required!';
+            },
+            showbuttons: true, url: changedValue
+        });
         $('#ParticipantType').editable({ showbuttons: true, url: changedValue });
-        $('#OriginalNationality').editable({ url: changedValue });
-        $('#CurrentNationality').editable({ url: changedValue });
+        $('#OriginalNationality').editable({
+            validate: function (value) {
+                if (value == '') return 'Original nationality is required!';
+            },
+            url: changedValue
+        });
+        $('#CurrentNationality').editable({
+            validate: function (value) {
+                if (value == '') return 'Current nationality is required!';
+            },
+            url: changedValue
+        });
         //$('#PassportNumber').editable({ url: changedValue });
         //$('#TypeOfPassport').editable({ showbuttons: true, url: changedValue });
-        $('#Occupation').editable({ url: changedValue });
+        $('#Occupation').editable({
+            validate: function (value) {
+                if (value == '') return 'Occupation is required!';
+            },
+            url: changedValue
+        });
         //$('#DateOfPassportIssue').editable({ url: changedValue });
         //$('#DateOfPassportExpiry').editable({ url: changedValue });
         $('#DetailOfEmbassy').editable({ url: changedValue });

@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Main Sholarship Registration";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="col-sm-9">
+    <div class="box box-color box-bordered">
+        <div class="box-title">
+            <h3>
+                <i class="fa fa-magic"></i>
+                Main sholarship registration
+            </h3>
+        </div>
+        <div class="box-content">
+            <form action="@Url.Action("SaveMainSholarship", "Registration")" method="POST" class='form-horizontal form-validate' id="frmMainRegistration">
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Registration number: <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="FullName" id="FullName" class="form-control" data-rule-required="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="additionalfield" class="control-label col-sm-3">Sex <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <select name="Sex" id="Sex" onchange="popupSelectInput(this, 'Sex')" data-rule-required="true">
+                            <option value="">-- Chose one --</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="additionalfield" class="control-label col-sm-3">Meal preference <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <select name="MealPreference" id="MealPreference" data-rule-required="true">
+                            <option value="">-- Chose one --</option>
+                            <option value="Vegetarian">Vegetarian</option>
+                            <option value="Non- vegetarian">Non- vegetarian</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Disability or special treatment</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="DisabilityOrTreatment" id="DisabilityOrTreatment" class="form-control">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

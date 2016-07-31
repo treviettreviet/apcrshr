@@ -274,3 +274,71 @@ GO
 ALTER TABLE [Session] ADD [Completed] BIT NOT NULL DEFAULT(0)
 
 GO
+
+ALTER TABLE [MainScholarship] ADD [WorkingID] VARCHAR(50) NOT NULL
+
+GO
+
+ALTER TABLE [MainScholarship] DROP COLUMN [Organization]
+
+GO
+
+ALTER TABLE [MainScholarship] DROP COLUMN [Position]
+
+GO
+
+ALTER TABLE [MainScholarship] DROP COLUMN [DurationWorking]
+
+GO
+
+ALTER TABLE [Experience] ADD [YouthScholarshipID] VARCHAR(50) NOT NULL
+
+GO
+
+ALTER TABLE [Education] ADD [YouthScholarshipID] VARCHAR(50) NOT NULL
+
+GO
+
+ALTER TABLE [Training] ADD [YouthScholarshipID] VARCHAR(50) NOT NULL
+
+GO
+
+ALTER TABLE [LeaderShip] ADD [YouthScholarshipID] VARCHAR(50) NOT NULL
+
+GO
+
+ALTER TABLE [Publication] ADD [YouthScholarshipID] VARCHAR(50) NOT NULL
+
+GO
+
+ALTER TABLE [MainScholarship] DROP CONSTRAINT [FK_MainScholarship_Experience]
+
+GO
+
+ALTER TABLE [MainScholarship] DROP CONSTRAINT [FK_MainScholarship_MainScholarship]
+
+GO
+
+ALTER TABLE [MainScholarship] DROP COLUMN [WorkingID]
+
+GO
+
+ALTER TABLE [MainScholarship] ADD [Organization] NVARCHAR(200) NOT NULL
+
+GO
+
+ALTER TABLE [MainScholarship] ADD [Position] NVARCHAR(100) NOT NULL
+
+GO
+
+ALTER TABLE [MainScholarship] ADD [WorkingStart] DATETIME NOT NULL
+
+GO
+
+ALTER TABLE [MainScholarship] ADD [WorkingEnd] DATETIME NULL
+
+GO
+
+ALTER TABLE [MainScholarship] ADD [WorkingNow] BIT NOT NULL DEFAULT(0)
+
+GO

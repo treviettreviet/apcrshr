@@ -1265,6 +1265,7 @@
     <Content Include="Views\User\UpdateUser.cshtml" />
     <Content Include="Views\Registration\ActiveAccount.cshtml" />
     <Content Include="Views\Registration\RegistrationCompleted.cshtml" />
+    <Content Include="Views\Registration\MainSholarshipRegistration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

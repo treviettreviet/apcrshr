@@ -186,6 +186,7 @@ namespace apcrshr_site.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SendPassword(string email)

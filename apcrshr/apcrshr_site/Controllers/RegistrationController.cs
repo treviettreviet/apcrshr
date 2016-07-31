@@ -38,6 +38,7 @@ namespace apcrshr_site.Controllers
             return View();
         }
 
+        #region User registration
         public ActionResult RegistrationForm()
         {
             return View();
@@ -73,7 +74,8 @@ namespace apcrshr_site.Controllers
         public JsonResult EmailValidation(string email)
         {
             FindItemReponse<UserModel> response = _userService.FindUserByEmail(email);
-            if(response.Item != null){
+            if (response.Item != null)
+            {
                 return Json(new { ErrorCode = (int)ErrorCode.Error, Message = string.Format(Resources.Resource.msg_item_exists, "Email", email) }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { }, JsonRequestBehavior.AllowGet);
@@ -184,7 +186,7 @@ namespace apcrshr_site.Controllers
                             temp.Organization = registration.Organization;
                         }
                         temp.RegistrationStatus = (int)RegistrationStatus.Created;
-                        
+
                         session = sessionResponse.Item;
                         session.Step = registration.CurrentStep;
                         session.UpdatedDate = DateTime.Now;
@@ -485,6 +487,16 @@ namespace apcrshr_site.Controllers
                 return Json("Upload failed");
             }
             return Json("File uploaded successfully");
+        } 
+        #endregion
+
+
+        #region Main Scholarship
+        public ActionResult MainSholarshipRegistration()
+        {
+            return View();
         }
+        #endregion
+
     }
 }
