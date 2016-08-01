@@ -43,19 +43,26 @@
     <Compile Include="IAlbumService.cs" />
     <Compile Include="IArticleService.cs" />
     <Compile Include="IConferenceDeclarationService.cs" />
+    <Compile Include="IEducationService.cs" />
+    <Compile Include="IExperienceService.cs" />
     <Compile Include="IHomeService.cs" />
     <Compile Include="IImportantDeadlineService.cs" />
+    <Compile Include="ILeaderShipService.cs" />
+    <Compile Include="IMainScholarshipService.cs" />
     <Compile Include="IMenuCategoryService.cs" />
     <Compile Include="INewsService.cs" />
     <Compile Include="IPhotoService.cs" />
     <Compile Include="IPresentationService.cs" />
+    <Compile Include="IPublicationService.cs" />
     <Compile Include="ISessionService.cs" />
     <Compile Include="ISliderService.cs" />
     <Compile Include="ISubscriberService.cs" />
+    <Compile Include="ITrainingService.cs" />
     <Compile Include="IUploadService.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="IVideoService.cs" />
     <Compile Include="IMailingAddressService.cs" />
+    <Compile Include="IYouthScholarshipService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -59,6 +59,13 @@ namespace Site.Core.Service.Implementation.ModelMapper
                 cfg.CreateMap<SliderModel, Slider>();
                 cfg.CreateMap<MailingAddressModel, MailingAddress>();
                 cfg.CreateMap<SessionModel, Session>();
+                cfg.CreateMap<MainScholarshipModel, MainScholarship>();
+                cfg.CreateMap<EducationModel, Education>();
+                cfg.CreateMap<ExperienceModel, Experience>();
+                cfg.CreateMap<LeaderShipModel, LeaderShip>();
+                cfg.CreateMap<PublicationModel, Publication>();
+                cfg.CreateMap<TrainingModel, Training>();
+                cfg.CreateMap<YouthScholarshipModel, YouthScholarship>();
 
                 //Entity model mapper
                 cfg.CreateMap<Admin, AdminModel>();
@@ -82,6 +89,13 @@ namespace Site.Core.Service.Implementation.ModelMapper
                 cfg.CreateMap<Slider, SliderModel>();
                 cfg.CreateMap<MailingAddress, MailingAddressModel>();
                 cfg.CreateMap<Session, SessionModel>();
+                cfg.CreateMap<MainScholarship, MainScholarshipModel>();
+                cfg.CreateMap<Education, EducationModel>();
+                cfg.CreateMap<Experience, ExperienceModel>();
+                cfg.CreateMap<LeaderShip, LeaderShipModel>();
+                cfg.CreateMap<Publication, PublicationModel>();
+                cfg.CreateMap<Training, TrainingModel>();
+                cfg.CreateMap<YouthScholarship, YouthScholarshipModel>();
             });
 
             mapper = config.CreateMapper();
