@@ -50,15 +50,20 @@
     <Compile Include="ConferenceDeclarationService.cs" />
     <Compile Include="Convertor\ConvertBase.cs" />
     <Compile Include="Convertor\IConvertor.cs" />
+    <Compile Include="EducationService.cs" />
+    <Compile Include="ExperienceService.cs" />
     <Compile Include="HomeService.cs" />
     <Compile Include="ImportantDeadlineService.cs" />
+    <Compile Include="LeaderShipService.cs" />
     <Compile Include="MailingAddressService.cs" />
+    <Compile Include="MainScholarshipService.cs" />
     <Compile Include="MenuCategoryService.cs" />
     <Compile Include="ModelMapper\MapperUtil.cs" />
     <Compile Include="NewsService.cs" />
     <Compile Include="PhotoService.cs" />
     <Compile Include="PresentationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PublicationService.cs" />
     <Compile Include="Resources\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

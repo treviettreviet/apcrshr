@@ -115,5 +115,40 @@ namespace Site.Core.Repository
         {
             return new SessionRepository();
         }
+
+        public IEducationRepository GetEducationRepository()
+        {
+            return new EducationRepository();
+        }
+
+        public IExperienceRepository GetExperienceRepository()
+        {
+            return new ExperienceRepository();
+        }
+
+        public ILeaderShipRepository GetLeaderShipRepository()
+        {
+            return new LeaderShipRepository();
+        }
+
+        public IMainScholarshipRepository GetMainScholarshipRepository()
+        {
+            return new MainScholarshipRepository();
+        }
+
+        public IPublicationRepository GetPublicationRepository()
+        {
+            return new PublicationRepository();
+        }
+
+        public ITrainingRepository GetTrainingRepository()
+        {
+            return new TrainingRepository();
+        }
+
+        public IYouthScholarshipRepository GetYouthShcolarshipReoisitory()
+        {
+            return new YouthScholarshipRepository();
+        }
     }
 }
