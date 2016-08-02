@@ -72,9 +72,11 @@
     <Compile Include="SessionService.cs" />
     <Compile Include="SliderService.cs" />
     <Compile Include="SubscriberService.cs" />
+    <Compile Include="TrainingService.cs" />
     <Compile Include="UploadService.cs" />
     <Compile Include="UserService.cs" />
     <Compile Include="VideoService.cs" />
+    <Compile Include="YouthScholarshipService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Site.Core.DataModel\Site.Core.DataModel.csproj">
