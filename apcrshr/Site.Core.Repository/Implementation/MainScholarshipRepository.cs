@@ -30,9 +30,7 @@ namespace Site.Core.Repository.Implementation
                     scholarship.Organization = item.Organization;
                     scholarship.Position = item.Position;
                     scholarship.ReasonScholarship = item.ReasonScholarship;
-                    scholarship.RegistrationNumber = item.RegistrationNumber;
                     scholarship.Responsibility = item.Responsibility;
-                    scholarship.SubmissionNumber = item.SubmissionNumber;
                     scholarship.UpdatedBy = item.UpdatedBy;
                     scholarship.UpdatedDate = DateTime.Now;
                     scholarship.WorkingEnd = item.WorkingEnd;

@@ -30,7 +30,6 @@ namespace Site.Core.Repository.Implementation
                     scholarship.MotivationReason = item.MotivationReason;
                     scholarship.MotivationResolving = item.MotivationResolving;
                     scholarship.PlanMaking = item.PlanMaking;
-                    scholarship.RegistrationNumber = item.RegistrationNumber;
                     scholarship.UpdatedBy = item.UpdatedBy;
                     scholarship.UpdatedDate = DateTime.Now;
                     scholarship.UploadFile = item.UploadFile;

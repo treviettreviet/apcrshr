@@ -45,6 +45,7 @@ namespace Site.Core.Repository.Implementation
                     mailing.NeedVisaSupport = item.NeedVisaSupport;
                     mailing.ActivationCode = item.ActivationCode;
                     mailing.RegistrationNumber = item.RegistrationNumber;
+                    mailing.SubmissionNumber = item.SubmissionNumber;
 
                     context.SaveChanges();
                 }

@@ -342,3 +342,23 @@ GO
 ALTER TABLE [MainScholarship] ADD [WorkingNow] BIT NOT NULL DEFAULT(0)
 
 GO
+
+ALTER TABLE [User] DROP COLUMN [EmailDuplicationCode]
+
+GO
+
+ALTER TABLE [MailingAddress] ADD [SubmissionNumber] VARCHAR(50) NULL
+
+GO
+
+ALTER TABLE [MainScholarship] DROP COLUMN [RegistrationNumber]
+
+GO
+
+ALTER TABLE [MainScholarship] DROP COLUMN [SubmissionNumber]
+
+GO
+
+ALTER TABLE [YouthScholarship] DROP COLUMN [RegistrationNumber]
+
+GO
