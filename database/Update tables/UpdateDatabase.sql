@@ -362,3 +362,7 @@ GO
 ALTER TABLE [YouthScholarship] DROP COLUMN [RegistrationNumber]
 
 GO
+
+ALTER TABLE [MailingAddress] DROP COLUMN [SubmissionNumber]
+
+GO

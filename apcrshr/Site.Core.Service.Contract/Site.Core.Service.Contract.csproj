@@ -60,6 +60,7 @@
     <Compile Include="ITrainingService.cs" />
     <Compile Include="IUploadService.cs" />
     <Compile Include="IUserService.cs" />
+    <Compile Include="IUserSubmissionService.cs" />
     <Compile Include="IVideoService.cs" />
     <Compile Include="IMailingAddressService.cs" />
     <Compile Include="IYouthScholarshipService.cs" />

@@ -74,6 +74,7 @@
     <Compile Include="Model\TrainingModel.cs" />
     <Compile Include="Model\UploadModel.cs" />
     <Compile Include="Model\UserModel.cs" />
+    <Compile Include="Model\UserSubmissionModel.cs" />
     <Compile Include="Model\VideoModel.cs" />
     <Compile Include="Model\YouthScholarshipModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

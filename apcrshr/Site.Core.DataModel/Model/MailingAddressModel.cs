@@ -29,6 +29,5 @@ namespace Site.Core.DataModel.Model
         public bool NeedVisaSupport { get; set; }
         public string ActivationCode { get; set; }
         public string RegistrationNumber { get; set; }
-        public string SubmissionNumber { get; set; }
     }
 }

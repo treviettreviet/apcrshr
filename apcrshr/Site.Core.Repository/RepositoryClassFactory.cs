@@ -150,5 +150,10 @@ namespace Site.Core.Repository
         {
             return new YouthScholarshipRepository();
         }
+
+        public IUserSubmissionRepository GetUserSubmissionRepository()
+        {
+            return new UserSubmissionRepository();
+        }
     }
 }
