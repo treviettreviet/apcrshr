@@ -1,8 +1,13 @@
-﻿@{
+﻿@using apcrshr_site.Helper
+@model Site.Core.DataModel.Model.MainScholarshipModel
+@{
     ViewBag.Title = "Main Sholarship Registration";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
-
+<!-- Tagsinput -->
+<link rel="stylesheet" href="~/Areas/Administrator/css/plugins/tagsinput/jquery.tagsinput.css">
+<!-- TagsInput -->
+<script src="~/Areas/Administrator/js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
 <div class="col-sm-9">
     <div class="box box-color box-bordered">
         <div class="box-title">
@@ -14,39 +19,143 @@
         <div class="box-content">
             <form action="@Url.Action("SaveMainSholarship", "Registration")" method="POST" class='form-horizontal form-validate' id="frmMainRegistration">
                 <div class="form-group">
-                    <label for="anotherelem" class="control-label col-sm-3">Registration number: <span class="validation-span-required">(*)</span></label>
+                    <label for="anotherelem" class="control-label col-sm-3">Registration number <span class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
-                        <input type="text" name="FullName" id="FullName" class="form-control" data-rule-required="true">
+                        <input type="text" name="RegistrationNumber" id="RegistrationNumber" class="form-control" data-rule-required="true">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="additionalfield" class="control-label col-sm-3">Sex <span class="validation-span-required">(*)</span></label>
+                    <label for="anotherelem" class="control-label col-sm-3">Abstract submission number <span class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
-                        <select name="Sex" id="Sex" onchange="popupSelectInput(this, 'Sex')" data-rule-required="true">
-                            <option value="">-- Chose one --</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Others">Others</option>
-                        </select>
+                        <input type="text" name="SubmissionNumber" id="SubmissionNumber" class="form-control" data-rule-required="true">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="additionalfield" class="control-label col-sm-3">Meal preference <span class="validation-span-required">(*)</span></label>
+                    <p style="padding: 10px; text-align: justify;">You have to register and submit abstract before apply for a scholarship. Once you have finished registration form and abstract submission form, the registration number and the abstract submission number will be sent to your email. If you have not registered and submit abstract, please do it <a href='@Url.Action("RegistrationForm", "Registration")'>HERE</a>.</p>
+                </div>
+                <div class="box-title" style="margin-left: -20px; margin-right: -20px;">
+                    <h3>
+                        <i class="fa fa-check"></i>
+                        WORKING EXPERIENCE
+                    </h3>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Current organization (Full name) <span class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
-                        <select name="MealPreference" id="MealPreference" data-rule-required="true">
-                            <option value="">-- Chose one --</option>
-                            <option value="Vegetarian">Vegetarian</option>
-                            <option value="Non- vegetarian">Non- vegetarian</option>
-                        </select>
+                        <input type="text" name="Organization" id="Organization" maxlength="50" class="form-control" data-rule-required="true">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="anotherelem" class="control-label col-sm-3">Disability or special treatment</label>
+                    <label for="anotherelem" class="control-label col-sm-3">Position <span class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
-                        <input type="text" name="DisabilityOrTreatment" id="DisabilityOrTreatment" class="form-control">
+                        <input type="text" name="Position" id="Position" class="form-control" data-rule-required="true">
                     </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Duration of work (number of year) <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="DurationOfWork" id="DurationOfWork" class="form-control" data-rule-required="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Responsibility relating to Reproductive and Sexual Health and Rights <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <textarea name="Responsibility" id="Responsibility" rows="3" maxlength="200" class="form-control" data-rule-required="true"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Why should we provide you a scholarship? <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <textarea name="ReasonScholarship" id="ReasonScholarship" rows="7" maxlength="300" class="form-control" data-rule-required="true"></textarea>
+                    </div>
+                </div>
+                <div class="box-title" style="margin-left: -20px; margin-right: -20px;">
+                    <h3>
+                        <i class="fa fa-check"></i>
+                        ABSTRACT SUBMISSION
+                    </h3>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Have you submitted at least 1 abstract for the conference <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <div class="checkbox">
+                            <label>
+                                <input type="radio" id="HasSubmitted" name="HasSubmitted" value="true" data-rule-required="true">&nbsp;Yes
+                                <input type="radio" id="HasSubmitted" name="HasSubmitted" value="false" data-rule-required="true">&nbsp;No
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Title of abstract submitted</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="SubmissionTitles" id="SubmissionTitles" class="tagsinput form-control" value="">
+                    </div>
+                </div>
+                <div class="form-actions col-sm-offset-3 col-sm-9">
+                    <button type="button" onclick="submitForm()" class="btn btn-primary">Save Changes</button>
+                    <a href='@Url.Action("Index", "Home")' class="btn btn-info">Cancel</a>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function submitForm() {
+        $.blockUI({ message: $('#spinner') });
+        var formData = new FormData();
+        formData.append("RegistrationNumber", $("#RegistrationNumber").val());
+        formData.append("SubmissionNumber", $("#SubmissionNumber").val());
+        formData.append("Responsibility", $("#Responsibility").val());
+        formData.append("ReasonScholarship", $("#ReasonScholarship").val());
+        formData.append("HasSubmitted", $("#HasSubmitted").val());
+        formData.append("Organization", $("#Organization").val());
+        formData.append("Position", $("#Position").val());
+        formData.append("DurationOfWork", $("#DurationOfWork").val());
+        formData.append("SubmissionTitles", $("#SubmissionTitles").val());
+        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveMainSholarship", "Registration")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $.unblockUI();
+                bootbox.alert(response.message, function () {
+                    bootbox.hideAll();
+                });
+                //Timeout
+                if (response.errorCode == 2) {
+                    window.location = "/User/Login";
+                }
+                if (response.errorCode == 0) {
+                    resertForm();
+                    if (response.url != "") {
+                        bootbox.prompt({
+                            title: "Đường dẫn bài viết",
+                            value: response.url,
+                            callback: function (result) {
+                                if (result != null) {
+                                    clipboard.copy(result);
+                                    bootbox.hideAll();
+                                } else {
+                                    bootbox.hideAll();
+                                }
+                            }
+                        });
+                    }
+                }
+            },
+            error: function (error) {
+                $.unblockUI();
+                bootbox.alert(error, function () {
+                    bootbox.hideAll();
+                });
+            }
+        });
+    }
+</script>

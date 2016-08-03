@@ -277,6 +277,15 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your login session has timeout..
+        /// </summary>
+        public static string msg_sessionTimeOut {
+            get {
+                return ResourceManager.GetString("msg_sessionTimeOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This user name has registered by another user..
         /// </summary>
         public static string msg_username_exist {

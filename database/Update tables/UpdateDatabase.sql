@@ -366,3 +366,27 @@ GO
 ALTER TABLE [MailingAddress] DROP COLUMN [SubmissionNumber]
 
 GO
+
+ALTER TABLE [MainScholarship] ADD [DurationOfWork] INT NOT NULL
+
+GO
+
+ALTER TABLE [MainScholarship] DROP COLUMN [WorkingStart]
+
+GO
+
+ALTER TABLE [MainScholarship] DROP COLUMN [WorkingEnd]
+
+GO
+
+ALTER TABLE [MainScholarship] DROP COLUMN [WorkingNow]
+
+GO
+
+ALTER TABLE [MainScholarship] DROP CONSTRAINT [DF__MainSchol__Worki__160F4887]
+
+GO
+
+ALTER TABLE [MainScholarship] ADD [SubmissionTitles] NVARCHAR(1000) NOT NULL
+
+GO

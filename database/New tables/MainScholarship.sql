@@ -1,7 +1,7 @@
 USE [APCRSHR]
 GO
 
-/****** Object:  Table [dbo].[MainScholarship]    Script Date: 7/30/2016 9:11:32 AM ******/
+/****** Object:  Table [dbo].[MainScholarship]    Script Date: 8/3/2016 9:41:05 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -13,8 +13,6 @@ GO
 
 CREATE TABLE [dbo].[MainScholarship](
 	[ScholarshipID] [varchar](50) NOT NULL,
-	[RegistrationNumber] [nvarchar](50) NOT NULL,
-	[SubmissionNumber] [varchar](50) NOT NULL,
 	[Responsibility] [nvarchar](200) NOT NULL,
 	[ReasonScholarship] [nvarchar](500) NOT NULL,
 	[HasSubmitted] [bit] NOT NULL,
@@ -22,6 +20,9 @@ CREATE TABLE [dbo].[MainScholarship](
 	[CreatedBy] [varchar](50) NOT NULL,
 	[UpdatedDate] [datetime] NULL,
 	[UpdatedBy] [varchar](50) NULL,
+	[Organization] [nvarchar](200) NOT NULL,
+	[Position] [nvarchar](100) NOT NULL,
+	[DurationOfWork] [int] NOT NULL,
  CONSTRAINT [PK_MainScholarship] PRIMARY KEY CLUSTERED 
 (
 	[ScholarshipID] ASC

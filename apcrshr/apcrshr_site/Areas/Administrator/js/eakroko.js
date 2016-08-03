@@ -164,7 +164,8 @@ $(document).ready(function () {
 		$('.tagsinput').each(function (e) {
 			$(this).tagsInput({
 				width : 'auto',
-				height: 'auto'
+				height: 'auto',
+				defaultText: 'add a title'
 			});
 		});
 	}

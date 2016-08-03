@@ -20,8 +20,7 @@ namespace Site.Core.DataModel.Model
         public string UpdatedBy { get; set; }
         public string Organization { get; set; }
         public string Position { get; set; }
-        public System.DateTime WorkingStart { get; set; }
-        public Nullable<System.DateTime> WorkingEnd { get; set; }
-        public bool WorkingNow { get; set; }
+        public int DurationOfWork { get; set; }
+        public string SubmissionTitles { get; set; }
     }
 }

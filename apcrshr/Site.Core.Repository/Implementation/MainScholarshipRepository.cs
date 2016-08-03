@@ -33,9 +33,8 @@ namespace Site.Core.Repository.Implementation
                     scholarship.Responsibility = item.Responsibility;
                     scholarship.UpdatedBy = item.UpdatedBy;
                     scholarship.UpdatedDate = DateTime.Now;
-                    scholarship.WorkingEnd = item.WorkingEnd;
-                    scholarship.WorkingNow = item.WorkingNow;
-                    scholarship.WorkingStart = item.WorkingStart;
+                    scholarship.DurationOfWork = item.DurationOfWork;
+                    scholarship.SubmissionTitles = item.SubmissionTitles;
 
                     context.SaveChanges();
                 }

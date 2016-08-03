@@ -6,11 +6,13 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using apcrshr_site.Filters;
 using apcrshr_site.Helper;
 using apcrshr_site.Models;
 using Site.Core.DataModel.Enum;
 using Site.Core.DataModel.Model;
 using Site.Core.DataModel.Response;
+using Site.Core.Repository;
 using Site.Core.Service.Contract;
 using Site.Core.Service.Implementation;
 
@@ -492,10 +494,26 @@ namespace apcrshr_site.Controllers
 
 
         #region Main Scholarship
+
+        [UserSessionFilter]
         public ActionResult MainSholarshipRegistration()
         {
             return View();
         }
+
+        [ValidateAntiForgeryToken]
+        public JsonResult SaveMainSholarship(MainScholarshipModel scholarship)
+        {
+            string sessionId = Session["User-SessionID"].ToString();
+            UserSession userSession = SessionUtil.GetInstance.VerifySession(sessionId);
+            if (userSession == null)
+            {
+                return Json(new { ErrorCode = (int)ErrorCode.Redirect, Message = Resources.Resource.msg_sessionTimeOut }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { }, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
     }
