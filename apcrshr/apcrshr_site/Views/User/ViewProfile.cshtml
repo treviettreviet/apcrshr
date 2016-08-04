@@ -63,6 +63,13 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td>Password</td>
+                                        <td>
+                                            <a href="javascript:void(0)" id="lnkChangePassword" style="color: #b200ff; font-weight: bold;">Change Password</a>
+                                            &nbsp;&nbsp;<span style="font-style: italic; color: #3348ef" id="spanPasswordChanged"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td>Sex <span class="validation-span-required">(*)</span></td>
                                         <td>
                                             <a href="#" id="Sex" data-type="select" data-pk="2" data-value="@Model.Sex" data-source="/sex" data-original-title="Select Sex">@Model.Sex</a>
@@ -867,7 +874,7 @@
                 });
                 //Timeout
                 if (response.ErrorCode == 2) {
-                    window.location = "/User/Login";
+                    window.location = '@Url.Action("Login", "User")';
                 }
                 if (response.ErrorCode == 0) {
                     $("#btnSave").attr("disabled", "disabled");
@@ -878,6 +885,122 @@
                 bootbox.alert(error, function () {
                     bootbox.hideAll();
                 });
+            }
+        });
+    });
+
+    var changePasswordDialog = [
+            '<form method="POST" action="@Url.Action("ChangePassword", "User")" id="frmChangePassword" class="form-horizontal form-bordered">',
+                '<div class="box">',
+                    '<div class="box-content nopadding">',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Current password</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="password" name="CurrentPassword" id="CurrentPassword" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">New password</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="password" name="NewPassword" id="NewPassword" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Confirm password</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="password" name="ConfirmPassword" id="ConfirmPassword" class="form-control" data-rule-required="true" data-rule-equalto="#NewPassword">',
+                            '</div>',
+                        '</div>',
+                    '</div>',
+                '</div>',
+            '</form>'
+    ].join("\n");
+
+    $("#lnkChangePassword").click(function () {
+        bootbox.dialog({
+            message: changePasswordDialog,
+            title: "Change password",
+            buttons: {
+                success: {
+                    label: "Save Changes",
+                    className: "btn-primary",
+                    callback: function (e) {
+                        var currentPassword = $("#CurrentPassword").val();
+                        var newPassword = $("#NewPassword").val();
+                        var confirmPassword = $("#ConfirmPassword").val();
+
+                        if (currentPassword == null || currentPassword.length == 0) {
+                            bootbox.alert("Please input your current password!", function () {
+                                setTimeout(function () {
+                                    $("#CurrentPassword").focus();
+                                }, 1);
+                            });
+                            return false;
+                        }
+                        if (newPassword == null || newPassword.length < 6) {
+                            bootbox.alert("Your new password must be at least 6 characters!", function () {
+                                setTimeout(function () {
+                                    $("#NewPassword").focus();
+                                }, 1);
+                            });
+                            return false;
+                        }
+                        if (confirmPassword != newPassword) {
+                            bootbox.alert("Confirmation password doesn't match!", function () {
+                                setTimeout(function () {
+                                    $("#ConfirmPassword").focus();
+                                }, 1);
+                            });
+                            return false;
+                        }
+                        //Save changes
+                        $.blockUI({ message: $('#spinner') });
+                        var formData = new FormData();
+                        formData.append("UserID", $("#UserID").val());
+                        formData.append("CurrentPassword", $("#CurrentPassword").val());
+                        formData.append("NewPassword", $("#NewPassword").val());
+                        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("ChangePassword", "User")',
+                            data: formData,
+                            dataType: 'json',
+                            contentType: false,
+                            processData: false,
+                            success: function (response) {
+                                //Timeout
+                                if (response.ErrorCode == 2) {
+                                    window.location = '@Url.Action("Login", "User")';
+                                }
+                                if (response.ErrorCode == 0) {
+                                    $.unblockUI();
+                                    $("#spanPasswordChanged").html("Your password has changed!");
+                                    bootbox.hideAll();
+                                    $("#spanPasswordChanged").fadeIn(200);
+                                    return true;
+                                }
+                                if (response.ErrorCode == 1) {
+                                    bootbox.alert(response.Message, function () {
+                                        $.unblockUI();
+                                    });
+                                }
+                            },
+                            error: function (error) {
+                                $.unblockUI();
+                                bootbox.alert(error, function () {
+                                });
+                            }
+                        });
+                        return false;
+                    }
+                },
+                danger: {
+                    label: "Cancel",
+                    className: "btn-danger",
+                    callback: function () {
+                        bootbox.hideAll();
+                    }
+                }
             }
         });
     });

@@ -15,5 +15,7 @@ namespace Site.Core.Repository.Repository
         User FindByEmail(string email);
 
         User FindByUserName(string username);
+
+        void ChangePassword(string userID, string newPassword);
     }
 }

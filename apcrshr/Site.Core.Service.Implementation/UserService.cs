@@ -374,5 +374,28 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public BaseResponse ChangePassword(string userID, string newPassword)
+        {
+            try
+            {
+                IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
+                userRepository.ChangePassword(userID, newPassword);
+                return new BaseResponse
+                {
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = Resources.Resource.msg_update_success
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }

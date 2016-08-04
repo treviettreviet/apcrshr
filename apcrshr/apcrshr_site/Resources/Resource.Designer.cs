@@ -268,11 +268,29 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid user..
+        /// </summary>
+        public static string msg_invalidUser {
+            get {
+                return ResourceManager.GetString("msg_invalidUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} &quot;{1}&quot; is existed..
         /// </summary>
         public static string msg_item_exists {
             get {
                 return ResourceManager.GetString("msg_item_exists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have submitted a Main Scholarship form already..
+        /// </summary>
+        public static string msg_mainScholarshipAlreadySubmitted {
+            get {
+                return ResourceManager.GetString("msg_mainScholarshipAlreadySubmitted", resourceCulture);
             }
         }
         

@@ -25,6 +25,7 @@ namespace apcrshr_site.Controllers
         private IMailingAddressService _mailingService;
         private ISessionService _sessionService;
         private IUserSubmissionService _userSubmissionService;
+        private IMainScholarshipService _mainScholarshipService;
 
         public RegistrationController()
         {
@@ -32,6 +33,7 @@ namespace apcrshr_site.Controllers
             this._mailingService = new MailingAddressService();
             this._sessionService = new SessionService();
             this._userSubmissionService = new UserSubmissionService();
+            this._mainScholarshipService = new MainScholarshipService();
         }
 
         //
@@ -561,7 +563,22 @@ namespace apcrshr_site.Controllers
                 return Json(new { ErrorCode = (int)ErrorCode.Error, Message = Resources.Resource.msg_submissionNumberInvalid });
             }
 
-            return Json(new { });
+            //Check for existing registration
+            FindAllItemReponse<MainScholarshipModel> scholarshipResponse = _mainScholarshipService.FindByUserID(userResponse.Item.UserID);
+            if (scholarshipResponse.Items != null && scholarshipResponse.Items.Count > 0)
+            {
+                return Json(new { ErrorCode = (int)ErrorCode.Error, Message = Resources.Resource.msg_mainScholarshipAlreadySubmitted });
+            }
+
+            //Register main scholarship
+            scholarship.CreatedBy = userResponse.Item.UserID;
+            scholarship.CreatedDate = DateTime.Now;
+            scholarship.ScholarshipID = Guid.NewGuid().ToString();
+            scholarship.UserID = userResponse.Item.UserID;
+
+            InsertResponse response = _mainScholarshipService.Create(scholarship);
+
+            return Json(response);
         }
 
         #endregion

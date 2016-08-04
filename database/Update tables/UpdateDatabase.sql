@@ -390,3 +390,11 @@ GO
 ALTER TABLE [MainScholarship] ADD [SubmissionTitles] NVARCHAR(1000) NOT NULL
 
 GO
+
+ALTER TABLE [MainScholarship] ADD [UserID] VARCHAR(50) NOT NULL
+
+GO
+
+ALTER TABLE [YouthScholarship] ADD [UserID] VARCHAR(50) NOT NULL
+
+GO

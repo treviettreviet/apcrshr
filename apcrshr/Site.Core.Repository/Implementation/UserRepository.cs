@@ -130,5 +130,25 @@ namespace Site.Core.Repository.Implementation
                 return context.Users.Where(u => !u.UserID.Equals(userID)).ToList();
             }
         }
+
+
+        public void ChangePassword(string userID, string newPassword)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                var user = context.Users.Where(u => u.UserID.Equals(userID)).SingleOrDefault();
+                if (user != null)
+                {
+                    user.Password = string.IsNullOrEmpty(newPassword) ? user.Password : Encryption.ComputeHash(newPassword, Algorithm.SHA384, null);
+                    user.UpdatedDate = DateTime.Now;
+
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception(string.Format("User id {0} invalid", userID));
+                }
+            }
+        }
     }
 }

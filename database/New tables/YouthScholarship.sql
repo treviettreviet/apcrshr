@@ -1,7 +1,7 @@
 USE [APCRSHR]
 GO
 
-/****** Object:  Table [dbo].[YouthScholarship]    Script Date: 7/30/2016 8:56:20 AM ******/
+/****** Object:  Table [dbo].[YouthScholarship]    Script Date: 8/4/2016 2:50:51 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -13,7 +13,6 @@ GO
 
 CREATE TABLE [dbo].[YouthScholarship](
 	[YouthScholarshipID] [varchar](50) NOT NULL,
-	[RegistrationNumber] [varchar](50) NOT NULL,
 	[MotivationIssue] [nvarchar](1000) NOT NULL,
 	[MotivationResolving] [nvarchar](1000) NULL,
 	[MotivationReason] [nvarchar](1000) NOT NULL,
@@ -23,6 +22,7 @@ CREATE TABLE [dbo].[YouthScholarship](
 	[CreatedBy] [varchar](50) NOT NULL,
 	[UpdatedDate] [datetime] NULL,
 	[UpdatedBy] [varchar](50) NULL,
+	[UserID] [varchar](50) NOT NULL,
  CONSTRAINT [PK_YouthScholarship] PRIMARY KEY CLUSTERED 
 (
 	[YouthScholarshipID] ASC
@@ -32,6 +32,13 @@ CREATE TABLE [dbo].[YouthScholarship](
 GO
 
 SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[YouthScholarship]  WITH CHECK ADD  CONSTRAINT [FK_YouthScholarship_User] FOREIGN KEY([UserID])
+REFERENCES [dbo].[User] ([UserID])
+GO
+
+ALTER TABLE [dbo].[YouthScholarship] CHECK CONSTRAINT [FK_YouthScholarship_User]
 GO
 
 

@@ -33,6 +33,7 @@ namespace Site.Core.Repository.Implementation
                     scholarship.UpdatedBy = item.UpdatedBy;
                     scholarship.UpdatedDate = DateTime.Now;
                     scholarship.UploadFile = item.UploadFile;
+                    scholarship.UserID = item.UserID;
 
                     context.SaveChanges();
                 }

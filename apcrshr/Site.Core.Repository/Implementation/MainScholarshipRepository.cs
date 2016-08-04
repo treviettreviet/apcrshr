@@ -35,6 +35,7 @@ namespace Site.Core.Repository.Implementation
                     scholarship.UpdatedDate = DateTime.Now;
                     scholarship.DurationOfWork = item.DurationOfWork;
                     scholarship.SubmissionTitles = item.SubmissionTitles;
+                    scholarship.UserID = item.UserID;
 
                     context.SaveChanges();
                 }
@@ -77,6 +78,14 @@ namespace Site.Core.Repository.Implementation
             using (APCRSHREntities context = new APCRSHREntities())
             {
                 return context.MainScholarships.ToList();
+            }
+        }
+
+        public IList<MainScholarship> FindByUserID(string userID)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.MainScholarships.Where(m => m.UserID.Equals(userID)).ToList();
             }
         }
     }

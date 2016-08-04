@@ -94,5 +94,12 @@ namespace Site.Core.Service.Contract
         /// <returns></returns>
         FindItemReponse<UserModel> CheckEmail(string email);
 
+        /// <summary>
+        /// Change user password
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="newPassword"></param>
+        /// <returns></returns>
+        BaseResponse ChangePassword(string userID, string newPassword);
     }
 }

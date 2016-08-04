@@ -141,5 +141,31 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindAllItemReponse<MainScholarshipModel> FindByUserID(string userID)
+        {
+            try
+            {
+                IMainScholarshipRepository mainScholarshipRepository = RepositoryClassFactory.GetInstance().GetMainScholarshipRepository();
+                IList<MainScholarship> scholarships = mainScholarshipRepository.FindByUserID(userID);
+                var _scholarships = scholarships.Select(n => MapperUtil.CreateMapper().Mapper.Map<MainScholarship, MainScholarshipModel>(n)).ToList();
+                return new FindAllItemReponse<MainScholarshipModel>
+                {
+                    Items = _scholarships,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new FindAllItemReponse<MainScholarshipModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }

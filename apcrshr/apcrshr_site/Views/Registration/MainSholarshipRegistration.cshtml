@@ -22,7 +22,8 @@
                     InsertionMode = InsertionMode.Replace,
                     HttpMethod = "POST",
                     OnFailure = "OnMainSholarshipFailure",
-                    OnSuccess = "OnMainSholarshipSuccess"
+                    OnSuccess = "OnMainSholarshipSuccess",
+                    OnBegin = "OnBeginSubmit"
                 }, new { @class = "form-horizontal form-validate", id = "frmMainRegistration" }))
             {
                 @Html.AntiForgeryToken()
@@ -112,22 +113,29 @@
     </div>
 </div>
 <script type="text/javascript">
+
+    function OnBeginSubmit() {
+        $.blockUI({ message: $('#spinner') });
+    }
+
     function OnMainSholarshipFailure() {
         $.unblockUI();
     }
 
     function OnMainSholarshipSuccess(response) {
-        $.unblockUI();
         //Timeout
         if (response.ErrorCode == 2) {
-            window.location = "/User/Login";
+            window.location = '@Url.Action("Login", "User")';
         }
         if (response.ErrorCode == "1") {
+            $.unblockUI();
             bootbox.alert(response.Message, function () {
                 bootbox.hideAll();
             });
         } else if (response.ErrorCode == "0") {
-            
+            bootbox.alert("Thank you for your scholarship application form, we will review and give you feedback.", function () {
+                window.location = '@Url.Action("ViewProfile", "User")';
+            });
         }
     }
 </script>

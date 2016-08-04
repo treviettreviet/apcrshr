@@ -8,5 +8,6 @@ namespace Site.Core.Repository.Repository
 {
     public interface IMainScholarshipRepository : IRepository<MainScholarship>
     {
+        IList<MainScholarship> FindByUserID(string userID);
     }
 }

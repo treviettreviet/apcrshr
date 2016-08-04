@@ -291,4 +291,10 @@
   <data name="msg_submissionNumberInvalid" xml:space="preserve">
     <value>Your submission number is invalid.</value>
   </data>
+  <data name="msg_mainScholarshipAlreadySubmitted" xml:space="preserve">
+    <value>You have submitted a Main Scholarship form already.</value>
+  </data>
+  <data name="msg_invalidUser" xml:space="preserve">
+    <value>Invalid user.</value>
+  </data>
 </root>

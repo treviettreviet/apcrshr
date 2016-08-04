@@ -22,5 +22,6 @@ namespace Site.Core.DataModel.Model
         public string Position { get; set; }
         public int DurationOfWork { get; set; }
         public string SubmissionTitles { get; set; }
+        public string UserID { get; set; }
     }
 }

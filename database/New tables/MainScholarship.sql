@@ -1,7 +1,7 @@
 USE [APCRSHR]
 GO
 
-/****** Object:  Table [dbo].[MainScholarship]    Script Date: 8/3/2016 9:41:05 AM ******/
+/****** Object:  Table [dbo].[MainScholarship]    Script Date: 8/4/2016 2:46:53 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -23,6 +23,8 @@ CREATE TABLE [dbo].[MainScholarship](
 	[Organization] [nvarchar](200) NOT NULL,
 	[Position] [nvarchar](100) NOT NULL,
 	[DurationOfWork] [int] NOT NULL,
+	[SubmissionTitles] [nvarchar](1000) NOT NULL,
+	[UserID] [varchar](50) NOT NULL,
  CONSTRAINT [PK_MainScholarship] PRIMARY KEY CLUSTERED 
 (
 	[ScholarshipID] ASC
@@ -35,6 +37,13 @@ SET ANSI_PADDING OFF
 GO
 
 ALTER TABLE [dbo].[MainScholarship] ADD  CONSTRAINT [DF_MainScholarship_HasSubmitted]  DEFAULT ((0)) FOR [HasSubmitted]
+GO
+
+ALTER TABLE [dbo].[MainScholarship]  WITH CHECK ADD  CONSTRAINT [FK_MainScholarship_User] FOREIGN KEY([UserID])
+REFERENCES [dbo].[User] ([UserID])
+GO
+
+ALTER TABLE [dbo].[MainScholarship] CHECK CONSTRAINT [FK_MainScholarship_User]
 GO
 
 

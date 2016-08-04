@@ -11,6 +11,8 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using apcrshr_site.Models;
+using Site.Core.Repository;
+using apcrshr_site.Helper;
 
 namespace apcrshr_site.Controllers
 {
@@ -346,6 +348,36 @@ namespace apcrshr_site.Controllers
                 response.Message = Resources.Resource.msg_commonError;
             }
             return Json(response, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword(string UserID, string CurrentPassword, string NewPassword)
+        {
+            string sessionId = Session["User-SessionID"].ToString();
+            UserSession userSession = SessionUtil.GetInstance.VerifySession(sessionId);
+            if (userSession == null)
+            {
+                return Json(new { ErrorCode = (int)ErrorCode.Redirect, Message = Resources.Resource.msg_sessionTimeOut });
+            }
+
+            //Check user
+            FindItemReponse<UserModel> userReponse = _userService.FindUserByID(UserID);
+            if (userReponse.Item == null)
+            {
+                return Json(new { ErrorCode = (int)ErrorCode.Error, Message = Resources.Resource.msg_invalidUser });
+            }
+
+            UserLoginResponse loginresponse = _userService.Login(userReponse.Item.UserName, CurrentPassword);
+            if (loginresponse.ErrorCode != (int)ErrorCode.None)
+            {
+                return Json(new { ErrorCode = loginresponse.ErrorCode, Message = loginresponse.Message });
+            }
+
+            //Update password
+            BaseResponse response = _userService.ChangePassword(UserID, NewPassword);
+
+            return Json(response);
         }
     }
 }
