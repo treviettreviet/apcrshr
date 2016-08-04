@@ -72,5 +72,22 @@ namespace Site.Core.Repository.Implementation
                 return context.UserSubmissions.ToList();
             }
         }
+
+        public IList<UserSubmission> FindByUserID(string userID)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.UserSubmissions.Where(s => s.UserID.Equals(userID)).ToList();
+            }
+        }
+
+
+        public UserSubmission FindBySubmissionNumber(string submissionNumber)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.UserSubmissions.Where(a => a.SubmissionNumber.Equals(submissionNumber)).SingleOrDefault();
+            }
+        }
     }
 }

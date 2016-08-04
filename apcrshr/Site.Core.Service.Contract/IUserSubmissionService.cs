@@ -43,5 +43,19 @@ namespace Site.Core.Service.Contract
         /// </summary>
         /// <returns></returns>
         FindAllItemReponse<UserSubmissionModel> GetAlls();
+
+        /// <summary>
+        /// Find all submission by user ID
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        FindAllItemReponse<UserSubmissionModel> FindByUserID(string userID);
+
+        /// <summary>
+        /// Find by submission number
+        /// </summary>
+        /// <param name="submissionNumber"></param>
+        /// <returns></returns>
+        FindItemReponse<UserSubmissionModel> FindBySubmissionNumber(string submissionNumber);
     }
 }

@@ -24,12 +24,14 @@ namespace apcrshr_site.Controllers
         private IUserService _userService;
         private IMailingAddressService _mailingService;
         private ISessionService _sessionService;
+        private IUserSubmissionService _userSubmissionService;
 
         public RegistrationController()
         {
             this._userService = new UserService();
             this._mailingService = new MailingAddressService();
             this._sessionService = new SessionService();
+            this._userSubmissionService = new UserSubmissionService();
         }
 
         //
@@ -498,7 +500,22 @@ namespace apcrshr_site.Controllers
         [UserSessionFilter]
         public ActionResult MainSholarshipRegistration()
         {
-            return View();
+            MainScholarshipModel model = new MainScholarshipModel();
+            string sessionId = Session["User-SessionID"].ToString();
+            Site.Core.Repository.User _user = SessionUtil.GetInstance.GetUserBySessionID(sessionId);
+            if (_user != null)
+            {
+                FindAllItemReponse<MailingAddressModel> response = _mailingService.FindMailingAddressByUser(_user.UserID);
+                if (response.Items != null)
+                {
+                    MailingAddressModel mailing = response.Items.FirstOrDefault();
+                    if (mailing != null)
+                    {
+                        model.RegistrationNumber = mailing.RegistrationNumber;
+                    }
+                }
+            }
+            return View(model);
         }
 
         [ValidateAntiForgeryToken]
@@ -508,10 +525,43 @@ namespace apcrshr_site.Controllers
             UserSession userSession = SessionUtil.GetInstance.VerifySession(sessionId);
             if (userSession == null)
             {
-                return Json(new { ErrorCode = (int)ErrorCode.Redirect, Message = Resources.Resource.msg_sessionTimeOut }, JsonRequestBehavior.AllowGet);
+                return Json(new { ErrorCode = (int)ErrorCode.Redirect, Message = Resources.Resource.msg_sessionTimeOut });
             }
 
-            return Json(new { }, JsonRequestBehavior.AllowGet);
+            //Check registration number
+            FindItemReponse<UserModel> userResponse = _userService.FindUserByID(userSession.UserID);
+            if (userResponse.Item == null)
+            {
+                return Json(new { ErrorCode = (int)ErrorCode.Redirect, Message = Resources.Resource.msg_sessionTimeOut });
+            }
+            else
+            {
+                FindAllItemReponse<MailingAddressModel> mailingResponse = _mailingService.FindMailingAddressByUser(userResponse.Item.UserID);
+                if (mailingResponse.Items != null)
+                {
+                    MailingAddressModel mailing = mailingResponse.Items.FirstOrDefault();
+                    if (mailing != null)
+                    {
+                        if (!mailing.RegistrationNumber.Equals(scholarship.RegistrationNumber))
+                        {
+                            return Json(new { ErrorCode = (int)ErrorCode.Error, Message = Resources.Resource.msg_registrationNumberInvalid });
+                        }
+                    }
+                }
+                else
+                {
+                    return Json(new { ErrorCode = (int)ErrorCode.Error, Message = Resources.Resource.msg_registrationIsNotCompleted });
+                }
+            }
+
+            //Check submission number
+            FindItemReponse<UserSubmissionModel> submissionReponse = _userSubmissionService.FindBySubmissionNumber(scholarship.SubmissionNumber);
+            if (submissionReponse.Item == null)
+            {
+                return Json(new { ErrorCode = (int)ErrorCode.Error, Message = Resources.Resource.msg_submissionNumberInvalid });
+            }
+
+            return Json(new { });
         }
 
         #endregion

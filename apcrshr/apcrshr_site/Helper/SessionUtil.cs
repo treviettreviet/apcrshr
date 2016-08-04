@@ -72,5 +72,17 @@ namespace apcrshr_site.Helper
             }
             return null;
         }
+
+        public User GetUserBySessionID(string sessionID)
+        {
+            IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
+            IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository();
+            UserSession userSession = userSessionRepository.FindByID(sessionID);
+            if (userSession != null)
+            {
+                return userRepository.FindByID(userSession.UserID);
+            }
+            return null;
+        }
     }
 }

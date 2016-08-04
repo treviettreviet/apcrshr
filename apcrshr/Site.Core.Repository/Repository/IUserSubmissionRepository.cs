@@ -8,5 +8,7 @@ namespace Site.Core.Repository.Repository
 {
     public interface IUserSubmissionRepository : IRepository<UserSubmission>
     {
+        IList<UserSubmission> FindByUserID(string userID);
+        UserSubmission FindBySubmissionNumber(string submissionNumber);
     }
 }

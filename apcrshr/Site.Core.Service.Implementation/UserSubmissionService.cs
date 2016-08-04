@@ -141,5 +141,59 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindAllItemReponse<UserSubmissionModel> FindByUserID(string userID)
+        {
+            try
+            {
+                IUserSubmissionRepository submissionRepository = RepositoryClassFactory.GetInstance().GetUserSubmissionRepository();
+                IList<UserSubmission> submissions = submissionRepository.FindByUserID(userID);
+                var _submissions = submissions.Select(n => MapperUtil.CreateMapper().Mapper.Map<UserSubmission, UserSubmissionModel>(n)).ToList();
+                return new FindAllItemReponse<UserSubmissionModel>
+                {
+                    Items = _submissions,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new FindAllItemReponse<UserSubmissionModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
+
+
+        public FindItemReponse<UserSubmissionModel> FindBySubmissionNumber(string submissionNumber)
+        {
+            try
+            {
+                IUserSubmissionRepository submissionRepository = RepositoryClassFactory.GetInstance().GetUserSubmissionRepository();
+                UserSubmission submission = submissionRepository.FindBySubmissionNumber(submissionNumber);
+                var _submission = MapperUtil.CreateMapper().Mapper.Map<UserSubmission, UserSubmissionModel>(submission);
+                return new FindItemReponse<UserSubmissionModel>
+                {
+                    Item = _submission,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+
+
+            }
+            catch (Exception ex)
+            {
+
+                return new FindItemReponse<UserSubmissionModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }

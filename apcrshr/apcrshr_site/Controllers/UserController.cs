@@ -126,6 +126,7 @@ namespace apcrshr_site.Controllers
         }
 
         [HttpGet]
+        [UserSessionFilter]
         public ActionResult ViewProfile()
         {
             if (this.Session["User-UserID"] != null)
@@ -264,7 +265,7 @@ namespace apcrshr_site.Controllers
             return View("ForgetPassword");
         }
 
-        [SessionFilter]
+        [UserSessionFilter]
         public ActionResult UpdateUser()
         {
             if (this.Session["User-SessionID"] == null)
@@ -278,7 +279,7 @@ namespace apcrshr_site.Controllers
             }
         }
 
-        [SessionFilter]
+        [UserSessionFilter]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SaveUpdateUser(UserModel user)

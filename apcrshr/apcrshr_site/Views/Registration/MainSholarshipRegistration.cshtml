@@ -17,11 +17,20 @@
             </h3>
         </div>
         <div class="box-content">
-            <form action="@Url.Action("SaveMainSholarship", "Registration")" method="POST" class='form-horizontal form-validate' id="frmMainRegistration">
+            @using (Ajax.BeginForm("SaveMainSholarship", "Registration", new AjaxOptions
+                {
+                    InsertionMode = InsertionMode.Replace,
+                    HttpMethod = "POST",
+                    OnFailure = "OnMainSholarshipFailure",
+                    OnSuccess = "OnMainSholarshipSuccess"
+                }, new { @class = "form-horizontal form-validate", id = "frmMainRegistration" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(Model => Model.RegistrationNumber)
                 <div class="form-group">
                     <label for="anotherelem" class="control-label col-sm-3">Registration number <span class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
-                        <input type="text" name="RegistrationNumber" id="RegistrationNumber" class="form-control" data-rule-required="true">
+                        @Html.TextBoxFor(Model => Model.RegistrationNumber, new { @disabled = "disabled", @class = "form-control" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -82,7 +91,7 @@
                     <div class="col-sm-9">
                         <div class="checkbox">
                             <label>
-                                <input type="radio" id="HasSubmitted" name="HasSubmitted" value="true" data-rule-required="true">&nbsp;Yes
+                                <input type="radio" id="HasSubmitted" name="HasSubmitted" value="true" data-rule-required="true">&nbsp;Yes&nbsp;
                                 <input type="radio" id="HasSubmitted" name="HasSubmitted" value="false" data-rule-required="true">&nbsp;No
                             </label>
                         </div>
@@ -95,67 +104,30 @@
                     </div>
                 </div>
                 <div class="form-actions col-sm-offset-3 col-sm-9">
-                    <button type="button" onclick="submitForm()" class="btn btn-primary">Save Changes</button>
-                    <a href='@Url.Action("Index", "Home")' class="btn btn-info">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a href='@Url.Action("ViewProfile", "User")' class="btn btn-info">Cancel</a>
                 </div>
-            </form>
+            }
         </div>
     </div>
 </div>
 <script type="text/javascript">
-    function submitForm() {
-        $.blockUI({ message: $('#spinner') });
-        var formData = new FormData();
-        formData.append("RegistrationNumber", $("#RegistrationNumber").val());
-        formData.append("SubmissionNumber", $("#SubmissionNumber").val());
-        formData.append("Responsibility", $("#Responsibility").val());
-        formData.append("ReasonScholarship", $("#ReasonScholarship").val());
-        formData.append("HasSubmitted", $("#HasSubmitted").val());
-        formData.append("Organization", $("#Organization").val());
-        formData.append("Position", $("#Position").val());
-        formData.append("DurationOfWork", $("#DurationOfWork").val());
-        formData.append("SubmissionTitles", $("#SubmissionTitles").val());
-        formData.append(@Html.AntiForgeryTokenForAjaxPost());
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("SaveMainSholarship", "Registration")',
-            data: formData,
-            dataType: 'json',
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                $.unblockUI();
-                bootbox.alert(response.message, function () {
-                    bootbox.hideAll();
-                });
-                //Timeout
-                if (response.errorCode == 2) {
-                    window.location = "/User/Login";
-                }
-                if (response.errorCode == 0) {
-                    resertForm();
-                    if (response.url != "") {
-                        bootbox.prompt({
-                            title: "Đường dẫn bài viết",
-                            value: response.url,
-                            callback: function (result) {
-                                if (result != null) {
-                                    clipboard.copy(result);
-                                    bootbox.hideAll();
-                                } else {
-                                    bootbox.hideAll();
-                                }
-                            }
-                        });
-                    }
-                }
-            },
-            error: function (error) {
-                $.unblockUI();
-                bootbox.alert(error, function () {
-                    bootbox.hideAll();
-                });
-            }
-        });
+    function OnMainSholarshipFailure() {
+        $.unblockUI();
+    }
+
+    function OnMainSholarshipSuccess(response) {
+        $.unblockUI();
+        //Timeout
+        if (response.ErrorCode == 2) {
+            window.location = "/User/Login";
+        }
+        if (response.ErrorCode == "1") {
+            bootbox.alert(response.Message, function () {
+                bootbox.hideAll();
+            });
+        } else if (response.ErrorCode == "0") {
+            
+        }
     }
 </script>

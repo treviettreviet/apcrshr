@@ -277,11 +277,38 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your registration is not completed, please completed it..
+        /// </summary>
+        public static string msg_registrationIsNotCompleted {
+            get {
+                return ResourceManager.GetString("msg_registrationIsNotCompleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your registration number is invalid..
+        /// </summary>
+        public static string msg_registrationNumberInvalid {
+            get {
+                return ResourceManager.GetString("msg_registrationNumberInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your login session has timeout..
         /// </summary>
         public static string msg_sessionTimeOut {
             get {
                 return ResourceManager.GetString("msg_sessionTimeOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your submission number is invalid..
+        /// </summary>
+        public static string msg_submissionNumberInvalid {
+            get {
+                return ResourceManager.GetString("msg_submissionNumberInvalid", resourceCulture);
             }
         }
         

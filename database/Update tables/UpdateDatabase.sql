@@ -383,7 +383,7 @@ ALTER TABLE [MainScholarship] DROP COLUMN [WorkingNow]
 
 GO
 
-ALTER TABLE [MainScholarship] DROP CONSTRAINT [DF__MainSchol__Worki__160F4887]
+ALTER TABLE [MainScholarship] DROP CONSTRAINT [DF__MainSchol__Worki__41EDCAC5]
 
 GO
 

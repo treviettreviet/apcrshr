@@ -282,4 +282,13 @@
   <data name="msg_sessionTimeOut" xml:space="preserve">
     <value>Your login session has timeout.</value>
   </data>
+  <data name="msg_registrationIsNotCompleted" xml:space="preserve">
+    <value>Your registration is not completed, please completed it.</value>
+  </data>
+  <data name="msg_registrationNumberInvalid" xml:space="preserve">
+    <value>Your registration number is invalid.</value>
+  </data>
+  <data name="msg_submissionNumberInvalid" xml:space="preserve">
+    <value>Your submission number is invalid.</value>
+  </data>
 </root>
