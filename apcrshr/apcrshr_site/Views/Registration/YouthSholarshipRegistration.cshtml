@@ -1,0 +1,428 @@
+﻿@using apcrshr_site.Helper
+@model Site.Core.DataModel.Model.YouthScholarshipModel
+@{
+    ViewBag.Title = "Youth Sholarship Registration";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!-- Tagsinput -->
+<link rel="stylesheet" href="~/Areas/Administrator/css/plugins/tagsinput/jquery.tagsinput.css">
+<!-- TagsInput -->
+<script src="~/Areas/Administrator/js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
+<!-- Custom file upload -->
+<script src="~/Areas/Administrator/js/plugins/fileupload/bootstrap-fileupload.min.js"></script>
+<div class="col-sm-9">
+    <div class="box box-color box-bordered">
+        <div class="box-title">
+            <h3>
+                <i class="fa fa-cog"></i>
+                Youth sholarship registration form
+            </h3>
+        </div>
+        <div class="box-content">
+            @using (Ajax.BeginForm("SaveMainSholarship", "Registration", new AjaxOptions
+                {
+                    InsertionMode = InsertionMode.Replace,
+                    HttpMethod = "POST",
+                    OnFailure = "OnYouthSholarshipFailure",
+                    OnSuccess = "OnYouthSholarshipSuccess",
+                    OnBegin = "OnBeginSubmit"
+                }, new { @class = "form-horizontal form-validate", id = "frmYouthRegistration" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(Model => Model.RegistrationNumber)
+                @Html.HiddenFor(Model => Model.YouthScholarshipID, new { @id = "YouthScholarshipID" })
+                <div class="form-group">
+                    <label for="RegistrationNumber" class="control-label col-sm-3">Registration number <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(Model => Model.RegistrationNumber, new { @id = "RegistrationNumber", @disabled = "disabled", @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p style="padding: 10px; text-align: justify;">You have to register and submit abstract before apply for a scholarship. Once you have finished registration form and abstract submission form, the registration number and the abstract submission number will be sent to your email. If you have not registered and submit abstract, please do it <a href='@Url.Action("RegistrationForm", "Registration")'>HERE</a>.</p>
+                </div>
+                <div class="box-title" style="margin-left: -20px; margin-right: -20px;">
+                    <h3>
+                        <i class="fa fa-cog"></i>
+                        WORKING EXPERIENCE
+                    </h3>
+                </div>
+                <br />
+                <div class="form-group">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-9">
+                        <a href="javascript:void(0);" id="lnkAddExperience" class="btn btn-primary" rel="tooltip" title="" data-original-title="Add">
+                            <i class="fa fa-plus"></i>Add
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Organization</label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(Model => Model.ExperienceTitles, new { @class = "tagsinput form-control", @id = "ExperienceTitles" })
+                    </div>
+                </div>
+                <div class="box-title" style="margin-left: -20px; margin-right: -20px;">
+                    <h3>
+                        <i class="fa fa-cog"></i>
+                        EDUCATION
+                    </h3>
+                </div>
+                <br />
+                <div class="form-group">
+                    <p style="padding: 10px; text-align: justify;">Please list your education history, starting with the most current.</p>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-9">
+                        <a href="javascript:void(0);" onclick="" class="btn btn-primary" rel="tooltip" title="" data-original-title="Add">
+                            <i class="fa fa-plus"></i>Add
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Degree / Diplomas</label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(Model => Model.EducationTitles, new { @class = "tagsinput form-control", @id = "EducationTitles" })
+                    </div>
+                </div>
+                <div class="box-title" style="margin-left: -20px; margin-right: -20px;">
+                    <h3>
+                        <i class="fa fa-cog"></i>
+                        ADDITIONAL TRAINING
+                    </h3>
+                </div>
+                <br />
+                <div class="form-group">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-9">
+                        <a href="javascript:void(0);" onclick="" class="btn btn-primary" rel="tooltip" title="" data-original-title="Add">
+                            <i class="fa fa-plus"></i>Add
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Name of course</label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(Model => Model.AdditionalTrainingTitles, new { @class = "tagsinput form-control", @id = "AdditionalTrainingTitles" })
+                    </div>
+                </div>
+                <div class="box-title" style="margin-left: -20px; margin-right: -20px;">
+                    <h3>
+                        <i class="fa fa-cog"></i>
+                        LEARSHIP EXPERIENCE
+                    </h3>
+                </div>
+                <br />
+                <div class="form-group">
+                    <p style="padding: 10px; text-align: justify;">Please list up to three experiences you had in an organization, volunteer experiences, working group, your community or at an event, where you demonstrated leadership experience.</p>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-9">
+                        <a href="javascript:void(0);" onclick="" class="btn btn-primary" rel="tooltip" title="" data-original-title="Add">
+                            <i class="fa fa-plus"></i>Add
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Organization / Group</label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(Model => Model.LeaderShipTitles, new { @class = "tagsinput form-control", @id = "LeaderShipTitles" })
+                    </div>
+                </div>
+                <div class="box-title" style="margin-left: -20px; margin-right: -20px;">
+                    <h3>
+                        <i class="fa fa-cog"></i>
+                        PUBLICATION
+                    </h3>
+                </div>
+                <br />
+                <div class="form-group">
+                    <p style="padding: 10px; text-align: justify;">Please list any kind of publication you have authored or co-authored, in forms of paper, books or articles.</p>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-9">
+                        <a href="javascript:void(0);" onclick="" class="btn btn-primary" rel="tooltip" title="" data-original-title="Add">
+                            <i class="fa fa-plus"></i>Add
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Publication titles</label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(Model => Model.PublicationTitles, new { @class = "tagsinput form-control", @id = "PublicationTitles" })
+                    </div>
+                </div>
+                <div class="box-title" style="margin-left: -20px; margin-right: -20px;">
+                    <h3>
+                        <i class="fa fa-cog"></i>
+                        MOTIVATION
+                    </h3>
+                </div>
+                <br />
+                <div class="form-group">
+                    <p style="padding: 10px; text-align: justify;">Please explain your motivation to participate in this conference in maximum 2 pages. Your answer should cover all questions below.</p>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">List 3 problems that young people in your country are facing now <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <textarea name="MotivationIssue" id="MotivationIssue" rows="7" maxlength="300" class="form-control" data-rule-required="true"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Have you participated in any activities/projects to solve these problems? How could you involve young people in your country to participate in youth activities? <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <textarea name="MotivationResolving" id="MotivationResolving" rows="7" maxlength="300" class="form-control" data-rule-required="true"></textarea>
+                        <i>Please share the link/ video of your projects/activities.</i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">What will you contribute to this conference? Why we should select you as youth scholars of this conference? <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <textarea name="MotivationReason" id="MotivationReason" rows="7" maxlength="300" class="form-control" data-rule-required="true"></textarea>
+                    </div>
+                </div>
+                <div class="box-title" style="margin-left: -20px; margin-right: -20px;">
+                    <h3>
+                        <i class="fa fa-cog"></i>
+                        MAKE A PLAN
+                    </h3>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Present your plan after taking part in this conference <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <textarea name="PlanMaking" id="PlanMaking" rows="7" maxlength="300" class="form-control" data-rule-required="true"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                        <label for="attachment" class="control-label col-sm-3">
+                            Attachment
+                            <small>(You can describe your idea and plan by power point, video/clip, pictures, etc)</small>
+                        </label>
+                        <div class="col-sm-9">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="input-group">
+                                    <div class="form-control" data-trigger="fileinput">
+                                        <i class="glyphicon glyphicon-regular-file fileinput-exists"></i>
+                                        <span class="fileinput-filename"></span>
+                                    </div>
+                                    <span class="input-group-addon btn btn-default btn-file">
+                                        <span class="fileinput-new">Browse</span>
+                                        <span class="fileinput-exists">Change</span>
+                                        <input type="file" name="UploadFile" id="UploadFile" data-filesize="1048576">
+                                    </span>
+                                    <a href="javascript:void()" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="form-actions col-sm-offset-3 col-sm-9">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a href='@Url.Action("ViewProfile", "User")' class="btn btn-info">Cancel</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    // tag-input
+    if ($(".tagsinput").length > 0) {
+        $('.tagsinput').each(function (e) {
+            $(this).tagsInput({
+                width: 'auto',
+                height: 'auto',
+                defaultText: 'add a title'
+            });
+        });
+    }
+</script>
+
+<script type="text/javascript">
+
+    function OnBeginSubmit() {
+        $.blockUI({ message: $('#spinner') });
+    }
+
+    function OnYouthSholarshipSuccess() {
+        $.unblockUI();
+    }
+
+    function OnMainSholarshipSuccess(response) {
+        //Timeout
+        if (response.ErrorCode == 2) {
+            window.location = '@Url.Action("Login", "User")';
+        }
+        if (response.ErrorCode == "1") {
+            $.unblockUI();
+            bootbox.alert(response.Message, function () {
+                bootbox.hideAll();
+            });
+        } else if (response.ErrorCode == "0") {
+            bootbox.alert("Thank you for your scholarship application form, we will review and give you feedback.", function () {
+                window.location = '@Url.Action("ViewProfile", "User")';
+            });
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    var experienceDialog = [
+            '<form method="POST" action="@Url.Action("ChangePassword", "User")" id="frmExperience" class="form-horizontal form-bordered">',
+                '<div class="box">',
+                    '<div class="box-content nopadding">',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Organization (Full name) <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" name="Organization" id="Organization" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Position <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" name="Position" id="Position" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Working from <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" name="WorkingStart" id="WorkingStart" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Working to</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" name="WorkingEnd" id="WorkingEnd" class="form-control">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Duties <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<textarea name="Duties" id="Duties" rows="3" maxlength="150" class="form-control" data-rule-required="true"></textarea>',
+                            '</div>',
+                        '</div>',
+                    '</div>',
+                '</div>',
+            '</form>'
+    ].join("\n");
+
+    function validateExperience() {
+        var organization = $("#Organization").val();
+        var position = $("#Position").val();
+        var workingStart = $("#WorkingStart").val();
+        var workingEnd = $("#WorkingEnd").val();
+        var duties = $("#Duties").val();
+
+        if (organization == null || organization.length == 0) {
+            bootbox.alert("Please input your organization!", function () {
+                setTimeout(function () {
+                    $("#Organization").focus();
+                }, 1);
+            });
+            return false;
+        }
+        if (position == null || position.length == 0) {
+            bootbox.alert("Please input your position!", function () {
+                setTimeout(function () {
+                    $("#Position").focus();
+                }, 1);
+            });
+            return false;
+        }
+        if (workingStart == null) {
+            bootbox.alert("Please input your working start!", function () {
+                setTimeout(function () {
+                    $("#WorkingStart").focus();
+                }, 1);
+            });
+            return false;
+        }
+        if (duties == null || duties.length == 0) {
+            bootbox.alert("Please input your duties!", function () {
+                setTimeout(function () {
+                    $("#Duties").focus();
+                }, 1);
+            });
+            return false;
+        }
+        return true;
+    }
+
+    $("#lnkAddExperience").click(function () {
+        bootbox.dialog({
+            message: experienceDialog,
+            title: "Add working experience",
+            buttons: {
+                success: {
+                    label: "Save Changes",
+                    className: "btn-primary",
+                    callback: function (e) {
+                        //Validate
+                        if (!validateExperience()) {
+                            return false;
+                        }
+                        
+                        //Save changes
+                        $.blockUI({ message: $('#spinner') });
+                        var formData = new FormData();
+                        formData.append("RegistrationNumber", $("#RegistrationNumber").val());
+                        formData.append("MotivationIssue", $("#MotivationIssue").val());
+                        formData.append("MotivationResolving", $("#MotivationResolving").val());
+                        formData.append("MotivationReason", $("#MotivationReason").val());
+                        formData.append("PlanMaking", $("#PlanMaking").val());
+                        formData.append("YouthScholarshipID", $("#YouthScholarshipID").val());
+                        formData.append("Organization", $("#Organization").val());
+                        formData.append("Position", $("#Position").val());
+                        formData.append("WorkingStart", $("#WorkingStart").val());
+                        formData.append("WorkingEnd", $("#WorkingEnd").val());
+                        formData.append("Duties", $("#Duties").val());
+                        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("SaveExperience", "Registration")',
+                            data: formData,
+                            dataType: 'json',
+                            contentType: false,
+                            processData: false,
+                            success: function (response) {
+                                //Timeout
+                                if (response.ErrorCode == 2) {
+                                    window.location = '@Url.Action("Login", "User")';
+                                }
+                                if (response.ErrorCode == 0) {
+                                    $.unblockUI();
+                                    $("#YouthScholarshipID").val(response.YouthScholarshipID);
+                                    $('#ExperienceTitles').addTag(response.Title);
+                                    bootbox.hideAll();
+                                    return true;
+                                }
+                                if (response.ErrorCode == 1) {
+                                    bootbox.alert(response.Message, function () {
+                                        $.unblockUI();
+                                    });
+                                }
+                            },
+                            error: function (error) {
+                                $.unblockUI();
+                                bootbox.alert(error, function () {
+                                });
+                            }
+                        });
+                        return false;
+                    }
+                },
+                danger: {
+                    label: "Cancel",
+                    className: "btn-danger",
+                    callback: function () {
+                        bootbox.hideAll();
+                    }
+                }
+            }
+        });
+        $('#WorkingStart').datepicker().datepicker("setDate", new Date());
+        $('#WorkingEnd').datepicker().datepicker("setDate", new Date());
+    });
+</script>

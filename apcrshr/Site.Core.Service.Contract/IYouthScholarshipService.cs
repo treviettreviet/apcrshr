@@ -43,5 +43,12 @@ namespace Site.Core.Service.Contract
         /// </summary>
         /// <returns></returns>
         FindAllItemReponse<YouthScholarshipModel> GetAlls();
+
+        /// <summary>
+        /// Get youth scholarship by user ID
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        FindItemReponse<YouthScholarshipModel> FindByUserID(string userID);
     }
 }

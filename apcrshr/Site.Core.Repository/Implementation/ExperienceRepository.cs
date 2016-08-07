@@ -30,7 +30,6 @@ namespace Site.Core.Repository.Implementation
                     experience.Organization = item.Organization;
                     experience.Position = item.Position;
                     experience.WorkingEnd = item.WorkingEnd;
-                    experience.WorkingNow = item.WorkingNow;
                     experience.WorkingStart = item.WorkingStart;
                     experience.YouthScholarshipID = item.YouthScholarshipID;
 
@@ -75,6 +74,23 @@ namespace Site.Core.Repository.Implementation
             using (APCRSHREntities context = new APCRSHREntities())
             {
                 return context.Experiences.ToList();
+            }
+        }
+
+        public IList<Experience> FindByOrganization(string organization)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Experiences.Where(e => e.Organization.Equals(organization)).ToList();
+            }
+        }
+
+
+        public IList<Experience> FindByYouthScholarshipID(string scholarshipID)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Experiences.Where(e => e.YouthScholarshipID.Equals(scholarshipID)).ToList();
             }
         }
     }

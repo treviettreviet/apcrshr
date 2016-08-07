@@ -13,7 +13,6 @@ namespace Site.Core.DataModel.Model
         public string Country { get; set; }
         public System.DateTime TrainingStart { get; set; }
         public Nullable<System.DateTime> TrainingEnd { get; set; }
-        public bool TrainingNow { get; set; }
         public string YouthScholarshipID { get; set; }
     }
 }

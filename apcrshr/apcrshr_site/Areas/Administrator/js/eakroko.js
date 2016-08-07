@@ -159,16 +159,6 @@ $(document).ready(function () {
 	if ($('.mask_productNumber').length > 0) {
 		$(".mask_productNumber").mask("aaa-9999-a");
 	}
-	// tag-input
-	if ($(".tagsinput").length > 0) {
-		$('.tagsinput').each(function (e) {
-			$(this).tagsInput({
-				width : 'auto',
-				height: 'auto',
-				defaultText: 'add a title'
-			});
-		});
-	}
 
 	// datepicker
 	if ($('.datepick').length > 0) {

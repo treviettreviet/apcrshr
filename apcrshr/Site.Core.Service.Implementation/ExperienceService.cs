@@ -71,6 +71,15 @@ namespace Site.Core.Service.Implementation
             try
             {
                 IExperienceRepository experienceRepository = RepositoryClassFactory.GetInstance().GetExperienceRepository();
+                IList<Experience> _experiences = experienceRepository.FindByOrganization(experience.Organization);
+                if (_experiences != null && _experiences.Count > 0)
+                {
+                    return new InsertResponse
+                    {
+                        ErrorCode = (int)ErrorCode.Error,
+                        Message = string.Format(Resources.Resource.msg_insert_exists, "Organization", experience.Organization)
+                    };
+                }
                 var _experience = MapperUtil.CreateMapper().Mapper.Map<ExperienceModel, Experience>(experience);
                 object id = experienceRepository.Insert(_experience);
                 return new InsertResponse
@@ -123,6 +132,32 @@ namespace Site.Core.Service.Implementation
             {
                 IExperienceRepository experienceRepository = RepositoryClassFactory.GetInstance().GetExperienceRepository();
                 IList<Experience> experiences = experienceRepository.FindAll();
+                var _experiences = experiences.Select(n => MapperUtil.CreateMapper().Mapper.Map<Experience, ExperienceModel>(n)).ToList();
+                return new FindAllItemReponse<ExperienceModel>
+                {
+                    Items = _experiences,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new FindAllItemReponse<ExperienceModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
+
+
+        public FindAllItemReponse<ExperienceModel> FindByscholarshipID(string scholarship)
+        {
+            try
+            {
+                IExperienceRepository experienceRepository = RepositoryClassFactory.GetInstance().GetExperienceRepository();
+                IList<Experience> experiences = experienceRepository.FindByYouthScholarshipID(scholarship);
                 var _experiences = experiences.Select(n => MapperUtil.CreateMapper().Mapper.Map<Experience, ExperienceModel>(n)).ToList();
                 return new FindAllItemReponse<ExperienceModel>
                 {

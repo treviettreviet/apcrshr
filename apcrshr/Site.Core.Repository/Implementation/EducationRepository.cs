@@ -29,7 +29,6 @@ namespace Site.Core.Repository.Implementation
                     education.Country = item.Country;
                     education.Degree = item.Degree;
                     education.EducationEnd = item.EducationEnd;
-                    education.EducationNow = item.EducationNow;
                     education.EducationStart = item.EducationStart;
                     education.MainCourseStudy = item.MainCourseStudy;
                     education.TypeOfTraining = item.TypeOfTraining;

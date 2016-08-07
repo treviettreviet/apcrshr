@@ -8,5 +8,6 @@ namespace Site.Core.Repository.Repository
 {
     public interface IYouthScholarshipRepository : IRepository<YouthScholarship>
     {
+        YouthScholarship FindByUserID(string userID);
     }
 }

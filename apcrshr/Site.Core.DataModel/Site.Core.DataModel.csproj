@@ -87,6 +87,7 @@
     <Compile Include="Response\MenuDisplayResponse.cs" />
     <Compile Include="Response\SearchResultResponse.cs" />
     <Compile Include="Response\UserLoginResponse.cs" />
+    <Compile Include="Response\UserValidationResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Resource.vi-VN.resx" />

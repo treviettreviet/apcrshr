@@ -20,5 +20,10 @@ namespace Site.Core.DataModel.Model
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public string UpdatedBy { get; set; }
         public string UserID { get; set; }
+        public string ExperienceTitles { get; set; }
+        public string EducationTitles { get; set; }
+        public string AdditionalTrainingTitles { get; set; }
+        public string LeaderShipTitles { get; set; }
+        public string PublicationTitles { get; set; }
     }
 }

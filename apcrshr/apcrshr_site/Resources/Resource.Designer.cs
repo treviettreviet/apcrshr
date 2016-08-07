@@ -340,6 +340,15 @@ namespace apcrshr_site.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User is not found..
+        /// </summary>
+        public static string msg_userNotFound {
+            get {
+                return ResourceManager.GetString("msg_userNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current page:.
         /// </summary>
         public static string text_currentPage {

@@ -398,3 +398,48 @@ GO
 ALTER TABLE [YouthScholarship] ADD [UserID] VARCHAR(50) NOT NULL
 
 GO
+
+ALTER TABLE [YouthScholarship] ALTER COLUMN [MotivationIssue] NVARCHAR(1000) NULL
+
+GO
+
+ALTER TABLE [YouthScholarship] ALTER COLUMN [MotivationReason] NVARCHAR(1000) NULL
+
+GO
+
+ALTER TABLE [YouthScholarship] ALTER COLUMN [PlanMaking] NVARCHAR(1000) NULL
+
+GO
+
+ALTER TABLE [Experience] DROP CONSTRAINT [DF_Table_1_StillWorking]
+
+GO
+
+ALTER TABLE [Experience] DROP COLUMN [WorkingNow]
+
+GO
+
+ALTER TABLE [Education] DROP CONSTRAINT [DF_Education_EducationNow]
+
+GO
+
+ALTER TABLE [Education] DROP COLUMN [EducationNow]
+
+GO
+
+ALTER TABLE [LeaderShip] DROP CONSTRAINT [DF_LeaderShip_LeaderNow]
+
+GO
+
+ALTER TABLE [LeaderShip] DROP COLUMN [LeaderNow]
+
+GO
+
+ALTER TABLE [Training] DROP CONSTRAINT [DF_Training_TrainingNow]
+
+GO
+
+ALTER TABLE [Training] DROP COLUMN [TrainingNow]
+
+GO
+

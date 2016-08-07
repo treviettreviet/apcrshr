@@ -297,4 +297,7 @@
   <data name="msg_invalidUser" xml:space="preserve">
     <value>Invalid user.</value>
   </data>
+  <data name="msg_userNotFound" xml:space="preserve">
+    <value>User is not found.</value>
+  </data>
 </root>

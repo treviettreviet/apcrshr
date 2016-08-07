@@ -8,5 +8,7 @@ namespace Site.Core.Repository.Repository
 {
     public interface IExperienceRepository : IRepository<Experience>
     {
+        IList<Experience> FindByOrganization(string organization);
+        IList<Experience> FindByYouthScholarshipID(string scholarshipID);
     }
 }

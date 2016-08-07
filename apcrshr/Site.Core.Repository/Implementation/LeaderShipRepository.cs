@@ -29,7 +29,6 @@ namespace Site.Core.Repository.Implementation
                     leader.Duties = item.Duties;
                     leader.EndDate = item.EndDate;
                     leader.FromDate = item.FromDate;
-                    leader.LeaderNow = item.LeaderNow;
                     leader.Organization = item.Organization;
                     leader.Position = item.Position;
                     leader.YouthScholarshipID = item.YouthScholarshipID;

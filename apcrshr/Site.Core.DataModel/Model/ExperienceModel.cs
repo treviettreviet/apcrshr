@@ -13,7 +13,6 @@ namespace Site.Core.DataModel.Model
         public string Position { get; set; }
         public System.DateTime WorkingStart { get; set; }
         public Nullable<System.DateTime> WorkingEnd { get; set; }
-        public bool WorkingNow { get; set; }
         public string Duties { get; set; }
         public string YouthScholarshipID { get; set; }
     }

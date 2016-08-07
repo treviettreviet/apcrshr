@@ -141,5 +141,33 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindItemReponse<YouthScholarshipModel> FindByUserID(string userID)
+        {
+            try
+            {
+                IYouthScholarshipRepository youthScholarshipRepository = RepositoryClassFactory.GetInstance().GetYouthShcolarshipReoisitory();
+                YouthScholarship scholarship = youthScholarshipRepository.FindByUserID(userID);
+                var _scholarship = MapperUtil.CreateMapper().Mapper.Map<YouthScholarship, YouthScholarshipModel>(scholarship);
+                return new FindItemReponse<YouthScholarshipModel>
+                {
+                    Item = _scholarship,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+
+
+            }
+            catch (Exception ex)
+            {
+
+                return new FindItemReponse<YouthScholarshipModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }

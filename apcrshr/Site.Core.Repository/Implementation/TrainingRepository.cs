@@ -29,7 +29,6 @@ namespace Site.Core.Repository.Implementation
                     training.Country = item.Country;
                     training.NameOfCourse = item.NameOfCourse;
                     training.TrainingEnd = item.TrainingEnd;
-                    training.TrainingNow = item.TrainingNow;
                     training.TrainingStart = item.TrainingStart;
                     training.YouthScholarshipID = item.YouthScholarshipID;
 

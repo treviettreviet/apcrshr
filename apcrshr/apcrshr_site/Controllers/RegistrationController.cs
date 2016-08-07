@@ -26,6 +26,8 @@ namespace apcrshr_site.Controllers
         private ISessionService _sessionService;
         private IUserSubmissionService _userSubmissionService;
         private IMainScholarshipService _mainScholarshipService;
+        private IYouthScholarshipService _youthScholarshipService;
+        private IExperienceService _experienceService;
 
         public RegistrationController()
         {
@@ -34,6 +36,8 @@ namespace apcrshr_site.Controllers
             this._sessionService = new SessionService();
             this._userSubmissionService = new UserSubmissionService();
             this._mainScholarshipService = new MainScholarshipService();
+            this._youthScholarshipService = new YouthScholarshipService();
+            this._experienceService = new ExperienceService();
         }
 
         //
@@ -520,40 +524,51 @@ namespace apcrshr_site.Controllers
             return View(model);
         }
 
+        [UserSessionFilter]
+        public ActionResult YouthSholarshipRegistration()
+        {
+            YouthScholarshipModel model = new YouthScholarshipModel();
+            string sessionId = Session["User-SessionID"].ToString();
+            Site.Core.Repository.User _user = SessionUtil.GetInstance.GetUserBySessionID(sessionId);
+            if (_user != null)
+            {
+                //Try to get scholarship
+                FindItemReponse<YouthScholarshipModel> scholarshipResponse = _youthScholarshipService.FindByUserID(_user.UserID);
+                model = scholarshipResponse.Item;
+                if (model == null)
+                {
+                    model = new YouthScholarshipModel();
+                }
+
+                //Find mailing
+                FindAllItemReponse<MailingAddressModel> response = _mailingService.FindMailingAddressByUser(_user.UserID);
+                if (response.Items != null)
+                {
+                    MailingAddressModel mailing = response.Items.FirstOrDefault();
+                    if (mailing != null)
+                    {
+                        model.RegistrationNumber = mailing.RegistrationNumber;
+                    }
+                }
+
+                //Find experiences
+                FindAllItemReponse<ExperienceModel> experiencesResponse = _experienceService.FindByscholarshipID(model.YouthScholarshipID);
+                if (experiencesResponse.Items != null && experiencesResponse.Items.Count > 0)
+                {
+                    model.ExperienceTitles = string.Join(",", experiencesResponse.Items.Select(i => i.Organization));
+                }
+            }
+            return View(model);
+        }
+
         [ValidateAntiForgeryToken]
         public JsonResult SaveMainSholarship(MainScholarshipModel scholarship)
         {
-            string sessionId = Session["User-SessionID"].ToString();
-            UserSession userSession = SessionUtil.GetInstance.VerifySession(sessionId);
-            if (userSession == null)
+            //Validate before save
+            UserValidationResponse validateResponse = ValidateBeforeSave(scholarship.RegistrationNumber);
+            if (validateResponse.ErrorCode != (int)ErrorCode.None)
             {
-                return Json(new { ErrorCode = (int)ErrorCode.Redirect, Message = Resources.Resource.msg_sessionTimeOut });
-            }
-
-            //Check registration number
-            FindItemReponse<UserModel> userResponse = _userService.FindUserByID(userSession.UserID);
-            if (userResponse.Item == null)
-            {
-                return Json(new { ErrorCode = (int)ErrorCode.Redirect, Message = Resources.Resource.msg_sessionTimeOut });
-            }
-            else
-            {
-                FindAllItemReponse<MailingAddressModel> mailingResponse = _mailingService.FindMailingAddressByUser(userResponse.Item.UserID);
-                if (mailingResponse.Items != null)
-                {
-                    MailingAddressModel mailing = mailingResponse.Items.FirstOrDefault();
-                    if (mailing != null)
-                    {
-                        if (!mailing.RegistrationNumber.Equals(scholarship.RegistrationNumber))
-                        {
-                            return Json(new { ErrorCode = (int)ErrorCode.Error, Message = Resources.Resource.msg_registrationNumberInvalid });
-                        }
-                    }
-                }
-                else
-                {
-                    return Json(new { ErrorCode = (int)ErrorCode.Error, Message = Resources.Resource.msg_registrationIsNotCompleted });
-                }
+                return Json(new { ErrorCode = validateResponse.ErrorCode, Message = validateResponse.Message });
             }
 
             //Check submission number
@@ -564,21 +579,111 @@ namespace apcrshr_site.Controllers
             }
 
             //Check for existing registration
-            FindAllItemReponse<MainScholarshipModel> scholarshipResponse = _mainScholarshipService.FindByUserID(userResponse.Item.UserID);
+            FindAllItemReponse<MainScholarshipModel> scholarshipResponse = _mainScholarshipService.FindByUserID(validateResponse.UserID);
             if (scholarshipResponse.Items != null && scholarshipResponse.Items.Count > 0)
             {
                 return Json(new { ErrorCode = (int)ErrorCode.Error, Message = Resources.Resource.msg_mainScholarshipAlreadySubmitted });
             }
 
             //Register main scholarship
-            scholarship.CreatedBy = userResponse.Item.UserID;
+            scholarship.CreatedBy = validateResponse.UserID;
             scholarship.CreatedDate = DateTime.Now;
             scholarship.ScholarshipID = Guid.NewGuid().ToString();
-            scholarship.UserID = userResponse.Item.UserID;
+            scholarship.UserID = validateResponse.UserID;
 
             InsertResponse response = _mainScholarshipService.Create(scholarship);
 
             return Json(response);
+        }
+
+        /// <summary>
+        /// Validate ultility method
+        /// </summary>
+        /// <param name="registrationNumber"></param>
+        /// <returns></returns>
+        private UserValidationResponse ValidateBeforeSave(string registrationNumber)
+        {
+            string sessionId = Session["User-SessionID"].ToString();
+            UserSession userSession = SessionUtil.GetInstance.VerifySession(sessionId);
+            if (userSession == null)
+            {
+                return new UserValidationResponse { ErrorCode = (int)ErrorCode.Redirect, Message = Resources.Resource.msg_sessionTimeOut };
+            }
+
+            //Check registration number
+            FindItemReponse<UserModel> userResponse = _userService.FindUserByID(userSession.UserID);
+            if (userResponse.Item == null)
+            {
+                return new UserValidationResponse { ErrorCode = (int)ErrorCode.Redirect, Message = Resources.Resource.msg_userNotFound };
+            }
+
+            FindAllItemReponse<MailingAddressModel> mailingResponse = _mailingService.FindMailingAddressByUser(userResponse.Item.UserID);
+            if (mailingResponse.Items != null)
+            {
+                MailingAddressModel mailing = mailingResponse.Items.FirstOrDefault();
+                if (mailing != null)
+                {
+                    if (!mailing.RegistrationNumber.Equals(registrationNumber))
+                    {
+                        return new UserValidationResponse { ErrorCode = (int)ErrorCode.Error, Message = Resources.Resource.msg_registrationNumberInvalid };
+                    }
+                }
+            }
+            else
+            {
+                return new UserValidationResponse { ErrorCode = (int)ErrorCode.Error, Message = Resources.Resource.msg_registrationIsNotCompleted };
+            }
+
+            //Return succeeded
+            UserValidationResponse response = new UserValidationResponse();
+            response.UserID = userResponse.Item.UserID;
+            return response;
+        }
+
+        [ValidateAntiForgeryToken]
+        public JsonResult SaveExperience(ExperienceModel experience, YouthScholarshipModel scholarship)
+        {
+            //Validate before save
+            UserValidationResponse validateResponse = ValidateBeforeSave(scholarship.RegistrationNumber);
+            if (validateResponse.ErrorCode != (int)ErrorCode.None)
+            {
+                return Json(new { ErrorCode = validateResponse.ErrorCode, Message = validateResponse.Message });
+            }
+
+            //Scholarship is not created yet, create it
+            var scholarshipID = scholarship.YouthScholarshipID;
+            if (string.IsNullOrEmpty(scholarshipID))
+            {
+                //Try to get scholarship
+                FindItemReponse<YouthScholarshipModel> scholarshipResponse = _youthScholarshipService.FindByUserID(validateResponse.UserID);
+                if (scholarshipResponse.Item == null)
+                {
+                    scholarship.YouthScholarshipID = Guid.NewGuid().ToString();
+                    scholarship.UserID = validateResponse.UserID;
+                    scholarship.CreatedDate = DateTime.Now;
+                    scholarship.CreatedBy = validateResponse.UserID;
+                    InsertResponse createScholarshipResponse = _youthScholarshipService.Create(scholarship);
+                    if (createScholarshipResponse.ErrorCode != (int)ErrorCode.None)
+                    {
+                        return Json(new { ErrorCode = createScholarshipResponse.ErrorCode, Message = createScholarshipResponse.Message });
+                    }
+                    else
+                    {
+                        scholarshipID = createScholarshipResponse.InsertID;
+                    }
+                }
+                else
+                {
+                    scholarshipID = scholarshipResponse.Item.YouthScholarshipID;
+                }
+            }
+
+            //Save working experience
+            experience.WorkingID = Guid.NewGuid().ToString();
+            experience.YouthScholarshipID = scholarshipID;
+            InsertResponse createExperienceResponse = _experienceService.Create(experience);
+
+            return Json(new { ErrorCode = (int)createExperienceResponse.ErrorCode, Message = createExperienceResponse.Message, YouthScholarshipID = scholarshipID, Title = experience.Organization });
         }
 
         #endregion

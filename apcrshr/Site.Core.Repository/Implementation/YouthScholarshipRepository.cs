@@ -78,5 +78,13 @@ namespace Site.Core.Repository.Implementation
                 return context.YouthScholarships.ToList();
             }
         }
+
+        public YouthScholarship FindByUserID(string userID)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.YouthScholarships.Where(a => a.UserID.Equals(userID)).SingleOrDefault();
+            }
+        }
     }
 }
