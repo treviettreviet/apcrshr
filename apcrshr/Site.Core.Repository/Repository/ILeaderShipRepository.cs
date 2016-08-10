@@ -8,5 +8,6 @@ namespace Site.Core.Repository.Repository
 {
     public interface ILeaderShipRepository : IRepository<LeaderShip>
     {
+        IList<LeaderShip> FindByOrganization(string organization);
     }
 }

@@ -29,6 +29,9 @@ namespace apcrshr_site.Controllers
         private IYouthScholarshipService _youthScholarshipService;
         private IExperienceService _experienceService;
         private IEducationService _educationService;
+        private ITrainingService _trainingService;
+        private ILeaderShipService _leadershipService;
+        private IPublicationService _publicationService;
 
         public RegistrationController()
         {
@@ -40,6 +43,9 @@ namespace apcrshr_site.Controllers
             this._youthScholarshipService = new YouthScholarshipService();
             this._experienceService = new ExperienceService();
             this._educationService = new EducationService();
+            this._trainingService = new TrainingService();
+            this._leadershipService = new LeaderShipService();
+            this._publicationService = new PublicationService();
         }
 
         //
@@ -729,12 +735,150 @@ namespace apcrshr_site.Controllers
                 }
             }
 
-            //Save working experience
+            //Save Education
             education.EducationID = Guid.NewGuid().ToString();
             education.YouthScholarshipID = scholarshipID;
             InsertResponse createResponse = _educationService.Create(education);
 
             return Json(new { ErrorCode = (int)createResponse.ErrorCode, Message = createResponse.Message, YouthScholarshipID = scholarshipID, Title = education.MainCourseStudy });
+        }
+
+        [ValidateAntiForgeryToken]
+        public JsonResult SaveTraining(TrainingModel training, YouthScholarshipModel scholarship)
+        {
+            //Validate before save
+            UserValidationResponse validateResponse = ValidateBeforeSave(scholarship.RegistrationNumber);
+            if (validateResponse.ErrorCode != (int)ErrorCode.None)
+            {
+                return Json(new { ErrorCode = validateResponse.ErrorCode, Message = validateResponse.Message });
+            }
+
+            //Scholarship is not created yet, create it
+            var scholarshipID = scholarship.YouthScholarshipID;
+            if (string.IsNullOrEmpty(scholarshipID))
+            {
+                //Try to get scholarship
+                FindItemReponse<YouthScholarshipModel> scholarshipResponse = _youthScholarshipService.FindByUserID(validateResponse.UserID);
+                if (scholarshipResponse.Item == null)
+                {
+                    scholarship.YouthScholarshipID = Guid.NewGuid().ToString();
+                    scholarship.UserID = validateResponse.UserID;
+                    scholarship.CreatedDate = DateTime.Now;
+                    scholarship.CreatedBy = validateResponse.UserID;
+                    InsertResponse createScholarshipResponse = _youthScholarshipService.Create(scholarship);
+                    if (createScholarshipResponse.ErrorCode != (int)ErrorCode.None)
+                    {
+                        return Json(new { ErrorCode = createScholarshipResponse.ErrorCode, Message = createScholarshipResponse.Message });
+                    }
+                    else
+                    {
+                        scholarshipID = createScholarshipResponse.InsertID;
+                    }
+                }
+                else
+                {
+                    scholarshipID = scholarshipResponse.Item.YouthScholarshipID;
+                }
+            }
+
+            //Save Training
+            training.TrainingID = Guid.NewGuid().ToString();
+            training.YouthScholarshipID = scholarshipID;
+            InsertResponse createResponse = _trainingService.Create(training);
+
+            return Json(new { ErrorCode = (int)createResponse.ErrorCode, Message = createResponse.Message, YouthScholarshipID = scholarshipID, Title = training.NameOfCourse });
+        }
+
+        [ValidateAntiForgeryToken]
+        public JsonResult SaveLeaderShip(LeaderShipModel leadership, YouthScholarshipModel scholarship)
+        {
+            //Validate before save
+            UserValidationResponse validateResponse = ValidateBeforeSave(scholarship.RegistrationNumber);
+            if (validateResponse.ErrorCode != (int)ErrorCode.None)
+            {
+                return Json(new { ErrorCode = validateResponse.ErrorCode, Message = validateResponse.Message });
+            }
+
+            //Scholarship is not created yet, create it
+            var scholarshipID = scholarship.YouthScholarshipID;
+            if (string.IsNullOrEmpty(scholarshipID))
+            {
+                //Try to get scholarship
+                FindItemReponse<YouthScholarshipModel> scholarshipResponse = _youthScholarshipService.FindByUserID(validateResponse.UserID);
+                if (scholarshipResponse.Item == null)
+                {
+                    scholarship.YouthScholarshipID = Guid.NewGuid().ToString();
+                    scholarship.UserID = validateResponse.UserID;
+                    scholarship.CreatedDate = DateTime.Now;
+                    scholarship.CreatedBy = validateResponse.UserID;
+                    InsertResponse createScholarshipResponse = _youthScholarshipService.Create(scholarship);
+                    if (createScholarshipResponse.ErrorCode != (int)ErrorCode.None)
+                    {
+                        return Json(new { ErrorCode = createScholarshipResponse.ErrorCode, Message = createScholarshipResponse.Message });
+                    }
+                    else
+                    {
+                        scholarshipID = createScholarshipResponse.InsertID;
+                    }
+                }
+                else
+                {
+                    scholarshipID = scholarshipResponse.Item.YouthScholarshipID;
+                }
+            }
+
+            //Save LeaderShip
+            leadership.LeaderShipID = Guid.NewGuid().ToString();
+            leadership.YouthScholarshipID = scholarshipID;
+            InsertResponse createResponse = _leadershipService.Create(leadership);
+
+            return Json(new { ErrorCode = (int)createResponse.ErrorCode, Message = createResponse.Message, YouthScholarshipID = scholarshipID, Title = leadership.Organization });
+        }
+
+        [ValidateAntiForgeryToken]
+        public JsonResult SavePublication(PublicationModel publication, YouthScholarshipModel scholarship)
+        {
+            //Validate before save
+            UserValidationResponse validateResponse = ValidateBeforeSave(scholarship.RegistrationNumber);
+            if (validateResponse.ErrorCode != (int)ErrorCode.None)
+            {
+                return Json(new { ErrorCode = validateResponse.ErrorCode, Message = validateResponse.Message });
+            }
+
+            //Scholarship is not created yet, create it
+            var scholarshipID = scholarship.YouthScholarshipID;
+            if (string.IsNullOrEmpty(scholarshipID))
+            {
+                //Try to get scholarship
+                FindItemReponse<YouthScholarshipModel> scholarshipResponse = _youthScholarshipService.FindByUserID(validateResponse.UserID);
+                if (scholarshipResponse.Item == null)
+                {
+                    scholarship.YouthScholarshipID = Guid.NewGuid().ToString();
+                    scholarship.UserID = validateResponse.UserID;
+                    scholarship.CreatedDate = DateTime.Now;
+                    scholarship.CreatedBy = validateResponse.UserID;
+                    InsertResponse createScholarshipResponse = _youthScholarshipService.Create(scholarship);
+                    if (createScholarshipResponse.ErrorCode != (int)ErrorCode.None)
+                    {
+                        return Json(new { ErrorCode = createScholarshipResponse.ErrorCode, Message = createScholarshipResponse.Message });
+                    }
+                    else
+                    {
+                        scholarshipID = createScholarshipResponse.InsertID;
+                    }
+                }
+                else
+                {
+                    scholarshipID = scholarshipResponse.Item.YouthScholarshipID;
+                }
+            }
+
+            //Save LeaderShip
+            publication.PublicationID = Guid.NewGuid().ToString();
+            publication.YouthScholarshipID = scholarshipID;
+            InsertResponse createResponse = _publicationService.Create(publication);
+
+            return Json(new { ErrorCode = (int)createResponse.ErrorCode, Message = createResponse.Message, YouthScholarshipID = scholarshipID, Title = publication.Title });
         }
 
         #endregion

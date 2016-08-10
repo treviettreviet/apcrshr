@@ -14,5 +14,6 @@ namespace Site.Core.DataModel.Model
         public System.DateTime TrainingStart { get; set; }
         public Nullable<System.DateTime> TrainingEnd { get; set; }
         public string YouthScholarshipID { get; set; }
+        public string TypeOfTraining { get; set; }
     }
 }

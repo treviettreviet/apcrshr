@@ -96,7 +96,7 @@
                 <div class="form-group">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-9">
-                        <a href="javascript:void(0);" onclick="" class="btn btn-primary" rel="tooltip" title="" data-original-title="Add">
+                        <a href="javascript:void(0);" id="lnkAddTraining" class="btn btn-primary" rel="tooltip" title="" data-original-title="Add">
                             <i class="fa fa-plus"></i>Add
                         </a>
                     </div>
@@ -120,7 +120,7 @@
                 <div class="form-group">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-9">
-                        <a href="javascript:void(0);" onclick="" class="btn btn-primary" rel="tooltip" title="" data-original-title="Add">
+                        <a href="javascript:void(0);" id="lnkAddLeaderShip" class="btn btn-primary" rel="tooltip" title="" data-original-title="Add">
                             <i class="fa fa-plus"></i>Add
                         </a>
                     </div>
@@ -144,7 +144,7 @@
                 <div class="form-group">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-9">
-                        <a href="javascript:void(0);" onclick="" class="btn btn-primary" rel="tooltip" title="" data-original-title="Add">
+                        <a href="javascript:void(0);" id="lnkAddPublication" class="btn btn-primary" rel="tooltip" title="" data-original-title="Add">
                             <i class="fa fa-plus"></i>Add
                         </a>
                     </div>
@@ -613,5 +613,489 @@
         });
         $('#EducationStart').datepicker().datepicker("setDate", new Date());
         $('#EducationEnd').datepicker().datepicker("setDate", new Date());
+    });
+</script>
+
+<!--Additional training-->
+<script type="text/javascript">
+    var trainingDialog = [
+            '<form method="POST" action="@Url.Action("SaveTraining", "Registration")" id="frmTraining" class="form-horizontal form-bordered">',
+                '<div class="box">',
+                    '<div class="box-content nopadding">',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Name of course <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" name="NameOfCourse" id="NameOfCourse" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Country <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" name="Country" id="Country" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Attended from <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" name="TrainingStart" id="TrainingStart" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">To <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" name="TrainingEnd" id="TrainingEnd" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Type of training <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<select id="TypeOfTraining" name="TypeOfTraining">',
+                                    '<option value="Onsite">Onsite</option>',
+                                    '<option value="Online">Online</option>',
+                                    '<option value="Remote">Remote</option>',
+                                '</select>',
+                            '</div>',
+                        '</div>',
+                    '</div>',
+                '</div>',
+            '</form>'
+    ].join("\n");
+
+    function validateTraining() {
+        var nameOfCourse = $("#NameOfCourse").val();
+        var country = $("#Country").val();
+        var trainingStart = $("#TrainingStart").val();
+        var trainingEnd = $("#TrainingEnd").val();
+
+        if (nameOfCourse == null || nameOfCourse.length == 0) {
+            bootbox.alert("Please input your name of course!", function () {
+                setTimeout(function () {
+                    $("#NameOfCourse").focus();
+                }, 1);
+            });
+            return false;
+        }
+        if (country == null || country.length == 0) {
+            bootbox.alert("Please input your country!", function () {
+                setTimeout(function () {
+                    $("#Country").focus();
+                }, 1);
+            });
+            return false;
+        }
+        if (trainingStart == null) {
+            bootbox.alert("Please input your attended from!", function () {
+                setTimeout(function () {
+                    $("#TrainingStart").focus();
+                }, 1);
+            });
+            return false;
+        }
+        if (trainingEnd == null) {
+            bootbox.alert("Please input your attended to!", function () {
+                setTimeout(function () {
+                    $("#TrainingEnd").focus();
+                }, 1);
+            });
+            return false;
+        }
+        return true;
+    }
+
+    $("#lnkAddTraining").click(function () {
+        bootbox.dialog({
+            message: trainingDialog,
+            title: "Add training",
+            buttons: {
+                success: {
+                    label: "Save Changes",
+                    className: "btn-primary",
+                    callback: function (e) {
+                        //Validate
+                        if (!validateTraining()) {
+                            return false;
+                        }
+
+                        //Save changes
+                        $.blockUI({ message: $('#spinner') });
+                        var formData = new FormData();
+                        formData.append("RegistrationNumber", $("#RegistrationNumber").val());
+                        formData.append("MotivationIssue", $("#MotivationIssue").val());
+                        formData.append("MotivationResolving", $("#MotivationResolving").val());
+                        formData.append("MotivationReason", $("#MotivationReason").val());
+                        formData.append("PlanMaking", $("#PlanMaking").val());
+                        formData.append("YouthScholarshipID", $("#YouthScholarshipID").val());
+                        //Training
+                        formData.append("NameOfCourse", $("#NameOfCourse").val());
+                        formData.append("Country", $("#Country").val());
+                        formData.append("TrainingStart", $("#TrainingStart").val());
+                        formData.append("TrainingEnd", $("#TrainingEnd").val());
+                        formData.append("TypeOfTraining", $("#TypeOfTraining").find(":selected").val());
+                        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("SaveTraining", "Registration")',
+                            data: formData,
+                            dataType: 'json',
+                            contentType: false,
+                            processData: false,
+                            success: function (response) {
+                                //Timeout
+                                if (response.ErrorCode == 2) {
+                                    window.location = '@Url.Action("Login", "User")';
+                                }
+                                if (response.ErrorCode == 0) {
+                                    $.unblockUI();
+                                    $("#YouthScholarshipID").val(response.YouthScholarshipID);
+                                    $('#AdditionalTrainingTitles').addTag(response.Title);
+                                    bootbox.hideAll();
+                                    return true;
+                                }
+                                if (response.ErrorCode == 1) {
+                                    bootbox.alert(response.Message, function () {
+                                        $.unblockUI();
+                                    });
+                                }
+                            },
+                            error: function (error) {
+                                $.unblockUI();
+                                bootbox.alert(error, function () {
+                                });
+                            }
+                        });
+                        return false;
+                    }
+                },
+                danger: {
+                    label: "Cancel",
+                    className: "btn-danger",
+                    callback: function () {
+                        bootbox.hideAll();
+                    }
+                }
+            }
+        });
+        $('#TrainingStart').datepicker().datepicker("setDate", new Date());
+        $('#TrainingEnd').datepicker().datepicker("setDate", new Date());
+    });
+</script>
+
+<!--Leadership-->
+<script type="text/javascript">
+    var leaderDialog = [
+            '<form method="POST" action="@Url.Action("SaveLeaderShip", "Registration")" id="frmLeaderShip" class="form-horizontal form-bordered">',
+                '<div class="box">',
+                    '<div class="box-content nopadding">',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Organization/Group <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" name="Organization" id="Organization" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Position <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" name="Position" id="Position" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Attended from <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" name="FromDate" id="FromDate" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">To <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" name="EndDate" id="EndDate" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Duties <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<textarea name="Duties" id="Duties" rows="3" maxlength="150" class="form-control" data-rule-required="true"></textarea>',
+                            '</div>',
+                        '</div>',
+                    '</div>',
+                '</div>',
+            '</form>'
+    ].join("\n");
+
+    function validateLeaderShip() {
+        var organization = $("#Organization").val();
+        var position = $("#Position").val();
+        var fromDate = $("#FromDate").val();
+        var endDate = $("#EndDate").val();
+        var duties = $("#Duties").val();
+
+        if (organization == null || organization.length == 0) {
+            bootbox.alert("Please input your organization/group!", function () {
+                setTimeout(function () {
+                    $("#Organization").focus();
+                }, 1);
+            });
+            return false;
+        }
+        if (position == null || position.length == 0) {
+            bootbox.alert("Please input your position!", function () {
+                setTimeout(function () {
+                    $("#Position").focus();
+                }, 1);
+            });
+            return false;
+        }
+        if (fromDate == null) {
+            bootbox.alert("Please input from date!", function () {
+                setTimeout(function () {
+                    $("#FromDate").focus();
+                }, 1);
+            });
+            return false;
+        }
+        if (endDate == null) {
+            bootbox.alert("Please input to date!", function () {
+                setTimeout(function () {
+                    $("#EndDate").focus();
+                }, 1);
+            });
+            return false;
+        }
+        if (duties == null || duties.length == 0) {
+            bootbox.alert("Please input duties!", function () {
+                setTimeout(function () {
+                    $("#Duties").focus();
+                }, 1);
+            });
+            return false;
+        }
+        return true;
+    }
+
+    $("#lnkAddLeaderShip").click(function () {
+        bootbox.dialog({
+            message: leaderDialog,
+            title: "Add leadership",
+            buttons: {
+                success: {
+                    label: "Save Changes",
+                    className: "btn-primary",
+                    callback: function (e) {
+                        //Validate
+                        if (!validateLeaderShip()) {
+                            return false;
+                        }
+
+                        //Save changes
+                        $.blockUI({ message: $('#spinner') });
+                        var formData = new FormData();
+                        formData.append("RegistrationNumber", $("#RegistrationNumber").val());
+                        formData.append("MotivationIssue", $("#MotivationIssue").val());
+                        formData.append("MotivationResolving", $("#MotivationResolving").val());
+                        formData.append("MotivationReason", $("#MotivationReason").val());
+                        formData.append("PlanMaking", $("#PlanMaking").val());
+                        formData.append("YouthScholarshipID", $("#YouthScholarshipID").val());
+                        //LeaderShip
+                        formData.append("Organization", $("#Organization").val());
+                        formData.append("Position", $("#Position").val());
+                        formData.append("FromDate", $("#FromDate").val());
+                        formData.append("EndDate", $("#EndDate").val());
+                        formData.append("Duties", $("#Duties").val());
+                        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("SaveLeaderShip", "Registration")',
+                            data: formData,
+                            dataType: 'json',
+                            contentType: false,
+                            processData: false,
+                            success: function (response) {
+                                //Timeout
+                                if (response.ErrorCode == 2) {
+                                    window.location = '@Url.Action("Login", "User")';
+                                }
+                                if (response.ErrorCode == 0) {
+                                    $.unblockUI();
+                                    $("#YouthScholarshipID").val(response.YouthScholarshipID);
+                                    $('#LeaderShipTitles').addTag(response.Title);
+                                    bootbox.hideAll();
+                                    return true;
+                                }
+                                if (response.ErrorCode == 1) {
+                                    bootbox.alert(response.Message, function () {
+                                        $.unblockUI();
+                                    });
+                                }
+                            },
+                            error: function (error) {
+                                $.unblockUI();
+                                bootbox.alert(error, function () {
+                                });
+                            }
+                        });
+                        return false;
+                    }
+                },
+                danger: {
+                    label: "Cancel",
+                    className: "btn-danger",
+                    callback: function () {
+                        bootbox.hideAll();
+                    }
+                }
+            }
+        });
+        $('#FromDate').datepicker().datepicker("setDate", new Date());
+        $('#EndDate').datepicker().datepicker("setDate", new Date());
+    });
+</script>
+
+<!--Publication-->
+<script type="text/javascript">
+    var publicationDialog = [
+            '<form method="POST" action="@Url.Action("SavePublication", "Registration")" id="frmPublication" class="form-horizontal form-bordered">',
+                '<div class="box">',
+                    '<div class="box-content nopadding">',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Title <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" name="Title" id="Title" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Source <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" name="Source" id="Source" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Year <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" name="Year" id="Year" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">URL <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" name="URL" id="URL" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                    '</div>',
+                '</div>',
+            '</form>'
+    ].join("\n");
+
+    function validatePublication() {
+        var title = $("#Title").val();
+        var source = $("#Source").val();
+        var year = $("#Year").val();
+        var url = $("#URL").val();
+
+        if (title == null || title.length == 0) {
+            bootbox.alert("Please input title!", function () {
+                setTimeout(function () {
+                    $("#Title").focus();
+                }, 1);
+            });
+            return false;
+        }
+        if (source == null || source.length == 0) {
+            bootbox.alert("Please input source!", function () {
+                setTimeout(function () {
+                    $("#Source").focus();
+                }, 1);
+            });
+            return false;
+        }
+        if (year == null || year.length == 0) {
+            bootbox.alert("Please input year!", function () {
+                setTimeout(function () {
+                    $("#Year").focus();
+                }, 1);
+            });
+            return false;
+        }
+        if (url == null || url.length == 0) {
+            bootbox.alert("Please input year!", function () {
+                setTimeout(function () {
+                    $("#URL").focus();
+                }, 1);
+            });
+            return false;
+        }
+        return true;
+    }
+
+    $("#lnkAddPublication").click(function () {
+        bootbox.dialog({
+            message: publicationDialog,
+            title: "Add publication",
+            buttons: {
+                success: {
+                    label: "Save Changes",
+                    className: "btn-primary",
+                    callback: function (e) {
+                        //Validate
+                        if (!validatePublication()) {
+                            return false;
+                        }
+
+                        //Save changes
+                        $.blockUI({ message: $('#spinner') });
+                        var formData = new FormData();
+                        formData.append("RegistrationNumber", $("#RegistrationNumber").val());
+                        formData.append("MotivationIssue", $("#MotivationIssue").val());
+                        formData.append("MotivationResolving", $("#MotivationResolving").val());
+                        formData.append("MotivationReason", $("#MotivationReason").val());
+                        formData.append("PlanMaking", $("#PlanMaking").val());
+                        formData.append("YouthScholarshipID", $("#YouthScholarshipID").val());
+                        //Publication
+                        formData.append("Title", $("#Title").val());
+                        formData.append("Source", $("#Source").val());
+                        formData.append("Year", $("#Year").val());
+                        formData.append("URL", $("#URL").val());
+                        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("SavePublication", "Registration")',
+                            data: formData,
+                            dataType: 'json',
+                            contentType: false,
+                            processData: false,
+                            success: function (response) {
+                                //Timeout
+                                if (response.ErrorCode == 2) {
+                                    window.location = '@Url.Action("Login", "User")';
+                                }
+                                if (response.ErrorCode == 0) {
+                                    $.unblockUI();
+                                    $("#YouthScholarshipID").val(response.YouthScholarshipID);
+                                    $('#PublicationTitles').addTag(response.Title);
+                                    bootbox.hideAll();
+                                    return true;
+                                }
+                                if (response.ErrorCode == 1) {
+                                    bootbox.alert(response.Message, function () {
+                                        $.unblockUI();
+                                    });
+                                }
+                            },
+                            error: function (error) {
+                                $.unblockUI();
+                                bootbox.alert(error, function () {
+                                });
+                            }
+                        });
+                        return false;
+                    }
+                },
+                danger: {
+                    label: "Cancel",
+                    className: "btn-danger",
+                    callback: function () {
+                        bootbox.hideAll();
+                    }
+                }
+            }
+        });
     });
 </script>

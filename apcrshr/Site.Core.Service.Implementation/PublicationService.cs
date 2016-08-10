@@ -71,6 +71,15 @@ namespace Site.Core.Service.Implementation
             try
             {
                 IPublicationRepository publicationRepository = RepositoryClassFactory.GetInstance().GetPublicationRepository();
+                IList<Publication> _publications = publicationRepository.FindByTitle(publication.Title);
+                if (_publications != null && _publications.Count > 0)
+                {
+                    return new InsertResponse
+                    {
+                        ErrorCode = (int)ErrorCode.Error,
+                        Message = string.Format(Resources.Resource.msg_insert_exists, "Publication", publication.Title)
+                    };
+                }
                 var _publication = MapperUtil.CreateMapper().Mapper.Map<PublicationModel, Publication>(publication);
                 object id = publicationRepository.Insert(_publication);
                 return new InsertResponse

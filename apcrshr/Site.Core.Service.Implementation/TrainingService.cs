@@ -71,6 +71,15 @@ namespace Site.Core.Service.Implementation
             try
             {
                 ITrainingRepository trainingRepository = RepositoryClassFactory.GetInstance().GetTrainingRepository();
+                IList<Training> _trainings = trainingRepository.FindByNameOfCourse(training.NameOfCourse);
+                if (_trainings != null && _trainings.Count > 0)
+                {
+                    return new InsertResponse
+                    {
+                        ErrorCode = (int)ErrorCode.Error,
+                        Message = string.Format(Resources.Resource.msg_insert_exists, "Training", training.NameOfCourse)
+                    };
+                }
                 var _training = MapperUtil.CreateMapper().Mapper.Map<TrainingModel, Training>(training);
                 object id = trainingRepository.Insert(_training);
                 return new InsertResponse

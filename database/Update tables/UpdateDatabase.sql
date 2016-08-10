@@ -2,3 +2,6 @@ USE [APCRSHR]
 
 GO
 
+ALTER TABLE [Training] ADD [TypeOfTraining] VARCHAR(100) NOT NULL
+
+GO

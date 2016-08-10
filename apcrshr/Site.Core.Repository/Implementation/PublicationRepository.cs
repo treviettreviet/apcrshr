@@ -75,5 +75,13 @@ namespace Site.Core.Repository.Implementation
                 return context.Publications.ToList();
             }
         }
+
+        public IList<Publication> FindByTitle(string title)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Publications.Where(p => p.Title.Equals(title)).ToList();
+            }
+        }
     }
 }

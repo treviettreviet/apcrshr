@@ -71,6 +71,15 @@ namespace Site.Core.Service.Implementation
             try
             {
                 IEducationRepository educationRepository = RepositoryClassFactory.GetInstance().GetEducationRepository();
+                IList<Education> _educations = educationRepository.FindByMainCourseStudy(education.MainCourseStudy);
+                if (_educations != null && _educations.Count > 0)
+                {
+                    return new InsertResponse
+                    {
+                        ErrorCode = (int)ErrorCode.Error,
+                        Message = string.Format(Resources.Resource.msg_insert_exists, "Education", education.MainCourseStudy)
+                    };
+                }
                 var _education = MapperUtil.CreateMapper().Mapper.Map<EducationModel, Education>(education);
                 object id = educationRepository.Insert(_education);
                 return new InsertResponse

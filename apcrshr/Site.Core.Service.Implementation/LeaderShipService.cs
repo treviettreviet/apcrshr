@@ -71,6 +71,15 @@ namespace Site.Core.Service.Implementation
             try
             {
                 ILeaderShipRepository leaderShipRepository = RepositoryClassFactory.GetInstance().GetLeaderShipRepository();
+                IList<LeaderShip> _leaderships = leaderShipRepository.FindByOrganization(leadership.Organization);
+                if (_leaderships != null && _leaderships.Count > 0)
+                {
+                    return new InsertResponse
+                    {
+                        ErrorCode = (int)ErrorCode.Error,
+                        Message = string.Format(Resources.Resource.msg_insert_exists, "LeaderShip", leadership.Organization)
+                    };
+                }
                 var _leadership = MapperUtil.CreateMapper().Mapper.Map<LeaderShipModel, LeaderShip>(leadership);
                 object id = leaderShipRepository.Insert(_leadership);
                 return new InsertResponse

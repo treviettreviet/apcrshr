@@ -31,6 +31,7 @@ namespace Site.Core.Repository.Implementation
                     training.TrainingEnd = item.TrainingEnd;
                     training.TrainingStart = item.TrainingStart;
                     training.YouthScholarshipID = item.YouthScholarshipID;
+                    training.TypeOfTraining = item.TypeOfTraining;
 
                     context.SaveChanges();
                 }
@@ -73,6 +74,14 @@ namespace Site.Core.Repository.Implementation
             using (APCRSHREntities context = new APCRSHREntities())
             {
                 return context.Trainings.ToList();
+            }
+        }
+
+        public IList<Training> FindByNameOfCourse(string nameOfCourse)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Trainings.Where(a => a.NameOfCourse.Equals(nameOfCourse)).ToList();
             }
         }
     }

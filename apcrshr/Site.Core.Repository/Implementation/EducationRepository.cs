@@ -77,5 +77,13 @@ namespace Site.Core.Repository.Implementation
                 return context.Educations.ToList();
             }
         }
+
+        public IList<Education> FindByMainCourseStudy(string mainCourseStudy)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Educations.Where(e => e.MainCourseStudy.Equals(mainCourseStudy)).ToList();
+            }
+        }
     }
 }

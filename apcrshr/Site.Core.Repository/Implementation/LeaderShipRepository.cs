@@ -76,5 +76,13 @@ namespace Site.Core.Repository.Implementation
                 return context.LeaderShips.ToList();
             }
         }
+
+        public IList<LeaderShip> FindByOrganization(string organization)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.LeaderShips.Where(l => l.Organization.Equals(organization)).ToList();
+            }
+        }
     }
 }
