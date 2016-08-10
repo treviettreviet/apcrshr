@@ -75,7 +75,7 @@
                 <div class="form-group">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-9">
-                        <a href="javascript:void(0);" onclick="" class="btn btn-primary" rel="tooltip" title="" data-original-title="Add">
+                        <a href="javascript:void(0);" id="lnkAddEducation" class="btn btn-primary" rel="tooltip" title="" data-original-title="Add">
                             <i class="fa fa-plus"></i>Add
                         </a>
                     </div>
@@ -268,9 +268,10 @@
     }
 </script>
 
+<!--Experiences-->
 <script type="text/javascript">
     var experienceDialog = [
-            '<form method="POST" action="@Url.Action("ChangePassword", "User")" id="frmExperience" class="form-horizontal form-bordered">',
+            '<form method="POST" action="@Url.Action("SaveExperience", "Registration")" id="frmExperience" class="form-horizontal form-bordered">',
                 '<div class="box">',
                     '<div class="box-content nopadding">',
                         '<div class="form-group">',
@@ -292,9 +293,9 @@
                             '</div>',
                         '</div>',
                         '<div class="form-group">',
-                            '<label for="textfield" class="control-label col-sm-2">Working to</label>',
+                            '<label for="textfield" class="control-label col-sm-2">Working to <span class="validation-span-required">(*)</span></label>',
                             '<div class="col-sm-10">',
-                                '<input type="text" name="WorkingEnd" id="WorkingEnd" class="form-control">',
+                                '<input type="text" name="WorkingEnd" id="WorkingEnd" class="form-control" data-rule-required="true">',
                             '</div>',
                         '</div>',
                         '<div class="form-group">',
@@ -335,6 +336,14 @@
             bootbox.alert("Please input your working start!", function () {
                 setTimeout(function () {
                     $("#WorkingStart").focus();
+                }, 1);
+            });
+            return false;
+        }
+        if (workingEnd == null) {
+            bootbox.alert("Please input your working to!", function () {
+                setTimeout(function () {
+                    $("#WorkingEnd").focus();
                 }, 1);
             });
             return false;
@@ -424,5 +433,185 @@
         });
         $('#WorkingStart').datepicker().datepicker("setDate", new Date());
         $('#WorkingEnd').datepicker().datepicker("setDate", new Date());
+    });
+</script>
+
+<!--Educations-->
+<script type="text/javascript">
+    var educationDialog = [
+            '<form method="POST" action="@Url.Action("SaveEducation", "Registration")" id="frmEducation" class="form-horizontal form-bordered">',
+                '<div class="box">',
+                    '<div class="box-content nopadding">',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Degree/Diplomas obtained <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" name="Degree" id="Degree" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Country <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" name="Country" id="Country" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Attended from <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" name="EducationStart" id="EducationStart" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">To <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" name="EducationEnd" id="EducationEnd" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Main course of study <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" name="MainCourseStudy" id="MainCourseStudy" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Type of training <span class="validation-span-required">(*)</span></label>',
+                            '<div class="col-sm-10">',
+                                '<select id="TypeOfTraining" name="TypeOfTraining">',
+                                    '<option value="Onsite">Onsite</option>',
+                                    '<option value="Online">Online</option>',
+                                    '<option value="Remote">Remote</option>',
+                                '</select>',
+                            '</div>',
+                        '</div>',
+                    '</div>',
+                '</div>',
+            '</form>'
+    ].join("\n");
+
+    function validateEducation() {
+        var degree = $("#Degree").val();
+        var country = $("#Country").val();
+        var educationStart = $("#EducationStart").val();
+        var educationEnd = $("#EducationEnd").val();
+        var mainCourseStudy = $("#MainCourseStudy").val();
+
+        if (degree == null || degree.length == 0) {
+            bootbox.alert("Please input your degree!", function () {
+                setTimeout(function () {
+                    $("#Degree").focus();
+                }, 1);
+            });
+            return false;
+        }
+        if (country == null || country.length == 0) {
+            bootbox.alert("Please input your country!", function () {
+                setTimeout(function () {
+                    $("#Country").focus();
+                }, 1);
+            });
+            return false;
+        }
+        if (educationStart == null) {
+            bootbox.alert("Please input your attended from!", function () {
+                setTimeout(function () {
+                    $("#EducationStart").focus();
+                }, 1);
+            });
+            return false;
+        }
+        if (educationEnd == null) {
+            bootbox.alert("Please input your attended to!", function () {
+                setTimeout(function () {
+                    $("#EducationEnd").focus();
+                }, 1);
+            });
+            return false;
+        }
+        if (mainCourseStudy == null || mainCourseStudy.length == 0) {
+            bootbox.alert("Please input your main course of study!", function () {
+                setTimeout(function () {
+                    $("#MainCourseStudy").focus();
+                }, 1);
+            });
+            return false;
+        }
+        return true;
+    }
+
+    $("#lnkAddEducation").click(function () {
+        bootbox.dialog({
+            message: educationDialog,
+            title: "Add education",
+            buttons: {
+                success: {
+                    label: "Save Changes",
+                    className: "btn-primary",
+                    callback: function (e) {
+                        //Validate
+                        if (!validateEducation()) {
+                            return false;
+                        }
+
+                        //Save changes
+                        $.blockUI({ message: $('#spinner') });
+                        var formData = new FormData();
+                        formData.append("RegistrationNumber", $("#RegistrationNumber").val());
+                        formData.append("MotivationIssue", $("#MotivationIssue").val());
+                        formData.append("MotivationResolving", $("#MotivationResolving").val());
+                        formData.append("MotivationReason", $("#MotivationReason").val());
+                        formData.append("PlanMaking", $("#PlanMaking").val());
+                        formData.append("YouthScholarshipID", $("#YouthScholarshipID").val());
+                        //Education
+                        formData.append("Degree", $("#Degree").val());
+                        formData.append("Country", $("#Country").val());
+                        formData.append("EducationStart", $("#EducationStart").val());
+                        formData.append("EducationEnd", $("#EducationEnd").val());
+                        formData.append("MainCourseStudy", $("#MainCourseStudy").val());
+                        formData.append("TypeOfTraining", $("#TypeOfTraining").find(":selected").val());
+                        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("SaveEducation", "Registration")',
+                            data: formData,
+                            dataType: 'json',
+                            contentType: false,
+                            processData: false,
+                            success: function (response) {
+                                //Timeout
+                                if (response.ErrorCode == 2) {
+                                    window.location = '@Url.Action("Login", "User")';
+                                }
+                                if (response.ErrorCode == 0) {
+                                    $.unblockUI();
+                                    $("#YouthScholarshipID").val(response.YouthScholarshipID);
+                                    $('#EducationTitles').addTag(response.Title);
+                                    bootbox.hideAll();
+                                    return true;
+                                }
+                                if (response.ErrorCode == 1) {
+                                    bootbox.alert(response.Message, function () {
+                                        $.unblockUI();
+                                    });
+                                }
+                            },
+                            error: function (error) {
+                                $.unblockUI();
+                                bootbox.alert(error, function () {
+                                });
+                            }
+                        });
+                        return false;
+                    }
+                },
+                danger: {
+                    label: "Cancel",
+                    className: "btn-danger",
+                    callback: function () {
+                        bootbox.hideAll();
+                    }
+                }
+            }
+        });
+        $('#EducationStart').datepicker().datepicker("setDate", new Date());
+        $('#EducationEnd').datepicker().datepicker("setDate", new Date());
     });
 </script>
