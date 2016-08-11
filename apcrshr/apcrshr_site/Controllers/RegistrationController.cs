@@ -676,6 +676,130 @@ namespace apcrshr_site.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public JsonResult UploadScholarshipFile(string YouthScholarshipID, string RegistrationNumber)
+        {
+            try
+            {
+                //Validate before save
+                UserValidationResponse validateResponse = ValidateBeforeSave(RegistrationNumber);
+                if (validateResponse.ErrorCode != (int)ErrorCode.None)
+                {
+                    return Json(new { ErrorCode = validateResponse.ErrorCode, Message = validateResponse.Message });
+                }
+
+                //Scholarship is not created yet, create it
+                YouthScholarshipModel scholarship = new YouthScholarshipModel();
+                var scholarshipID = YouthScholarshipID;
+                if (string.IsNullOrEmpty(scholarshipID))
+                {
+                    //Try to get scholarship
+                    FindItemReponse<YouthScholarshipModel> scholarshipResponse = _youthScholarshipService.FindByUserID(validateResponse.UserID);
+                    if (scholarshipResponse.Item == null)
+                    {
+
+                        scholarship.YouthScholarshipID = Guid.NewGuid().ToString();
+                        scholarship.UserID = validateResponse.UserID;
+                        scholarship.CreatedDate = DateTime.Now;
+                        scholarship.CreatedBy = validateResponse.UserID;
+                        InsertResponse createScholarshipResponse = _youthScholarshipService.Create(scholarship);
+                        if (createScholarshipResponse.ErrorCode != (int)ErrorCode.None)
+                        {
+                            return Json(new { ErrorCode = createScholarshipResponse.ErrorCode, Message = createScholarshipResponse.Message });
+                        }
+                        else
+                        {
+                            scholarshipID = createScholarshipResponse.InsertID;
+                        }
+                    }
+                    else
+                    {
+                        scholarshipID = scholarshipResponse.Item.YouthScholarshipID;
+                        scholarship = scholarshipResponse.Item;
+                    }
+                }
+                else
+                {
+                    FindItemReponse<YouthScholarshipModel> findScholarshipResponse = _youthScholarshipService.FindByID(scholarshipID);
+                    scholarship = findScholarshipResponse.Item;
+                }
+                foreach (string file in Request.Files)
+                {
+                    var fileContent = Request.Files[file];
+                    if (fileContent != null && fileContent.ContentLength > 0)
+                    {
+                        //Create Folder
+                        try
+                        {
+                            if (!System.IO.File.Exists(Server.MapPath("~/Content/upload/files/youthscholarship/")))
+                            {
+                                Directory.CreateDirectory(Server.MapPath("~/Content/upload/files/youthscholarship/"));
+                            }
+                        }
+                        catch (Exception) { }
+
+                        if (!string.IsNullOrEmpty(scholarship.UploadFile))
+                        {
+                            if (System.IO.File.Exists(Server.MapPath(scholarship.UploadFile)))
+                            {
+                                System.IO.File.Delete(Server.MapPath(scholarship.UploadFile));
+                            }
+                        }
+
+                        string extension = fileContent.FileName.Substring(fileContent.FileName.LastIndexOf("."));
+                        string filename = fileContent.FileName.Substring(0, fileContent.FileName.LastIndexOf(".")).Replace(" ", "-");
+                        filename = string.Format("{0}-{1}", filename, UrlSlugger.Get8Digits());
+                        fileContent.SaveAs(Server.MapPath("~/Content/upload/files/youthscholarship/" + filename + extension));
+
+                        scholarship.UploadFile = "/Content/upload/files/youthscholarship/" + filename + extension;
+                        //Save update
+                        BaseResponse updateResponse = _youthScholarshipService.Update(scholarship);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return Json("Upload failed");
+            }
+            return Json("File uploaded successfully");
+        }
+
+        [ValidateAntiForgeryToken]
+        public JsonResult SaveYouthSholarship(YouthScholarshipModel scholarship, HttpPostedFileBase upload)
+        {
+            //Validate before save
+            UserValidationResponse validateResponse = ValidateBeforeSave(scholarship.RegistrationNumber);
+            if (validateResponse.ErrorCode != (int)ErrorCode.None)
+            {
+                return Json(new { ErrorCode = validateResponse.ErrorCode, Message = validateResponse.Message });
+            }
+
+            //Check for existing registration
+            if (!string.IsNullOrEmpty(scholarship.YouthScholarshipID))
+            {
+                FindItemReponse<YouthScholarshipModel> scholarshipResponse = _youthScholarshipService.FindByID(scholarship.YouthScholarshipID);
+                //Update scholarship
+                if (scholarshipResponse.Item != null)
+                {
+                    scholarship.UpdatedBy = validateResponse.UserID;
+                    scholarship.UpdatedDate = DateTime.Now;
+
+                    //Save update
+                    BaseResponse updateResponse = _youthScholarshipService.Update(scholarship);
+                    return Json(new { ErrorCode = updateResponse.ErrorCode, Message = updateResponse.Message, IsUpdate = true });
+                }
+            }
+
+            //Register youth scholarship
+            scholarship.CreatedBy = validateResponse.UserID;
+            scholarship.CreatedDate = DateTime.Now;
+            scholarship.YouthScholarshipID = Guid.NewGuid().ToString();
+            scholarship.UserID = validateResponse.UserID;
+            InsertResponse response = _youthScholarshipService.Create(scholarship);
+
+            return Json(new { ErrorCode = response.ErrorCode, Message = response.Message, IsUpdate = false });
+        }
+
         [ValidateAntiForgeryToken]
         public JsonResult SaveExperience(ExperienceModel experience, YouthScholarshipModel scholarship)
         {

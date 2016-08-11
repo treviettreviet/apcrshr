@@ -32,7 +32,7 @@ namespace Site.Core.Repository.Implementation
                     scholarship.PlanMaking = item.PlanMaking;
                     scholarship.UpdatedBy = item.UpdatedBy;
                     scholarship.UpdatedDate = DateTime.Now;
-                    scholarship.UploadFile = item.UploadFile;
+                    scholarship.UploadFile = !string.IsNullOrEmpty(item.UploadFile) ? item.UploadFile : scholarship.UploadFile;
                     scholarship.UserID = item.UserID;
 
                     context.SaveChanges();
