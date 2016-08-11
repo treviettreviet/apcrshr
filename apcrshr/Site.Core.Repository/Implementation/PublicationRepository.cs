@@ -83,5 +83,14 @@ namespace Site.Core.Repository.Implementation
                 return context.Publications.Where(p => p.Title.Equals(title)).ToList();
             }
         }
+
+
+        public IList<Publication> FindByYouthScholarshipID(string scholarshipID)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Publications.Where(p => p.YouthScholarshipID.Equals(scholarshipID)).ToList();
+            }
+        }
     }
 }

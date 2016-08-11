@@ -59,7 +59,11 @@
                 <div class="form-group">
                     <label for="anotherelem" class="control-label col-sm-3">Organization</label>
                     <div class="col-sm-9">
-                        @Html.TextBoxFor(Model => Model.ExperienceTitles, new { @class = "tagsinput form-control", @id = "ExperienceTitles" })
+                        @Html.TextBoxFor(Model => Model.ExperienceTitles, new Dictionary<string, object> {
+                                { "class", "tagsinput form-control" },
+                                { "id", "ExperienceTitles" },
+                                { "data-rule-required", "true" }
+                            })
                     </div>
                 </div>
                 <div class="box-title" style="margin-left: -20px; margin-right: -20px;">
@@ -83,7 +87,11 @@
                 <div class="form-group">
                     <label for="anotherelem" class="control-label col-sm-3">Degree / Diplomas</label>
                     <div class="col-sm-9">
-                        @Html.TextBoxFor(Model => Model.EducationTitles, new { @class = "tagsinput form-control", @id = "EducationTitles" })
+                        @Html.TextBoxFor(Model => Model.EducationTitles, new Dictionary<string, object> {
+                                { "class", "tagsinput form-control" },
+                                { "id", "EducationTitles" },
+                                { "data-rule-required", "true" }
+                            })
                     </div>
                 </div>
                 <div class="box-title" style="margin-left: -20px; margin-right: -20px;">
@@ -104,7 +112,11 @@
                 <div class="form-group">
                     <label for="anotherelem" class="control-label col-sm-3">Name of course</label>
                     <div class="col-sm-9">
-                        @Html.TextBoxFor(Model => Model.AdditionalTrainingTitles, new { @class = "tagsinput form-control", @id = "AdditionalTrainingTitles" })
+                        @Html.TextBoxFor(Model => Model.AdditionalTrainingTitles, new Dictionary<string, object> {
+                                { "class", "tagsinput form-control" },
+                                { "id", "AdditionalTrainingTitles" },
+                                { "data-rule-required", "true" }
+                            })
                     </div>
                 </div>
                 <div class="box-title" style="margin-left: -20px; margin-right: -20px;">
@@ -128,7 +140,11 @@
                 <div class="form-group">
                     <label for="anotherelem" class="control-label col-sm-3">Organization / Group</label>
                     <div class="col-sm-9">
-                        @Html.TextBoxFor(Model => Model.LeaderShipTitles, new { @class = "tagsinput form-control", @id = "LeaderShipTitles" })
+                        @Html.TextBoxFor(Model => Model.LeaderShipTitles, new Dictionary<string, object> {
+                                { "class", "tagsinput form-control" },
+                                { "id", "LeaderShipTitles" },
+                                { "data-rule-required", "true" }
+                            })
                     </div>
                 </div>
                 <div class="box-title" style="margin-left: -20px; margin-right: -20px;">
@@ -152,7 +168,11 @@
                 <div class="form-group">
                     <label for="anotherelem" class="control-label col-sm-3">Publication titles</label>
                     <div class="col-sm-9">
-                        @Html.TextBoxFor(Model => Model.PublicationTitles, new { @class = "tagsinput form-control", @id = "PublicationTitles" })
+                        @Html.TextBoxFor(Model => Model.PublicationTitles, new Dictionary<string, object> {
+                                { "class", "tagsinput form-control" },
+                                { "id", "PublicationTitles" },
+                                { "data-rule-required", "true" }
+                            })
                     </div>
                 </div>
                 <div class="box-title" style="margin-left: -20px; margin-right: -20px;">
@@ -277,13 +297,13 @@
                         '<div class="form-group">',
                             '<label for="textfield" class="control-label col-sm-2">Organization (Full name) <span class="validation-span-required">(*)</span></label>',
                             '<div class="col-sm-10">',
-                                '<input type="text" name="Organization" id="Organization" class="form-control" data-rule-required="true">',
+                                '<input type="text" name="Organization" id="Organization" maxlength="50" class="form-control" data-rule-required="true">',
                             '</div>',
                         '</div>',
                         '<div class="form-group">',
                             '<label for="textfield" class="control-label col-sm-2">Position <span class="validation-span-required">(*)</span></label>',
                             '<div class="col-sm-10">',
-                                '<input type="text" name="Position" id="Position" class="form-control" data-rule-required="true">',
+                                '<input type="text" name="Position" id="Position" maxlength="50" class="form-control" data-rule-required="true">',
                             '</div>',
                         '</div>',
                         '<div class="form-group">',
@@ -445,13 +465,110 @@
                         '<div class="form-group">',
                             '<label for="textfield" class="control-label col-sm-2">Degree/Diplomas obtained <span class="validation-span-required">(*)</span></label>',
                             '<div class="col-sm-10">',
-                                '<input type="text" name="Degree" id="Degree" class="form-control" data-rule-required="true">',
+                                '<input type="text" name="Degree" id="Degree" maxlength="30" class="form-control" data-rule-required="true">',
                             '</div>',
                         '</div>',
                         '<div class="form-group">',
                             '<label for="textfield" class="control-label col-sm-2">Country <span class="validation-span-required">(*)</span></label>',
                             '<div class="col-sm-10">',
-                                '<input type="text" name="Country" id="Country" class="form-control" data-rule-required="true">',
+                                '<select name="Country" id="Country" class="form-control" data-rule-required="true">',
+                                    '<option value="">-- Chose one --</option>',
+                                    '<option value="Afghanistan">Afghanistan</option>',
+                                    '<option value="Albania">Albania</option>',
+                                    '<option value="Algeria">Algeria</option>',
+                                    '<option value="Angola">Angola</option>',
+                                    '<option value="Argentina">Argentina</option>',
+                                    '<option value="Armenia">Armenia</option>',
+                                    '<option value="Australia">Australia</option>',
+                                    '<option value="Azerbaijan">Azerbaijan</option>',
+                                    '<option value="Bangladesh">Bangladesh</option>',
+                                    '<option value="Bolivia">Bolivia</option>',
+                                    '<option value="Brazil">Brazil</option>',
+                                    '<option value="Brunei">Brunei</option>',
+                                    '<option value="Bulgaria">Bulgaria</option>',
+                                    '<option value="Cameroon">Cameroon</option>',
+                                    '<option value="Canada">Canada</option>',
+                                    '<option value="Chile">Chile</option>',
+                                    '<option value="China">China</option>',
+                                    '<option value="Colombia">Colombia</option>',
+                                    '<option value="Congo">Congo</option>',
+                                    '<option value="Costa Rica">Costa Rica</option>',
+                                    '<option value="Croatia">Croatia</option>',
+                                    '<option value="Cuba">Cuba</option>',
+                                    '<option value="Czech">Czech</option>',
+                                    '<option value="Dominica">Dominica</option>',
+                                    '<option value="Ecuador">Ecuador</option>',
+                                    '<option value="Egypt">Egypt</option>',
+                                    '<option value="France">France</option>',
+                                    '<option value="Georgia">Georgia</option>',
+                                    '<option value="Germany">Germany</option>',
+                                    '<option value="Ghana">Ghana</option>',
+                                    '<option value="Greece">Greece</option>',
+                                    '<option value="Haiti">Haiti</option>',
+                                    '<option value="Hungary">Hungary</option>',
+                                    '<option value="Iceland">Iceland</option>',
+                                    '<option value="India">India</option>',
+                                    '<option value="Indonesia">Indonesia</option>',
+                                    '<option value="Iran">Iran</option>',
+                                    '<option value="Ireland">Ireland</option>',
+                                    '<option value="Israel">Israel</option>',
+                                    '<option value="Italy">Italy</option>',
+                                    '<option value="Jamaica">Jamaica</option>',
+                                    '<option value="Japan">Japan</option>',
+                                    '<option value="Jordan">Jordan</option>',
+                                    '<option value="Kazakhstan">Kazakhstan</option>',
+                                    '<option value="Kuwait">Kuwait</option>',
+                                    '<option value="Kyrgyzstan">Kyrgyzstan</option>',
+                                    '<option value="Laos">Laos</option>',
+                                    '<option value="Latvia">Latvia</option>',
+                                    '<option value="Lebanon">Lebanon</option>',
+                                    '<option value="Liberia">Liberia</option>',
+                                    '<option value="Libya">Libya</option>',
+                                    '<option value="Macedonia">Macedonia</option>',
+                                    '<option value="Malaysia">Malaysia</option>',
+                                    '<option value="Mali">Mali</option>',
+                                    '<option value="Mexico">Mexico</option>',
+                                    '<option value="Myanmar">Myanmar</option>',
+                                    '<option value="Nepal">Nepal</option>',
+                                    '<option value="New Zealand">New Zealand</option>',
+                                    '<option value="Nigeria">Nigeria</option>',
+                                    '<option value="North Korea">North Korea</option>',
+                                    '<option value="Pakistan">Pakistan</option>',
+                                    '<option value="Palestine">Palestine</option>',
+                                    '<option value="Paraguay">Paraguay</option>',
+                                    '<option value="Peru">Peru</option>',
+                                    '<option value="Philippines">Philippines</option>',
+                                    '<option value="Poland">Poland</option>',
+                                    '<option value="Portugal">Portugal</option>',
+                                    '<option value="Romania">Romania</option>',
+                                    '<option value="Russia">Russia</option>',
+                                    '<option value="Saudi Arabia">Saudi Arabia</option>',
+                                    '<option value="Senegal">Senegal</option>',
+                                    '<option value="Serbia">Serbia</option>',
+                                    '<option value="Singapore">Singapore</option>',
+                                    '<option value="Slovenia">Slovenia</option>',
+                                    '<option value="South Africa">South Africa</option>',
+                                    '<option value="South Korea">South Korea</option>',
+                                    '<option value="Spain">Spain</option>',
+                                    '<option value="Sudan">Sudan</option>',
+                                    '<option value="Sweden">Sweden</option>',
+                                    '<option value="Switzerland">Switzerland</option>',
+                                    '<option value="Syria">Syria</option>',
+                                    '<option value="Taiwan">Taiwan</option>',
+                                    '<option value="Tajikistan">Tajikistan</option>',
+                                    '<option value="Thailand">Thailand</option>',
+                                    '<option value="Tunisia">Tunisia</option>',
+                                    '<option value="Turkey">Turkey</option>',
+                                    '<option value="Ukraine">Ukraine</option>',
+                                    '<option value="United Kingdom">United Kingdom</option>',
+                                    '<option value="United States">United States</option>',
+                                    '<option value="Uruguay">Uruguay</option>',
+                                    '<option value="Venezuela">Venezuela</option>',
+                                    '<option value="Vietnam">Vietnam</option>',
+                                    '<option value="Yemen">Yemen</option>',
+                                    '<option value="Zambia">Zambia</option>',
+                                    '<option value="Zimbabwe">Zimbabwe</option>',
+                                '</select>',
                             '</div>',
                         '</div>',
                         '<div class="form-group">',
@@ -469,13 +586,14 @@
                         '<div class="form-group">',
                             '<label for="textfield" class="control-label col-sm-2">Main course of study <span class="validation-span-required">(*)</span></label>',
                             '<div class="col-sm-10">',
-                                '<input type="text" name="MainCourseStudy" id="MainCourseStudy" class="form-control" data-rule-required="true">',
+                                '<input type="text" name="MainCourseStudy" id="MainCourseStudy" maxlength="20" class="form-control" data-rule-required="true">',
                             '</div>',
                         '</div>',
                         '<div class="form-group">',
                             '<label for="textfield" class="control-label col-sm-2">Type of training <span class="validation-span-required">(*)</span></label>',
                             '<div class="col-sm-10">',
                                 '<select id="TypeOfTraining" name="TypeOfTraining">',
+                                    '<option value="">-- Chose one --</option>',
                                     '<option value="Onsite">Onsite</option>',
                                     '<option value="Online">Online</option>',
                                     '<option value="Remote">Remote</option>',
@@ -493,6 +611,7 @@
         var educationStart = $("#EducationStart").val();
         var educationEnd = $("#EducationEnd").val();
         var mainCourseStudy = $("#MainCourseStudy").val();
+        var typeOfTraining = $("#TypeOfTraining").val();
 
         if (degree == null || degree.length == 0) {
             bootbox.alert("Please input your degree!", function () {
@@ -503,7 +622,7 @@
             return false;
         }
         if (country == null || country.length == 0) {
-            bootbox.alert("Please input your country!", function () {
+            bootbox.alert("Please select your country!", function () {
                 setTimeout(function () {
                     $("#Country").focus();
                 }, 1);
@@ -530,6 +649,14 @@
             bootbox.alert("Please input your main course of study!", function () {
                 setTimeout(function () {
                     $("#MainCourseStudy").focus();
+                }, 1);
+            });
+            return false;
+        }
+        if (typeOfTraining == null || typeOfTraining.length == 0) {
+            bootbox.alert("Please select type of training!", function () {
+                setTimeout(function () {
+                    $("#TypeOfTraining").focus();
                 }, 1);
             });
             return false;
@@ -625,13 +752,110 @@
                         '<div class="form-group">',
                             '<label for="textfield" class="control-label col-sm-2">Name of course <span class="validation-span-required">(*)</span></label>',
                             '<div class="col-sm-10">',
-                                '<input type="text" name="NameOfCourse" id="NameOfCourse" class="form-control" data-rule-required="true">',
+                                '<input type="text" name="NameOfCourse" id="NameOfCourse" maxlength="30" class="form-control" data-rule-required="true">',
                             '</div>',
                         '</div>',
                         '<div class="form-group">',
                             '<label for="textfield" class="control-label col-sm-2">Country <span class="validation-span-required">(*)</span></label>',
                             '<div class="col-sm-10">',
-                                '<input type="text" name="Country" id="Country" class="form-control" data-rule-required="true">',
+                                '<select name="Country" id="Country" class="form-control" data-rule-required="true">',
+                                    '<option value="">-- Chose one --</option>',
+                                    '<option value="Afghanistan">Afghanistan</option>',
+                                    '<option value="Albania">Albania</option>',
+                                    '<option value="Algeria">Algeria</option>',
+                                    '<option value="Angola">Angola</option>',
+                                    '<option value="Argentina">Argentina</option>',
+                                    '<option value="Armenia">Armenia</option>',
+                                    '<option value="Australia">Australia</option>',
+                                    '<option value="Azerbaijan">Azerbaijan</option>',
+                                    '<option value="Bangladesh">Bangladesh</option>',
+                                    '<option value="Bolivia">Bolivia</option>',
+                                    '<option value="Brazil">Brazil</option>',
+                                    '<option value="Brunei">Brunei</option>',
+                                    '<option value="Bulgaria">Bulgaria</option>',
+                                    '<option value="Cameroon">Cameroon</option>',
+                                    '<option value="Canada">Canada</option>',
+                                    '<option value="Chile">Chile</option>',
+                                    '<option value="China">China</option>',
+                                    '<option value="Colombia">Colombia</option>',
+                                    '<option value="Congo">Congo</option>',
+                                    '<option value="Costa Rica">Costa Rica</option>',
+                                    '<option value="Croatia">Croatia</option>',
+                                    '<option value="Cuba">Cuba</option>',
+                                    '<option value="Czech">Czech</option>',
+                                    '<option value="Dominica">Dominica</option>',
+                                    '<option value="Ecuador">Ecuador</option>',
+                                    '<option value="Egypt">Egypt</option>',
+                                    '<option value="France">France</option>',
+                                    '<option value="Georgia">Georgia</option>',
+                                    '<option value="Germany">Germany</option>',
+                                    '<option value="Ghana">Ghana</option>',
+                                    '<option value="Greece">Greece</option>',
+                                    '<option value="Haiti">Haiti</option>',
+                                    '<option value="Hungary">Hungary</option>',
+                                    '<option value="Iceland">Iceland</option>',
+                                    '<option value="India">India</option>',
+                                    '<option value="Indonesia">Indonesia</option>',
+                                    '<option value="Iran">Iran</option>',
+                                    '<option value="Ireland">Ireland</option>',
+                                    '<option value="Israel">Israel</option>',
+                                    '<option value="Italy">Italy</option>',
+                                    '<option value="Jamaica">Jamaica</option>',
+                                    '<option value="Japan">Japan</option>',
+                                    '<option value="Jordan">Jordan</option>',
+                                    '<option value="Kazakhstan">Kazakhstan</option>',
+                                    '<option value="Kuwait">Kuwait</option>',
+                                    '<option value="Kyrgyzstan">Kyrgyzstan</option>',
+                                    '<option value="Laos">Laos</option>',
+                                    '<option value="Latvia">Latvia</option>',
+                                    '<option value="Lebanon">Lebanon</option>',
+                                    '<option value="Liberia">Liberia</option>',
+                                    '<option value="Libya">Libya</option>',
+                                    '<option value="Macedonia">Macedonia</option>',
+                                    '<option value="Malaysia">Malaysia</option>',
+                                    '<option value="Mali">Mali</option>',
+                                    '<option value="Mexico">Mexico</option>',
+                                    '<option value="Myanmar">Myanmar</option>',
+                                    '<option value="Nepal">Nepal</option>',
+                                    '<option value="New Zealand">New Zealand</option>',
+                                    '<option value="Nigeria">Nigeria</option>',
+                                    '<option value="North Korea">North Korea</option>',
+                                    '<option value="Pakistan">Pakistan</option>',
+                                    '<option value="Palestine">Palestine</option>',
+                                    '<option value="Paraguay">Paraguay</option>',
+                                    '<option value="Peru">Peru</option>',
+                                    '<option value="Philippines">Philippines</option>',
+                                    '<option value="Poland">Poland</option>',
+                                    '<option value="Portugal">Portugal</option>',
+                                    '<option value="Romania">Romania</option>',
+                                    '<option value="Russia">Russia</option>',
+                                    '<option value="Saudi Arabia">Saudi Arabia</option>',
+                                    '<option value="Senegal">Senegal</option>',
+                                    '<option value="Serbia">Serbia</option>',
+                                    '<option value="Singapore">Singapore</option>',
+                                    '<option value="Slovenia">Slovenia</option>',
+                                    '<option value="South Africa">South Africa</option>',
+                                    '<option value="South Korea">South Korea</option>',
+                                    '<option value="Spain">Spain</option>',
+                                    '<option value="Sudan">Sudan</option>',
+                                    '<option value="Sweden">Sweden</option>',
+                                    '<option value="Switzerland">Switzerland</option>',
+                                    '<option value="Syria">Syria</option>',
+                                    '<option value="Taiwan">Taiwan</option>',
+                                    '<option value="Tajikistan">Tajikistan</option>',
+                                    '<option value="Thailand">Thailand</option>',
+                                    '<option value="Tunisia">Tunisia</option>',
+                                    '<option value="Turkey">Turkey</option>',
+                                    '<option value="Ukraine">Ukraine</option>',
+                                    '<option value="United Kingdom">United Kingdom</option>',
+                                    '<option value="United States">United States</option>',
+                                    '<option value="Uruguay">Uruguay</option>',
+                                    '<option value="Venezuela">Venezuela</option>',
+                                    '<option value="Vietnam">Vietnam</option>',
+                                    '<option value="Yemen">Yemen</option>',
+                                    '<option value="Zambia">Zambia</option>',
+                                    '<option value="Zimbabwe">Zimbabwe</option>',
+                                '</select>',
                             '</div>',
                         '</div>',
                         '<div class="form-group">',
@@ -650,6 +874,7 @@
                             '<label for="textfield" class="control-label col-sm-2">Type of training <span class="validation-span-required">(*)</span></label>',
                             '<div class="col-sm-10">',
                                 '<select id="TypeOfTraining" name="TypeOfTraining">',
+                                    '<option value="">-- Chose one --</option>',
                                     '<option value="Onsite">Onsite</option>',
                                     '<option value="Online">Online</option>',
                                     '<option value="Remote">Remote</option>',
@@ -666,6 +891,7 @@
         var country = $("#Country").val();
         var trainingStart = $("#TrainingStart").val();
         var trainingEnd = $("#TrainingEnd").val();
+        var typeOfTraining = $("#TypeOfTraining").val();
 
         if (nameOfCourse == null || nameOfCourse.length == 0) {
             bootbox.alert("Please input your name of course!", function () {
@@ -676,7 +902,7 @@
             return false;
         }
         if (country == null || country.length == 0) {
-            bootbox.alert("Please input your country!", function () {
+            bootbox.alert("Please select your country!", function () {
                 setTimeout(function () {
                     $("#Country").focus();
                 }, 1);
@@ -695,6 +921,14 @@
             bootbox.alert("Please input your attended to!", function () {
                 setTimeout(function () {
                     $("#TrainingEnd").focus();
+                }, 1);
+            });
+            return false;
+        }
+        if (typeOfTraining == null || typeOfTraining.length == 0) {
+            bootbox.alert("Please select type of training!", function () {
+                setTimeout(function () {
+                    $("#TypeOfTraining").focus();
                 }, 1);
             });
             return false;
@@ -789,13 +1023,13 @@
                         '<div class="form-group">',
                             '<label for="textfield" class="control-label col-sm-2">Organization/Group <span class="validation-span-required">(*)</span></label>',
                             '<div class="col-sm-10">',
-                                '<input type="text" name="Organization" id="Organization" class="form-control" data-rule-required="true">',
+                                '<input type="text" name="Organization" id="Organization" maxlength="30" class="form-control" data-rule-required="true">',
                             '</div>',
                         '</div>',
                         '<div class="form-group">',
                             '<label for="textfield" class="control-label col-sm-2">Position <span class="validation-span-required">(*)</span></label>',
                             '<div class="col-sm-10">',
-                                '<input type="text" name="Position" id="Position" class="form-control" data-rule-required="true">',
+                                '<input type="text" name="Position" id="Position" maxlength="50" class="form-control" data-rule-required="true">',
                             '</div>',
                         '</div>',
                         '<div class="form-group">',
@@ -958,13 +1192,13 @@
                         '<div class="form-group">',
                             '<label for="textfield" class="control-label col-sm-2">Title <span class="validation-span-required">(*)</span></label>',
                             '<div class="col-sm-10">',
-                                '<input type="text" name="Title" id="Title" class="form-control" data-rule-required="true">',
+                                '<input type="text" name="Title" id="Title" maxlength="100" class="form-control" data-rule-required="true">',
                             '</div>',
                         '</div>',
                         '<div class="form-group">',
                             '<label for="textfield" class="control-label col-sm-2">Source <span class="validation-span-required">(*)</span></label>',
                             '<div class="col-sm-10">',
-                                '<input type="text" name="Source" id="Source" class="form-control" data-rule-required="true">',
+                                '<input type="text" name="Source" id="Source" maxlength="50" class="form-control" data-rule-required="true">',
                             '</div>',
                         '</div>',
                         '<div class="form-group">',
@@ -976,7 +1210,7 @@
                         '<div class="form-group">',
                             '<label for="textfield" class="control-label col-sm-2">URL <span class="validation-span-required">(*)</span></label>',
                             '<div class="col-sm-10">',
-                                '<input type="text" name="URL" id="URL" class="form-control" data-rule-required="true">',
+                                '<input type="text" name="URL" id="URL" maxlength="100" class="form-control" data-rule-required="true">',
                             '</div>',
                         '</div>',
                     '</div>',
@@ -1014,8 +1248,24 @@
             });
             return false;
         }
+        if (isNaN(year) || year.length != 4) {
+            bootbox.alert("Please input a valid year!", function () {
+                setTimeout(function () {
+                    $("#Year").focus();
+                }, 1);
+            });
+            return false;
+        }
         if (url == null || url.length == 0) {
-            bootbox.alert("Please input year!", function () {
+            bootbox.alert("Please input url!", function () {
+                setTimeout(function () {
+                    $("#URL").focus();
+                }, 1);
+            });
+            return false;
+        }
+        if (!appUtil.utility.validateURL(url)) {
+            bootbox.alert("Please input a valid url!", function () {
                 setTimeout(function () {
                     $("#URL").focus();
                 }, 1);

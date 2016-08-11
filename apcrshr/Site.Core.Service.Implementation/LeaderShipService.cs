@@ -150,5 +150,31 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindAllItemReponse<LeaderShipModel> FindByscholarshipID(string scholarship)
+        {
+            try
+            {
+                ILeaderShipRepository leaderShipRepository = RepositoryClassFactory.GetInstance().GetLeaderShipRepository();
+                IList<LeaderShip> leaderships = leaderShipRepository.FindByYouthScholarshipID(scholarship);
+                var _leaderships = leaderships.Select(n => MapperUtil.CreateMapper().Mapper.Map<LeaderShip, LeaderShipModel>(n)).ToList();
+                return new FindAllItemReponse<LeaderShipModel>
+                {
+                    Items = _leaderships,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new FindAllItemReponse<LeaderShipModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }

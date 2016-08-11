@@ -612,6 +612,7 @@ namespace apcrshr_site.Controllers
         }
         #endregion
 
+
         #region Youth Scholarship Registration
 
         [UserSessionFilter]
@@ -646,6 +647,30 @@ namespace apcrshr_site.Controllers
                 if (experiencesResponse.Items != null && experiencesResponse.Items.Count > 0)
                 {
                     model.ExperienceTitles = string.Join(",", experiencesResponse.Items.Select(i => i.Organization));
+                }
+                //Find educations
+                FindAllItemReponse<EducationModel> educationsResponse = _educationService.FindByscholarshipID(model.YouthScholarshipID);
+                if (educationsResponse.Items != null && educationsResponse.Items.Count > 0)
+                {
+                    model.EducationTitles = string.Join(",", educationsResponse.Items.Select(i => i.MainCourseStudy));
+                }
+                //Find trainings
+                FindAllItemReponse<TrainingModel> trainingsResponse = _trainingService.FindByscholarshipID(model.YouthScholarshipID);
+                if (trainingsResponse.Items != null && trainingsResponse.Items.Count > 0)
+                {
+                    model.AdditionalTrainingTitles = string.Join(",", trainingsResponse.Items.Select(i => i.NameOfCourse));
+                }
+                //Find leadership
+                FindAllItemReponse<LeaderShipModel> leadershipsResponse = _leadershipService.FindByscholarshipID(model.YouthScholarshipID);
+                if (leadershipsResponse.Items != null && leadershipsResponse.Items.Count > 0)
+                {
+                    model.LeaderShipTitles = string.Join(",", leadershipsResponse.Items.Select(i => i.Organization));
+                }
+                //Find publication
+                FindAllItemReponse<PublicationModel> publicationsResponse = _publicationService.FindByscholarshipID(model.YouthScholarshipID);
+                if (publicationsResponse.Items != null && publicationsResponse.Items.Count > 0)
+                {
+                    model.PublicationTitles = string.Join(",", publicationsResponse.Items.Select(i => i.Title));
                 }
             }
             return View(model);

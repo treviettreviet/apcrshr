@@ -84,5 +84,14 @@ namespace Site.Core.Repository.Implementation
                 return context.LeaderShips.Where(l => l.Organization.Equals(organization)).ToList();
             }
         }
+
+
+        public IList<LeaderShip> FindByYouthScholarshipID(string scholarshipID)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.LeaderShips.Where(l => l.YouthScholarshipID.Equals(scholarshipID)).ToList();
+            }
+        }
     }
 }

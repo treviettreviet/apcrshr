@@ -9,5 +9,6 @@ namespace Site.Core.Repository.Repository
     public interface ITrainingRepository : IRepository<Training>
     {
         IList<Training> FindByNameOfCourse(string nameOfCourse);
+        IList<Training> FindByYouthScholarshipID(string scholarshipID);
     }
 }

@@ -150,5 +150,31 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindAllItemReponse<PublicationModel> FindByscholarshipID(string scholarship)
+        {
+            try
+            {
+                IPublicationRepository publicationRepository = RepositoryClassFactory.GetInstance().GetPublicationRepository();
+                IList<Publication> publications = publicationRepository.FindByYouthScholarshipID(scholarship);
+                var _publications = publications.Select(n => MapperUtil.CreateMapper().Mapper.Map<Publication, PublicationModel>(n)).ToList();
+                return new FindAllItemReponse<PublicationModel>
+                {
+                    Items = _publications,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new FindAllItemReponse<PublicationModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }
