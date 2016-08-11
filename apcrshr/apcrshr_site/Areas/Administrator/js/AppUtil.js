@@ -39,6 +39,10 @@
                 var e = document.createElement('div');
                 e.innerHTML = encode;
                 return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+            },
+
+            isImage: function (name) {
+                return (/\.(gif|jpg|jpeg|tiff|png)$/i).test(name);
             }
         }
     };

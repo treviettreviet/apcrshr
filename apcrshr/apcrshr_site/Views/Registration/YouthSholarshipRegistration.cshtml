@@ -248,8 +248,20 @@
                             <small>(You can describe your idea and plan by power point, video/clip, pictures, etc)</small>
                         </label>
                         <div class="col-sm-9">
-                            <input type="file" id="upload" name="upload" class="form-control" />
-                            <span class="help-block">power point, video/clip, pictures, etc</span>
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="input-group">
+                                    <div class="form-control" data-trigger="fileinput">
+                                        <i class="glyphicon glyphicon-file fileinput-exists"></i>
+                                        <span class="fileinput-filename">@(!string.IsNullOrEmpty(this.Model.UploadFile) ? this.Model.UploadFile.Substring(this.Model.UploadFile.LastIndexOf("/") + 1) : "")</span>
+                                    </div>
+                                    <span class="input-group-addon btn btn-default btn-file">
+                                        <span class="fileinput-new">Browse</span>
+                                        <span class="fileinput-exists">Change</span>
+                                        <input type="file" name="upload" id="upload">
+                                    </span>
+                                    <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Delete</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 <div class="form-actions col-sm-offset-3 col-sm-9">
