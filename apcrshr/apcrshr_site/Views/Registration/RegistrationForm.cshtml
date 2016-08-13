@@ -568,10 +568,10 @@
                     $.blockUI({ message: $('#spinner') });
                 },
                 success: function (data) {
-                    $.unblockUI();
                     if (data) {
                         if (data.SessionID != null && data.SessionID != "") {
                             $(".hidSession").val(data.SessionID);
+                            $.unblockUI();
                         }
                         if (data.MailingID != null && data.MailingID != "") {
                             window.location = "/Registration/RegistrationCompleted";
@@ -579,8 +579,10 @@
                         }
                         if (data.ErrorCode != null && data.ErrorCode != 0) {
                             alert(data.Message);
+                            $.unblockUI();
                         }
                     }
+                    $.unblockUI();
                     return data;
                 }
             };
