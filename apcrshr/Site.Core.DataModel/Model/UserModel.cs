@@ -30,5 +30,6 @@ namespace Site.Core.DataModel.Model
         public string WorkAddress { get; set; }
         public string Organization { get; set; }
         public int RegistrationStatus { get; set; }
+        public string ParticipantType { get; set; }
     }
 }

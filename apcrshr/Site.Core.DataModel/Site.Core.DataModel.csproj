@@ -84,6 +84,7 @@
     <Compile Include="Response\FindItemReponse.cs" />
     <Compile Include="Response\FindAllItemReponse.cs" />
     <Compile Include="Response\InsertResponse.cs" />
+    <Compile Include="Response\LockResponse.cs" />
     <Compile Include="Response\MenuDisplayResponse.cs" />
     <Compile Include="Response\SearchResultResponse.cs" />
     <Compile Include="Response\UserLoginResponse.cs" />

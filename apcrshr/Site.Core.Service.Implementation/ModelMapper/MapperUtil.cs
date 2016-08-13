@@ -71,7 +71,8 @@ namespace Site.Core.Service.Implementation.ModelMapper
                 //Entity model mapper
                 cfg.CreateMap<Admin, AdminModel>();
                 cfg.CreateMap<News, NewsModel>();
-                cfg.CreateMap<User, UserModel>();
+                cfg.CreateMap<User, UserModel>()
+                    .ForMember(u => u.ParticipantType, m => m.MapFrom(u => u.MailingAddresses.FirstOrDefault().ParticipantType));
                 cfg.CreateMap<Subscriber, SubscriberModel>();
                 cfg.CreateMap<Menu, MenuModel>()
                     .ForMember(m => m.SubMenus, c => c.MapFrom(m => m.Menu1))

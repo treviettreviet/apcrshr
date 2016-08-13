@@ -101,5 +101,12 @@ namespace Site.Core.Service.Contract
         /// <param name="newPassword"></param>
         /// <returns></returns>
         BaseResponse ChangePassword(string userID, string newPassword);
+
+        /// <summary>
+        /// Lock user
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        LockResponse LockUser(string userID);
     }
 }

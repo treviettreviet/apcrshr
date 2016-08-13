@@ -78,36 +78,28 @@ namespace Site.Core.Repository.Implementation
 
         public User FindByID(object id)
         {
-            using (APCRSHREntities context = new APCRSHREntities())
-            {
-                var _id = id.ToString();
-                return context.Users.Where(a => a.UserID.Equals(_id)).SingleOrDefault();
-            }
+            APCRSHREntities context = new APCRSHREntities();
+            var _id = id.ToString();
+            return context.Users.Where(a => a.UserID.Equals(_id)).SingleOrDefault();
         }
 
         public User FindByEmail(string email)
         {
-            using (APCRSHREntities context = new APCRSHREntities())
-            {
-                var _email = email.ToString();
-                return context.Users.Where(u => u.Email == _email).SingleOrDefault();
-            }
+            APCRSHREntities context = new APCRSHREntities();
+            var _email = email.ToString();
+            return context.Users.Where(u => u.Email == _email).SingleOrDefault();
         }
 
         public User FindByUserName(string username)
         {
-            using (APCRSHREntities context = new APCRSHREntities())
-            {
-                return context.Users.Where(u => u.UserName.Equals(username)).SingleOrDefault();
-            }
+            APCRSHREntities context = new APCRSHREntities();
+            return context.Users.Where(u => u.UserName.Equals(username)).SingleOrDefault();
         }
 
         public IList<User> FindAll()
         {
-            using (APCRSHREntities context = new APCRSHREntities())
-            {
-                return context.Users.ToList();
-            }
+            APCRSHREntities context = new APCRSHREntities();
+            return context.Users.ToList();
         }
 
         public User Login(string username, string password)
@@ -125,10 +117,8 @@ namespace Site.Core.Repository.Implementation
 
         public IList<User> GetUserExceptMe(string userID)
         {
-            using (APCRSHREntities context = new APCRSHREntities())
-            {
-                return context.Users.Where(u => !u.UserID.Equals(userID)).ToList();
-            }
+            APCRSHREntities context = new APCRSHREntities();
+            return context.Users.Where(u => !u.UserID.Equals(userID)).ToList();
         }
 
 
@@ -143,6 +133,25 @@ namespace Site.Core.Repository.Implementation
                     user.UpdatedDate = DateTime.Now;
 
                     context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception(string.Format("User id {0} invalid", userID));
+                }
+            }
+        }
+
+
+        public bool LockUser(string userID)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                var user = context.Users.Where(a => a.UserID.Equals(userID)).SingleOrDefault();
+                if (user != null)
+                {
+                    user.Locked = !user.Locked;
+                    context.SaveChanges();
+                    return user.Locked;
                 }
                 else
                 {

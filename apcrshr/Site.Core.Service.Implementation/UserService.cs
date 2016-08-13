@@ -397,5 +397,29 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public LockResponse LockUser(string userID)
+        {
+            try
+            {
+                IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
+                var locked = userRepository.LockUser(userID);
+                return new LockResponse
+                {
+                    Locked = locked,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = Resources.Resource.msg_update_success
+                };
+            }
+            catch (Exception ex)
+            {
+                return new LockResponse
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }

@@ -69,5 +69,12 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             BaseResponse response = _userService.DeleteUser(userID);
             return Json(new { ErrorCode = response.ErrorCode, Message = response.Message }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public JsonResult LockUser(string userID)
+        {
+            LockResponse response = _userService.LockUser(userID);
+            return Json(new { ErrorCode = response.ErrorCode, Message = response.Message, Locked = response.Locked }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
