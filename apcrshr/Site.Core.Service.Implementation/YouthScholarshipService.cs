@@ -148,8 +148,17 @@ namespace Site.Core.Service.Implementation
             try
             {
                 IYouthScholarshipRepository youthScholarshipRepository = RepositoryClassFactory.GetInstance().GetYouthShcolarshipReoisitory();
+                IMailingAddressRepository mailingRepository = RepositoryClassFactory.GetInstance().GetMailingAddressRepository();
                 YouthScholarship scholarship = youthScholarshipRepository.FindByUserID(userID);
                 var _scholarship = MapperUtil.CreateMapper().Mapper.Map<YouthScholarship, YouthScholarshipModel>(scholarship);
+                if (_scholarship != null)
+                {
+                    IList<MailingAddress> _mailings = mailingRepository.FindByUserID(userID);
+                    if (_mailings != null && _mailings.Count > 0)
+                    {
+                        _scholarship.RegistrationNumber = _mailings.FirstOrDefault().RegistrationNumber;
+                    }
+                }
                 return new FindItemReponse<YouthScholarshipModel>
                 {
                     Item = _scholarship,

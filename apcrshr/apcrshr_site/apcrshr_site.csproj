@@ -1166,6 +1166,7 @@
     <Content Include="Areas\Administrator\js\ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
     <Content Include="Areas\Administrator\js\ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
     <Content Include="Areas\Administrator\js\ckeditor\skins\moono\readme.md" />
+    <Content Include="Areas\Administrator\Views\AdminUser\ViewUser.cshtml" />
     <None Include="Properties\PublishProfiles\apcrshr.hvtec.vn - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />

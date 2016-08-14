@@ -143,16 +143,31 @@ namespace Site.Core.Service.Implementation
         }
 
 
-        public FindAllItemReponse<MainScholarshipModel> FindByUserID(string userID)
+        public FindItemReponse<MainScholarshipModel> FindByUserID(string userID)
         {
             try
             {
                 IMainScholarshipRepository mainScholarshipRepository = RepositoryClassFactory.GetInstance().GetMainScholarshipRepository();
-                IList<MainScholarship> scholarships = mainScholarshipRepository.FindByUserID(userID);
-                var _scholarships = scholarships.Select(n => MapperUtil.CreateMapper().Mapper.Map<MainScholarship, MainScholarshipModel>(n)).ToList();
-                return new FindAllItemReponse<MainScholarshipModel>
+                IMailingAddressRepository mailingRepository = RepositoryClassFactory.GetInstance().GetMailingAddressRepository();
+                IUserSubmissionRepository userSubmissionRepository = RepositoryClassFactory.GetInstance().GetUserSubmissionRepository();
+                MainScholarship scholarship = mainScholarshipRepository.FindByUserID(userID);
+                var _scholarship = MapperUtil.CreateMapper().Mapper.Map<MainScholarship, MainScholarshipModel>(scholarship);
+                if (_scholarship != null)
                 {
-                    Items = _scholarships,
+                    IList<MailingAddress> _mailings = mailingRepository.FindByUserID(userID);
+                    if (_mailings != null && _mailings.Count > 0)
+                    {
+                        _scholarship.RegistrationNumber = _mailings.FirstOrDefault().RegistrationNumber;
+                    }
+                    IList<UserSubmission> _submissions = userSubmissionRepository.FindByUserID(userID);
+                    if (_submissions != null && _submissions.Count > 0)
+                    {
+                        _scholarship.SubmissionNumber = _submissions.FirstOrDefault().SubmissionNumber;
+                    }
+                }
+                return new FindItemReponse<MainScholarshipModel>
+                {
+                    Item = _scholarship,
                     ErrorCode = (int)ErrorCode.None,
                     Message = string.Empty
                 };
@@ -160,7 +175,7 @@ namespace Site.Core.Service.Implementation
             catch (Exception ex)
             {
 
-                return new FindAllItemReponse<MainScholarshipModel>
+                return new FindItemReponse<MainScholarshipModel>
                 {
                     ErrorCode = (int)ErrorCode.Error,
                     Message = ex.Message

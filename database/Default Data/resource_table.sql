@@ -154,6 +154,10 @@ INSERT [dbo].[Resource] ([ResourceID], [Title], [URL], [CreatedBy], [CreatedDate
 
 GO
 
+INSERT [dbo].[Resource] ([ResourceID], [Title], [URL], [CreatedBy], [CreatedDate]) VALUES (N'4a2a3e38-9027-4a00-a700-7770ae41a415', N'Xem thông tin người dùng', N'AdminUser/ViewUser', N'03d48cb6-46b5-43d3-98f2-872eaacd36bc', CAST(0x0000A12500000000 AS DateTime))
+
+GO
+
 INSERT [dbo].[Resource] ([ResourceID], [Title], [URL], [CreatedBy], [CreatedDate]) VALUES (N'5f02e317-930d-4459-8b0b-1202e4c1b0bd', N'Xóa người dùng', N'AdminUser/DeleteUser', N'03d48cb6-46b5-43d3-98f2-872eaacd36bc', CAST(0x0000A12500000000 AS DateTime))
 
 GO

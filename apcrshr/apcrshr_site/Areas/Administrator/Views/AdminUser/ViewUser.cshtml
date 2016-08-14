@@ -1,0 +1,530 @@
+﻿@model Site.Core.DataModel.Model.UserModel
+@{
+    ViewBag.Title = "View User";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box box-color">
+            <div class="box-title">
+                <h3>
+                    <i class="fa fa-bars"></i>
+                    Thông tin hội viên
+                </h3>
+                <ul class="tabs">
+                    <li class="active">
+                        <a href="#t7" data-toggle="tab">General information</a>
+                    </li>
+                    <li>
+                        <a href="#t8" data-toggle="tab">@ViewBag.ScholarshipTitle</a>
+                    </li>
+                    <li>
+                        <a href="#t9" data-toggle="tab">Working experience</a>
+                    </li>
+                    <li>
+                        <a href="#t10" data-toggle="tab">Education</a>
+                    </li>
+                    <li>
+                        <a href="#t11" data-toggle="tab">Additional training</a>
+                    </li>
+                    <li>
+                        <a href="#t12" data-toggle="tab">Leadership experience</a>
+                    </li>
+                    <li>
+                        <a href="#t13" data-toggle="tab">Publication</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="box-content">
+                <div class="tab-content">
+                    <!--Start general information-->
+                    <div class="tab-pane active" id="t7">
+                        <div class="box-content nopadding">
+                            @using (Html.BeginForm("SaveUpdateUser", "AdminUser", FormMethod.Post, new { @class = "form-horizontal form-bordered" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(m => m.UserID)
+                                <div class="form-group">
+                                    <label for="Title" class="control-label col-sm-2">Title</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(m => m.Title)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="FullName" class="control-label col-sm-2">Fullname</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(m => m.FullName)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Sex" class="control-label col-sm-2">Sex</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(m => m.Sex, new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(m => m.Sex)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Email" class="control-label col-sm-2">Email</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(m => m.Email)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="OtherEmail" class="control-label col-sm-2">Other email</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(m => m.OtherEmail, new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(m => m.OtherEmail)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="DateOfBirth" class="control-label col-sm-2">Date of birth</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(m => m.DateOfBirth, new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(m => m.DateOfBirth)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="PhoneNumber" class="control-label col-sm-2">Phone</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(m => m.PhoneNumber)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="UserName" class="control-label col-sm-2">Username</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(m => m.UserName)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="CreatedDate" class="control-label col-sm-2">Registration date</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(m => m.CreatedDate, new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(m => m.CreatedDate)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Locked" class="control-label col-sm-2">Status</label>
+                                    <div class="col-sm-10">
+                                        <div class="check-demo-col">
+                                            <div class="check-line">
+                                                <input type="radio" name="Locked" id="Locked" readonly="readonly" class='icheck-me' data-skin="square" data-color="blue" value="false" @(Model.Locked ? "" : "checked")>
+                                                <label class='inline' for="Locked">Actived</label>
+                                            </div>
+                                            <div class="check-line">
+                                                <input type="radio" name="Locked" id="Locked" readonly="readonly" class='icheck-me' data-skin="square" data-color="blue" value="true" @(Model.Locked ? "checked" : "")>
+                                                <label class='inline' for="Locked">Locked</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="MealPreference" class="control-label col-sm-2">Meal preference</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(m => m.MealPreference, new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(m => m.MealPreference)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="DisabilitySpecialTreatment" class="control-label col-sm-2">Disability or special treatment</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(m => m.DisabilitySpecialTreatment, new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(m => m.DisabilitySpecialTreatment)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Address" class="control-label col-sm-2">Address</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(m => m.Address)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="City" class="control-label col-sm-2">City</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(m => m.City, new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(m => m.City)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Country" class="control-label col-sm-2">Country</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(m => m.Country, new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(m => m.Country)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="WorkAddress" class="control-label col-sm-2">Work address</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(m => m.WorkAddress, new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(m => m.WorkAddress)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Organization" class="control-label col-sm-2">Organization</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(m => m.Organization, new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(m => m.Organization)
+                                    </div>
+                                </div>
+                                @*<div class="form-actions col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-primary">Lưu Thông Tin</button>
+                                    <button type="reset" class="btn">Reset</button>
+                                    <a href='@Url.Action("Index")' class="btn btn-info">Hủy Bỏ</a>
+                                </div>*@
+                            }
+                        </div>
+                    </div>
+                    <!--End general information-->
+
+                    <!--Start conference-->
+                    <div class="tab-pane" id="t8">
+                        @if (ViewBag.ScholarshipTitle != null)
+                        {
+                            string title = (string)ViewBag.ScholarshipTitle;
+                            if (title == apcrshr_site.Areas.Administrator.Controllers.AdminUserController.SCHOLARSHIP_NOT_AVAILABLE)
+                            {
+                                <h4>This user hasn't submit any scholarship form</h4>
+                            }
+                            else if (title == apcrshr_site.Areas.Administrator.Controllers.AdminUserController.SCHOLARSHIP_MAIN_TITLE)
+                            {
+                                Site.Core.DataModel.Model.MainScholarshipModel mainScholarship = (Site.Core.DataModel.Model.MainScholarshipModel)ViewBag.MainScholarship;
+                                <div class="box-content nopadding">
+                                    <form action="#" class="form-horizontal form-bordered">
+                                        <div class="form-group">
+                                            <label for="RegistrationNumber" class="control-label col-sm-2">Registration number</label>
+                                            <div class="col-sm-10">
+                                                <label class="form-control">@mainScholarship.RegistrationNumber</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="SubmissionNumber" class="control-label col-sm-2">Abstract submission number</label>
+                                            <div class="col-sm-10">
+                                                <label class="form-control">@mainScholarship.SubmissionNumber</label>
+                                            </div>
+                                        </div>
+                                        <div class="box-title">
+                                            <h3>
+                                                <i class="fa fa-check"></i>
+                                                WORKING EXPERIENCE
+                                            </h3>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Organization" class="control-label col-sm-2">Current organization</label>
+                                            <div class="col-sm-10">
+                                                <label class="form-control">@mainScholarship.Organization</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Position" class="control-label col-sm-2">Position</label>
+                                            <div class="col-sm-10">
+                                                <label class="form-control">@mainScholarship.Position</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="DurationOfWork" class="control-label col-sm-2">Duration of work</label>
+                                            <div class="col-sm-10">
+                                                <label class="form-control">@mainScholarship.DurationOfWork &nbsp;(years)</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Responsibility" class="control-label col-sm-2">Responsibility relating to Reproductive and Sexual Health and Rights</label>
+                                            <div class="col-sm-10">
+                                                <textarea class="form-control" rows="6" readonly="readonly">@mainScholarship.Responsibility</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ReasonScholarship" class="control-label col-sm-2">Why should we provide you a scholarship?</label>
+                                            <div class="col-sm-10">
+                                                <textarea class="form-control" rows="6" readonly="readonly">@mainScholarship.ReasonScholarship</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="box-title">
+                                            <h3>
+                                                <i class="fa fa-check"></i>
+                                                ABSTRACT SUBMISSION
+                                            </h3>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Locked" class="control-label col-sm-2">Have you submitted at least 1 abstract for the conference</label>
+                                            <div class="col-sm-10">
+                                                <div class="check-demo-col">
+                                                    <div class="check-line">
+                                                        <input type="radio" name="HasSubmitted" id="HasSubmitted" readonly="readonly" class='icheck-me' data-skin="square" data-color="blue" value="false" @(mainScholarship.HasSubmitted ? "checked" : "")>
+                                                        <label class='inline' for="HasSubmitted">Yes</label>
+                                                    </div>
+                                                    <div class="check-line">
+                                                        <input type="radio" name="HasSubmitted" id="HasSubmitted" readonly="readonly" class='icheck-me' data-skin="square" data-color="blue" value="true" @(mainScholarship.HasSubmitted ? "" : "checked")>
+                                                        <label class='inline' for="HasSubmitted">No</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Position" class="control-label col-sm-2">Title of abstract submitted</label>
+                                            <div class="col-sm-10">
+                                                <label class="form-control">@mainScholarship.SubmissionTitles</label>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            }
+                            else if (title == apcrshr_site.Areas.Administrator.Controllers.AdminUserController.SCHOLARSHIP_YOUTH_TITLE)
+                            {
+                                Site.Core.DataModel.Model.YouthScholarshipModel youthScholarship = (Site.Core.DataModel.Model.YouthScholarshipModel)ViewBag.YouthScholarship;
+                                <div class="box-content nopadding">
+                                    <form action="#" class="form-horizontal form-bordered">
+                                        <div class="form-group">
+                                            <label for="RegistrationNumber" class="control-label col-sm-2">Registration number</label>
+                                            <div class="col-sm-10">
+                                                <label class="form-control">@youthScholarship.RegistrationNumber</label>
+                                            </div>
+                                        </div>
+                                        <div class="box-title">
+                                            <h3>
+                                                <i class="fa fa-check"></i>
+                                                MOTIVATION
+                                            </h3>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="MotivationIssue" class="control-label col-sm-2">List 3 problems that young people in your country are facing now</label>
+                                            <div class="col-sm-10">
+                                                <textarea class="form-control" rows="6" readonly="readonly">@youthScholarship.MotivationIssue</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="MotivationResolving" class="control-label col-sm-2">Have you participated in any activities/projects to solve these problems? How could you involve young people in your country to participate in youth activities?</label>
+                                            <div class="col-sm-10">
+                                                <textarea class="form-control" rows="6" readonly="readonly">@youthScholarship.MotivationResolving</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="MotivationReason" class="control-label col-sm-2">What will you contribute to this conference? Why we should select you as youth scholars of this conference?</label>
+                                            <div class="col-sm-10">
+                                                <textarea class="form-control" rows="6" readonly="readonly">@youthScholarship.MotivationReason</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="box-title">
+                                            <h3>
+                                                <i class="fa fa-check"></i>
+                                                MAKE A PLAN
+                                            </h3>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="PlanMaking" class="control-label col-sm-2">Present your plan after taking part in this conference</label>
+                                            <div class="col-sm-10">
+                                                <textarea class="form-control" rows="6" readonly="readonly">@youthScholarship.PlanMaking</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="UploadFile" class="control-label col-sm-2">Uploaded file</label>
+                                            <div class="col-sm-10">
+                                                <a class="form-control" href="@youthScholarship.UploadFile" target="_blank">@(youthScholarship.UploadFile != null ? youthScholarship.UploadFile.Substring(youthScholarship.UploadFile.LastIndexOf("/") + 1) : "No attachment")</a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <!--End conference-->
+
+                    <!--Start working experience-->
+                    <div class="tab-pane" id="t9">
+                        <table id="tblRole" class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
+                               data-column_filter_types="null,text,text,text,null"
+                               data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
+                            <thead>
+                                <tr>
+                                    <th class='with-checkbox'>
+                                        <input type="checkbox" name="check_all" class="dataTable-checkall">
+                                    </th>
+                                    <th>Tên</th>
+                                    <th>Mô tả</th>
+                                    <th>Loại</th>
+                                    <th class='hidden-480'>Tùy Chọn</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    if (ViewBag.RoleList != null)
+                                    {
+                                        IList<Site.Core.DataModel.Model.RoleModel> roles = (IList<Site.Core.DataModel.Model.RoleModel>)ViewBag.RoleList;
+                                        for (int i = 0; i < roles.Count; i++)
+                                        {
+                                            <tr id="@roles[i].RoleID">
+                                                <td class="with-checkbox">
+                                                    <input type="checkbox" name="check" value="@roles[i].RoleID">
+                                                </td>
+                                                <td>@roles[i].Name</td>
+                                                <td>@roles[i].Description</td>
+                                                <td>@Enum.GetName(typeof(Site.Core.DataModel.Enum.RoleType), roles[i].Type)</td>
+                                                <td class='hidden-480'>
+                                                    <a href='@Url.Action("AssignResource", "AdminRole", new { roleID = roles[i].RoleID })' class="btn" rel="tooltip" title="Gán tài nguyên truy cập">
+                                                        <i class="fa fa-key"></i>
+                                                    </a>
+                                                    @if (roles[i].Type != (int)Site.Core.DataModel.Enum.RoleType.ConferenceManager
+                                                        && roles[i].Type != (int)Site.Core.DataModel.Enum.RoleType.ResourceManager
+                                                        && roles[i].Type != (int)Site.Core.DataModel.Enum.RoleType.Administrator)
+                                                    {
+                                                        <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteRole('@roles[i].RoleID')" id="btn_@roles[i].RoleID">
+                                                            <i class="fa fa-times"></i>
+                                                        </a>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--End working experience-->
+
+                    <div class="tab-pane" id="t10">
+                        <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
+                               data-column_filter_types="null,text,text"
+                               data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
+                            <thead>
+                                <tr>
+                                    <th class='with-checkbox'>
+                                        <input type="checkbox" name="check_all" class="dataTable-checkall">
+                                    </th>
+                                    <th>Tiêu đề</th>
+                                    <th>Đường dẫn</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    if (ViewBag.ResourceList != null)
+                                    {
+                                        IList<Site.Core.DataModel.Model.ResourceModel> resources = (IList<Site.Core.DataModel.Model.ResourceModel>)ViewBag.ResourceList;
+                                        for (int i = 0; i < resources.Count; i++)
+                                        {
+                                            <tr id="@resources[i].ResourceID">
+                                                <td class="with-checkbox">
+                                                    <input type="checkbox" name="check" value="@resources[i].ResourceID">
+                                                </td>
+                                                <td>@resources[i].Title</td>
+                                                <td>@resources[i].URL</td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="tab-pane" id="t11">
+                        <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
+                               data-column_filter_types="null,text,text"
+                               data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
+                            <thead>
+                                <tr>
+                                    <th class='with-checkbox'>
+                                        <input type="checkbox" name="check_all" class="dataTable-checkall">
+                                    </th>
+                                    <th>Tiêu đề</th>
+                                    <th>Đường dẫn</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    if (ViewBag.ResourceList != null)
+                                    {
+                                        IList<Site.Core.DataModel.Model.ResourceModel> resources = (IList<Site.Core.DataModel.Model.ResourceModel>)ViewBag.ResourceList;
+                                        for (int i = 0; i < resources.Count; i++)
+                                        {
+                                            <tr id="@resources[i].ResourceID">
+                                                <td class="with-checkbox">
+                                                    <input type="checkbox" name="check" value="@resources[i].ResourceID">
+                                                </td>
+                                                <td>@resources[i].Title</td>
+                                                <td>@resources[i].URL</td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="tab-pane" id="t12">
+                        <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
+                               data-column_filter_types="null,text,text"
+                               data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
+                            <thead>
+                                <tr>
+                                    <th class='with-checkbox'>
+                                        <input type="checkbox" name="check_all" class="dataTable-checkall">
+                                    </th>
+                                    <th>Tiêu đề</th>
+                                    <th>Đường dẫn</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    if (ViewBag.ResourceList != null)
+                                    {
+                                        IList<Site.Core.DataModel.Model.ResourceModel> resources = (IList<Site.Core.DataModel.Model.ResourceModel>)ViewBag.ResourceList;
+                                        for (int i = 0; i < resources.Count; i++)
+                                        {
+                                            <tr id="@resources[i].ResourceID">
+                                                <td class="with-checkbox">
+                                                    <input type="checkbox" name="check" value="@resources[i].ResourceID">
+                                                </td>
+                                                <td>@resources[i].Title</td>
+                                                <td>@resources[i].URL</td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="tab-pane" id="t13">
+                        <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
+                               data-column_filter_types="null,text,text"
+                               data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
+                            <thead>
+                                <tr>
+                                    <th class='with-checkbox'>
+                                        <input type="checkbox" name="check_all" class="dataTable-checkall">
+                                    </th>
+                                    <th>Tiêu đề</th>
+                                    <th>Đường dẫn</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    if (ViewBag.ResourceList != null)
+                                    {
+                                        IList<Site.Core.DataModel.Model.ResourceModel> resources = (IList<Site.Core.DataModel.Model.ResourceModel>)ViewBag.ResourceList;
+                                        for (int i = 0; i < resources.Count; i++)
+                                        {
+                                            <tr id="@resources[i].ResourceID">
+                                                <td class="with-checkbox">
+                                                    <input type="checkbox" name="check" value="@resources[i].ResourceID">
+                                                </td>
+                                                <td>@resources[i].Title</td>
+                                                <td>@resources[i].URL</td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

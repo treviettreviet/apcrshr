@@ -49,6 +49,6 @@ namespace Site.Core.Service.Contract
         /// </summary>
         /// <param name="userID"></param>
         /// <returns></returns>
-        FindAllItemReponse<MainScholarshipModel> FindByUserID(string userID);
+        FindItemReponse<MainScholarshipModel> FindByUserID(string userID);
     }
 }

@@ -81,11 +81,11 @@ namespace Site.Core.Repository.Implementation
             }
         }
 
-        public IList<MainScholarship> FindByUserID(string userID)
+        public MainScholarship FindByUserID(string userID)
         {
             using (APCRSHREntities context = new APCRSHREntities())
             {
-                return context.MainScholarships.Where(m => m.UserID.Equals(userID)).ToList();
+                return context.MainScholarships.Where(m => m.UserID.Equals(userID)).SingleOrDefault();
             }
         }
     }

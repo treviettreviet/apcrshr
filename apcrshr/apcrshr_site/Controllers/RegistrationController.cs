@@ -550,8 +550,8 @@ namespace apcrshr_site.Controllers
             }
 
             //Check for existing registration
-            FindAllItemReponse<MainScholarshipModel> scholarshipResponse = _mainScholarshipService.FindByUserID(validateResponse.UserID);
-            if (scholarshipResponse.Items != null && scholarshipResponse.Items.Count > 0)
+            FindItemReponse<MainScholarshipModel> scholarshipResponse = _mainScholarshipService.FindByUserID(validateResponse.UserID);
+            if (scholarshipResponse.Item != null)
             {
                 return Json(new { ErrorCode = (int)ErrorCode.Error, Message = Resources.Resource.msg_mainScholarshipAlreadySubmitted });
             }

@@ -47,7 +47,7 @@
                                 <td>@(Model[i].DateOfBirth.HasValue ? Model[i].DateOfBirth.Value.ToShortDateString() : string.Empty)</td>
                                 <td id="status_@Model[i].UserID">@(Model[i].Locked ? "Đã Khóa" : "Đã Kích Hoạt")</td>
                                 <td class='hidden-480'>
-                                    <a href='@Url.Action("UpdateUser", "AdminUser", new { userId = Model[i].UserID })' class="btn" rel="tooltip" title="Sửa">
+                                    <a href='@Url.Action("ViewUser", "AdminUser", new { userId = Model[i].UserID })' class="btn" rel="tooltip" title="Sửa">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                     <a href="javascript:void(0)" onclick="return lockUser('@Model[i].UserID', this)" class="btn" rel="tooltip" title="@(Model[i].Locked ? "Mở khóa" : "Khóa")">
@@ -69,6 +69,7 @@
     function deleteUser(userID) {
         bootbox.confirm("Bạn có chắc chắn muốn xóa bản ghi này?", function (result) {
             if (result) {
+                $.blockUI({ message: $('#spinner') });
                 $.ajax({
                     type: 'GET',
                     contentType: 'application/json',
@@ -87,9 +88,11 @@
                                 bootbox.hideAll();
                             });
                         }
+                        $.unblockUI();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         bootbox.hideAll();
+                        $.unblockUI();
                     }
                 });
                 return true;
@@ -103,6 +106,7 @@
     function lockUser(userID, sender) {
         bootbox.confirm("Bạn có chắc chắn muốn thực hiện khóa/mở khóa người dùng này?", function (result) {
             if (result) {
+                $.blockUI({ message: $('#spinner') });
                 $.ajax({
                     type: 'GET',
                     contentType: 'application/json',
@@ -136,9 +140,11 @@
                                 bootbox.hideAll();
                             });
                         }
+                        $.unblockUI();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         bootbox.hideAll();
+                        $.unblockUI();
                     }
                 });
                 return true;
