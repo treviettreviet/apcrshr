@@ -27,7 +27,7 @@ namespace Site.Core.Repository.Implementation
                 var news = context.News.Where(a => a.NewsID.Equals(item.NewsID)).SingleOrDefault();
                 if (news != null)
                 {
-                    news.ActionURL = item.ActionURL;
+                    news.ActionURL = !string.IsNullOrEmpty(item.ActionURL) ? item.ActionURL : news.ActionURL;
                     news.Contents = item.Contents;
                     news.Language = item.Language;
                     news.Title = item.Title;

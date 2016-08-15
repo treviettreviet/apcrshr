@@ -96,7 +96,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             {
                 return Json(new { errorCode = (int)ErrorCode.Redirect, message = Resources.AdminResource.msg_sessionInvalid }, JsonRequestBehavior.AllowGet);
             }
-            video.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(video.Title), UrlSlugger.Get8Digits());
+            //video.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(video.Title), UrlSlugger.Get8Digits());
             video.UpdatedBy = userSession.UserID;
             video.UpdatedDate = DateTime.Now;
             BaseResponse response = _videoService.UpdateVideo(video);

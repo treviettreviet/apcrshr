@@ -79,7 +79,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             {
                 return Json(new { errorCode = (int)ErrorCode.Redirect, message = Resources.AdminResource.msg_sessionInvalid }, JsonRequestBehavior.AllowGet);
             }
-            photo.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(photo.Title), UrlSlugger.Get8Digits());
+            //photo.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(photo.Title), UrlSlugger.Get8Digits());
             photo.UpdatedBy = userSession.UserID;
             photo.UpdatedDate = DateTime.Now;
             BaseResponse response = _photoService.UpdatePhoto(photo);

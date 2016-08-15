@@ -101,7 +101,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             {
                 return Json(new { errorCode = (int)ErrorCode.Redirect, message = Resources.AdminResource.msg_sessionInvalid }, JsonRequestBehavior.AllowGet);
             }
-            importantDeadline.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(importantDeadline.Title), UrlSlugger.Get8Digits());
+            //importantDeadline.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(importantDeadline.Title), UrlSlugger.Get8Digits());
             importantDeadline.UpdatedBy = userSession.UserID;
             importantDeadline.UpdateDate = DateTime.Now;
             BaseResponse response = _importantDeadline.UpdateImportantDealine(importantDeadline);

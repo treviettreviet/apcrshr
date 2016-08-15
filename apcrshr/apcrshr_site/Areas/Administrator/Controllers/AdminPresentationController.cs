@@ -138,7 +138,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             {
                 return Json(new { errorCode = (int)ErrorCode.Redirect, message = Resources.AdminResource.msg_sessionInvalid }, JsonRequestBehavior.AllowGet);
             }
-            presentation.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(presentation.Title), UrlSlugger.Get8Digits());
+            //presentation.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(presentation.Title), UrlSlugger.Get8Digits());
             presentation.UpdatedBy = userSession.UserID;
             presentation.UpdatedDate = DateTime.Now;
             BaseResponse response = _presentationService.UpdatePresentation(presentation);

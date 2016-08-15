@@ -30,7 +30,7 @@ namespace Site.Core.Repository.Implementation
                     importantDeadline.Title = item.Title;
                     importantDeadline.ShortContent = item.ShortContent;
                     importantDeadline.Contents = item.Contents;
-                    importantDeadline.ActionURL = item.ActionURL;
+                    importantDeadline.ActionURL = !string.IsNullOrEmpty(item.ActionURL) ? item.ActionURL : importantDeadline.ActionURL;
                     importantDeadline.StartDate = item.StartDate;
                     importantDeadline.EndDate = item.EndDate;
                     importantDeadline.Deadline = item.Deadline;

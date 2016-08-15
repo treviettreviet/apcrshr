@@ -23,7 +23,7 @@ namespace Site.Core.Repository.Implementation
             var menu = context.Menus.Where(a => a.MenuID.Equals(item.MenuID)).SingleOrDefault();
             if (menu != null)
             {
-                menu.ActionURL = item.ActionURL;
+                menu.ActionURL = !string.IsNullOrEmpty(item.ActionURL) ? item.ActionURL : menu.ActionURL;
                 menu.Language = item.Language;
                 menu.ParentID = item.ParentID;
                 menu.Title = item.Title;

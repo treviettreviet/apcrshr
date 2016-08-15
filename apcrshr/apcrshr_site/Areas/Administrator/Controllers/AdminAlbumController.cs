@@ -99,7 +99,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             {
                 return Json(new { errorCode = (int)ErrorCode.Redirect, message = Resources.AdminResource.msg_sessionInvalid }, JsonRequestBehavior.AllowGet);
             }
-            album.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(album.Title), UrlSlugger.Get8Digits());
+            //album.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(album.Title), UrlSlugger.Get8Digits());
             album.UpdatedBy = userSession.UserID;
             album.UpdatedDate = DateTime.Now;
             BaseResponse response = _albumService.UpdateAlbum(album);

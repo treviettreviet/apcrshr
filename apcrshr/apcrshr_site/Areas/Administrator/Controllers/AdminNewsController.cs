@@ -136,7 +136,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
                 return Json(new { errorCode = (int)ErrorCode.Redirect, message = Resources.AdminResource.msg_sessionInvalid }, JsonRequestBehavior.AllowGet);
             }
 
-            news.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(news.Title), UrlSlugger.Get8Digits());
+            //news.ActionURL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(news.Title), UrlSlugger.Get8Digits());
             news.UpdatedBy = userSession.UserID;
             BaseResponse response = _newsService.UpdateNews(news);
 
