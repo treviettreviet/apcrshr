@@ -19,6 +19,8 @@
                     <li>
                         <a href="#t8" data-toggle="tab">@ViewBag.ScholarshipTitle</a>
                     </li>
+                    @if (ViewBag.ScholarshipTitle == apcrshr_site.Areas.Administrator.Controllers.AdminUserController.SCHOLARSHIP_YOUTH_TITLE)
+                    { 
                     <li>
                         <a href="#t9" data-toggle="tab">Working experience</a>
                     </li>
@@ -34,10 +36,12 @@
                     <li>
                         <a href="#t13" data-toggle="tab">Publication</a>
                     </li>
+                    }
                 </ul>
             </div>
             <div class="box-content">
                 <div class="tab-content">
+
                     <!--Start general information-->
                     <div class="tab-pane active" id="t7">
                         <div class="box-content nopadding">
@@ -334,194 +338,261 @@
                     </div>
                     <!--End conference-->
 
+                    @if (ViewBag.ScholarshipTitle == apcrshr_site.Areas.Administrator.Controllers.AdminUserController.SCHOLARSHIP_YOUTH_TITLE)
+                    { 
                     <!--Start working experience-->
                     <div class="tab-pane" id="t9">
                         <table id="tblRole" class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
-                               data-column_filter_types="null,text,text,text,null"
+                               data-column_filter_types="null,text,text,daterange,daterange,text,null"
                                data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
                             <thead>
                                 <tr>
                                     <th class='with-checkbox'>
                                         <input type="checkbox" name="check_all" class="dataTable-checkall">
                                     </th>
-                                    <th>Tên</th>
-                                    <th>Mô tả</th>
-                                    <th>Loại</th>
-                                    <th class='hidden-480'>Tùy Chọn</th>
+                                    <th>Organization</th>
+                                    <th>Position</th>
+                                    <th>Working from</th>
+                                    <th>Working to</th>
+                                    <th>Duties</th>
+                                    <th class='hidden-480'>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @{
-                                    if (ViewBag.RoleList != null)
+                                @if (ViewBag.Experiences != null)
+                                {
+                                    IList<Site.Core.DataModel.Model.ExperienceModel> experiences = (IList<Site.Core.DataModel.Model.ExperienceModel>)ViewBag.Experiences;
+                                    for (int i = 0; i < experiences.Count; i++)
                                     {
-                                        IList<Site.Core.DataModel.Model.RoleModel> roles = (IList<Site.Core.DataModel.Model.RoleModel>)ViewBag.RoleList;
-                                        for (int i = 0; i < roles.Count; i++)
-                                        {
-                                            <tr id="@roles[i].RoleID">
-                                                <td class="with-checkbox">
-                                                    <input type="checkbox" name="check" value="@roles[i].RoleID">
-                                                </td>
-                                                <td>@roles[i].Name</td>
-                                                <td>@roles[i].Description</td>
-                                                <td>@Enum.GetName(typeof(Site.Core.DataModel.Enum.RoleType), roles[i].Type)</td>
-                                                <td class='hidden-480'>
-                                                    <a href='@Url.Action("AssignResource", "AdminRole", new { roleID = roles[i].RoleID })' class="btn" rel="tooltip" title="Gán tài nguyên truy cập">
-                                                        <i class="fa fa-key"></i>
-                                                    </a>
-                                                    @if (roles[i].Type != (int)Site.Core.DataModel.Enum.RoleType.ConferenceManager
-                                                        && roles[i].Type != (int)Site.Core.DataModel.Enum.RoleType.ResourceManager
-                                                        && roles[i].Type != (int)Site.Core.DataModel.Enum.RoleType.Administrator)
-                                                    {
-                                                        <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deleteRole('@roles[i].RoleID')" id="btn_@roles[i].RoleID">
-                                                            <i class="fa fa-times"></i>
-                                                        </a>
-                                                    }
-                                                </td>
-                                            </tr>
-                                        }
+                                        <tr id="@experiences[i].WorkingID">
+                                            <td class="with-checkbox">
+                                                <input type="checkbox" name="check" value="@experiences[i].WorkingID">
+                                            </td>
+                                            <td>@experiences[i].Organization</td>
+                                            <td>@experiences[i].Position</td>
+                                            <td>@experiences[i].WorkingStart.ToShortDateString()</td>
+                                            <td>@(experiences[i].WorkingEnd.HasValue ? experiences[i].WorkingEnd.Value.ToShortDateString() : "")</td>
+                                            <td>@(experiences[i].Duties.Length > 50 ? experiences[i].Duties.Substring(0, 45) + "..." : experiences[i].Duties)</td>
+                                            <td class='hidden-480'>
+                                                <a href='@Url.Action("UpdateExperience", "AdminUser", new { experienceID = experiences[i].WorkingID })' class="btn" rel="tooltip" title="Update">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <a href="#" class="btn" rel="tooltip" title="Delete" onclick="return deleteExperience('@experiences[i].WorkingID')" id="btn_@experiences[i].WorkingID">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
                                     }
                                 }
                             </tbody>
                         </table>
+
                     </div>
                     <!--End working experience-->
 
+                    <!--Start education-->
                     <div class="tab-pane" id="t10">
                         <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
-                               data-column_filter_types="null,text,text"
+                               data-column_filter_types="null,text,select,daterange,daterange,text,select,null"
                                data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
                             <thead>
                                 <tr>
                                     <th class='with-checkbox'>
                                         <input type="checkbox" name="check_all" class="dataTable-checkall">
                                     </th>
-                                    <th>Tiêu đề</th>
-                                    <th>Đường dẫn</th>
+                                    <th>Degree/Diplomas obtained</th>
+                                    <th>Country</th>
+                                    <th>Attended from</th>
+                                    <th>Attended to</th>
+                                    <th>Main course of study</th>
+                                    <th>Type of training</th>
+                                    <th class='hidden-480'>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @{
-                                    if (ViewBag.ResourceList != null)
+                                if (ViewBag.Educations != null)
+                                {
+                                    IList<Site.Core.DataModel.Model.EducationModel> educations = (IList<Site.Core.DataModel.Model.EducationModel>)ViewBag.Educations;
+                                    for (int i = 0; i < educations.Count; i++)
                                     {
-                                        IList<Site.Core.DataModel.Model.ResourceModel> resources = (IList<Site.Core.DataModel.Model.ResourceModel>)ViewBag.ResourceList;
-                                        for (int i = 0; i < resources.Count; i++)
-                                        {
-                                            <tr id="@resources[i].ResourceID">
-                                                <td class="with-checkbox">
-                                                    <input type="checkbox" name="check" value="@resources[i].ResourceID">
-                                                </td>
-                                                <td>@resources[i].Title</td>
-                                                <td>@resources[i].URL</td>
-                                            </tr>
-                                        }
+                                        <tr id="@educations[i].EducationID">
+                                            <td class="with-checkbox">
+                                                <input type="checkbox" name="check" value="@educations[i].EducationID">
+                                            </td>
+                                            <td>@educations[i].Degree</td>
+                                            <td>@educations[i].Country</td>
+                                            <td>@educations[i].EducationStart.ToShortDateString()</td>
+                                            <td>@(educations[i].EducationEnd.HasValue ? educations[i].EducationEnd.Value.ToShortDateString() : "")</td>
+                                            <td>@educations[i].MainCourseStudy</td>
+                                            <td>@educations[i].TypeOfTraining</td>
+                                            <td class='hidden-480'>
+                                                <a href='@Url.Action("UpdateEducation", "AdminUser", new { educationID = educations[i].EducationID })' class="btn" rel="tooltip" title="Update">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <a href="#" class="btn" rel="tooltip" title="Delete" onclick="return deleteEducation('@educations[i].EducationID')" id="btn_@educations[i].EducationID">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
                                     }
+                                }
                                 }
                             </tbody>
                         </table>
-                    </div>
 
+                    </div>
+                    <!--End education-->
+
+                    <!--Start additional training-->
                     <div class="tab-pane" id="t11">
                         <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
-                               data-column_filter_types="null,text,text"
+                               data-column_filter_types="null,text,select,daterange,daterange,select,null"
                                data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
                             <thead>
                                 <tr>
                                     <th class='with-checkbox'>
                                         <input type="checkbox" name="check_all" class="dataTable-checkall">
                                     </th>
-                                    <th>Tiêu đề</th>
-                                    <th>Đường dẫn</th>
+                                    <th>Name of course</th>
+                                    <th>Country</th>
+                                    <th>Attended from</th>
+                                    <th>Attended to</th>
+                                    <th>Type of training</th>
+                                    <th class='hidden-480'>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @{
-                                    if (ViewBag.ResourceList != null)
+                                @if (ViewBag.Trainings != null)
+                                {
+                                    IList<Site.Core.DataModel.Model.TrainingModel> trainings = (IList<Site.Core.DataModel.Model.TrainingModel>)ViewBag.Trainings;
+                                    for (int i = 0; i < trainings.Count; i++)
                                     {
-                                        IList<Site.Core.DataModel.Model.ResourceModel> resources = (IList<Site.Core.DataModel.Model.ResourceModel>)ViewBag.ResourceList;
-                                        for (int i = 0; i < resources.Count; i++)
-                                        {
-                                            <tr id="@resources[i].ResourceID">
-                                                <td class="with-checkbox">
-                                                    <input type="checkbox" name="check" value="@resources[i].ResourceID">
-                                                </td>
-                                                <td>@resources[i].Title</td>
-                                                <td>@resources[i].URL</td>
-                                            </tr>
-                                        }
+                                        <tr id="@trainings[i].TrainingID">
+                                            <td class="with-checkbox">
+                                                <input type="checkbox" name="check" value="@trainings[i].TrainingID">
+                                            </td>
+                                            <td>@trainings[i].NameOfCourse</td>
+                                            <td>@trainings[i].Country</td>
+                                            <td>@trainings[i].TrainingStart.ToShortDateString()</td>
+                                            <td>@(trainings[i].TrainingEnd.HasValue ? trainings[i].TrainingEnd.Value.ToShortDateString() : "")</td>
+                                            <td>@trainings[i].TypeOfTraining</td>
+                                            <td class='hidden-480'>
+                                                <a href='@Url.Action("UpdateTraining", "AdminUser", new { trainingID = trainings[i].TrainingID })' class="btn" rel="tooltip" title="Update">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <a href="#" class="btn" rel="tooltip" title="Delete" onclick="return deleteTraining('@trainings[i].TrainingID')" id="btn_@trainings[i].TrainingID">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
                                     }
                                 }
                             </tbody>
                         </table>
-                    </div>
 
+                    </div>
+                    <!--End additional training-->
+
+                    <!--Start leadership-->
                     <div class="tab-pane" id="t12">
                         <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
-                               data-column_filter_types="null,text,text"
+                               data-column_filter_types="null,text,text,daterange,daterange,text,null"
                                data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
                             <thead>
                                 <tr>
                                     <th class='with-checkbox'>
                                         <input type="checkbox" name="check_all" class="dataTable-checkall">
                                     </th>
-                                    <th>Tiêu đề</th>
-                                    <th>Đường dẫn</th>
+                                    <th>Organization/Group</th>
+                                    <th>Position</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>Duties</th>
+                                    <th class='hidden-480'>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @{
-                                    if (ViewBag.ResourceList != null)
+                                @if (ViewBag.Leaderships != null)
+                                {
+                                    IList<Site.Core.DataModel.Model.LeaderShipModel> leaderships = (IList<Site.Core.DataModel.Model.LeaderShipModel>)ViewBag.Leaderships;
+                                    for (int i = 0; i < leaderships.Count; i++)
                                     {
-                                        IList<Site.Core.DataModel.Model.ResourceModel> resources = (IList<Site.Core.DataModel.Model.ResourceModel>)ViewBag.ResourceList;
-                                        for (int i = 0; i < resources.Count; i++)
-                                        {
-                                            <tr id="@resources[i].ResourceID">
-                                                <td class="with-checkbox">
-                                                    <input type="checkbox" name="check" value="@resources[i].ResourceID">
-                                                </td>
-                                                <td>@resources[i].Title</td>
-                                                <td>@resources[i].URL</td>
-                                            </tr>
-                                        }
+                                        <tr id="@leaderships[i].LeaderShipID">
+                                            <td class="with-checkbox">
+                                                <input type="checkbox" name="check" value="@leaderships[i].LeaderShipID">
+                                            </td>
+                                            <td>@leaderships[i].Organization</td>
+                                            <td>@leaderships[i].Position</td>
+                                            <td>@leaderships[i].FromDate.ToShortDateString()</td>
+                                            <td>@(leaderships[i].EndDate.HasValue ? leaderships[i].EndDate.Value.ToShortDateString() : "")</td>
+                                            <td>@(leaderships[i].Duties.Length > 50 ? leaderships[i].Duties.Substring(0, 45) + "..." : leaderships[i].Duties)</td>
+                                            <td class='hidden-480'>
+                                                <a href='@Url.Action("UpdateLeadership", "AdminUser", new { leadershipID = leaderships[i].LeaderShipID })' class="btn" rel="tooltip" title="Update">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <a href="#" class="btn" rel="tooltip" title="Delete" onclick="return deleteLeadership('@leaderships[i].LeaderShipID')" id="btn_@leaderships[i].LeaderShipID">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
                                     }
                                 }
                             </tbody>
                         </table>
-                    </div>
 
+                    </div>
+                    <!--End leader ship-->
+
+                    <!--Start publication-->
                     <div class="tab-pane" id="t13">
                         <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
-                               data-column_filter_types="null,text,text"
+                               data-column_filter_types="null,text,text,text,text,null"
                                data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
                             <thead>
                                 <tr>
                                     <th class='with-checkbox'>
                                         <input type="checkbox" name="check_all" class="dataTable-checkall">
                                     </th>
-                                    <th>Tiêu đề</th>
-                                    <th>Đường dẫn</th>
+                                    <th>Title</th>
+                                    <th>Source</th>
+                                    <th>Years</th>
+                                    <th>URL</th>
+                                    <th class='hidden-480'>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @{
-                                    if (ViewBag.ResourceList != null)
+                                @if (ViewBag.Publications != null)
+                                {
+                                    IList<Site.Core.DataModel.Model.PublicationModel> publications = (IList<Site.Core.DataModel.Model.PublicationModel>)ViewBag.Publications;
+                                    for (int i = 0; i < publications.Count; i++)
                                     {
-                                        IList<Site.Core.DataModel.Model.ResourceModel> resources = (IList<Site.Core.DataModel.Model.ResourceModel>)ViewBag.ResourceList;
-                                        for (int i = 0; i < resources.Count; i++)
-                                        {
-                                            <tr id="@resources[i].ResourceID">
-                                                <td class="with-checkbox">
-                                                    <input type="checkbox" name="check" value="@resources[i].ResourceID">
-                                                </td>
-                                                <td>@resources[i].Title</td>
-                                                <td>@resources[i].URL</td>
-                                            </tr>
-                                        }
+                                        <tr id="@publications[i].PublicationID">
+                                            <td class="with-checkbox">
+                                                <input type="checkbox" name="check" value="@publications[i].PublicationID">
+                                            </td>
+                                            <td>@publications[i].Title</td>
+                                            <td>@publications[i].Source</td>
+                                            <td>@publications[i].Year</td>
+                                            <td>@publications[i].URL</td>
+                                            <td class='hidden-480'>
+                                                <a href='@Url.Action("UpdatePublication", "AdminUser", new { publicationID = publications[i].PublicationID })' class="btn" rel="tooltip" title="Update">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <a href="#" class="btn" rel="tooltip" title="Delete" onclick="return deletePublication('@publications[i].PublicationID')" id="btn_@publications[i].PublicationID">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
                                     }
                                 }
                             </tbody>
                         </table>
-                    </div>
 
+                    </div>
+                    <!--End publication-->
+                    }
+                        
                 </div>
             </div>
         </div>

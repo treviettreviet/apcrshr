@@ -19,6 +19,11 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         private IUserService _userService;
         private IMainScholarshipService _mainScholarshipService;
         private IYouthScholarshipService _youthScholarshipService;
+        private IExperienceService _experienceService;
+        private IEducationService _educationService;
+        private ITrainingService _trainingService;
+        private ILeaderShipService _leadershipService;
+        public IPublicationService _publicationService;
 
         public static readonly string SCHOLARSHIP_NOT_AVAILABLE = "Scholarship not available";
         public static readonly string SCHOLARSHIP_MAIN_TITLE = "Main scholarship";
@@ -30,6 +35,11 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             this._userService = new UserService();
             this._mainScholarshipService = new MainScholarshipService();
             this._youthScholarshipService = new YouthScholarshipService();
+            this._experienceService = new ExperienceService();
+            this._educationService = new EducationService();
+            this._trainingService = new TrainingService();
+            this._leadershipService = new LeaderShipService();
+            this._publicationService = new PublicationService();
         }
 
         [SessionFilter]
@@ -83,6 +93,26 @@ namespace apcrshr_site.Areas.Administrator.Controllers
                 {
                     ViewBag.YouthScholarship = youthScholarshipResponse.Item;
                     scholarshipTitle = SCHOLARSHIP_YOUTH_TITLE;
+
+                    //Find working experience
+                    FindAllItemReponse<ExperienceModel> experienceResponse = _experienceService.FindByscholarshipID(youthScholarshipResponse.Item.YouthScholarshipID);
+                    ViewBag.Experiences = experienceResponse.Items;
+
+                    //Find education
+                    FindAllItemReponse<EducationModel> educationResponse = _educationService.FindByscholarshipID(youthScholarshipResponse.Item.YouthScholarshipID);
+                    ViewBag.Educations = educationResponse.Items;
+
+                    //Find training
+                    FindAllItemReponse<TrainingModel> trainingResponse = _trainingService.FindByscholarshipID(youthScholarshipResponse.Item.YouthScholarshipID);
+                    ViewBag.Trainings = trainingResponse.Items;
+
+                    //Find leadership
+                    FindAllItemReponse<LeaderShipModel> leadershipResponse = _leadershipService.FindByscholarshipID(youthScholarshipResponse.Item.YouthScholarshipID);
+                    ViewBag.Leaderships = leadershipResponse.Items;
+
+                    //Find publication
+                    FindAllItemReponse<PublicationModel> publicationResponse = _publicationService.FindByscholarshipID(youthScholarshipResponse.Item.YouthScholarshipID);
+                    ViewBag.Publications = publicationResponse.Items;
                 }
             }
 
