@@ -26,6 +26,13 @@
                 {
                     @Html.AntiForgeryToken()
                     <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Thể loại <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-10">
+                            @Html.DropDownList("Type", DataHelper.GetInstance().GetDeadlineTypesForDropdown(), new { @id = "Type", @class = "form-control" })
+                            @Html.ValidationMessageFor(Model => Model.Type)
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="textfield" class="control-label col-sm-2">Tiêu Đề <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-10">
                             @Html.TextBoxFor(Model => Model.Title, new { @id = "Title", @class = "form-control" })
@@ -108,6 +115,7 @@
 
         $.blockUI({ message: $('#spinner') });
         var formData = new FormData();
+        formData.append("Type", $("#Type").find(":selected").val());
         formData.append("Title", $("#Title").val());
         formData.append("ShortContent", $("#ShortContent").val());
         formData.append("Contents", CKEDITOR.instances['editor'].getData());

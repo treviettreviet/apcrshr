@@ -35,6 +35,7 @@ namespace Site.Core.Repository.Implementation
                     importantDeadline.EndDate = item.EndDate;
                     importantDeadline.Deadline = item.Deadline;
                     importantDeadline.UpdatedDate = DateTime.Now;
+                    importantDeadline.Type = item.Type;
 
                     context.SaveChanges();
                 }

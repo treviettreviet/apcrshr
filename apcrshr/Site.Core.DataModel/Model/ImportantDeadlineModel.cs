@@ -23,5 +23,6 @@ namespace Site.Core.DataModel.Model
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
         public System.DateTime Deadline { get; set; }
+        public int Type { get; set; }
     }
 }

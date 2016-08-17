@@ -11,6 +11,8 @@ using Site.Core.Repository;
 using System.Net.Mail;
 using Site.Core.Common.Ultil.Security;
 using System.Text;
+using Site.Core.DataModel.Enum;
+using System.Web.Mvc;
 
 namespace apcrshr_site.Helper
 {
@@ -170,6 +172,20 @@ namespace apcrshr_site.Helper
                 }
                 return Output;
             }
+        }
+
+        public IDictionary<int, string> GetDeadlineTypes()
+        {
+            return Enum.GetValues(typeof(DeadlineType))
+               .Cast<DeadlineType>()
+               .ToDictionary(e => (int)e, e => e.ToString());
+        }
+
+        public SelectList GetDeadlineTypesForDropdown()
+        {
+            var directions = from DeadlineType d in Enum.GetValues(typeof(DeadlineType))
+                             select new { ID = (int)d, Name = d.ToString() };
+            return new SelectList(directions, "ID", "Name");
         }
     }
 }

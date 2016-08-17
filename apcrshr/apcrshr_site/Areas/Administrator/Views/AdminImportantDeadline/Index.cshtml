@@ -24,15 +24,15 @@
             </div>
             <div class="box-content nopadding">
                 <table id="tableImportantDeadline" class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
-                       data-column_filter_types="null,text,text,text,daterange,daterange,daterange,null"
+                       data-column_filter_types="null,select,text,text,daterange,daterange,daterange,null"
                        data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
                     <thead>
                         <tr>
                             <th class='with-checkbox'>
                                 <input type="checkbox" name="check_all" class="dataTable-checkall">
                             </th>
+                            <th>Loại</th>
                             <th>Tiêu Đề</th>
-                            <th>Nội Dung Ngắn</th>
                             <th>Người Tạo</th>
                             <th>Ngày Bắt Đầu</th>
                             <th>Ngày Kết Thúc</th>
@@ -49,15 +49,8 @@
                                     <td class="with-checkbox">
                                         <input type="checkbox" name="check" value="@Model[i].DeadlineID">
                                     </td>
-                                    <td>@Model[i].Title</td>
-                                    @if (!string.IsNullOrEmpty(Model[i].ShortContent))
-                                    {
-                                        <td>@(Model[i].ShortContent.Length > 50 ? Model[i].ShortContent.Substring(0, 50) : Model[i].ShortContent)</td>
-                                    }
-                                    else
-                                    {
-                                        <td>@Model[i].ShortContent</td>
-                                    }
+                                    <td>@Enum.GetName(typeof(Site.Core.DataModel.Enum.DeadlineType), Model[i].Type)</td>
+                                    <td>@(!string.IsNullOrEmpty(Model[i].Title) && Model[i].Title.Length > 50 ? Model[i].Title.Substring(0, 50) : Model[i].Title)</td>
                                     <td>@apcrshr_site.Helper.UserHelper.GetAdminName(Model[i].CreatedBy)</td>
                                     <td>@Model[i].StartDate.ToShortDateString()</td>
                                     <td>@Model[i].EndDate.ToShortDateString()</td>

@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enum\AccountType.cs" />
+    <Compile Include="Enum\DeadlineType.cs" />
     <Compile Include="Enum\ErrorCode.cs" />
     <Compile Include="Enum\Language.cs" />
     <Compile Include="Enum\MenuType.cs" />
