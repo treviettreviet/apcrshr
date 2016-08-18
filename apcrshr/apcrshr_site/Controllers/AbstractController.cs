@@ -1,4 +1,5 @@
-﻿using Site.Core.DataModel.Enum;
+﻿using apcrshr_site.Filters;
+using Site.Core.DataModel.Enum;
 using Site.Core.DataModel.Model;
 using Site.Core.DataModel.Response;
 using System;
@@ -13,13 +14,14 @@ namespace apcrshr_site.Controllers
     {
         //
         // GET: /Abstract/
-
+        [UserSessionFilter]
         public ActionResult Index()
         {
             return View();
         }
 
         [HttpGet]
+        [UserSessionFilter]
         public ActionResult SubmitAbstract()
         {
             //Allow registration when registration opened
