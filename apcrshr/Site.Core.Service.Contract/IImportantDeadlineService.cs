@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Site.Core.DataModel.Enum;
 
 namespace Site.Core.Service.Contract
 {
@@ -16,6 +17,12 @@ namespace Site.Core.Service.Contract
         /// <param name="id"></param>
         /// <returns></returns>
         FindItemReponse<ImportantDeadlineModel> FindImportantByID(string id);
+        /// <summary>
+        /// Find important deadline by type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        FindItemReponse<ImportantDeadlineModel> FindImportantDeadlineByType(DeadlineType type);
         /// <summary>
         /// Find by actionUrl
         /// </summary>
@@ -39,6 +46,13 @@ namespace Site.Core.Service.Contract
         /// <param name="top"></param>
         /// <returns></returns>
         FindAllItemReponse<ImportantDeadlineModel> GetImportantDeadlines(int top);
+        /// <summary>
+        /// Find the deadline with date filter
+        /// </summary>
+        /// <param name="top"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        FindAllItemReponse<ImportantDeadlineModel> GetImportantDeadlines(int top, DateTime date);
         /// <summary>
         /// Get all important pagging
         /// </summary>

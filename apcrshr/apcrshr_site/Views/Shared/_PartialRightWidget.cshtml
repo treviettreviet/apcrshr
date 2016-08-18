@@ -9,7 +9,7 @@
                 <a class="main-button" href='@Url.Action("RegistrationForm", "Registration")' style="color: #FFF; font-size: 12px; font-weight: bold; width: 100%;">Register Now</a>
             </li>
             <li>
-                <a class="main-button" href="#" style="color: #FFF; font-size: 12px; font-weight: bold; width: 100%;">Abstract Submission</a>
+                <a class="main-button" href='@Url.Action("SubmitAbstract", "Abstract")' style="color: #FFF; font-size: 12px; font-weight: bold; width: 100%;">Abstract Submission</a>
             </li>
         </ul>
     </div>
@@ -51,12 +51,12 @@
                 {
                     foreach (var item in deadlines)
                     {
-                        <li>
+                        <li class="sh-tooltip" title="@item.ShortContent">
                             <div class="widget-thumb-icon">
                                 <i class="icon-beaker icon-mini-effect icon-effect-1"></i>
                             </div>
                             <div class="widget-content">
-                                <h5><a href="#">@item.Title</a></h5>
+                                <h5><a href='#'>@item.Title</a></h5>
                                 <span style="Color: #D85D03; font-weight: bold; ">@item.Deadline.ToShortDateString()</span>
                             </div>
                             <div class="clearfix"></div>

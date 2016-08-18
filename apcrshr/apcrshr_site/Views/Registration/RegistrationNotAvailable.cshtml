@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Registration is not available";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="col-sm-9">
+    <div class="big-title text-center">
+        @if (ViewBag.Status != null)
+        {
+            int status = (int)ViewBag.Status;
+            switch (status)
+            {
+                case 1:
+                    <h1>This feature <span class="accent-color"><strong>under construction</strong></span></h1> 
+                    break;
+                case 2:
+                    <h1>The new registration was <span class="accent-color"><strong>expired</strong></span></h1> 
+                    break;
+                default:
+                    <h1>This feature <span class="accent-color"><strong>under construction</strong></span></h1> 
+                break;
+            }
+        }
+        else
+        {
+            <h1>This feature <span class="accent-color"><strong>under construction</strong></span></h1> 
+        }
+        <p class="title-desc">Thank You</p>
+    </div>
+</div>

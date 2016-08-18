@@ -75,9 +75,9 @@
 </div>
 <script>
     $(document).ready(function () {
-        $('#StartDate').datepicker({ dateFormat: 'mm/dd/yy' }).datepicker("setDate", new Date());
-        $('#EndDate').datepicker({ dateFormat: 'mm/dd/yy' }).datepicker("setDate", new Date());
-        $('#Deadline').datepicker({ dateFormat: 'mm/dd/yy' }).datepicker("setDate", new Date());
+        $('#StartDate').datepicker();
+        $('#EndDate').datepicker();
+        $('#Deadline').datepicker();
     });
 
     function submitForm() {
@@ -87,15 +87,14 @@
             });
             return false;
         }
-
         if (!validateDatetime()) {
             bootbox.alert("Ngày bắt đầu không được phép lớn hơn ngày kết thúc và hạn chót.", function () {
                 bootbox.hideAll();
             });
             return false;
         }
-        if (!validateDateline()) {
-            bootbox.alert("Ngày kết thúc không được phép lớn hơn hạn chót.", function () {
+        if (!validateDeadline()) {
+            bootbox.alert("Hạn chót đăng ký không được phép lớn hơn ngày kết thúc.", function () {
                 bootbox.hideAll();
             });
             return false;
@@ -119,17 +118,15 @@
             contentType: false,
             processData: false,
             success: function (response) {
+                //Timeout
+                if (response.errorCode == 2) {
+                    window.location = "/Administrator/AdminHome/Login";
+                    return;
+                }
                 $.unblockUI();
                 bootbox.alert(response.message, function () {
                     bootbox.hideAll();
                 });
-                //Timeout
-                if (response.errorCode == 2) {
-                    window.location = "/Administrator/AdminHome/Login";
-                }
-                if (response.errorCode == 0) {
-                    resetForm();
-                }
             },
             error: function (error) {
                 $.unblockUI();
@@ -161,18 +158,25 @@
     }
 
     function validateDatetime() {
-        if ($("#StartDate").val() > $("#EndDate").val()) {
+        var startDate = new Date($("#StartDate").val());
+        var endDate = new Date($("#EndDate").val());
+        var deadline = new Date($("#Deadline").val());
+
+        if (startDate > endDate) {
             $("#StartDate").focus();
             return false;
         }
-        if ($("#StartDate").val() > $("#Deadline").val()) {
+        if (startDate > endDate) {
             $("#StartDate").focus();
             return false;
         }
         return true;
     }
-    function validateDateline() {
-        if ($("#EndDate").val() > $("#Deadline").val()) {
+    function validateDeadline() {
+        var endDate = new Date($("#EndDate").val());
+        var deadline = new Date($("#Deadline").val());
+
+        if (endDate < deadline) {
             $("#EndDate").focus();
             return false;
         }

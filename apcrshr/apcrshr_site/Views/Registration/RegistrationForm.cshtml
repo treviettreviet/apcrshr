@@ -4,459 +4,449 @@
 }
 
 <div class="col-sm-9">
-    @if (Session["User-UserName"] == null)
-    {
-        <div class="big-title text-center">
-            <h1>This feature <span class="accent-color"><strong>under construction</strong></span></h1>
-            <p class="title-desc">Thank You</p>
-        </div>
-    }
-    else
-    {
-        <div class="box box-color box-bordered">
-        <div class="box-title">
-            <h3>
-                <i class="fa fa-magic"></i>
-                Step overview
-            </h3>
-        </div>
-        <div class="box-content nopadding">
-            <form action="@Url.Action("RegistrationWizard", "Registration")" method="POST" class='form-horizontal form-wizard form-validate' id="frmRegistration">
-                <div class="step" id="firstStep">
-                    <ul class="wizard-steps steps-3">
-                        <li class='active'>
-                            <div class="single-step">
-                                <span class="title">1</span>
-                                <span class="circle">
-                                    <span class="active"></span>
-                                </span>
-                                <span class="description">
-                                    General information
-                                </span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="single-step">
-                                <span class="title">2</span>
-                                <span class="circle">
-                                </span>
-                                <span class="description">
-                                    Contact information
-                                </span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="single-step">
-                                <span class="title">3</span>
-                                <span class="circle">
-                                </span>
-                                <span class="description">
-                                    Registration information
-                                </span>
-                            </div>
-                        </li>
-                    </ul>
-                    <input type="hidden" name="CurrentStep" value="1" />
-                    <input type="hidden" class="hidSession" name="hidSession" value="" />
-                    <div class="form-group">
-                        <label for="firstname" class="control-label col-sm-3">Title <span class="validation-span-required">(*)</span></label>
-                        <div class="col-sm-9">
-                            <select name="Title" id="Title" onchange="popupSelectInput(this, 'Title')" data-rule-required="true">
-                                <option value="">-- Chose one --</option>
-                                <option value="Dr">Dr</option>
-                                <option value="Mr">Mr</option>
-                                <option value="Mrs">Mrs</option>
-                                <option value="Ms">Ms</option>
-                                <option value="Others">Others</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="anotherelem" class="control-label col-sm-3">Full name <span class="validation-span-required">(*)</span></label>
-                        <div class="col-sm-9">
-                            <input type="text" name="FullName" id="FullName" class="form-control" data-rule-required="true">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="additionalfield" class="control-label col-sm-3">Sex <span class="validation-span-required">(*)</span></label>
-                        <div class="col-sm-9">
-                            <select name="Sex" id="Sex" onchange="popupSelectInput(this, 'Sex')" data-rule-required="true">
-                                <option value="">-- Chose one --</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Others">Others</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="additionalfield" class="control-label col-sm-3">Meal preference <span class="validation-span-required">(*)</span></label>
-                        <div class="col-sm-9">
-                            <select name="MealPreference" id="MealPreference" data-rule-required="true">
-                                <option value="">-- Chose one --</option>
-                                <option value="Vegetarian">Vegetarian</option>
-                                <option value="Non- vegetarian">Non- vegetarian</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="anotherelem" class="control-label col-sm-3">Disability or special treatment</label>
-                        <div class="col-sm-9">
-                            <input type="text" name="DisabilityOrTreatment" id="DisabilityOrTreatment" class="form-control">
-                        </div>
-                    </div>
-                </div>
-                <div class="step" id="secondStep">
-                    <ul class="wizard-steps steps-3">
-                        <li>
-                            <div class="single-step">
-                                <span class="title">1</span>
-                                <span class="circle">
-                                </span>
-                                <span class="description">
-                                    General information
-                                </span>
-                            </div>
-                        </li>
-                        <li class='active'>
-                            <div class="single-step">
-                                <span class="title">
-                                    2
-                                </span>
-                                <span class="circle">
-                                    <span class="active"></span>
-                                </span>
-                                <span class="description">
-                                    Contact information
-                                </span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="single-step">
-                                <span class="title">
-                                    3
-                                </span>
-                                <span class="circle">
-                                </span>
-                                <span class="description">
-                                    Registration information
-                                </span>
-                            </div>
-                        </li>
-                    </ul>
-                    <input type="hidden" name="CurrentStep" value="2" />
-                    <input type="hidden" class="hidSession" name="hidSession" value="" />
-                    <div class="form-group">
-                        <label for="anotherelem" class="control-label col-sm-3">Email address <span class="validation-span-required">(*)</span></label>
-                        <div class="col-sm-9">
-                            <input type="text" name="Email" id="Email" class="form-control" data-rule-required="true" data-rule-email="true">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="anotherelem" class="control-label col-sm-3">Other email address</label>
-                        <div class="col-sm-9">
-                            <input type="text" name="OtherEmail" id="OtherEmail" class="form-control" data-rule-email="true">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="anotherelem" class="control-label col-sm-3">Phone number <span class="validation-span-required">(*)</span></label>
-                        <div class="col-sm-9">
-                            <input type="text" name="Phone" id="Phone" class="form-control" data-rule-required="true" data-rule-number="true" data-rule-minlength="8">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="anotherelem" class="control-label col-sm-3">Address <span class="validation-span-required">(*)</span></label>
-                        <div class="col-sm-9">
-                            <input type="text" name="Address" id="Address" class="form-control" data-rule-required="true">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="anotherelem" class="control-label col-sm-3">City <span class="validation-span-required">(*)</span></label>
-                        <div class="col-sm-9">
-                            <input type="text" name="City" id="City" class="form-control" data-rule-required="true">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="text" class="control-label col-sm-3">Country <span class="validation-span-required">(*)</span></label>
-                        <div class="col-sm-9">
-                            <select name="Country" id="Country" data-rule-required="true">
-                                <option value="">-- Chose one --</option>
-                                <option value="Afghanistan">Afghanistan</option>
-                                <option value="Albania">Albania</option>
-                                <option value="Algeria">Algeria</option>
-                                <option value="Angola">Angola</option>
-                                <option value="Argentina">Argentina</option>
-                                <option value="Armenia">Armenia</option>
-                                <option value="Australia">Australia</option>
-                                <option value="Azerbaijan">Azerbaijan</option>
-                                <option value="Bangladesh">Bangladesh</option>
-                                <option value="Bolivia">Bolivia</option>
-                                <option value="Brazil">Brazil</option>
-                                <option value="Brunei">Brunei</option>
-                                <option value="Bulgaria">Bulgaria</option>
-                                <option value="Cameroon">Cameroon</option>
-                                <option value="Canada">Canada</option>
-                                <option value="Chile">Chile</option>
-                                <option value="China">China</option>
-                                <option value="Colombia">Colombia</option>
-                                <option value="Congo">Congo</option>
-                                <option value="Costa Rica">Costa Rica</option>
-                                <option value="Croatia">Croatia</option>
-                                <option value="Cuba">Cuba</option>
-                                <option value="Czech">Czech</option>
-                                <option value="Dominica">Dominica</option>
-                                <option value="Ecuador">Ecuador</option>
-                                <option value="Egypt">Egypt</option>
-                                <option value="France">France</option>
-                                <option value="Georgia">Georgia</option>
-                                <option value="Germany">Germany</option>
-                                <option value="Ghana">Ghana</option>
-                                <option value="Greece">Greece</option>
-                                <option value="Haiti">Haiti</option>
-                                <option value="Hungary">Hungary</option>
-                                <option value="Iceland">Iceland</option>
-                                <option value="India">India</option>
-                                <option value="Indonesia">Indonesia</option>
-                                <option value="Iran">Iran</option>
-                                <option value="Ireland">Ireland</option>
-                                <option value="Israel">Israel</option>
-                                <option value="Italy">Italy</option>
-                                <option value="Jamaica">Jamaica</option>
-                                <option value="Japan">Japan</option>
-                                <option value="Jordan">Jordan</option>
-                                <option value="Kazakhstan">Kazakhstan</option>
-                                <option value="Kuwait">Kuwait</option>
-                                <option value="Kyrgyzstan">Kyrgyzstan</option>
-                                <option value="Laos">Laos</option>
-                                <option value="Latvia">Latvia</option>
-                                <option value="Lebanon">Lebanon</option>
-                                <option value="Liberia">Liberia</option>
-                                <option value="Libya">Libya</option>
-                                <option value="Macedonia">Macedonia</option>
-                                <option value="Malaysia">Malaysia</option>
-                                <option value="Mali">Mali</option>
-                                <option value="Mexico">Mexico</option>
-                                <option value="Myanmar">Myanmar</option>
-                                <option value="Nepal">Nepal</option>
-                                <option value="New Zealand">New Zealand</option>
-                                <option value="Nigeria">Nigeria</option>
-                                <option value="North Korea">North Korea</option>
-                                <option value="Pakistan">Pakistan</option>
-                                <option value="Palestine">Palestine</option>
-                                <option value="Paraguay">Paraguay</option>
-                                <option value="Peru">Peru</option>
-                                <option value="Philippines">Philippines</option>
-                                <option value="Poland">Poland</option>
-                                <option value="Portugal">Portugal</option>
-                                <option value="Romania">Romania</option>
-                                <option value="Russia">Russia</option>
-                                <option value="Saudi Arabia">Saudi Arabia</option>
-                                <option value="Senegal">Senegal</option>
-                                <option value="Serbia">Serbia</option>
-                                <option value="Singapore">Singapore</option>
-                                <option value="Slovenia">Slovenia</option>
-                                <option value="South Africa">South Africa</option>
-                                <option value="South Korea">South Korea</option>
-                                <option value="Spain">Spain</option>
-                                <option value="Sudan">Sudan</option>
-                                <option value="Sweden">Sweden</option>
-                                <option value="Switzerland">Switzerland</option>
-                                <option value="Syria">Syria</option>
-                                <option value="Taiwan">Taiwan</option>
-                                <option value="Tajikistan">Tajikistan</option>
-                                <option value="Thailand">Thailand</option>
-                                <option value="Tunisia">Tunisia</option>
-                                <option value="Turkey">Turkey</option>
-                                <option value="Ukraine">Ukraine</option>
-                                <option value="United Kingdom">United Kingdom</option>
-                                <option value="United States">United States</option>
-                                <option value="Uruguay">Uruguay</option>
-                                <option value="Venezuela">Venezuela</option>
-                                <option value="Vietnam">Vietnam</option>
-                                <option value="Yemen">Yemen</option>
-                                <option value="Zambia">Zambia</option>
-                                <option value="Zimbabwe">Zimbabwe</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="box-title">
-                        <h3>
-                            <i class="fa fa-check"></i>
-                            Work place information
-                        </h3>
-                    </div>
-                    <br />
-                    <div class="form-group">
-                        <label for="anotherelem" class="control-label col-sm-3">Address</label>
-                        <div class="col-sm-9">
-                            <input type="text" name="WorkAddress" id="WorkAddress" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="anotherelem" class="control-label col-sm-3">Organization <span class="validation-span-required">(*)</span></label>
-                        <div class="col-sm-9">
-                            <input type="text" name="Organization" id="Organization" class="form-control" data-rule-required="true">
-                        </div>
-                    </div>
-                </div>
-                <div class="step" id="thirdStep">
-                    <ul class="wizard-steps steps-3">
-                        <li>
-                            <div class="single-step">
-                                <span class="title">
-                                    1
-                                </span>
-                                <span class="circle">
-                                </span>
-                                <span class="description">
-                                    General information
-                                </span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="single-step">
-                                <span class="title">
-                                    2
-                                </span>
-                                <span class="circle">
-                                </span>
-                                <span class="description">
-                                    Contact information
-                                </span>
-                            </div>
-                        </li>
-                        <li class='active'>
-                            <div class="single-step">
-                                <span class="title">
-                                    3
-                                </span>
-                                <span class="circle">
-                                    <span class="active"></span>
-                                </span>
-                                <span class="description">
-                                    Registration information
-                                </span>
-                            </div>
-                        </li>
-                    </ul>
-                    <input type="hidden" name="CurrentStep" value="3" />
-                    <input type="hidden" class="hidSession" name="hidSession" value="" />
-                    <div class="form-group">
-                        <label for="additionalfield" class="control-label col-sm-3">Participant type <span class="validation-span-required">(*)</span></label>
-                        <div class="col-sm-9">
-                            <select name="ParticipantType" id="ParticipantType" data-rule-required="true">
-                                <option value="">-- Chose one --</option>
-                                <option value="International delegates">International delegates</option>
-                                <option value="Vietnamese delegate">Vietnamese delegate</option>
-                                <option value="International youth">International youth</option>
-                                <option value="Vietnamese youth">Vietnamese youth</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="text" class="control-label col-sm-3">Participate in Youth conference <span class="validation-span-required">(*)</span></label>
-                        <div class="col-sm-9">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="radio" id="YouthConference" name="YouthConference" value="true" data-rule-required="true">&nbsp;Yes
-                                    <input type="radio" id="YouthConference" name="YouthConference" value="false" data-rule-required="true">&nbsp;No
-                                    <i>(Youth age 15-29/ Born in 1988 - 2002)</i>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="box-title">
-                        <h3>
-                            <i class="fa fa-check"></i>
-                            Visa/Guest management information
-                        </h3>
-                    </div>
-                    <div class="form-group">
-                        <i>Your information will be submitted to Vietnam Department of Immigration as the security requirement. Even though you do not need visa, please fill in the required fields.</i>
-                    </div>
-                    <div class="form-group">
-                        <label for="anotherelem" class="control-label col-sm-3">Need visa support:</label>
-                        <div class="col-sm-9">
-                            <input type="radio" name="NeedVisaSupport" value="true">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="anotherelem" class="control-label col-sm-3">Date of birth <span class="validation-span-required">(*)</span></label>
-                        <div class="col-sm-9">
-                            <input type="text" name="DateOfBirth" id="DateOfBirth" class="form-control mask_date" data-rule-required="true" data-rule-date="true">
-                            <i>(yyyy/mm/dd)</i>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="anotherelem" class="control-label col-sm-3">Original nationality <span class="validation-span-required">(*)</span></label>
-                        <div class="col-sm-9">
-                            <input type="text" name="OriginalNationality" id="OriginalNationality" class="form-control" data-rule-required="true">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="anotherelem" class="control-label col-sm-3">Current nationality <span class="validation-span-required">(*)</span></label>
-                        <div class="col-sm-9">
-                            <input type="text" name="CurrentNationality" id="CurrentNationality" class="form-control" data-rule-required="true">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="anotherelem" class="control-label col-sm-3">Passport number <span class="validation-span-required">(*)</span></label>
-                        <div class="col-sm-9">
-                            <input type="text" name="PassportNumber" id="PassportNumber" class="form-control" data-rule-required="true">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="additionalfield" class="control-label col-sm-3">Type of passport <span class="validation-span-required">(*)</span></label>
-                        <div class="col-sm-9">
-                            <select name="TypeOfPassport" id="TypeOfPassport" data-rule-required="true">
-                                <option value="">-- Chose one --</option>
-                                <option value="Regular">Regular</option>
-                                <option value="Official">Official</option>
-                                <option value="Diplomatic">Diplomatic</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="anotherelem" class="control-label col-sm-3">Occupation <span class="validation-span-required">(*)</span></label>
-                        <div class="col-sm-9">
-                            <input type="text" name="Occupation" id="Occupation" class="form-control" data-rule-required="true">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="anotherelem" class="control-label col-sm-3">Date of Passport issue <span class="validation-span-required">(*)</span></label>
-                        <div class="col-sm-9">
-                            <input type="text" name="DateOfPassportIssue" id="DateOfPassportIssue" class="form-control mask_date" data-rule-required="true" data-rule-date="true">
-                            <i>(yyyy/mm/dd)</i>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="anotherelem" class="control-label col-sm-3">Date of Passport expiry <span class="validation-span-required">(*)</span></label>
-                        <div class="col-sm-9">
-                            <input type="text" name="DateOfPassportExpiry" id="DateOfPassportExpiry" class="form-control mask_date" data-rule-required="true" data-rule-date="true">
-                            <i>(yyyy/mm/dd)</i>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="file" class="control-label col-sm-3">Photocopies of the first 3 pages of the passport <span class="validation-span-required">(*)</span></label>
-                        <div class="col-sm-9">
-                            <input type="file" id="upload" class="form-control" multiple data-rule-required="true"/>
-                            <span class="help-block">Only JPEG, JPG, PNG (Max Size: 5MB)</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="text" class="control-label col-sm-3">Detail address of the Embassy of Viet Nam in your country which you will apply for your Visa to enter Viet Nam (for all delegates who need visa)</label>
-                        <div class="col-sm-9">
-                            <textarea name="DetailOfEmbassy" id="DetailOfEmbassy" class="form-control ui-wizard-content" rows="7" placeholder="You can provide additional information in here..."></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-actions">
-                    <input type="reset" class="btn" value="Back" id="back">
-                    <input type="submit" class="btn btn-primary" value="Submit" id="next">
-                </div>
-            </form>
-        </div>
+    <div class="box box-color box-bordered">
+    <div class="box-title">
+        <h3>
+            <i class="fa fa-magic"></i>
+            Step overview
+        </h3>
     </div>
-    }
+    <div class="box-content nopadding">
+        <form action="@Url.Action("RegistrationWizard", "Registration")" method="POST" class='form-horizontal form-wizard form-validate' id="frmRegistration">
+            <div class="step" id="firstStep">
+                <ul class="wizard-steps steps-3">
+                    <li class='active'>
+                        <div class="single-step">
+                            <span class="title">1</span>
+                            <span class="circle">
+                                <span class="active"></span>
+                            </span>
+                            <span class="description">
+                                General information
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="single-step">
+                            <span class="title">2</span>
+                            <span class="circle">
+                            </span>
+                            <span class="description">
+                                Contact information
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="single-step">
+                            <span class="title">3</span>
+                            <span class="circle">
+                            </span>
+                            <span class="description">
+                                Registration information
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+                <input type="hidden" name="CurrentStep" value="1" />
+                <input type="hidden" class="hidSession" name="hidSession" value="" />
+                <div class="form-group">
+                    <label for="firstname" class="control-label col-sm-3">Title <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <select name="Title" id="Title" onchange="popupSelectInput(this, 'Title')" data-rule-required="true">
+                            <option value="">-- Chose one --</option>
+                            <option value="Dr">Dr</option>
+                            <option value="Mr">Mr</option>
+                            <option value="Mrs">Mrs</option>
+                            <option value="Ms">Ms</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Full name <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="FullName" id="FullName" class="form-control" data-rule-required="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="additionalfield" class="control-label col-sm-3">Sex <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <select name="Sex" id="Sex" onchange="popupSelectInput(this, 'Sex')" data-rule-required="true">
+                            <option value="">-- Chose one --</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="additionalfield" class="control-label col-sm-3">Meal preference <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <select name="MealPreference" id="MealPreference" data-rule-required="true">
+                            <option value="">-- Chose one --</option>
+                            <option value="Vegetarian">Vegetarian</option>
+                            <option value="Non- vegetarian">Non- vegetarian</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Disability or special treatment</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="DisabilityOrTreatment" id="DisabilityOrTreatment" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="step" id="secondStep">
+                <ul class="wizard-steps steps-3">
+                    <li>
+                        <div class="single-step">
+                            <span class="title">1</span>
+                            <span class="circle">
+                            </span>
+                            <span class="description">
+                                General information
+                            </span>
+                        </div>
+                    </li>
+                    <li class='active'>
+                        <div class="single-step">
+                            <span class="title">
+                                2
+                            </span>
+                            <span class="circle">
+                                <span class="active"></span>
+                            </span>
+                            <span class="description">
+                                Contact information
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="single-step">
+                            <span class="title">
+                                3
+                            </span>
+                            <span class="circle">
+                            </span>
+                            <span class="description">
+                                Registration information
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+                <input type="hidden" name="CurrentStep" value="2" />
+                <input type="hidden" class="hidSession" name="hidSession" value="" />
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Email address <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="Email" id="Email" class="form-control" data-rule-required="true" data-rule-email="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Other email address</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="OtherEmail" id="OtherEmail" class="form-control" data-rule-email="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Phone number <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="Phone" id="Phone" class="form-control" data-rule-required="true" data-rule-number="true" data-rule-minlength="8">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Address <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="Address" id="Address" class="form-control" data-rule-required="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">City <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="City" id="City" class="form-control" data-rule-required="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="text" class="control-label col-sm-3">Country <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <select name="Country" id="Country" data-rule-required="true">
+                            <option value="">-- Chose one --</option>
+                            <option value="Afghanistan">Afghanistan</option>
+                            <option value="Albania">Albania</option>
+                            <option value="Algeria">Algeria</option>
+                            <option value="Angola">Angola</option>
+                            <option value="Argentina">Argentina</option>
+                            <option value="Armenia">Armenia</option>
+                            <option value="Australia">Australia</option>
+                            <option value="Azerbaijan">Azerbaijan</option>
+                            <option value="Bangladesh">Bangladesh</option>
+                            <option value="Bolivia">Bolivia</option>
+                            <option value="Brazil">Brazil</option>
+                            <option value="Brunei">Brunei</option>
+                            <option value="Bulgaria">Bulgaria</option>
+                            <option value="Cameroon">Cameroon</option>
+                            <option value="Canada">Canada</option>
+                            <option value="Chile">Chile</option>
+                            <option value="China">China</option>
+                            <option value="Colombia">Colombia</option>
+                            <option value="Congo">Congo</option>
+                            <option value="Costa Rica">Costa Rica</option>
+                            <option value="Croatia">Croatia</option>
+                            <option value="Cuba">Cuba</option>
+                            <option value="Czech">Czech</option>
+                            <option value="Dominica">Dominica</option>
+                            <option value="Ecuador">Ecuador</option>
+                            <option value="Egypt">Egypt</option>
+                            <option value="France">France</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Germany">Germany</option>
+                            <option value="Ghana">Ghana</option>
+                            <option value="Greece">Greece</option>
+                            <option value="Haiti">Haiti</option>
+                            <option value="Hungary">Hungary</option>
+                            <option value="Iceland">Iceland</option>
+                            <option value="India">India</option>
+                            <option value="Indonesia">Indonesia</option>
+                            <option value="Iran">Iran</option>
+                            <option value="Ireland">Ireland</option>
+                            <option value="Israel">Israel</option>
+                            <option value="Italy">Italy</option>
+                            <option value="Jamaica">Jamaica</option>
+                            <option value="Japan">Japan</option>
+                            <option value="Jordan">Jordan</option>
+                            <option value="Kazakhstan">Kazakhstan</option>
+                            <option value="Kuwait">Kuwait</option>
+                            <option value="Kyrgyzstan">Kyrgyzstan</option>
+                            <option value="Laos">Laos</option>
+                            <option value="Latvia">Latvia</option>
+                            <option value="Lebanon">Lebanon</option>
+                            <option value="Liberia">Liberia</option>
+                            <option value="Libya">Libya</option>
+                            <option value="Macedonia">Macedonia</option>
+                            <option value="Malaysia">Malaysia</option>
+                            <option value="Mali">Mali</option>
+                            <option value="Mexico">Mexico</option>
+                            <option value="Myanmar">Myanmar</option>
+                            <option value="Nepal">Nepal</option>
+                            <option value="New Zealand">New Zealand</option>
+                            <option value="Nigeria">Nigeria</option>
+                            <option value="North Korea">North Korea</option>
+                            <option value="Pakistan">Pakistan</option>
+                            <option value="Palestine">Palestine</option>
+                            <option value="Paraguay">Paraguay</option>
+                            <option value="Peru">Peru</option>
+                            <option value="Philippines">Philippines</option>
+                            <option value="Poland">Poland</option>
+                            <option value="Portugal">Portugal</option>
+                            <option value="Romania">Romania</option>
+                            <option value="Russia">Russia</option>
+                            <option value="Saudi Arabia">Saudi Arabia</option>
+                            <option value="Senegal">Senegal</option>
+                            <option value="Serbia">Serbia</option>
+                            <option value="Singapore">Singapore</option>
+                            <option value="Slovenia">Slovenia</option>
+                            <option value="South Africa">South Africa</option>
+                            <option value="South Korea">South Korea</option>
+                            <option value="Spain">Spain</option>
+                            <option value="Sudan">Sudan</option>
+                            <option value="Sweden">Sweden</option>
+                            <option value="Switzerland">Switzerland</option>
+                            <option value="Syria">Syria</option>
+                            <option value="Taiwan">Taiwan</option>
+                            <option value="Tajikistan">Tajikistan</option>
+                            <option value="Thailand">Thailand</option>
+                            <option value="Tunisia">Tunisia</option>
+                            <option value="Turkey">Turkey</option>
+                            <option value="Ukraine">Ukraine</option>
+                            <option value="United Kingdom">United Kingdom</option>
+                            <option value="United States">United States</option>
+                            <option value="Uruguay">Uruguay</option>
+                            <option value="Venezuela">Venezuela</option>
+                            <option value="Vietnam">Vietnam</option>
+                            <option value="Yemen">Yemen</option>
+                            <option value="Zambia">Zambia</option>
+                            <option value="Zimbabwe">Zimbabwe</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="box-title">
+                    <h3>
+                        <i class="fa fa-check"></i>
+                        Work place information
+                    </h3>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Address</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="WorkAddress" id="WorkAddress" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Organization <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="Organization" id="Organization" class="form-control" data-rule-required="true">
+                    </div>
+                </div>
+            </div>
+            <div class="step" id="thirdStep">
+                <ul class="wizard-steps steps-3">
+                    <li>
+                        <div class="single-step">
+                            <span class="title">
+                                1
+                            </span>
+                            <span class="circle">
+                            </span>
+                            <span class="description">
+                                General information
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="single-step">
+                            <span class="title">
+                                2
+                            </span>
+                            <span class="circle">
+                            </span>
+                            <span class="description">
+                                Contact information
+                            </span>
+                        </div>
+                    </li>
+                    <li class='active'>
+                        <div class="single-step">
+                            <span class="title">
+                                3
+                            </span>
+                            <span class="circle">
+                                <span class="active"></span>
+                            </span>
+                            <span class="description">
+                                Registration information
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+                <input type="hidden" name="CurrentStep" value="3" />
+                <input type="hidden" class="hidSession" name="hidSession" value="" />
+                <div class="form-group">
+                    <label for="additionalfield" class="control-label col-sm-3">Participant type <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <select name="ParticipantType" id="ParticipantType" data-rule-required="true">
+                            <option value="">-- Chose one --</option>
+                            <option value="International delegates">International delegates</option>
+                            <option value="Vietnamese delegate">Vietnamese delegate</option>
+                            <option value="International youth">International youth</option>
+                            <option value="Vietnamese youth">Vietnamese youth</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="text" class="control-label col-sm-3">Participate in Youth conference <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <div class="checkbox">
+                            <label>
+                                <input type="radio" id="YouthConference" name="YouthConference" value="true" data-rule-required="true">&nbsp;Yes
+                                <input type="radio" id="YouthConference" name="YouthConference" value="false" data-rule-required="true">&nbsp;No
+                                <i>(Youth age 15-29/ Born in 1988 - 2002)</i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-title">
+                    <h3>
+                        <i class="fa fa-check"></i>
+                        Visa/Guest management information
+                    </h3>
+                </div>
+                <div class="form-group">
+                    <i>Your information will be submitted to Vietnam Department of Immigration as the security requirement. Even though you do not need visa, please fill in the required fields.</i>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Need visa support:</label>
+                    <div class="col-sm-9">
+                        <input type="radio" name="NeedVisaSupport" value="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Date of birth <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="DateOfBirth" id="DateOfBirth" class="form-control mask_date" data-rule-required="true" data-rule-date="true">
+                        <i>(yyyy/mm/dd)</i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Original nationality <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="OriginalNationality" id="OriginalNationality" class="form-control" data-rule-required="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Current nationality <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="CurrentNationality" id="CurrentNationality" class="form-control" data-rule-required="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Passport number <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="PassportNumber" id="PassportNumber" class="form-control" data-rule-required="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="additionalfield" class="control-label col-sm-3">Type of passport <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <select name="TypeOfPassport" id="TypeOfPassport" data-rule-required="true">
+                            <option value="">-- Chose one --</option>
+                            <option value="Regular">Regular</option>
+                            <option value="Official">Official</option>
+                            <option value="Diplomatic">Diplomatic</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Occupation <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="Occupation" id="Occupation" class="form-control" data-rule-required="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Date of Passport issue <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="DateOfPassportIssue" id="DateOfPassportIssue" class="form-control mask_date" data-rule-required="true" data-rule-date="true">
+                        <i>(yyyy/mm/dd)</i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Date of Passport expiry <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="DateOfPassportExpiry" id="DateOfPassportExpiry" class="form-control mask_date" data-rule-required="true" data-rule-date="true">
+                        <i>(yyyy/mm/dd)</i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="file" class="control-label col-sm-3">Photocopies of the first 3 pages of the passport <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <input type="file" id="upload" class="form-control" multiple data-rule-required="true"/>
+                        <span class="help-block">Only JPEG, JPG, PNG (Max Size: 5MB)</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="text" class="control-label col-sm-3">Detail address of the Embassy of Viet Nam in your country which you will apply for your Visa to enter Viet Nam (for all delegates who need visa)</label>
+                    <div class="col-sm-9">
+                        <textarea name="DetailOfEmbassy" id="DetailOfEmbassy" class="form-control ui-wizard-content" rows="7" placeholder="You can provide additional information in here..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <input type="reset" class="btn" value="Back" id="back">
+                <input type="submit" class="btn btn-primary" value="Submit" id="next">
+            </div>
+        </form>
+    </div>
+</div>
 </div>
 <script type="text/javascript">
     function popupSelectInput(select, field) {

@@ -59,6 +59,31 @@ namespace apcrshr_site.Controllers
         #region User registration
         public ActionResult RegistrationForm()
         {
+            //Allow registration when registration opened
+            FindItemReponse<ImportantDeadlineModel> importantDeadlineResponse = _importantDeadlineService.FindImportantDeadlineByType(DeadlineType.Registration);
+            if (importantDeadlineResponse.Item == null)
+            {
+                return RedirectToAction("RegistrationNotAvailable", new { status = 1 });
+            }
+            else if (importantDeadlineResponse.Item.Deadline < DateTime.Now)
+            {
+                return RedirectToAction("RegistrationNotAvailable", new { status = 2 });
+            }
+            return View();
+        }
+
+        /// <summary>
+        /// Display registration status
+        /// </summary>
+        /// <param name="status">
+        /// 1: Registration is not opened
+        /// 2: Registration is expired
+        /// </param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult RegistrationNotAvailable(int status)
+        {
+            ViewBag.Status = status;
             return View();
         }
 

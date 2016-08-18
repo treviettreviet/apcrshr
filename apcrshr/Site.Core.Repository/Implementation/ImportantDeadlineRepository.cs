@@ -137,5 +137,22 @@ namespace Site.Core.Repository.Implementation
                 return Tuple.Create<int, IList<ImportantDeadline>>(count, deadlines);
             }
         }
+
+
+        public IList<ImportantDeadline> FindTop(int top, DateTime date)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.ImportantDeadlines.Where(i => i.Deadline >= date).OrderByDescending(i => i.CreatedDate).Take(top).ToList();
+            }
+        }
+
+        public ImportantDeadline FindByType(int type)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.ImportantDeadlines.Where(i => i.Type == type).OrderByDescending(i => i.Deadline).FirstOrDefault();
+            }
+        }
     }
 }
