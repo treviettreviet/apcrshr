@@ -13,8 +13,12 @@ namespace Site.Core.DataModel.Enum
         /// </summary>
         Created = 0,
         /// <summary>
-        /// Account actived with confimation email confirmed
+        /// The user isn't paid
         /// </summary>
-        Actived = 1
+        PaymentNotCompleted = 1,
+        /// <summary>
+        /// The user has paid
+        /// </summary>
+        PaymentCompleted = 2
     }
 }

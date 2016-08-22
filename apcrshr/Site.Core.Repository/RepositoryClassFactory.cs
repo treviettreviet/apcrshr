@@ -155,5 +155,10 @@ namespace Site.Core.Repository
         {
             return new UserSubmissionRepository();
         }
+
+        public IPaymentRepository GetPaymentRepository()
+        {
+            return new PaymentRepository();
+        }
     }
 }

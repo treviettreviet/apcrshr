@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="col-md-9 page-content">
+    <!-- Classic Heading -->
+    <h4 class="classic-title"><span>@ViewBag.Title</span></h4>
+    @Html.ActionLink("Pay Direct With Credit Card", "PaymentWithCreditCard", "Payment")
+    @Html.ActionLink("Pay with Paypal Account", "PaymentWithPaypal", "Payment")
+</div>

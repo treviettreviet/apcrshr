@@ -60,6 +60,7 @@
     <Compile Include="MenuCategoryService.cs" />
     <Compile Include="ModelMapper\MapperUtil.cs" />
     <Compile Include="NewsService.cs" />
+    <Compile Include="PaymentService.cs" />
     <Compile Include="PhotoService.cs" />
     <Compile Include="PresentationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,7 +95,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Resource.resx">
