@@ -58,7 +58,7 @@ namespace apcrshr_site.Controllers
 
         public IList<ImportantDeadlineModel> GetImportantDeadlines(int top)
         {
-            FindAllItemReponse<ImportantDeadlineModel> importantDeadlineResponse = _importantDeadlineService.GetImportantDeadlines(top);
+            FindAllItemReponse<ImportantDeadlineModel> importantDeadlineResponse = _importantDeadlineService.GetImportantDeadlines(top, DateTime.Now);
             return importantDeadlineResponse.Items;
         }
     }

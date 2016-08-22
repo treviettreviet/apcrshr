@@ -281,5 +281,55 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindAllItemReponse<ImportantDeadlineModel> GetImportantDeadlines(int top, DateTime date)
+        {
+            try
+            {
+                IImportantDeadlineRepository importantDeadlineRepository = RepositoryClassFactory.GetInstance().GetImportantDeadlineRepository();
+                IList<ImportantDeadline> importantDeadline = importantDeadlineRepository.FindTop(top, date);
+                var _importantDeadline = importantDeadline.Select(i => MapperUtil.CreateMapper().Mapper.Map<ImportantDeadline, ImportantDeadlineModel>(i)).ToList();
+                return new FindAllItemReponse<ImportantDeadlineModel>
+                {
+                    Items = _importantDeadline,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindAllItemReponse<ImportantDeadlineModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
+
+
+        public FindItemReponse<ImportantDeadlineModel> FindImportantDeadlineByType(DeadlineType type)
+        {
+            try
+            {
+                IImportantDeadlineRepository importantDeadlineRepository = RepositoryClassFactory.GetInstance().GetImportantDeadlineRepository();
+                ImportantDeadline importantDeadline = importantDeadlineRepository.FindByType((int)type);
+                var _importantDeadlines = MapperUtil.CreateMapper().Mapper.Map<ImportantDeadline, ImportantDeadlineModel>(importantDeadline);
+                return new FindItemReponse<ImportantDeadlineModel>
+                {
+                    Item = _importantDeadlines,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindItemReponse<ImportantDeadlineModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }

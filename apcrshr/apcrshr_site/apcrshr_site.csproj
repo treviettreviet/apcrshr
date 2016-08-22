@@ -204,6 +204,7 @@
     <Compile Include="Areas\Administrator\Controllers\ArticleController.cs" />
     <Compile Include="Areas\Administrator\Controllers\ErrorController.cs" />
     <Compile Include="Constants\Constants.cs" />
+    <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ConferenceDeclarationController.cs" />
@@ -1278,7 +1279,10 @@
     <Content Include="Views\Registration\RegistrationCompleted.cshtml" />
     <Content Include="Views\Registration\MainSholarshipRegistration.cshtml" />
     <Content Include="Views\Registration\YouthSholarshipRegistration.cshtml" />
+    <Content Include="Views\Registration\RegistrationNotAvailable.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
+    <Content Include="Views\Abstract\SubmitAbstract.cshtml" />
+    <Content Include="Views\Abstract\AbstractNotAvailable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

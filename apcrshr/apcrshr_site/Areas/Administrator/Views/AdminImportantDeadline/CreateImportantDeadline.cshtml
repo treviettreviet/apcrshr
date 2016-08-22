@@ -88,9 +88,9 @@
 
 <script>
     $(document).ready(function () {
-        $('#StartDate').datepicker({ dateFormat: 'mm/dd/yy' }).datepicker("setDate", new Date());
-        $('#EndDate').datepicker({ dateFormat: 'mm/dd/yy' }).datepicker("setDate", new Date());
-        $('#Deadline').datepicker({ dateFormat: 'mm/dd/yy' }).datepicker("setDate", new Date());
+        $('#StartDate').datepicker().datepicker("setDate", new Date());
+        $('#EndDate').datepicker().datepicker("setDate", new Date());
+        $('#Deadline').datepicker().datepicker("setDate", new Date());
     });
 
     function submitForm() {
