@@ -63,6 +63,7 @@
     <Compile Include="Model\MainScholarshipModel.cs" />
     <Compile Include="Model\MenuModel.cs" />
     <Compile Include="Model\NewsModel.cs" />
+    <Compile Include="Model\PaymentModel.cs" />
     <Compile Include="Model\PhotoModel.cs" />
     <Compile Include="Model\PresentationModel.cs" />
     <Compile Include="Model\PublicationModel.cs" />

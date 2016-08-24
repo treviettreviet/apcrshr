@@ -51,6 +51,7 @@
     <Compile Include="IMainScholarshipService.cs" />
     <Compile Include="IMenuCategoryService.cs" />
     <Compile Include="INewsService.cs" />
+    <Compile Include="IPaymentService.cs" />
     <Compile Include="IPhotoService.cs" />
     <Compile Include="IPresentationService.cs" />
     <Compile Include="IPublicationService.cs" />

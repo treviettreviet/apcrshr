@@ -60,6 +60,7 @@
     <Compile Include="MenuCategoryService.cs" />
     <Compile Include="ModelMapper\MapperUtil.cs" />
     <Compile Include="NewsService.cs" />
+    <Compile Include="PaymentService.cs" />
     <Compile Include="PhotoService.cs" />
     <Compile Include="PresentationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

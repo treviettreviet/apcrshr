@@ -99,6 +99,7 @@
     <Compile Include="Implementation\MainScholarshipRepository.cs" />
     <Compile Include="Implementation\MenuRepository.cs" />
     <Compile Include="Implementation\NewsRepository.cs" />
+    <Compile Include="Implementation\PaymentRepository.cs" />
     <Compile Include="Implementation\PhotoRepository.cs" />
     <Compile Include="Implementation\PresentationRepository.cs" />
     <Compile Include="Implementation\PublicationRepository.cs" />
@@ -134,6 +135,9 @@
     <Compile Include="News.cs">
       <DependentUpon>APCRSHRModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Payment.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Photo.cs">
       <DependentUpon>APCRSHRModel.tt</DependentUpon>
     </Compile>
@@ -158,6 +162,7 @@
     <Compile Include="Repository\IMainScholarshipRepository.cs" />
     <Compile Include="Repository\IMenuRepository.cs" />
     <Compile Include="Repository\INewsRepository.cs" />
+    <Compile Include="Repository\IPaymentRepository.cs" />
     <Compile Include="Repository\IPhotoRepository.cs" />
     <Compile Include="Repository\IPresentationRepository.cs" />
     <Compile Include="Repository\IPublicationRepository.cs" />

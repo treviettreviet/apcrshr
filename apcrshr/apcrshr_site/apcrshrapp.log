@@ -1,0 +1,68 @@
+2016-08-22 10:09:37,310
+      [5] DEBUG PayPal.Api.PayPalResource [(null)] Content-Type:application/x-www-form-urlencoded
+2016-08-22 10:09:43,556
+      [5] DEBUG PayPal.Api.PayPalResource [(null)] User-Agent:PayPalSDK/PayPal-NET-SDK 1.7.4 (lang=DOTNET;v=4.5;clr=4.0.30319.42000;bit=64;os=Microsoft Windows NT 6.2.9200.0)
+2016-08-22 10:09:43,557
+      [5] DEBUG PayPal.Api.PayPalResource [(null)] Authorization:Basic QWNEOTQ3b3J2d2NOQ3lBQ3JwUWdaOFpIOXhJYWFJR3ZOSXc4ZS15aURTUDZISk01eW5yd2xxM1AyTWxtZ1pFQ21EMlpEZEZQcHhtOFowV3M6RUtQeDJrN2Q5YXhhT0FQX1F6N2tKajk2alA4RlNSOV9qeWdicHpIR3FaZ19qOE1YOWZ5cDBuN0dUZFlid0I3THFxWHNiSU1VNjllVDhVb0g=
+2016-08-22 10:09:43,558
+      [5] DEBUG PayPal.Api.PayPalResource [(null)] PayPal-Request-Id:248e0cb6-be14-45a8-9c65-99cb263e9266
+2016-08-22 10:09:44,070
+      [5] DEBUG PayPal.Api.HttpConnection [(null)] grant_type=client_credentials
+2016-08-22 10:09:46,800
+      [5] DEBUG PayPal.Api.HttpConnection [(null)] Service response: 
+2016-08-22 10:09:46,802
+      [5] DEBUG PayPal.Api.HttpConnection [(null)] {"scope":"https://uri.paypal.com/services/subscriptions https://api.paypal.com/v1/payments/.* https://api.paypal.com/v1/vault/credit-card https://uri.paypal.com/services/applications/webhooks openid https://uri.paypal.com/payments/payouts https://api.paypal.com/v1/vault/credit-card/.*","nonce":"2016-08-22T17:09:51ZtwXpcIwWV9fqzzBWzIdZ7fVM0fQgdprVSqfhD9xr8Kg","access_token":"A101.8M8lfx8eYb8_HSgnDP3Ag3pMegAgKkLgUjBHiI9EXCKcVHXuO4OltewKP_XCUsTo.PDafM8H0jOph-Twxk19kBGBcrm0","token_type":"Bearer","app_id":"APP-80W284485P519543T","expires_in":32400}
+2016-08-22 10:10:10,514
+      [5] DEBUG PayPal.Api.PayPalResource [(null)] Content-Type:application/json
+2016-08-22 10:10:10,518
+      [5] DEBUG PayPal.Api.PayPalResource [(null)] User-Agent:PayPalSDK/PayPal-NET-SDK 1.7.4 (lang=DOTNET;v=4.5;clr=4.0.30319.42000;bit=64;os=Microsoft Windows NT 6.2.9200.0)
+2016-08-22 10:10:10,519
+      [5] DEBUG PayPal.Api.PayPalResource [(null)] Authorization:Bearer A101.8M8lfx8eYb8_HSgnDP3Ag3pMegAgKkLgUjBHiI9EXCKcVHXuO4OltewKP_XCUsTo.PDafM8H0jOph-Twxk19kBGBcrm0
+2016-08-22 10:10:10,519
+      [5] DEBUG PayPal.Api.PayPalResource [(null)] PayPal-Request-Id:9fc019d8-dee8-452e-8555-0f7264cb6575
+2016-08-22 10:10:10,757
+      [5] DEBUG PayPal.Api.HttpConnection [(null)] {"intent":"sale","payer":{"payment_method":"credit_card","funding_instruments":[{"credit_card":{"number":"1234567890123456","type":"visa","expire_month":1,"expire_year":2020,"cvv2":"874","first_name":"Aman","last_name":"Thakur","billing_address":{"line1":"23rd street kew gardens","city":"NewYork","country_code":"US","postal_code":"43210","state":"NY"}}}]},"transactions":[{"amount":{"currency":"USD","total":"7","details":{"subtotal":"5","shipping":"1","tax":"1"}},"description":"Description about the payment amount.","invoice_number":"your invoice number which you are generating","item_list":{"items":[{"quantity":"1","name":"Demo Item","price":"5","currency":"USD","sku":"sku"}]}}]}
+2016-08-22 10:10:12,432
+      [5] ERROR PayPal.Api.HttpConnection [(null)] Error response:
+2016-08-22 10:10:12,432
+      [5] ERROR PayPal.Api.HttpConnection [(null)] {"name":"VALIDATION_ERROR","details":[{"field":"payer.funding_instruments[0].credit_card.number","issue":"Value is invalid."}],"message":"Invalid request. See details.","information_link":"https://developer.paypal.com/webapps/developer/docs/api/#VALIDATION_ERROR","debug_id":"755b5df44162a"}
+2016-08-22 10:10:12,434
+      [5] ERROR PayPal.Api.HttpConnection [(null)] The remote server returned an error: (400) Bad Request.
+2016-08-22 10:10:13,192
+      [5] ERROR PayPal.PayPalException [(null)] Payments Exception: 
+   Error:    VALIDATION_ERROR
+   Message:  Invalid request. See details.
+   URI:      https://developer.paypal.com/webapps/developer/docs/api/#VALIDATION_ERROR
+   Debug ID: 755b5df44162a
+   Details:  payer.funding_instruments[0].credit_card.number -> Value is invalid.
+
+2016-08-22 10:11:05,116
+      [5] ERROR apcrshr_site.Controllers.PaymentController [(null)] Error: The remote server returned an error: (400) Bad Request.
+2016-08-22 10:11:33,745
+      [5] DEBUG PayPal.Api.PayPalResource [(null)] Content-Type:application/x-www-form-urlencoded
+2016-08-22 10:11:33,746
+      [5] DEBUG PayPal.Api.PayPalResource [(null)] User-Agent:PayPalSDK/PayPal-NET-SDK 1.7.4 (lang=DOTNET;v=4.5;clr=4.0.30319.42000;bit=64;os=Microsoft Windows NT 6.2.9200.0)
+2016-08-22 10:11:33,747
+      [5] DEBUG PayPal.Api.PayPalResource [(null)] Authorization:Basic QWNEOTQ3b3J2d2NOQ3lBQ3JwUWdaOFpIOXhJYWFJR3ZOSXc4ZS15aURTUDZISk01eW5yd2xxM1AyTWxtZ1pFQ21EMlpEZEZQcHhtOFowV3M6RUtQeDJrN2Q5YXhhT0FQX1F6N2tKajk2alA4RlNSOV9qeWdicHpIR3FaZ19qOE1YOWZ5cDBuN0dUZFlid0I3THFxWHNiSU1VNjllVDhVb0g=
+2016-08-22 10:11:33,749
+      [5] DEBUG PayPal.Api.PayPalResource [(null)] PayPal-Request-Id:9b17d13d-dae5-4709-ad6f-472ba70fb30e
+2016-08-22 10:11:33,988
+      [5] DEBUG PayPal.Api.HttpConnection [(null)] grant_type=client_credentials
+2016-08-22 10:11:34,743
+      [5] DEBUG PayPal.Api.HttpConnection [(null)] Service response: 
+2016-08-22 10:11:34,744
+      [5] DEBUG PayPal.Api.HttpConnection [(null)] {"scope":"https://uri.paypal.com/services/subscriptions https://api.paypal.com/v1/payments/.* https://api.paypal.com/v1/vault/credit-card https://uri.paypal.com/services/applications/webhooks openid https://uri.paypal.com/payments/payouts https://api.paypal.com/v1/vault/credit-card/.*","nonce":"2016-08-22T17:09:51ZtwXpcIwWV9fqzzBWzIdZ7fVM0fQgdprVSqfhD9xr8Kg","access_token":"A101.8M8lfx8eYb8_HSgnDP3Ag3pMegAgKkLgUjBHiI9EXCKcVHXuO4OltewKP_XCUsTo.PDafM8H0jOph-Twxk19kBGBcrm0","token_type":"Bearer","app_id":"APP-80W284485P519543T","expires_in":32292}
+2016-08-22 10:11:51,687
+      [5] DEBUG PayPal.Api.PayPalResource [(null)] Content-Type:application/json
+2016-08-22 10:11:51,688
+      [5] DEBUG PayPal.Api.PayPalResource [(null)] User-Agent:PayPalSDK/PayPal-NET-SDK 1.7.4 (lang=DOTNET;v=4.5;clr=4.0.30319.42000;bit=64;os=Microsoft Windows NT 6.2.9200.0)
+2016-08-22 10:11:51,689
+      [5] DEBUG PayPal.Api.PayPalResource [(null)] Authorization:Bearer A101.8M8lfx8eYb8_HSgnDP3Ag3pMegAgKkLgUjBHiI9EXCKcVHXuO4OltewKP_XCUsTo.PDafM8H0jOph-Twxk19kBGBcrm0
+2016-08-22 10:11:51,689
+      [5] DEBUG PayPal.Api.PayPalResource [(null)] PayPal-Request-Id:a8d3e742-f437-452d-8668-15ab0e16cf9a
+2016-08-22 10:11:51,939
+      [5] DEBUG PayPal.Api.HttpConnection [(null)] {"intent":"sale","payer":{"payment_method":"paypal"},"transactions":[{"amount":{"currency":"USD","total":"7","details":{"subtotal":"5","shipping":"1","tax":"1"}},"description":"Transaction description.","invoice_number":"your invoice number","item_list":{"items":[{"quantity":"1","name":"Item Name","price":"5","currency":"USD","sku":"sku"}]}}],"redirect_urls":{"return_url":"http://localhost:56742/Paypal/PaymentWithPayPal?guid=69281","cancel_url":"http://localhost:56742/Paypal/PaymentWithPayPal?guid=69281"}}
+2016-08-22 10:11:52,995
+      [5] DEBUG PayPal.Api.HttpConnection [(null)] Service response: 
+2016-08-22 10:11:52,997
+      [5] DEBUG PayPal.Api.HttpConnection [(null)] {"id":"PAY-57D90999AD614181GK65TEXI","intent":"sale","state":"created","payer":{"payment_method":"paypal"},"transactions":[{"amount":{"total":"7.00","currency":"USD","details":{"subtotal":"5.00","tax":"1.00","shipping":"1.00"}},"description":"Transaction description.","invoice_number":"your invoice number","item_list":{"items":[{"name":"Item Name","sku":"sku","price":"5.00","currency":"USD","quantity":1}]},"related_resources":[]}],"create_time":"2016-08-22T17:11:57Z","links":[{"href":"https://api.sandbox.paypal.com/v1/payments/payment/PAY-57D90999AD614181GK65TEXI","rel":"self","method":"GET"},{"href":"https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-9XB925230H432473C","rel":"approval_url","method":"REDIRECT"},{"href":"https://api.sandbox.paypal.com/v1/payments/payment/PAY-57D90999AD614181GK65TEXI/execute","rel":"execute","method":"POST"}]}
