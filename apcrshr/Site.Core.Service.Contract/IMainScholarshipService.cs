@@ -49,6 +49,14 @@ namespace Site.Core.Service.Contract
         /// </summary>
         /// <param name="userID"></param>
         /// <returns></returns>
-        FindItemReponse<MainScholarshipModel> FindByUserID(string userID);
+        FindAllItemReponse<MainScholarshipModel> FindByUserID(string userID);
+
+        /// <summary>
+        /// Find main scholarship by userID and submission number
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="submissionNumber"></param>
+        /// <returns></returns>
+        FindItemReponse<MainScholarshipModel> FindByUserIDAndSubmission(string userID, string submissionNumber);
     }
 }

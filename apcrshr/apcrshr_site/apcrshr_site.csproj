@@ -214,6 +214,7 @@
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\PresentationController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
+    <Compile Include="Controllers\ScholarshipController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\AuthorizationFilter.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -1283,6 +1284,9 @@
     <Content Include="Views\Payment\Index.cshtml" />
     <Content Include="Views\Abstract\SubmitAbstract.cshtml" />
     <Content Include="Views\Abstract\AbstractNotAvailable.cshtml" />
+    <Content Include="Views\Scholarship\MainScholarships.cshtml" />
+    <Content Include="Views\Scholarship\UpdateMainScholarship.cshtml" />
+    <Content Include="Views\Scholarship\YouthScholarships.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

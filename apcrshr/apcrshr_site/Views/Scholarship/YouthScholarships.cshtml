@@ -1,42 +1,39 @@
 ﻿@using apcrshr_site.Helper
 @model Site.Core.DataModel.Model.YouthScholarshipModel
 @{
-    ViewBag.Title = "Youth Sholarship Registration";
+    ViewBag.Title = "Update youth sholarship";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
-
 <!-- Tagsinput -->
 <link rel="stylesheet" href="~/Areas/Administrator/css/plugins/tagsinput/jquery.tagsinput.css">
 <!-- TagsInput -->
 <script src="~/Areas/Administrator/js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
-<!-- Custom file upload -->
-<script src="~/Areas/Administrator/js/plugins/fileupload/bootstrap-fileupload.min.js"></script>
 <div class="col-sm-9">
+    <!--Alert-->
+    @if (ViewBag.Message != null)
+    {
+        Site.Core.DataModel.Response.BaseResponse responseMsg = (Site.Core.DataModel.Response.BaseResponse)ViewBag.Message;
+        <br />
+        <div class="alert @(responseMsg.ErrorCode == (int)Site.Core.DataModel.Enum.ErrorCode.None ? " alert-info" : " alert-danger")"><a class="close" data-dismiss="alert" href="#">×</a><strong></strong> @responseMsg.Message</div>
+    }
+
     <div class="box box-color box-bordered">
         <div class="box-title">
             <h3>
-                <i class="fa fa-cog"></i>
-                Youth sholarship registration form
+                <i class="fa fa-magic"></i>
+                Youth sholarship form
             </h3>
         </div>
         <div class="box-content">
-            @using (Ajax.BeginForm("SaveYouthSholarship", "Registration", new AjaxOptions
-                {
-                    InsertionMode = InsertionMode.Replace,
-                    HttpMethod = "POST",
-                    OnFailure = "OnYouthSholarshipFailure",
-                    OnSuccess = "OnYouthSholarshipSuccess",
-                    OnBegin = "OnBeginSubmit"
-                }, new { @class = "form-horizontal form-validate", id = "frmYouthRegistration" }))
+            @using (Html.BeginForm("SaveYouthScholarship", "Scholarship", FormMethod.Post, new { @class = "form-horizontal form-bordered", @id = "frmYouthScholarship", @onsubmit = "onSubmitTrigger()" }))
             {
                 @Html.AntiForgeryToken()
-                @Html.HiddenFor(Model => Model.RegistrationNumber)
+                @Html.HiddenFor(Model => Model.YouthScholarshipID)
                 @Html.HiddenFor(Model => Model.UserID)
-                @Html.HiddenFor(Model => Model.YouthScholarshipID, new { @id = "YouthScholarshipID" })
                 <div class="form-group">
                     <label for="RegistrationNumber" class="control-label col-sm-3">Registration number <span class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
-                        @Html.TextBoxFor(Model => Model.RegistrationNumber, new { @id = "RegistrationNumber", @disabled = "disabled", @class = "form-control" })
+                        @Html.TextBoxFor(Model => Model.RegistrationNumber, new { @id = "RegistrationNumber", @readonly = "readonly", @class = "form-control" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -242,28 +239,6 @@
                             })
                     </div>
                 </div>
-                <div class="form-group">
-                        <label for="attachment" class="control-label col-sm-3">
-                            Attachment
-                            <small>(You can describe your idea and plan by power point, video/clip, pictures, etc)</small>
-                        </label>
-                        <div class="col-sm-9">
-                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                <div class="input-group">
-                                    <div class="form-control" data-trigger="fileinput">
-                                        <i class="glyphicon glyphicon-file fileinput-exists"></i>
-                                        <span class="fileinput-filename">@(!string.IsNullOrEmpty(this.Model.UploadFile) ? this.Model.UploadFile.Substring(this.Model.UploadFile.LastIndexOf("/") + 1) : "")</span>
-                                    </div>
-                                    <span class="input-group-addon btn btn-default btn-file">
-                                        <span class="fileinput-new">Browse</span>
-                                        <span class="fileinput-exists">Change</span>
-                                        <input type="file" name="upload" id="upload">
-                                    </span>
-                                    <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Delete</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 <div class="form-actions col-sm-offset-3 col-sm-9">
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                     <a href='@Url.Action("ViewProfile", "User")' class="btn btn-info">Cancel</a>
@@ -273,6 +248,7 @@
     </div>
 </div>
 <script type="text/javascript">
+    $("form#frmYouthScholarship").validate();
     // tag-input
     if ($(".tagsinput").length > 0) {
         $('.tagsinput').each(function (e) {
@@ -284,80 +260,13 @@
         });
     }
 
-    //Upload
-    $('#upload').on('change', function (e) {
-        var files = e.target.files;
-        if (files.length > 0) {
-            if (window.FormData !== undefined) {
-                $.blockUI({ message: $('#spinner') });
-                var data = new FormData();
-                for (var x = 0; x < files.length; x++) {
-                    data.append("file" + x, files[x]);
-                }
-
-                $.ajax({
-                    type: "POST",
-                    url: '/Registration/UploadScholarshipFile?YouthScholarshipID=' + $("#YouthScholarshipID").val() + '&RegistrationNumber=' + $("#RegistrationNumber").val(),
-                    contentType: false,
-                    processData: false,
-                    data: data,
-                    success: function (result) {
-                        console.log(result);
-                        $.unblockUI();
-                    },
-                    error: function (xhr, status, p3, p4) {
-                        var err = "Error " + " " + status + " " + p3 + " " + p4;
-                        if (xhr.responseText && xhr.responseText[0] == "{")
-                            err = JSON.parse(xhr.responseText).Message;
-                        console.log(err);
-                        $.unblockUI();
-                    }
-                });
-            } else {
-                alert("This browser doesn't support HTML5 file uploads!");
-            }
-        }
-    });
-</script>
-
-<script type="text/javascript">
-
-    function OnBeginSubmit() {
-        if (!$("#frmYouthRegistration").valid()) {
+    function onSubmitTrigger() {
+        if (!$("#frmYouthScholarship").valid()) {
             return false;
         }
         $.blockUI({ message: $('#spinner') });
     }
-
-    function OnYouthSholarshipFailure() {
-        $.unblockUI();
-    }
-
-    function OnYouthSholarshipSuccess(response) {
-        //Timeout
-        if (response.ErrorCode == 2) {
-            window.location = '@Url.Action("Login", "User")';
-        }
-        if (response.ErrorCode == "1") {
-            $.unblockUI();
-            bootbox.alert(response.Message, function () {
-                bootbox.hideAll();
-            });
-        } else if (response.ErrorCode == "0") {
-            $.unblockUI();
-            if (!response.IsUpdate) {
-                bootbox.alert("Thank you for your scholarship application form, we will review and give you feedback.", function () {
-                    window.location = '@Url.Action("ViewProfile", "User")';
-                });
-            } else {
-                bootbox.alert(response.Message, function () {
-                    bootbox.hideAll();
-                });
-            }
-        }
-    }
 </script>
-
 <!--Experiences-->
 <script type="text/javascript">
     var experienceDialog = [
@@ -462,7 +371,7 @@
                         if (!validateExperience()) {
                             return false;
                         }
-                        
+
                         //Save changes
                         $.blockUI({ message: $('#spinner') });
                         var formData = new FormData();

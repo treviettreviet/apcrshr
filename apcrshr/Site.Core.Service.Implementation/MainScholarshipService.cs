@@ -22,6 +22,21 @@ namespace Site.Core.Service.Implementation
                 IMainScholarshipRepository mainScholarshipRepository = RepositoryClassFactory.GetInstance().GetMainScholarshipRepository();
                 MainScholarship scholarship = mainScholarshipRepository.FindByID(id);
                 var _scholarship = MapperUtil.CreateMapper().Mapper.Map<MainScholarship, MainScholarshipModel>(scholarship);
+                if (_scholarship != null)
+                {
+                    IMailingAddressRepository mailingRepository = RepositoryClassFactory.GetInstance().GetMailingAddressRepository();
+                    IUserSubmissionRepository userSubmissionRepository = RepositoryClassFactory.GetInstance().GetUserSubmissionRepository();
+                    IList<MailingAddress> _mailings = mailingRepository.FindByUserID(_scholarship.UserID);
+                    IList<UserSubmission> _submissions = userSubmissionRepository.FindByUserID(_scholarship.UserID);
+                    if (_mailings != null && _mailings.Count > 0)
+                    {
+                        _scholarship.RegistrationNumber = _mailings.FirstOrDefault().RegistrationNumber;
+                    }
+                    if (_submissions != null && _submissions.Count > 0)
+                    {
+                        _scholarship.SubmissionNumber = _submissions.FirstOrDefault().SubmissionNumber;
+                    }
+                }
                 return new FindItemReponse<MainScholarshipModel>
                 {
                     Item = _scholarship,
@@ -143,34 +158,65 @@ namespace Site.Core.Service.Implementation
         }
 
 
-        public FindItemReponse<MainScholarshipModel> FindByUserID(string userID)
+        public FindAllItemReponse<MainScholarshipModel> FindByUserID(string userID)
         {
             try
             {
                 IMainScholarshipRepository mainScholarshipRepository = RepositoryClassFactory.GetInstance().GetMainScholarshipRepository();
                 IMailingAddressRepository mailingRepository = RepositoryClassFactory.GetInstance().GetMailingAddressRepository();
                 IUserSubmissionRepository userSubmissionRepository = RepositoryClassFactory.GetInstance().GetUserSubmissionRepository();
-                MainScholarship scholarship = mainScholarshipRepository.FindByUserID(userID);
-                var _scholarship = MapperUtil.CreateMapper().Mapper.Map<MainScholarship, MainScholarshipModel>(scholarship);
-                if (_scholarship != null)
+                IList<MainScholarship> scholarships = mainScholarshipRepository.FindByUserID(userID);
+                var _scholarships = scholarships.Select(n => MapperUtil.CreateMapper().Mapper.Map<MainScholarship, MainScholarshipModel>(n)).ToList();
+                if (_scholarships != null)
                 {
                     IList<MailingAddress> _mailings = mailingRepository.FindByUserID(userID);
-                    if (_mailings != null && _mailings.Count > 0)
-                    {
-                        _scholarship.RegistrationNumber = _mailings.FirstOrDefault().RegistrationNumber;
-                    }
                     IList<UserSubmission> _submissions = userSubmissionRepository.FindByUserID(userID);
-                    if (_submissions != null && _submissions.Count > 0)
+                    foreach (var item in _scholarships)
                     {
-                        _scholarship.SubmissionNumber = _submissions.FirstOrDefault().SubmissionNumber;
+                        if (_mailings != null && _mailings.Count > 0)
+                        {
+                            item.RegistrationNumber = _mailings.FirstOrDefault().RegistrationNumber;
+                        }
+                        if (_submissions != null && _submissions.Count > 0)
+                        {
+                            item.SubmissionNumber = _submissions.FirstOrDefault().SubmissionNumber;
+                        }
                     }
                 }
+                return new FindAllItemReponse<MainScholarshipModel>
+                {
+                    Items = _scholarships,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new FindAllItemReponse<MainScholarshipModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
+
+
+        public FindItemReponse<MainScholarshipModel> FindByUserIDAndSubmission(string userID, string submissionNumber)
+        {
+            try
+            {
+                IMainScholarshipRepository mainScholarshipRepository = RepositoryClassFactory.GetInstance().GetMainScholarshipRepository();
+                MainScholarship scholarship = mainScholarshipRepository.FindByUserIDAndSubmission(userID, submissionNumber);
+                var _scholarship = MapperUtil.CreateMapper().Mapper.Map<MainScholarship, MainScholarshipModel>(scholarship);
                 return new FindItemReponse<MainScholarshipModel>
                 {
                     Item = _scholarship,
                     ErrorCode = (int)ErrorCode.None,
                     Message = string.Empty
                 };
+
+
             }
             catch (Exception ex)
             {

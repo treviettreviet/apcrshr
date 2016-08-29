@@ -1,0 +1,164 @@
+﻿@using apcrshr_site.Helper
+@model Site.Core.DataModel.Model.MainScholarshipModel
+@{
+    ViewBag.Title = "Update main sholarship";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<!-- Tagsinput -->
+<link rel="stylesheet" href="~/Areas/Administrator/css/plugins/tagsinput/jquery.tagsinput.css">
+<!-- TagsInput -->
+<script src="~/Areas/Administrator/js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
+<div class="col-sm-9">
+    <!--Alert-->
+    @if (ViewBag.Message != null)
+    {
+        Site.Core.DataModel.Response.BaseResponse responseMsg = (Site.Core.DataModel.Response.BaseResponse)ViewBag.Message;
+        <br />
+        <div class="alert @(responseMsg.ErrorCode == (int)Site.Core.DataModel.Enum.ErrorCode.None ? " alert-info" : " alert-danger")"><a class="close" data-dismiss="alert" href="#">×</a><strong></strong> @responseMsg.Message</div>
+    }
+    
+    <div class="box box-color box-bordered">
+        <div class="box-title">
+            <h3>
+                <i class="fa fa-magic"></i>
+                Main sholarship form
+            </h3>
+        </div>
+        <div class="box-content">
+            @using (Html.BeginForm("SaveMainScholarship", "Scholarship", FormMethod.Post, new { @class = "form-horizontal form-bordered", @id = "frmMainScholarship", @onsubmit="onSubmitTrigger()" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(Model => Model.ScholarshipID)
+                @Html.HiddenFor(Model => Model.UserID)
+                @Html.HiddenFor(Model => Model.SubmissionNumber)
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Registration number <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(Model => Model.RegistrationNumber, new { @readonly = "readonly", @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Abstract submission number <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(Model => Model.SubmissionNumber, new Dictionary<string, object> {
+                                { "class", "form-control" },
+                                { "data-rule-required", "true" },
+                                { "readonly", "readonly" }
+                            })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p style="padding: 10px; text-align: justify;">You have to register and submit abstract before apply for a scholarship. Once you have finished registration form and abstract submission form, the registration number and the abstract submission number will be sent to your email. If you have not registered and submit abstract, please do it <a href='@Url.Action("RegistrationForm", "Registration")'>HERE</a>.</p>
+                </div>
+                <div class="box-title" style="margin-left: -20px; margin-right: -20px;">
+                    <h3>
+                        <i class="fa fa-check"></i>
+                        WORKING EXPERIENCE
+                    </h3>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Current organization (Full name) <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(Model => Model.Organization, new Dictionary<string, object> {
+                                { "class", "form-control" },
+                                { "data-rule-required", "true" },
+                                { "maxlength", "50" }
+                            })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Position <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(Model => Model.Position, new Dictionary<string, object> {
+                                { "class", "form-control" },
+                                { "data-rule-required", "true" }
+                            })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Duration of work (number of year) <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(Model => Model.DurationOfWork, new Dictionary<string, object> {
+                                { "class", "form-control" },
+                                { "data-rule-required", "true" }
+                            })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Responsibility relating to Reproductive and Sexual Health and Rights <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        @Html.TextAreaFor(Model => Model.Responsibility, new Dictionary<string, object> {
+                                { "class", "form-control" },
+                                { "data-rule-required", "true" },
+                                { "rows", "3" },
+                                { "maxlength", "200" }
+                            })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Why should we provide you a scholarship? <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        @Html.TextAreaFor(Model => Model.ReasonScholarship, new Dictionary<string, object> {
+                                { "class", "form-control" },
+                                { "data-rule-required", "true" },
+                                { "rows", "7" },
+                                { "maxlength", "300" }
+                            })
+                    </div>
+                </div>
+                <div class="box-title" style="margin-left: -20px; margin-right: -20px;">
+                    <h3>
+                        <i class="fa fa-check"></i>
+                        ABSTRACT SUBMISSION
+                    </h3>
+                </div>
+                <br />
+                <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Have you submitted at least 1 abstract for the conference <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-10">
+                            <div class="check-demo-col">
+                                <div class="check-line">
+                                    <input type="radio" name="HasSubmitted" id="HasSubmitted" class='icheck-me' data-skin="square" data-color="blue" value="true" @(this.Model.HasSubmitted ? "checked" : "")>
+                                    <label class='inline' for="HasSubmitted">Yes</label>
+                                </div>
+                                <div class="check-line">
+                                    <input type="radio" name="HasSubmitted" id="HasSubmitted" class='icheck-me' data-skin="square" data-color="blue" value="false" @(this.Model.HasSubmitted ? "" : "checked")>
+                                    <label class='inline' for="HasSubmitted">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Title of abstract submitted</label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(Model => Model.SubmissionTitles, new Dictionary<string, object> {
+                                { "class", "tagsinput form-control" },
+                                { "SubmissionTitles", "SubmissionTitles" }
+                            })
+                    </div>
+                </div>
+                <div class="form-actions col-sm-offset-3 col-sm-9">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a href='@Url.Action("ViewProfile", "User")' class="btn btn-info">Cancel</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    // tag-input
+    if ($(".tagsinput").length > 0) {
+        $('.tagsinput').each(function (e) {
+            $(this).tagsInput({
+                width: 'auto',
+                height: 'auto',
+                defaultText: 'add a title'
+            });
+        });
+    }
+
+    function onSubmitTrigger() {
+        $.blockUI({ message: $('#spinner') });
+    }
+</script>

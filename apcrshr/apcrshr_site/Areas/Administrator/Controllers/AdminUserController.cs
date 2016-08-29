@@ -23,7 +23,8 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         private IEducationService _educationService;
         private ITrainingService _trainingService;
         private ILeaderShipService _leadershipService;
-        public IPublicationService _publicationService;
+        private IPublicationService _publicationService;
+        private IUserSubmissionService _userSubmissionService;
 
         public static readonly string SCHOLARSHIP_NOT_AVAILABLE = "Scholarship not available";
         public static readonly string SCHOLARSHIP_MAIN_TITLE = "Main scholarship";
@@ -40,6 +41,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             this._trainingService = new TrainingService();
             this._leadershipService = new LeaderShipService();
             this._publicationService = new PublicationService();
+            this._userSubmissionService = new UserSubmissionService();
         }
 
         [SessionFilter]
@@ -79,10 +81,10 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             FindItemReponse<UserModel> response = _userService.FindUserByID(userId);
 
             //Find main scholarship by userID
-            FindItemReponse<MainScholarshipModel> mainScholarshipReponse = _mainScholarshipService.FindByUserID(userId);
-            if (mainScholarshipReponse.Item != null)
+            FindAllItemReponse<MainScholarshipModel> mainScholarshipReponse = _mainScholarshipService.FindByUserID(userId);
+            if (mainScholarshipReponse.Items != null)
             {
-                ViewBag.MainScholarship = mainScholarshipReponse.Item;
+                ViewBag.MainScholarship = mainScholarshipReponse.Items;
                 scholarshipTitle = SCHOLARSHIP_MAIN_TITLE;
             }
             else

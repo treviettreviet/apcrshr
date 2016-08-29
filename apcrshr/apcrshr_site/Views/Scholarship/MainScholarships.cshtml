@@ -1,0 +1,57 @@
+﻿@using apcrshr_site.Helper
+@model IList<Site.Core.DataModel.Model.MainScholarshipModel>
+@{
+    ViewBag.Title = "Main Sholarships";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!-- dataTables -->
+<link rel="stylesheet" href="~/Areas/Administrator/css/plugins/datatable/TableTools.css">
+
+<!-- New DataTables -->
+<script src="~/Areas/Administrator/js/plugins/momentjs/jquery.moment.min.js"></script>
+<script src="~/Areas/Administrator/js/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/Areas/Administrator/js/plugins/datatables/extensions/dataTables.tableTools.min.js"></script>
+<script src="~/Areas/Administrator/js/plugins/datatables/extensions/dataTables.colReorder.min.js"></script>
+<script src="~/Areas/Administrator/js/plugins/datatables/extensions/dataTables.colVis.min.js"></script>
+<script src="~/Areas/Administrator/js/plugins/datatables/extensions/dataTables.scroller.min.js"></script>
+
+<div class="col-sm-9">
+    <div class="box box-color box-bordered">
+        <div class="box-title">
+            <h3>
+                <i class="fa fa-magic"></i>
+                Main sholarships
+            </h3>
+        </div>
+        <div class="box-content">
+            <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
+                   data-column_filter_types="text,text,daterange,null"
+                   data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
+                <thead>
+                    <tr>
+                        <th>Submission Number</th>
+                        <th>Organization</th>
+                        <th class='hidden-1024'>Submitted Date</th>
+                        <th class='hidden-480'>Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        <tr id="@Model[i].ScholarshipID">
+                            <td>@Model[i].SubmissionNumber</td>
+                            <td>@Model[i].Organization</td>
+                            <td class='hidden-1024'>@Model[i].CreatedDate.ToShortDateString()</td>
+                            <td class='hidden-480'>
+                                <a href='@Url.Action("UpdateMainScholarship", "Scholarship", new { scholarshipID = Model[i].ScholarshipID })' class="btn" rel="tooltip" title="Update">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
