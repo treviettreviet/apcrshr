@@ -51,7 +51,7 @@
                 {
                     foreach (var item in deadlines)
                     {
-                        <li class="sh-tooltip" title="@item.ShortContent">
+                        <li class="sh-tooltip" title="Start from @item.StartDate.ToShortDateString() to @item.Deadline.ToShortDateString()">
                             <div class="widget-thumb-icon">
                                 <i class="icon-beaker icon-mini-effect icon-effect-1"></i>
                             </div>

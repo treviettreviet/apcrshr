@@ -103,6 +103,7 @@
         $.blockUI({ message: $('#spinner') });
         var formData = new FormData();
         formData.append("DeadlineID", $("#DeadlineID").val());
+        formData.append("Type", $("#Type").val());
         formData.append("Title", $("#Title").val());
         formData.append("ShortContent", $("#ShortContent").val());
         formData.append("Contents", CKEDITOR.instances['editor'].getData());
