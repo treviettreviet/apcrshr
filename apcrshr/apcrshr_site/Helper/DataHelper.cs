@@ -187,5 +187,32 @@ namespace apcrshr_site.Helper
                              select new { ID = (int)d, Name = d.ToString() };
             return new SelectList(directions, "ID", "Name");
         }
+
+        public SelectList GetScholarshipStatusForDropdown()
+        {
+            var directions = from ScholarshipStatus d in Enum.GetValues(typeof(ScholarshipStatus))
+                             select new { ID = (int)d, Name = d.ToString() };
+            return new SelectList(directions, "ID", "Name");
+        }
+
+        public string GetEnumName<T>(T enumtype)
+        {
+            return Enum.GetName(typeof(T), enumtype);
+        }
+
+        public string GetScholarshipStatusName(int status)
+        {
+            switch (status)
+            {
+                case (int)ScholarshipStatus.Submitted:
+                    return "Scholarship is not reviewed";
+                case (int)ScholarshipStatus.Reviewed:
+                    return "Scholarship was reviewed";
+                case (int)ScholarshipStatus.Rejected:
+                    return "Scholarship was rejected";
+                default:
+                    throw new InvalidCastException("Invalid status");
+            }
+        }
     }
 }

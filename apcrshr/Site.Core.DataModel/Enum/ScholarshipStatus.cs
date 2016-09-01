@@ -6,15 +6,19 @@ using System.Threading.Tasks;
 
 namespace Site.Core.DataModel.Enum
 {
-    public enum AccountType
+    public enum ScholarshipStatus
     {
         /// <summary>
-        /// Normal administrator account
+        /// Scholarship is not reviewed
         /// </summary>
-        Standard = 0,
+        Submitted = 0,
         /// <summary>
-        /// The full right administrator account
+        /// Scholarship is reviewed
         /// </summary>
-        Administrator = 1
+        Reviewed = 1,
+        /// <summary>
+        /// Scholarship has rejected
+        /// </summary>
+        Rejected = 2
     }
 }

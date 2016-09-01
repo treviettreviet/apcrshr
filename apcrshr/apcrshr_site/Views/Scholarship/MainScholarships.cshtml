@@ -26,12 +26,13 @@
         </div>
         <div class="box-content">
             <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
-                   data-column_filter_types="text,text,daterange,null"
+                   data-column_filter_types="text,text,select,daterange,null"
                    data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
                 <thead>
                     <tr>
                         <th>Submission Number</th>
                         <th>Organization</th>
+                        <th>Review Status</th>
                         <th class='hidden-1024'>Submitted Date</th>
                         <th class='hidden-480'>Options</th>
                     </tr>
@@ -42,6 +43,17 @@
                         <tr id="@Model[i].ScholarshipID">
                             <td>@Model[i].SubmissionNumber</td>
                             <td>@Model[i].Organization</td>
+                            <td>
+                                @if (Model[i].Status == (int)Site.Core.DataModel.Enum.ScholarshipStatus.Reviewed)
+                                {
+                                    <span style="color: blue; font-weight:bold;">@apcrshr_site.Helper.DataHelper.GetInstance().GetScholarshipStatusName(Model[i].Status)</span>
+                                }
+                                else
+                                {
+                                    <span style="color: red; font-weight:bold;">@apcrshr_site.Helper.DataHelper.GetInstance().GetScholarshipStatusName(Model[i].Status)</span>
+                                }
+                                
+                            </td>
                             <td class='hidden-1024'>@Model[i].CreatedDate.ToShortDateString()</td>
                             <td class='hidden-480'>
                                 <a href='@Url.Action("UpdateMainScholarship", "Scholarship", new { scholarshipID = Model[i].ScholarshipID })' class="btn" rel="tooltip" title="Update">

@@ -150,5 +150,35 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             LockResponse response = _userService.LockUser(userID);
             return Json(new { ErrorCode = response.ErrorCode, Message = response.Message, Locked = response.Locked }, JsonRequestBehavior.AllowGet);
         }
+
+        [SessionFilter]
+        [AuthorizationFilter]
+        [HttpGet]
+        public ActionResult UpdateMainScholarship(string scholarshipID)
+        {
+            FindItemReponse<MainScholarshipModel> response = _mainScholarshipService.FindByID(scholarshipID);
+            return View(response.Item);
+        }
+
+        [SessionFilter]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult SaveUpdateMainScholarship(MainScholarshipModel scholarship)
+        {
+            var sessionId = this.Session["SessionID"].ToString();
+            IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository();
+            UserSession userSession = userSessionRepository.FindByID(sessionId);
+
+            if (userSession == null)
+            {
+                return Json(new { errorCode = (int)ErrorCode.Redirect, message = Resources.AdminResource.msg_sessionInvalid }, JsonRequestBehavior.AllowGet);
+            }
+
+            scholarship.UpdatedBy = userSession.UserID;
+            scholarship.UpdatedDate = DateTime.Now;
+            BaseResponse response = _mainScholarshipService.Update(scholarship);
+
+            return Json(new { errorCode = response.ErrorCode, message = response.Message }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

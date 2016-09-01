@@ -23,5 +23,6 @@ namespace Site.Core.DataModel.Model
         public int DurationOfWork { get; set; }
         public string SubmissionTitles { get; set; }
         public string UserID { get; set; }
+        public int Status { get; set; }
     }
 }

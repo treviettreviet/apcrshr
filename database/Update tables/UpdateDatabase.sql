@@ -5,3 +5,8 @@ GO
 ALTER TABLE [ImportantDeadline] ADD [Type] INT NOT NULL DEFAULT(0)
 
 GO
+
+ALTER TABLE [MainScholarship] ADD [Status] INT NOT NULL DEFAULT(0)
+
+GO
+

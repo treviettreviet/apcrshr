@@ -1,0 +1,203 @@
+﻿@model Site.Core.DataModel.Model.MainScholarshipModel
+@using apcrshr_site.Helper
+@{
+    ViewBag.Title = "Update Main Scholarship";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <!--Alert-->
+        @if (ViewBag.Message != null)
+        {
+            Site.Core.DataModel.Response.BaseResponse responseMsg = (Site.Core.DataModel.Response.BaseResponse)ViewBag.Message;
+            <br />
+            <div class="alert @(responseMsg.ErrorCode == (int)Site.Core.DataModel.Enum.ErrorCode.None ? " alert-info" : " alert-danger")"><a class="close" data-dismiss="alert" href="#">×</a><strong></strong> @responseMsg.Message</div>
+        }
+
+        <div class="box box-bordered box-color">
+            <div class="box-title">
+                <h3>
+                    <i class="fa fa-edit"></i>Cập Nhập Người Dùng
+                </h3>
+            </div>
+            <div class="box-content nopadding">
+                @using (Html.BeginForm("SaveUpdateMainScholarship", "AdminUser", FormMethod.Post, new { @class = "form-horizontal form-bordered" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.UserID)
+                    @Html.HiddenFor(m => m.RegistrationNumber)
+                    @Html.HiddenFor(m => m.ScholarshipID)
+                    <div class="form-group">
+                        <label for="RegistrationNumber" class="control-label col-sm-2">Registration number</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.RegistrationNumber, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="SubmissionNumber" class="control-label col-sm-2">Abstract submission number</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.SubmissionNumber, new { @class = "form-control", @id = "SubmissionNumber" })
+                        </div>
+                    </div>
+                    <div class="box-title">
+                        <h3>
+                            <i class="fa fa-check"></i>
+                            WORKING EXPERIENCE
+                        </h3>
+                    </div>
+                    <div class="form-group">
+                        <label for="Organization" class="control-label col-sm-2">Current organization</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.Organization, new { @class = "form-control", @id = "Organization" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Position" class="control-label col-sm-2">Position</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.Position, new { @class = "form-control", @id = "Position" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="DurationOfWork" class="control-label col-sm-2">Duration of work</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.DurationOfWork, new { @class = "form-control", @id = "DurationOfWork" })
+                            <small>(years)</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Responsibility" class="control-label col-sm-2">Responsibility relating to Reproductive and Sexual Health and Rights</label>
+                        <div class="col-sm-10">
+                            @Html.TextAreaFor(model => model.Responsibility, new { @class = "form-control", @rows = "6", @id = "Responsibility" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ReasonScholarship" class="control-label col-sm-2">Why should we provide you a scholarship?</label>
+                        <div class="col-sm-10">
+                            @Html.TextAreaFor(model => model.ReasonScholarship, new { @class = "form-control", @rows = "6", @id = "ReasonScholarship" })
+                        </div>
+                    </div>
+                    <div class="box-title">
+                        <h3>
+                            <i class="fa fa-check"></i>
+                            ABSTRACT SUBMISSION
+                        </h3>
+                    </div>
+                    <div class="form-group">
+                        <label for="Locked" class="control-label col-sm-2">Have you submitted at least 1 abstract for the conference</label>
+                        <div class="col-sm-10">
+                            <div class="check-demo-col">
+                                <div class="check-line">
+                                    <input type="radio" name="HasSubmitted" id="HasSubmitted" readonly="readonly" class='icheck-me' data-skin="square" data-color="blue" value="true" @(Model.HasSubmitted ? "checked" : "")>
+                                    <label class='inline' for="HasSubmitted">Yes</label>
+                                </div>
+                                <div class="check-line">
+                                    <input type="radio" name="HasSubmitted" id="HasSubmitted" readonly="readonly" class='icheck-me' data-skin="square" data-color="blue" value="false" @(Model.HasSubmitted ? "" : "checked")>
+                                    <label class='inline' for="HasSubmitted">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Position" class="control-label col-sm-2">Title of abstract submitted</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.SubmissionTitles, new { @class = "form-control", @readonly = "readonly", @id = "SubmissionTitles" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Review <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-10">
+                            @Html.DropDownList("Status", DataHelper.GetInstance().GetScholarshipStatusForDropdown(), new { @id = "Status", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-actions col-sm-offset-2 col-sm-10">
+                        <button type="button" onclick="submitForm()" class="btn btn-primary">Lưu Thông Tin</button>
+                        <a href='@Url.Action("Index")' class="btn btn-info">Hủy Bỏ</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function submitForm() {
+        if (!validateForm()) {
+            bootbox.alert("Cần phải nhập dữ liệu những trường bắt buộc.", function () {
+                bootbox.hideAll();
+            });
+            return false;
+        }
+
+        $.blockUI({ message: $('#spinner') });
+        var formData = new FormData();
+        formData.append("ScholarshipID", $("#ScholarshipID").val());
+        formData.append("UserID", $("#UserID").val());
+        formData.append("RegistrationNumber", $("#RegistrationNumber").val());
+        formData.append("SubmissionNumber", $("#SubmissionNumber").val());
+        formData.append("Organization", $("#Organization").val());
+        formData.append("Position", $("#Position").val());
+        formData.append("DurationOfWork", $("#DurationOfWork").val());
+        formData.append("Responsibility", $("#Responsibility").val());
+        formData.append("ReasonScholarship", $("#ReasonScholarship").val());
+        formData.append("HasSubmitted", $("input[name=HasSubmitted]:checked").val());
+        formData.append("SubmissionTitles", $("#SubmissionTitles").val());
+        formData.append("Status", $("#Status").find(":selected").val());
+        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveUpdateMainScholarship", "AdminUser")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $.unblockUI();
+                bootbox.alert(response.message, function () {
+                    bootbox.hideAll();
+                });
+                //Timeout
+                if (response.errorCode == 2) {
+                    window.location = "/Administrator/AdminHome/Login";
+                }
+            },
+            error: function (error) {
+                $.unblockUI();
+                bootbox.alert(error, function () {
+                    bootbox.hideAll();
+                });
+            }
+        });
+    }
+
+    function validateForm() {
+        if ($("#SubmissionNumber").val() == null || $("#SubmissionNumber").val() == "") {
+            $("#SubmissionNumber").focus();
+            return false;
+        }
+        if ($("#Organization").val() == null || $("#Organization").val() == "") {
+            $("#Organization").focus();
+            return false;
+        }
+        if ($("#Position").val() == null || $("#Position").val() == "") {
+            $("#Position").focus();
+            return false;
+        }
+        if ($("#DurationOfWork").val() == null || $("#DurationOfWork").val() == "") {
+            $("#DurationOfWork").focus();
+            return false;
+        }
+        if ($("#Responsibility").val() == null || $("#Responsibility").val() == "") {
+            $("#Responsibility").focus();
+            return false;
+        }
+        if ($("#ReasonScholarship").val() == null || $("#ReasonScholarship").val() == "") {
+            $("#ReasonScholarship").focus();
+            return false;
+        }
+        return true;
+    }
+
+    function setControlCss(control) {
+        $(control).css({ "background-color": "#ffafb3" });
+    }
+</script>

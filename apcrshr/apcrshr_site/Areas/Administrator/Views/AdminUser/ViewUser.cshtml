@@ -197,85 +197,41 @@
                             }
                             else if (title == apcrshr_site.Areas.Administrator.Controllers.AdminUserController.SCHOLARSHIP_MAIN_TITLE)
                             {
-                                Site.Core.DataModel.Model.MainScholarshipModel mainScholarship = (Site.Core.DataModel.Model.MainScholarshipModel)ViewBag.MainScholarship;
+                                IList<Site.Core.DataModel.Model.MainScholarshipModel> mainScholarship = (IList<Site.Core.DataModel.Model.MainScholarshipModel>)ViewBag.MainScholarship;
                                 <div class="box-content nopadding">
-                                    <form action="#" class="form-horizontal form-bordered">
-                                        <div class="form-group">
-                                            <label for="RegistrationNumber" class="control-label col-sm-2">Registration number</label>
-                                            <div class="col-sm-10">
-                                                <label class="form-control">@mainScholarship.RegistrationNumber</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="SubmissionNumber" class="control-label col-sm-2">Abstract submission number</label>
-                                            <div class="col-sm-10">
-                                                <label class="form-control">@mainScholarship.SubmissionNumber</label>
-                                            </div>
-                                        </div>
-                                        <div class="box-title">
-                                            <h3>
-                                                <i class="fa fa-check"></i>
-                                                WORKING EXPERIENCE
-                                            </h3>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="Organization" class="control-label col-sm-2">Current organization</label>
-                                            <div class="col-sm-10">
-                                                <label class="form-control">@mainScholarship.Organization</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="Position" class="control-label col-sm-2">Position</label>
-                                            <div class="col-sm-10">
-                                                <label class="form-control">@mainScholarship.Position</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="DurationOfWork" class="control-label col-sm-2">Duration of work</label>
-                                            <div class="col-sm-10">
-                                                <label class="form-control">@mainScholarship.DurationOfWork &nbsp;(years)</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="Responsibility" class="control-label col-sm-2">Responsibility relating to Reproductive and Sexual Health and Rights</label>
-                                            <div class="col-sm-10">
-                                                <textarea class="form-control" rows="6" readonly="readonly">@mainScholarship.Responsibility</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="ReasonScholarship" class="control-label col-sm-2">Why should we provide you a scholarship?</label>
-                                            <div class="col-sm-10">
-                                                <textarea class="form-control" rows="6" readonly="readonly">@mainScholarship.ReasonScholarship</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="box-title">
-                                            <h3>
-                                                <i class="fa fa-check"></i>
-                                                ABSTRACT SUBMISSION
-                                            </h3>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="Locked" class="control-label col-sm-2">Have you submitted at least 1 abstract for the conference</label>
-                                            <div class="col-sm-10">
-                                                <div class="check-demo-col">
-                                                    <div class="check-line">
-                                                        <input type="radio" name="HasSubmitted" id="HasSubmitted" readonly="readonly" class='icheck-me' data-skin="square" data-color="blue" value="false" @(mainScholarship.HasSubmitted ? "checked" : "")>
-                                                        <label class='inline' for="HasSubmitted">Yes</label>
-                                                    </div>
-                                                    <div class="check-line">
-                                                        <input type="radio" name="HasSubmitted" id="HasSubmitted" readonly="readonly" class='icheck-me' data-skin="square" data-color="blue" value="true" @(mainScholarship.HasSubmitted ? "" : "checked")>
-                                                        <label class='inline' for="HasSubmitted">No</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="Position" class="control-label col-sm-2">Title of abstract submitted</label>
-                                            <div class="col-sm-10">
-                                                <label class="form-control">@mainScholarship.SubmissionTitles</label>
-                                            </div>
-                                        </div>
-                                    </form>
+                                    <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
+                                           data-column_filter_types="text,text,text,text,select,daterange,null"
+                                           data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
+                                        <thead>
+                                            <tr>
+                                                <th>Organization</th>
+                                                <th>Position</th>
+                                                <th>Duration of Work</th>
+                                                <th>SubmissionNumber</th>
+                                                <th>Review Status</th>
+                                                <th class='hidden-1024'>Submitted Date</th>
+                                                <th class='hidden-480'>Tùy Chọn</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach(var item in mainScholarship)
+                                            {
+                                                <tr id="@item.ScholarshipID">
+                                                    <td>@item.Organization</td>
+                                                    <td>@item.Position</td>
+                                                    <td>@item.DurationOfWork</td>
+                                                    <td>@item.SubmissionNumber</td>
+                                                    <td>@apcrshr_site.Helper.DataHelper.GetInstance().GetScholarshipStatusName(item.Status)</td>
+                                                    <td class='hidden-1024'>@item.CreatedDate.ToShortDateString()</td>
+                                                    <td class='hidden-480'>
+                                                        <a target="_blank" href='@Url.Action("UpdateMainScholarship", "AdminUser", new { scholarshipID = item.ScholarshipID })' class="btn" rel="tooltip" title="Sửa">
+                                                            <i class="fa fa-edit"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
                                 </div>
                             }
                             else if (title == apcrshr_site.Areas.Administrator.Controllers.AdminUserController.SCHOLARSHIP_YOUTH_TITLE)

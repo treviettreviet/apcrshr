@@ -35,7 +35,8 @@ namespace Site.Core.Repository.Implementation
                     scholarship.UpdatedDate = DateTime.Now;
                     scholarship.DurationOfWork = item.DurationOfWork;
                     scholarship.SubmissionTitles = item.SubmissionTitles;
-                    scholarship.UserID = item.UserID;
+                    //scholarship.UserID = item.UserID;
+                    scholarship.Status = item.Status;
 
                     context.SaveChanges();
                 }
