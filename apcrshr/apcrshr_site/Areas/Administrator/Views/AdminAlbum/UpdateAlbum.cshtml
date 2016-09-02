@@ -72,7 +72,7 @@
         formData.append("AlbumID", $("#AlbumID").val());
         formData.append("Title", $("#Title").val());
         formData.append("Description", $("#Description").val());
-        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+        
         $.ajax({
             type: "POST",
             url: '@Url.Action("SaveUpdateAlbum", "AdminAlbum")',

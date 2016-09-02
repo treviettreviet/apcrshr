@@ -10,31 +10,37 @@
             <div class="box-title">
                 <h3>
                     <i class="fa fa-bars"></i>
-                    Thông tin hội viên
+                    Hội viên
                 </h3>
                 <ul class="tabs">
                     <li class="active">
-                        <a href="#t7" data-toggle="tab">General information</a>
+                        <a href="#t7" data-toggle="tab">General</a>
                     </li>
                     <li>
-                        <a href="#t8" data-toggle="tab">@ViewBag.ScholarshipTitle</a>
+                        <a href="#t8" data-toggle="tab">Abstract</a>
                     </li>
-                    @if (ViewBag.ScholarshipTitle == apcrshr_site.Areas.Administrator.Controllers.AdminUserController.SCHOLARSHIP_YOUTH_TITLE)
+                    <li>
+                        <a href="#t9" data-toggle="tab">@(ViewBag.ScholarshipTitleMain != null ? ViewBag.ScholarshipTitleMain : "Main is not available")</a>
+                    </li>
+                    <li>
+                        <a href="#t10" data-toggle="tab">@(ViewBag.ScholarshipTitleYouth != null ? ViewBag.ScholarshipTitleYouth : "Youth is not available")</a>
+                    </li>
+                    @if (ViewBag.ScholarshipTitleYouth != null)
                     { 
                     <li>
-                        <a href="#t9" data-toggle="tab">Working experience</a>
+                        <a href="#t11" data-toggle="tab">Working experience</a>
                     </li>
                     <li>
-                        <a href="#t10" data-toggle="tab">Education</a>
+                        <a href="#t12" data-toggle="tab">Education</a>
                     </li>
                     <li>
-                        <a href="#t11" data-toggle="tab">Additional training</a>
+                        <a href="#t13" data-toggle="tab">Additional training</a>
                     </li>
                     <li>
-                        <a href="#t12" data-toggle="tab">Leadership experience</a>
+                        <a href="#t14" data-toggle="tab">Leadership</a>
                     </li>
                     <li>
-                        <a href="#t13" data-toggle="tab">Publication</a>
+                        <a href="#t15" data-toggle="tab">Publication</a>
                     </li>
                     }
                 </ul>
@@ -47,7 +53,7 @@
                         <div class="box-content nopadding">
                             @using (Html.BeginForm("SaveUpdateUser", "AdminUser", FormMethod.Post, new { @class = "form-horizontal form-bordered" }))
                             {
-                                @Html.AntiForgeryToken()
+                                
                                 @Html.HiddenFor(m => m.UserID)
                                 <div class="form-group">
                                     <label for="Title" class="control-label col-sm-2">Title</label>
@@ -186,118 +192,162 @@
                     </div>
                     <!--End general information-->
 
-                    <!--Start conference-->
+                    <!--Start abstract-->
                     <div class="tab-pane" id="t8">
-                        @if (ViewBag.ScholarshipTitle != null)
+                        @if (ViewBag.Abstracts != null)
                         {
-                            string title = (string)ViewBag.ScholarshipTitle;
-                            if (title == apcrshr_site.Areas.Administrator.Controllers.AdminUserController.SCHOLARSHIP_NOT_AVAILABLE)
-                            {
-                                <h4>This user hasn't submit any scholarship form</h4>
-                            }
-                            else if (title == apcrshr_site.Areas.Administrator.Controllers.AdminUserController.SCHOLARSHIP_MAIN_TITLE)
-                            {
-                                IList<Site.Core.DataModel.Model.MainScholarshipModel> mainScholarship = (IList<Site.Core.DataModel.Model.MainScholarshipModel>)ViewBag.MainScholarship;
-                                <div class="box-content nopadding">
-                                    <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
-                                           data-column_filter_types="text,text,text,text,select,daterange,null"
-                                           data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
-                                        <thead>
-                                            <tr>
-                                                <th>Organization</th>
-                                                <th>Position</th>
-                                                <th>Duration of Work</th>
-                                                <th>SubmissionNumber</th>
-                                                <th>Review Status</th>
-                                                <th class='hidden-1024'>Submitted Date</th>
-                                                <th class='hidden-480'>Tùy Chọn</th>
+                            IList<Site.Core.DataModel.Model.UserSubmissionModel> abstracts = (IList<Site.Core.DataModel.Model.UserSubmissionModel>)ViewBag.Abstracts;
+                            <div class="box-content nopadding">
+                                <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
+                                       data-column_filter_types="text,daterange,text,null"
+                                       data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
+                                    <thead>
+                                        <tr>
+                                            <th>Submission Number</th>
+                                            <th>Assigned Date</th>
+                                            <th>Review Status</th>
+                                            <th class='hidden-480'>Tùy Chọn</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in abstracts)
+                                        {
+                                            <tr id="@item.SubmitID">
+                                                <td>@item.SubmissionNumber</td>
+                                                <td>@item.CreatedDate.ToShortDateString()</td>
+                                                <td>@apcrshr_site.Helper.DataHelper.GetInstance().GetAbstractStatusName(item.Status)</td>
+                                                <td class='hidden-480'>
+                                                    <a target="_blank" href='@Url.Action("UpdateAbstract", "AdminUser", new { submitID = item.SubmitID })' class="btn" rel="tooltip" title="Sửa">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                    <a href="javascript:void(0)" class="btn" rel="tooltip" title="Xóa" onclick="return deleteAbstract('@item.SubmitID')" id="btn_@item.SubmitID">
+                                                        <i class="fa fa-times"></i>
+                                                    </a>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach(var item in mainScholarship)
-                                            {
-                                                <tr id="@item.ScholarshipID">
-                                                    <td>@item.Organization</td>
-                                                    <td>@item.Position</td>
-                                                    <td>@item.DurationOfWork</td>
-                                                    <td>@item.SubmissionNumber</td>
-                                                    <td>@apcrshr_site.Helper.DataHelper.GetInstance().GetScholarshipStatusName(item.Status)</td>
-                                                    <td class='hidden-1024'>@item.CreatedDate.ToShortDateString()</td>
-                                                    <td class='hidden-480'>
-                                                        <a target="_blank" href='@Url.Action("UpdateMainScholarship", "AdminUser", new { scholarshipID = item.ScholarshipID })' class="btn" rel="tooltip" title="Sửa">
-                                                            <i class="fa fa-edit"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            }
-                            else if (title == apcrshr_site.Areas.Administrator.Controllers.AdminUserController.SCHOLARSHIP_YOUTH_TITLE)
-                            {
-                                Site.Core.DataModel.Model.YouthScholarshipModel youthScholarship = (Site.Core.DataModel.Model.YouthScholarshipModel)ViewBag.YouthScholarship;
-                                <div class="box-content nopadding">
-                                    <form action="#" class="form-horizontal form-bordered">
-                                        <div class="form-group">
-                                            <label for="RegistrationNumber" class="control-label col-sm-2">Registration number</label>
-                                            <div class="col-sm-10">
-                                                <label class="form-control">@youthScholarship.RegistrationNumber</label>
-                                            </div>
-                                        </div>
-                                        <div class="box-title">
-                                            <h3>
-                                                <i class="fa fa-check"></i>
-                                                MOTIVATION
-                                            </h3>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="MotivationIssue" class="control-label col-sm-2">List 3 problems that young people in your country are facing now</label>
-                                            <div class="col-sm-10">
-                                                <textarea class="form-control" rows="6" readonly="readonly">@youthScholarship.MotivationIssue</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="MotivationResolving" class="control-label col-sm-2">Have you participated in any activities/projects to solve these problems? How could you involve young people in your country to participate in youth activities?</label>
-                                            <div class="col-sm-10">
-                                                <textarea class="form-control" rows="6" readonly="readonly">@youthScholarship.MotivationResolving</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="MotivationReason" class="control-label col-sm-2">What will you contribute to this conference? Why we should select you as youth scholars of this conference?</label>
-                                            <div class="col-sm-10">
-                                                <textarea class="form-control" rows="6" readonly="readonly">@youthScholarship.MotivationReason</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="box-title">
-                                            <h3>
-                                                <i class="fa fa-check"></i>
-                                                MAKE A PLAN
-                                            </h3>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="PlanMaking" class="control-label col-sm-2">Present your plan after taking part in this conference</label>
-                                            <div class="col-sm-10">
-                                                <textarea class="form-control" rows="6" readonly="readonly">@youthScholarship.PlanMaking</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="UploadFile" class="control-label col-sm-2">Uploaded file</label>
-                                            <div class="col-sm-10">
-                                                <a class="form-control" href="@youthScholarship.UploadFile" target="_blank">@(youthScholarship.UploadFile != null ? youthScholarship.UploadFile.Substring(youthScholarship.UploadFile.LastIndexOf("/") + 1) : "No attachment")</a>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
                         }
                     </div>
-                    <!--End conference-->
+                    <!--End abstract-->
 
-                    @if (ViewBag.ScholarshipTitle == apcrshr_site.Areas.Administrator.Controllers.AdminUserController.SCHOLARSHIP_YOUTH_TITLE)
-                    { 
-                    <!--Start working experience-->
+                    <!--Start main scholarship-->
                     <div class="tab-pane" id="t9">
+                        @if (ViewBag.ScholarshipTitleMain == null)
+                        {
+                            <h4>This user hasn't submit main scholarship form</h4>
+                        }
+                        else
+                        {
+                            IList<Site.Core.DataModel.Model.MainScholarshipModel> mainScholarship = (IList<Site.Core.DataModel.Model.MainScholarshipModel>)ViewBag.MainScholarship;
+                            <div class="box-content nopadding">
+                                <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
+                                        data-column_filter_types="text,text,text,text,select,daterange,null"
+                                        data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
+                                    <thead>
+                                        <tr>
+                                            <th>Organization</th>
+                                            <th>Position</th>
+                                            <th>Duration of Work</th>
+                                            <th>SubmissionNumber</th>
+                                            <th>Review Status</th>
+                                            <th class='hidden-1024'>Submitted Date</th>
+                                            <th class='hidden-480'>Tùy Chọn</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach(var item in mainScholarship)
+                                        {
+                                            <tr id="@item.ScholarshipID">
+                                                <td>@item.Organization</td>
+                                                <td>@item.Position</td>
+                                                <td>@item.DurationOfWork</td>
+                                                <td>@item.SubmissionNumber</td>
+                                                <td>@apcrshr_site.Helper.DataHelper.GetInstance().GetScholarshipStatusName(item.Status)</td>
+                                                <td class='hidden-1024'>@item.CreatedDate.ToShortDateString()</td>
+                                                <td class='hidden-480'>
+                                                    <a target="_blank" href='@Url.Action("UpdateMainScholarship", "AdminUser", new { scholarshipID = item.ScholarshipID })' class="btn" rel="tooltip" title="Sửa">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </div>
+                    <!--End main scholarship-->
+
+                    <!--Start youth scholarship-->
+                    <div class="tab-pane" id="t10">
+                        @if (ViewBag.ScholarshipTitleYouth == null)
+                        {
+                            <h4>This user hasn't submit main scholarship form</h4>
+                        }
+                        else
+                        {
+                            Site.Core.DataModel.Model.YouthScholarshipModel youthScholarship = (Site.Core.DataModel.Model.YouthScholarshipModel)ViewBag.YouthScholarship;
+                            <div class="box-content nopadding">
+                                <form action="#" class="form-horizontal form-bordered">
+                                    <div class="form-group">
+                                        <label for="RegistrationNumber" class="control-label col-sm-2">Registration number</label>
+                                        <div class="col-sm-10">
+                                            <label class="form-control">@youthScholarship.RegistrationNumber</label>
+                                        </div>
+                                    </div>
+                                    <div class="box-title">
+                                        <h3>
+                                            <i class="fa fa-check"></i>
+                                            MOTIVATION
+                                        </h3>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="MotivationIssue" class="control-label col-sm-2">List 3 problems that young people in your country are facing now</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" rows="6" readonly="readonly">@youthScholarship.MotivationIssue</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="MotivationResolving" class="control-label col-sm-2">Have you participated in any activities/projects to solve these problems? How could you involve young people in your country to participate in youth activities?</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" rows="6" readonly="readonly">@youthScholarship.MotivationResolving</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="MotivationReason" class="control-label col-sm-2">What will you contribute to this conference? Why we should select you as youth scholars of this conference?</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" rows="6" readonly="readonly">@youthScholarship.MotivationReason</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="box-title">
+                                        <h3>
+                                            <i class="fa fa-check"></i>
+                                            MAKE A PLAN
+                                        </h3>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="PlanMaking" class="control-label col-sm-2">Present your plan after taking part in this conference</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" rows="6" readonly="readonly">@youthScholarship.PlanMaking</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="UploadFile" class="control-label col-sm-2">Uploaded file</label>
+                                        <div class="col-sm-10">
+                                            <a class="form-control" href="@youthScholarship.UploadFile" target="_blank">@(youthScholarship.UploadFile != null ? youthScholarship.UploadFile.Substring(youthScholarship.UploadFile.LastIndexOf("/") + 1) : "No attachment")</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                    <!--End youth scholarship-->
+
+                    <!--Start working experience-->
+                    <div class="tab-pane" id="t11">
                         <table id="tblRole" class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
                                data-column_filter_types="null,text,text,daterange,daterange,text,null"
                                data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
@@ -330,11 +380,8 @@
                                             <td>@(experiences[i].WorkingEnd.HasValue ? experiences[i].WorkingEnd.Value.ToShortDateString() : "")</td>
                                             <td>@(experiences[i].Duties.Length > 50 ? experiences[i].Duties.Substring(0, 45) + "..." : experiences[i].Duties)</td>
                                             <td class='hidden-480'>
-                                                <a href='@Url.Action("UpdateExperience", "AdminUser", new { experienceID = experiences[i].WorkingID })' class="btn" rel="tooltip" title="Update">
+                                                <a href='javascript:void(0)' onclick="showExperience('@experiences[i].WorkingID')" class="btn" rel="tooltip" title="View">
                                                     <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="#" class="btn" rel="tooltip" title="Delete" onclick="return deleteExperience('@experiences[i].WorkingID')" id="btn_@experiences[i].WorkingID">
-                                                    <i class="fa fa-times"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -347,7 +394,7 @@
                     <!--End working experience-->
 
                     <!--Start education-->
-                    <div class="tab-pane" id="t10">
+                    <div class="tab-pane" id="t12">
                         <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
                                data-column_filter_types="null,text,select,daterange,daterange,text,select,null"
                                data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
@@ -383,11 +430,8 @@
                                             <td>@educations[i].MainCourseStudy</td>
                                             <td>@educations[i].TypeOfTraining</td>
                                             <td class='hidden-480'>
-                                                <a href='@Url.Action("UpdateEducation", "AdminUser", new { educationID = educations[i].EducationID })' class="btn" rel="tooltip" title="Update">
+                                                <a href='javascript:void(0)' onclick="showEducation('@educations[i].EducationID')" class="btn" rel="tooltip" title="View">
                                                     <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="#" class="btn" rel="tooltip" title="Delete" onclick="return deleteEducation('@educations[i].EducationID')" id="btn_@educations[i].EducationID">
-                                                    <i class="fa fa-times"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -401,7 +445,7 @@
                     <!--End education-->
 
                     <!--Start additional training-->
-                    <div class="tab-pane" id="t11">
+                    <div class="tab-pane" id="t13">
                         <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
                                data-column_filter_types="null,text,select,daterange,daterange,select,null"
                                data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
@@ -434,11 +478,8 @@
                                             <td>@(trainings[i].TrainingEnd.HasValue ? trainings[i].TrainingEnd.Value.ToShortDateString() : "")</td>
                                             <td>@trainings[i].TypeOfTraining</td>
                                             <td class='hidden-480'>
-                                                <a href='@Url.Action("UpdateTraining", "AdminUser", new { trainingID = trainings[i].TrainingID })' class="btn" rel="tooltip" title="Update">
+                                                <a href='javascript:void(0)' onclick="showTraining('@trainings[i].TrainingID')" class="btn" rel="tooltip" title="View">
                                                     <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="#" class="btn" rel="tooltip" title="Delete" onclick="return deleteTraining('@trainings[i].TrainingID')" id="btn_@trainings[i].TrainingID">
-                                                    <i class="fa fa-times"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -451,7 +492,7 @@
                     <!--End additional training-->
 
                     <!--Start leadership-->
-                    <div class="tab-pane" id="t12">
+                    <div class="tab-pane" id="t14">
                         <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
                                data-column_filter_types="null,text,text,daterange,daterange,text,null"
                                data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
@@ -484,11 +525,8 @@
                                             <td>@(leaderships[i].EndDate.HasValue ? leaderships[i].EndDate.Value.ToShortDateString() : "")</td>
                                             <td>@(leaderships[i].Duties.Length > 50 ? leaderships[i].Duties.Substring(0, 45) + "..." : leaderships[i].Duties)</td>
                                             <td class='hidden-480'>
-                                                <a href='@Url.Action("UpdateLeadership", "AdminUser", new { leadershipID = leaderships[i].LeaderShipID })' class="btn" rel="tooltip" title="Update">
+                                                <a href='javascript:void(0)' onclick="showLeadership('@leaderships[i].LeaderShipID')" class="btn" rel="tooltip" title="View">
                                                     <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="#" class="btn" rel="tooltip" title="Delete" onclick="return deleteLeadership('@leaderships[i].LeaderShipID')" id="btn_@leaderships[i].LeaderShipID">
-                                                    <i class="fa fa-times"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -501,7 +539,7 @@
                     <!--End leader ship-->
 
                     <!--Start publication-->
-                    <div class="tab-pane" id="t13">
+                    <div class="tab-pane" id="t15">
                         <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
                                data-column_filter_types="null,text,text,text,text,null"
                                data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
@@ -532,11 +570,8 @@
                                             <td>@publications[i].Year</td>
                                             <td>@publications[i].URL</td>
                                             <td class='hidden-480'>
-                                                <a href='@Url.Action("UpdatePublication", "AdminUser", new { publicationID = publications[i].PublicationID })' class="btn" rel="tooltip" title="Update">
+                                                <a href='javascript:void(0)' onclick="showPublication('@publications[i].PublicationID')" class="btn" rel="tooltip" title="View">
                                                     <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="#" class="btn" rel="tooltip" title="Delete" onclick="return deletePublication('@publications[i].PublicationID')" id="btn_@publications[i].PublicationID">
-                                                    <i class="fa fa-times"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -547,7 +582,6 @@
 
                     </div>
                     <!--End publication-->
-                    }
                         
                 </div>
             </div>
@@ -555,3 +589,461 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    function deleteAbstract(submitID) {
+        bootbox.confirm("Bạn có chắc chắn muốn xóa bản ghi này?", function (result) {
+            if (result) {
+                $.blockUI({ message: $('#spinner') });
+                $.ajax({
+                    type: 'GET',
+                    contentType: 'application/json',
+                    url: '@Url.Action("DeleteAbstract", "AdminUser")',
+                    data: { submitID: submitID },
+                    success: function (data) {
+                        if (data.ErrorCode == 0) {
+                            var $el = $("#btn_" + submitID);
+                            var $parent = $el.parents("tr");
+                            $parent.fadeOut(400, function () {
+                                $parent.remove();
+                            });
+                            bootbox.hideAll();
+                        } else {
+                            bootbox.alert(data.Message, function () {
+                                bootbox.hideAll();
+                            });
+                        }
+                        $.unblockUI();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        bootbox.hideAll();
+                        $.unblockUI();
+                    }
+                });
+                return true;
+            } else {
+                bootbox.hideAll();
+                return false;
+            }
+        });
+    }
+</script>
+
+<!--Experiences-->
+<script type="text/javascript">
+    var experienceDialog = [
+            '<form method="POST" action="#" id="frmExperience" class="form-horizontal form-bordered">',
+                '<div class="box">',
+                    '<div class="box-content nopadding">',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Organization (Full name)</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{Organization}" maxlength="50" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Position</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{Position}" maxlength="50" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Working from</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{WorkingStart}" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Working to</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{WorkingEnd}" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Duties</label>',
+                            '<div class="col-sm-10">',
+                                '<textarea rows="3" maxlength="150" class="form-control" data-rule-required="true" readonly>{Duties}</textarea>',
+                            '</div>',
+                        '</div>',
+                    '</div>',
+                '</div>',
+            '</form>'
+    ].join("\n");
+
+    function showExperience(workingID) {
+        $.ajax({
+            type: 'GET',
+            contentType: 'application/json',
+            url: '@Url.Action("GetWorkingExperience", "AdminUser")',
+            data: { workingID: workingID },
+            success: function (response) {
+                $.unblockUI();
+                if (response.ErrorCode != null && response.ErrorCode == 0) {
+                    //Replace values
+                    experienceDialog = experienceDialog
+                        .replace(/\{Organization\}/ig, response.Item.Organization)
+                        .replace(/\{Position\}/ig, response.Item.Position)
+                        .replace(/\{WorkingStart\}/ig, appUtil.utility.parseJsonDate(response.Item.WorkingStart))
+                        .replace(/\{WorkingEnd\}/ig, appUtil.utility.parseJsonDate(response.Item.WorkingEnd))
+                        .replace(/\{Duties\}/ig, response.Item.Duties);
+
+                    bootbox.dialog({
+                        message: experienceDialog,
+                        title: "View working experience",
+                        buttons: {
+                            danger: {
+                                label: "Close",
+                                className: "btn-danger",
+                                callback: function () {
+                                    bootbox.hideAll();
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    bootbox.alert(response.Message, function () {
+                        bootbox.hideAll();
+                    });
+                }
+            },
+            error: function (error) {
+                $.unblockUI();
+            }
+        });
+    }
+</script>
+
+<!--Education-->
+<script type="text/javascript">
+    var educationDialog = [
+            '<form method="POST" action="#" id="frmEducation" class="form-horizontal form-bordered">',
+                '<div class="box">',
+                    '<div class="box-content nopadding">',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Degree</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{Degree}" maxlength="50" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Country</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{Country}" maxlength="50" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">EducationStart</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{EducationStart}" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">EducationEnd</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{EducationEnd}" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">MainCourseStudy</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{MainCourseStudy}" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">TypeOfTraining</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{TypeOfTraining}" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                    '</div>',
+                '</div>',
+            '</form>'
+    ].join("\n");
+
+    function showEducation(educationID) {
+        $.ajax({
+            type: 'GET',
+            contentType: 'application/json',
+            url: '@Url.Action("GetEducation", "AdminUser")',
+            data: { educationID: educationID },
+            success: function (response) {
+                $.unblockUI();
+                if (response.ErrorCode != null && response.ErrorCode == 0) {
+                    //Replace values
+                    educationDialog = educationDialog
+                        .replace(/\{Degree\}/ig, response.Item.Degree)
+                        .replace(/\{Country\}/ig, response.Item.Country)
+                        .replace(/\{EducationStart\}/ig, appUtil.utility.parseJsonDate(response.Item.EducationStart))
+                        .replace(/\{EducationEnd\}/ig, appUtil.utility.parseJsonDate(response.Item.EducationEnd))
+                        .replace(/\{MainCourseStudy\}/ig, response.Item.MainCourseStudy)
+                        .replace(/\{TypeOfTraining\}/ig, response.Item.TypeOfTraining);
+
+                    bootbox.dialog({
+                        message: educationDialog,
+                        title: "View education",
+                        buttons: {
+                            danger: {
+                                label: "Close",
+                                className: "btn-danger",
+                                callback: function () {
+                                    bootbox.hideAll();
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    bootbox.alert(response.Message, function () {
+                        bootbox.hideAll();
+                    });
+                }
+            },
+            error: function (error) {
+                $.unblockUI();
+            }
+        });
+    }
+</script>
+
+<!--Training-->
+<script type="text/javascript">
+    var trainingDialog = [
+            '<form method="POST" action="#" id="frmTraining" class="form-horizontal form-bordered">',
+                '<div class="box">',
+                    '<div class="box-content nopadding">',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">NameOfCourse</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{NameOfCourse}" maxlength="50" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Country</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{Country}" maxlength="50" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">EducationStart</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{TrainingStart}" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">EducationEnd</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{TrainingEnd}" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">MainCourseStudy</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{TypeOfTraining}" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                    '</div>',
+                '</div>',
+            '</form>'
+    ].join("\n");
+
+    function showTraining(trainingID) {
+        $.ajax({
+            type: 'GET',
+            contentType: 'application/json',
+            url: '@Url.Action("GetTraining", "AdminUser")',
+            data: { trainingID: trainingID },
+            success: function (response) {
+                $.unblockUI();
+                if (response.ErrorCode != null && response.ErrorCode == 0) {
+                    //Replace values
+                    trainingDialog = trainingDialog
+                        .replace(/\{NameOfCourse\}/ig, response.Item.NameOfCourse)
+                        .replace(/\{Country\}/ig, response.Item.Country)
+                        .replace(/\{TrainingStart\}/ig, appUtil.utility.parseJsonDate(response.Item.TrainingStart))
+                        .replace(/\{TrainingEnd\}/ig, appUtil.utility.parseJsonDate(response.Item.TrainingEnd))
+                        .replace(/\{TypeOfTraining\}/ig, response.Item.TypeOfTraining);
+
+                    bootbox.dialog({
+                        message: trainingDialog,
+                        title: "View additional training",
+                        buttons: {
+                            danger: {
+                                label: "Close",
+                                className: "btn-danger",
+                                callback: function () {
+                                    bootbox.hideAll();
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    bootbox.alert(response.Message, function () {
+                        bootbox.hideAll();
+                    });
+                }
+            },
+            error: function (error) {
+                $.unblockUI();
+            }
+        });
+    }
+</script>
+
+<!--Leadership-->
+<script type="text/javascript">
+    var leadershipDialog = [
+            '<form method="POST" action="#" id="frmTraining" class="form-horizontal form-bordered">',
+                '<div class="box">',
+                    '<div class="box-content nopadding">',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Organization</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{Organization}" maxlength="50" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Position</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{Position}" maxlength="50" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">From</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{FromDate}" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">To</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{EndDate}" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Duties</label>',
+                            '<div class="col-sm-10">',
+                                '<textarea rows="3" maxlength="150" class="form-control" data-rule-required="true" readonly>{Duties}</textarea>',
+                            '</div>',
+                        '</div>',
+                    '</div>',
+                '</div>',
+            '</form>'
+    ].join("\n");
+
+    function showLeadership(leadershipID) {
+        $.ajax({
+            type: 'GET',
+            contentType: 'application/json',
+            url: '@Url.Action("GetLeadership", "AdminUser")',
+            data: { leadershipID: leadershipID },
+            success: function (response) {
+                $.unblockUI();
+                if (response.ErrorCode != null && response.ErrorCode == 0) {
+                    //Replace values
+                    leadershipDialog = leadershipDialog
+                        .replace(/\{Organization\}/ig, response.Item.Organization)
+                        .replace(/\{Position\}/ig, response.Item.Position)
+                        .replace(/\{FromDate\}/ig, appUtil.utility.parseJsonDate(response.Item.FromDate))
+                        .replace(/\{EndDate\}/ig, appUtil.utility.parseJsonDate(response.Item.EndDate))
+                        .replace(/\{Duties\}/ig, response.Item.Duties);
+
+                    bootbox.dialog({
+                        message: leadershipDialog,
+                        title: "View leadership experience",
+                        buttons: {
+                            danger: {
+                                label: "Close",
+                                className: "btn-danger",
+                                callback: function () {
+                                    bootbox.hideAll();
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    bootbox.alert(response.Message, function () {
+                        bootbox.hideAll();
+                    });
+                }
+            },
+            error: function (error) {
+                $.unblockUI();
+            }
+        });
+    }
+</script>
+
+<!--Publication-->
+<script type="text/javascript">
+    var publicationDialog = [
+            '<form method="POST" action="#" id="frmTraining" class="form-horizontal form-bordered">',
+                '<div class="box">',
+                    '<div class="box-content nopadding">',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Title</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{Title}" maxlength="50" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Source</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{Source}" maxlength="50" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Year</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{Year}" maxlength="50" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">URL</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{URL}" maxlength="50" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                    '</div>',
+                '</div>',
+            '</form>'
+    ].join("\n");
+
+    function showPublication(publicationID) {
+        $.ajax({
+            type: 'GET',
+            contentType: 'application/json',
+            url: '@Url.Action("GetPublication", "AdminUser")',
+            data: { publicationID: publicationID },
+            success: function (response) {
+                $.unblockUI();
+                if (response.ErrorCode != null && response.ErrorCode == 0) {
+                    //Replace values
+                    publicationDialog = publicationDialog
+                        .replace(/\{Title\}/ig, response.Item.Title)
+                        .replace(/\{Source\}/ig, response.Item.Source)
+                        .replace(/\{Year\}/ig, response.Item.Year)
+                        .replace(/\{URL\}/ig, response.Item.URL);
+
+                    bootbox.dialog({
+                        message: publicationDialog,
+                        title: "View publication",
+                        buttons: {
+                            danger: {
+                                label: "Close",
+                                className: "btn-danger",
+                                callback: function () {
+                                    bootbox.hideAll();
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    bootbox.alert(response.Message, function () {
+                        bootbox.hideAll();
+                    });
+                }
+            },
+            error: function (error) {
+                $.unblockUI();
+            }
+        });
+    }
+</script>

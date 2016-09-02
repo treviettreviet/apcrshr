@@ -52,6 +52,10 @@ namespace apcrshr_site.Controllers
             if (_user != null)
             {
                 response = _mainScholarshipService.FindByUserID(_user.UserID);
+                if (response.Items == null)
+                {
+                    response.Items = new List<MainScholarshipModel>();
+                }
             }
             return View(response.Items);
         }
@@ -64,7 +68,7 @@ namespace apcrshr_site.Controllers
         }
 
         [UserSessionFilter]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult SaveMainScholarship(MainScholarshipModel scholarship)
         {
             string sessionId = Session["User-SessionID"].ToString();
@@ -88,6 +92,10 @@ namespace apcrshr_site.Controllers
             if (_user != null)
             {
                 response = _youthScholarshipService.FindByUserID(_user.UserID);
+                if (response.Item == null)
+                {
+                    response.Item = new YouthScholarshipModel();
+                }
             }
 
             //Find experiences
@@ -125,7 +133,7 @@ namespace apcrshr_site.Controllers
         }
 
         [UserSessionFilter]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult SaveYouthScholarship(YouthScholarshipModel scholarship)
         {
             string sessionId = Session["User-SessionID"].ToString();

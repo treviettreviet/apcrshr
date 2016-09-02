@@ -12,5 +12,6 @@ namespace Site.Core.DataModel.Model
         public string UserID { get; set; }
         public string SubmissionNumber { get; set; }
         public System.DateTime CreatedDate { get; set; }
+        public int Status { get; set; }
     }
 }

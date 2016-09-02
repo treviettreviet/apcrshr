@@ -50,6 +50,9 @@
                                     <a href='@Url.Action("ViewUser", "AdminUser", new { userId = Model[i].UserID })' class="btn" rel="tooltip" title="Sửa">
                                         <i class="fa fa-edit"></i>
                                     </a>
+                                    <a href='javascript:void(0)' onclick="assignAbstract('@Model[i].UserID', '@Model[i].Email')" class="btn" rel="tooltip" title="Thêm abstract submission">
+                                        <i class="fa fa-plus"></i>
+                                    </a>
                                     <a href="javascript:void(0)" onclick="return lockUser('@Model[i].UserID', this)" class="btn" rel="tooltip" title="@(Model[i].Locked ? "Mở khóa" : "Khóa")">
                                         <i id="lock_@Model[i].UserID" class="fa @(Model[i].Locked ? "fa-unlock" : "fa-lock")"></i>
                                     </a>
@@ -155,4 +158,111 @@
         });
     }
 
+    function assignAbstract(userID, email) {
+        var assignDialog = [
+            '<form method="POST" action="#" id="frmAbstract" class="form-horizontal form-bordered">',
+                '<div class="box">',
+                    '<div class="box-content nopadding">',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Email</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" value="{Email}" maxlength="100" class="form-control" data-rule-required="true" readonly>',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Submission Number</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="text" id="SubmissionNumber" maxlength="100" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Submission Status</label>',
+                            '<div class="col-sm-10">',
+                                '<select id="Status" class="form-control" data-rule-required="true">',
+                                    '<option value="0">Submitted</option>',
+                                    '<option value="1">Reviewed</option>',
+                                    '<option value="2">Rejected</option>',
+                                '</select>',
+                            '</div>',
+                        '</div>',
+                    '</div>',
+                '</div>',
+            '</form>'
+        ].join("\n");
+
+        //Replace values
+        assignDialog = assignDialog
+            .replace(/\{Email\}/ig, email);
+
+        bootbox.dialog({
+            message: assignDialog,
+            title: "Assign abstract submission",
+            buttons: {
+                success: {
+                    label: "Save Changes",
+                    className: "btn-primary",
+                    callback: function (e) {
+                        //Validate
+                        if (!validateSubmission()) {
+                            return false;
+                        }
+
+                        //Save changes
+                        $.blockUI({ message: $('#spinner') });
+                        $.ajax({
+                            type: 'GET',
+                            contentType: 'application/json',
+                            url: '@Url.Action("AssignAbstractSubmission", "AdminUser")',
+                            data: { userID: userID, submissionNumber: $("#SubmissionNumber").val(), status: $("#Status").find(":selected").val() },
+                            success: function (response) {
+                                //Timeout
+                                if (response.ErrorCode == 2) {
+                                    window.location = '@Url.Action("Login", "User")';
+                                }
+                                if (response.ErrorCode == 0) {
+                                    bootbox.alert("Abstract submission was assigned sucessfully", function () {
+                                        $.unblockUI();
+                                        bootbox.hideAll();
+                                    });
+                                    return true;
+                                }
+                                if (response.ErrorCode == 1) {
+                                    bootbox.alert(response.Message, function () {
+                                        $.unblockUI();
+                                    });
+                                }
+                            },
+                            error: function (error) {
+                                $.unblockUI();
+                                bootbox.alert(error, function () {
+                                });
+                            }
+                        });
+                        return false;
+                    }
+                },
+                danger: {
+                    label: "Close",
+                    className: "btn-danger",
+                    callback: function () {
+                        bootbox.hideAll();
+                    }
+                }
+            }
+        });
+
+        function validateSubmission() {
+            var submissionNumber = $("#SubmissionNumber").val();
+
+            if (submissionNumber == null || submissionNumber.length == 0) {
+                bootbox.alert("Please input the user submission number!", function () {
+                    setTimeout(function () {
+                        $("#SubmissionNumber").focus();
+                    }, 1);
+                });
+                return false;
+            }
+            return true;
+        }
+    }
 </script>

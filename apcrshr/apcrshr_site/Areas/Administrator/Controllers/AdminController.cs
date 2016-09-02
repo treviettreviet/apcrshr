@@ -78,7 +78,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         /// <param name="languageCode">VN for Vietnamese or EN for English</param>
         /// <returns></returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult ChangeCurrentCulture(string Language)
         {
             Session["AdminCulture"] = Language;
@@ -131,7 +131,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         [SessionFilter]
         [HttpPost]
         [AuthorizationFilter]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult CreateAdmin(AdminModel admin)
         {
             if (ModelState.IsValid)
@@ -168,7 +168,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         [SessionFilter]
         [HttpPost]
         [AuthorizationFilter]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult SaveUpdateProfileAdmin(AdminModel admin)
         {
             if (ModelState.IsValid)
@@ -182,7 +182,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         [SessionFilter]
         [HttpPost]
         [AuthorizationFilter]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult SaveUpdateAdmin(AdminModel admin)
         {
             if (ModelState.IsValid)
@@ -202,7 +202,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [AuthorizationFilter]
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult CreateCategoryMenu(MenuModel menu, string parentTitle)
         {
             if (ModelState.IsValid)
@@ -222,7 +222,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public JsonResult UploadFiles(HttpPostedFileBase file)
         {
             var sessionId = this.Session["SessionID"].ToString();
@@ -316,7 +316,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [AuthorizationFilter]
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult UpdateCategoryMenu(MenuModel menu)
         {
             if (ModelState.IsValid)
@@ -372,7 +372,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [HttpPost]
         [SessionFilter]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult SaveSqlQuery(string query)
         {
             var msg = "Successed";

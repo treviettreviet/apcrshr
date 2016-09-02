@@ -43,6 +43,10 @@
 
             isImage: function (name) {
                 return (/\.(gif|jpg|jpeg|tiff|png)$/i).test(name);
+            },
+
+            parseJsonDate: function (jsonDateString){
+                return new Date(parseInt(jsonDateString.replace('/Date(', '')));
             }
         }
     };

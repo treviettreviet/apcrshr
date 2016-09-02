@@ -21,8 +21,8 @@ namespace apcrshr_site.Helper
         private static readonly string EMAIL = "abstract.apcrshr9vn@gmail.com";
         private static readonly string PASSWORD = "kjKJSDIFU8sf7*U*&FJDkfskdfjdjfhyT%$%^sgfdjsnflksflkM%%$#VBskmf;ls,fpl_-sfKKLFN)(F*s9f8s98fosnflkJFisf89sufdflkdmflkdmfkdfjUY*UFdjfnKJHyts76%&D*y8768y78FdkjfF98sufj==";
         private static readonly string CIPHER = "z3HMcf1v7/r+g4FqNPL0CqwoKQbdvwofhpcbDL6vyFK1ZPZ/ZM9n/rbiigd+r037d2VtcgRRh/HQ53Hx1dsuUUOf/nAgL8RX5YYaER/HbyQJc1+2LbsfcP8ygoWkvdM/";
-        private static readonly string HOST = "smtp.gmail.com"; 
-        private static readonly int PORT = 587;
+        private static readonly string HOST = "smtp.gmail.com";
+        private static readonly int PORT = 25;
         private static DataHelper _instance;
         private Object _lock = new Object();
 
@@ -195,9 +195,38 @@ namespace apcrshr_site.Helper
             return new SelectList(directions, "ID", "Name");
         }
 
+        public SelectList GetAbstractStatusForDropdown()
+        {
+            var directions = from SubmissionStatus d in Enum.GetValues(typeof(SubmissionStatus))
+                             select new { ID = (int)d, Name = d.ToString() };
+            return new SelectList(directions, "ID", "Name");
+        }
+
         public string GetEnumName<T>(T enumtype)
         {
             return Enum.GetName(typeof(T), enumtype);
+        }
+
+        public IDictionary<int, string> GetEnumSubmissionDictionary()
+        {
+            return Enum.GetValues(typeof(SubmissionStatus))
+               .Cast<SubmissionStatus>()
+               .ToDictionary(t => (int)t, t => t.ToString() );
+        }
+
+        public string GetAbstractStatusName(int status)
+        {
+            switch (status)
+            {
+                case (int)SubmissionStatus.Submitted:
+                    return "Abstract is not reviewed";
+                case (int)SubmissionStatus.Reviewed:
+                    return "Abstract was reviewed";
+                case (int)SubmissionStatus.Rejected:
+                    return "Abstract was rejected";
+                default:
+                    throw new InvalidCastException("Invalid status");
+            }
         }
 
         public string GetScholarshipStatusName(int status)

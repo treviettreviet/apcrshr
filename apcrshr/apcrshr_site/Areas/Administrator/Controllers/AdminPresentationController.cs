@@ -44,7 +44,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [SessionFilter]
-        [ValidateAntiForgeryToken]
+        
         public JsonResult SavePresentation(PresentationModel presentation, HttpPostedFileBase imageFile, HttpPostedFileBase file)
         {
             var sessionId = this.Session["SessionID"].ToString();
@@ -127,7 +127,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [SessionFilter]
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public JsonResult SaveUpdatePresentation(PresentationModel presentation, HttpPostedFileBase imageFile, HttpPostedFileBase file)
         {
             var sessionId = this.Session["SessionID"].ToString();

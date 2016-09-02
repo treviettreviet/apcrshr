@@ -10,3 +10,7 @@ ALTER TABLE [MainScholarship] ADD [Status] INT NOT NULL DEFAULT(0)
 
 GO
 
+ALTER TABLE [UserSubmission] ADD [Status] INT NOT NULL DEFAULT(0)
+
+GO
+

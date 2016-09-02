@@ -27,7 +27,7 @@
         <div class="box-content">
             @using (Html.BeginForm("SaveMainScholarship", "Scholarship", FormMethod.Post, new { @class = "form-horizontal form-bordered", @id = "frmMainScholarship", @onsubmit="onSubmitTrigger()" }))
             {
-                @Html.AntiForgeryToken()
+                
                 @Html.HiddenFor(Model => Model.ScholarshipID)
                 @Html.HiddenFor(Model => Model.UserID)
                 @Html.HiddenFor(Model => Model.SubmissionNumber)

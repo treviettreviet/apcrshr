@@ -557,7 +557,7 @@ namespace apcrshr_site.Controllers
             return View(model);
         }
 
-        [ValidateAntiForgeryToken]
+        
         public JsonResult SaveMainSholarship(MainScholarshipModel scholarship)
         {
             //Validate before save
@@ -643,62 +643,63 @@ namespace apcrshr_site.Controllers
         [UserSessionFilter]
         public ActionResult YouthSholarshipRegistration()
         {
-            YouthScholarshipModel model = new YouthScholarshipModel();
             string sessionId = Session["User-SessionID"].ToString();
             Site.Core.Repository.User _user = SessionUtil.GetInstance.GetUserBySessionID(sessionId);
+            FindItemReponse<YouthScholarshipModel> response = new FindItemReponse<YouthScholarshipModel>();
+
             if (_user != null)
             {
-                //Try to get scholarship
-                FindItemReponse<YouthScholarshipModel> scholarshipResponse = _youthScholarshipService.FindByUserID(_user.UserID);
-                model = scholarshipResponse.Item;
-                if (model == null)
+                response = _youthScholarshipService.FindByUserID(_user.UserID);
+                if (response.Item == null)
                 {
-                    model = new YouthScholarshipModel();
+                    response.Item = new YouthScholarshipModel();
                 }
+                response.Item.UserID = _user.UserID;
 
                 //Find mailing
-                FindAllItemReponse<MailingAddressModel> response = _mailingService.FindMailingAddressByUser(_user.UserID);
-                if (response.Items != null)
+                FindAllItemReponse<MailingAddressModel> mailingResponse = _mailingService.FindMailingAddressByUser(_user.UserID);
+                if (mailingResponse.Items != null)
                 {
-                    MailingAddressModel mailing = response.Items.FirstOrDefault();
+                    MailingAddressModel mailing = mailingResponse.Items.FirstOrDefault();
                     if (mailing != null)
                     {
-                        model.RegistrationNumber = mailing.RegistrationNumber;
+                        response.Item.RegistrationNumber = mailing.RegistrationNumber;
                     }
                 }
-
-                //Find experiences
-                FindAllItemReponse<ExperienceModel> experiencesResponse = _experienceService.FindByscholarshipID(model.YouthScholarshipID);
-                if (experiencesResponse.Items != null && experiencesResponse.Items.Count > 0)
-                {
-                    model.ExperienceTitles = string.Join(",", experiencesResponse.Items.Select(i => i.Organization));
-                }
-                //Find educations
-                FindAllItemReponse<EducationModel> educationsResponse = _educationService.FindByscholarshipID(model.YouthScholarshipID);
-                if (educationsResponse.Items != null && educationsResponse.Items.Count > 0)
-                {
-                    model.EducationTitles = string.Join(",", educationsResponse.Items.Select(i => i.MainCourseStudy));
-                }
-                //Find trainings
-                FindAllItemReponse<TrainingModel> trainingsResponse = _trainingService.FindByscholarshipID(model.YouthScholarshipID);
-                if (trainingsResponse.Items != null && trainingsResponse.Items.Count > 0)
-                {
-                    model.AdditionalTrainingTitles = string.Join(",", trainingsResponse.Items.Select(i => i.NameOfCourse));
-                }
-                //Find leadership
-                FindAllItemReponse<LeaderShipModel> leadershipsResponse = _leadershipService.FindByscholarshipID(model.YouthScholarshipID);
-                if (leadershipsResponse.Items != null && leadershipsResponse.Items.Count > 0)
-                {
-                    model.LeaderShipTitles = string.Join(",", leadershipsResponse.Items.Select(i => i.Organization));
-                }
-                //Find publication
-                FindAllItemReponse<PublicationModel> publicationsResponse = _publicationService.FindByscholarshipID(model.YouthScholarshipID);
-                if (publicationsResponse.Items != null && publicationsResponse.Items.Count > 0)
-                {
-                    model.PublicationTitles = string.Join(",", publicationsResponse.Items.Select(i => i.Title));
-                }
             }
-            return View(model);
+
+            //Find experiences
+            FindAllItemReponse<ExperienceModel> experiencesResponse = _experienceService.FindByscholarshipID(response.Item.YouthScholarshipID);
+            if (experiencesResponse.Items != null && experiencesResponse.Items.Count > 0)
+            {
+                response.Item.ExperienceTitles = string.Join(",", experiencesResponse.Items.Select(i => i.Organization));
+            }
+            //Find educations
+            FindAllItemReponse<EducationModel> educationsResponse = _educationService.FindByscholarshipID(response.Item.YouthScholarshipID);
+            if (educationsResponse.Items != null && educationsResponse.Items.Count > 0)
+            {
+                response.Item.EducationTitles = string.Join(",", educationsResponse.Items.Select(i => i.MainCourseStudy));
+            }
+            //Find trainings
+            FindAllItemReponse<TrainingModel> trainingsResponse = _trainingService.FindByscholarshipID(response.Item.YouthScholarshipID);
+            if (trainingsResponse.Items != null && trainingsResponse.Items.Count > 0)
+            {
+                response.Item.AdditionalTrainingTitles = string.Join(",", trainingsResponse.Items.Select(i => i.NameOfCourse));
+            }
+            //Find leadership
+            FindAllItemReponse<LeaderShipModel> leadershipsResponse = _leadershipService.FindByscholarshipID(response.Item.YouthScholarshipID);
+            if (leadershipsResponse.Items != null && leadershipsResponse.Items.Count > 0)
+            {
+                response.Item.LeaderShipTitles = string.Join(",", leadershipsResponse.Items.Select(i => i.Organization));
+            }
+            //Find publication
+            FindAllItemReponse<PublicationModel> publicationsResponse = _publicationService.FindByscholarshipID(response.Item.YouthScholarshipID);
+            if (publicationsResponse.Items != null && publicationsResponse.Items.Count > 0)
+            {
+                response.Item.PublicationTitles = string.Join(",", publicationsResponse.Items.Select(i => i.Title));
+            }
+
+            return View(response.Item);
         }
 
         [HttpPost]
@@ -789,7 +790,7 @@ namespace apcrshr_site.Controllers
             return Json("File uploaded successfully");
         }
 
-        [ValidateAntiForgeryToken]
+        
         public JsonResult SaveYouthSholarship(YouthScholarshipModel scholarship, HttpPostedFileBase upload)
         {
             //Validate before save
@@ -825,7 +826,7 @@ namespace apcrshr_site.Controllers
             return Json(new { ErrorCode = response.ErrorCode, Message = response.Message, IsUpdate = false });
         }
 
-        [ValidateAntiForgeryToken]
+        
         public JsonResult SaveExperience(ExperienceModel experience, YouthScholarshipModel scholarship)
         {
             //Validate before save
@@ -871,7 +872,7 @@ namespace apcrshr_site.Controllers
             return Json(new { ErrorCode = (int)createExperienceResponse.ErrorCode, Message = createExperienceResponse.Message, YouthScholarshipID = scholarshipID, Title = experience.Organization });
         }
 
-        [ValidateAntiForgeryToken]
+        
         public JsonResult SaveEducation(EducationModel education, YouthScholarshipModel scholarship)
         {
             //Validate before save
@@ -917,7 +918,7 @@ namespace apcrshr_site.Controllers
             return Json(new { ErrorCode = (int)createResponse.ErrorCode, Message = createResponse.Message, YouthScholarshipID = scholarshipID, Title = education.MainCourseStudy });
         }
 
-        [ValidateAntiForgeryToken]
+        
         public JsonResult SaveTraining(TrainingModel training, YouthScholarshipModel scholarship)
         {
             //Validate before save
@@ -963,7 +964,7 @@ namespace apcrshr_site.Controllers
             return Json(new { ErrorCode = (int)createResponse.ErrorCode, Message = createResponse.Message, YouthScholarshipID = scholarshipID, Title = training.NameOfCourse });
         }
 
-        [ValidateAntiForgeryToken]
+        
         public JsonResult SaveLeaderShip(LeaderShipModel leadership, YouthScholarshipModel scholarship)
         {
             //Validate before save
@@ -1009,7 +1010,7 @@ namespace apcrshr_site.Controllers
             return Json(new { ErrorCode = (int)createResponse.ErrorCode, Message = createResponse.Message, YouthScholarshipID = scholarshipID, Title = leadership.Organization });
         }
 
-        [ValidateAntiForgeryToken]
+        
         public JsonResult SavePublication(PublicationModel publication, YouthScholarshipModel scholarship)
         {
             //Validate before save

@@ -42,7 +42,7 @@ namespace apcrshr_site.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult UserLogin(UserModel user)
         {
             if (ModelState.IsValid)
@@ -66,7 +66,7 @@ namespace apcrshr_site.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult RegisterUser(UserModel user)
         {
             if (ModelState.IsValid)
@@ -191,7 +191,7 @@ namespace apcrshr_site.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult SendPassword(string email)
         {
             FindItemReponse<UserModel> user = null;
@@ -203,59 +203,17 @@ namespace apcrshr_site.Controllers
                 {
                     string password = Guid.NewGuid().ToString("D").Substring(1, 6);
 
-                    if (ModelState.IsValid)
-                    {
-                        var mail = new System.Net.Mail.MailMessage();
-                        mail.To.Add(new MailAddress(email));
-                        mail.From = new MailAddress("thudientu2102@gmail.com");
-                        mail.Subject = "Đổi mật khẩu APCRSHR";
-                        string body = "Thay đổi mật khẩu. Mật khẩu mới của bạn là: " + password;
-                        mail.Body = body;
-                        mail.IsBodyHtml = true;
-                        SmtpClient smtp = new SmtpClient();
-                        smtp.Host = "smtp.gmail.com";
-                        smtp.Port = 587;
-                        smtp.UseDefaultCredentials = false;
-                        smtp.Credentials = new System.Net.NetworkCredential
-                        ("thudientu2102@gmail.com", "Lamatkhau");// Enter seders User name and password
-                        smtp.EnableSsl = true;
-                        try
-                        {
-                            smtp.Send(mail);
-                        }
-                        catch (SmtpFailedRecipientsException ex)
-                        {
-                            for (int i = 0; i < ex.InnerExceptions.Length; i++)
-                            {
-                                SmtpStatusCode status = ex.InnerExceptions[i].StatusCode;
-                                if (status == SmtpStatusCode.MailboxBusy ||
-                                    status == SmtpStatusCode.MailboxUnavailable)
-                                {
-                                    Console.WriteLine("Delivery failed - retrying in 5 seconds.");
-                                    System.Threading.Thread.Sleep(5000);
-                                    smtp.Send(mail);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Failed to deliver message to {0}",
-                                        ex.InnerExceptions[i].FailedRecipient);
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            response = new BaseResponse { ErrorCode = (int)ErrorCode.Error, Message = ex.Message };
-                            ViewBag.Message = response;
-                            return View("ForgetPassword");
-                        }
-                    }
+                    
                     UserModel _user = user.Item;
                     _user.UpdatedDate = DateTime.Now;
-                    _user.Password = password;
+                    _user.Password = System.Web.Security.Membership.GeneratePassword(10, 3);
                     response = _userService.UpdateUser(_user);
                     if (response.ErrorCode == (int)ErrorCode.None)
                     {
                         response.Message = Resources.Resource.msg_forgotPassword_emailSend;
+
+                        string body = string.Format("Your password: <b>{0}</b>", _user.Password);
+                        DataHelper.GetInstance().SendEmail(user.Item.Email, "Password recovery", body);
                     }
                 }
                 else
@@ -283,7 +241,7 @@ namespace apcrshr_site.Controllers
 
         [UserSessionFilter]
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult SaveUpdateUser(UserModel user)
         {
             user.UpdatedDate = DateTime.Now;
@@ -351,7 +309,7 @@ namespace apcrshr_site.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult ChangePassword(string UserID, string CurrentPassword, string NewPassword)
         {
             string sessionId = Session["User-SessionID"].ToString();

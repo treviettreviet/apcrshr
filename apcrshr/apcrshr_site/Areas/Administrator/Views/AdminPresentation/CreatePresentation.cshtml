@@ -24,7 +24,7 @@
             <div class="box-content nopadding">
                 @using (Html.BeginForm("SavePresentation", "AdminPresentation", FormMethod.Post, new { @class = "form-horizontal form-bordered", @id = "frmSavePresentation", enctype = "multipart/form-data" }))
                 {
-                    @Html.AntiForgeryToken()
+                    
                     <div class="form-group">
                         <label for="textfield" class="control-label col-sm-2">Tiêu Đề <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-10">
@@ -117,7 +117,7 @@
         formData.append("Contents", CKEDITOR.instances['editor'].getData());
         formData.append("imageFile", $('#imageFile').get(0).files[0]);
         formData.append("file", $('#file').get(0).files[0]);
-        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+        
         $.ajax({
             type: "POST",
             url: '@Url.Action("SavePresentation", "AdminPresentation")',

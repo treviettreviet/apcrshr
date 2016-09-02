@@ -91,7 +91,7 @@
         formData.append("Description", $("#Description").val());
         formData.append("AlbumID", $("#AlbumID").val());
         formData.append("imageFile", $('#imageFile').get(0).files[0]);
-        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+        
         $.ajax({
             type: "POST",
             url: '@Url.Action("SaveUpdatePhoto", "AdminPhoto")',

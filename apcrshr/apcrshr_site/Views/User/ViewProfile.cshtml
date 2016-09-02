@@ -1090,7 +1090,7 @@
                         formData.append("UserID", $("#UserID").val());
                         formData.append("CurrentPassword", $("#CurrentPassword").val());
                         formData.append("NewPassword", $("#NewPassword").val());
-                        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+                        
                         $.ajax({
                             type: "POST",
                             url: '@Url.Action("ChangePassword", "User")',

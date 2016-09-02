@@ -32,7 +32,7 @@
                         <div class="left">
                             @using (Html.BeginForm("ChangeCurrentCulture", "Admin", FormMethod.Post, new { @id = "frmChangeLanguage" }))
                             {
-                                @Html.AntiForgeryToken()
+                                
                                 <select name="Language" id="Language" onchange="languageChanged(this)" class='chosen-select' data-nosearch="true" style="width:150px;">
                                     <option value="VN" @(Session["AdminCulture"] != null && Session["AdminCulture"].ToString().Equals("VN") ? "selected" : "")>Tiếng việt</option>
                                     <option value="EN" @(Session["AdminCulture"] != null && Session["AdminCulture"].ToString().Equals("EN") ? "selected" : "")>Tiếng anh</option>
@@ -90,7 +90,7 @@
                     <div class="bottom">
                         @using (Html.BeginForm("CreateCategoryMenu", "Admin", FormMethod.Post, new { @class = "form-horizontal", @id="frmCreateCategory" }))
                         {
-                            @Html.AntiForgeryToken()
+                            
                             <div class="form-group">
                                 <label for="txtMenuParent" class="control-label col-sm-2">Menu</label>
                                 <div class="col-sm-10">

@@ -115,7 +115,7 @@
         if ($('#file').get(0).files.length > 0) {
             formData.append("file", $('#file').get(0).files[0]);
         }
-        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+        
         $.ajax({
             type: "POST",
             url: '@Url.Action("SaveUpdatePresentation", "AdminPresentation")',

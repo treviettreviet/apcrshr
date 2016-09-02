@@ -47,7 +47,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [SessionFilter]
-        [ValidateAntiForgeryToken]
+        
         public JsonResult SaveSlider(SliderModel slider,HttpPostedFileBase imageFile)
         {
             var sessionId = this.Session["SessionID"].ToString();
@@ -104,7 +104,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
         [SessionFilter]
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public JsonResult SaveUpdateSlider(SliderModel slider, HttpPostedFileBase imageFile)
         {
             var sessionId = this.Session["SessionID"].ToString();

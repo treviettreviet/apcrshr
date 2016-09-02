@@ -110,7 +110,7 @@
         formData.append("StartDate", $("#StartDate").val());
         formData.append("EndDate", $("#EndDate").val());
         formData.append("Deadline", $("#Deadline").val());
-        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+        
         $.ajax({
             type: "POST",
             url: '@Url.Action("SaveUpdateImportantDeadline", "AdminImportantDeadline")',

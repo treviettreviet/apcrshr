@@ -44,7 +44,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [SessionFilter]
-        [ValidateAntiForgeryToken]
+        
         public JsonResult SaveAlbum(AlbumModel album)
         {
             var sessionId = this.Session["SessionID"].ToString();
@@ -88,7 +88,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [SessionFilter]
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public JsonResult SaveUpdateAlbum(AlbumModel album)
         {
             var sessionId = this.Session["SessionID"].ToString();

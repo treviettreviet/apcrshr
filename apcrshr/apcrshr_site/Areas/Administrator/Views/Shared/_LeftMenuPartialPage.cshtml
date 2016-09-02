@@ -82,7 +82,7 @@
     function uploadImage(file) {
         var formData = new FormData();
         formData.append("file", file);
-        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+        
         $.ajax({
             type: "POST",
             url: '@Url.Action("UploadFiles", "Admin")',

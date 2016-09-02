@@ -68,7 +68,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [SessionFilter]
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public JsonResult SaveUpdatePhoto(PhotoModel photo, HttpPostedFileBase imageFile)
         {
             var sessionId = this.Session["SessionID"].ToString();

@@ -29,7 +29,7 @@
                     OnBegin = "OnBeginSubmit"
                 }, new { @class = "form-horizontal form-validate", id = "frmYouthRegistration" }))
             {
-                @Html.AntiForgeryToken()
+                
                 @Html.HiddenFor(Model => Model.RegistrationNumber)
                 @Html.HiddenFor(Model => Model.UserID)
                 @Html.HiddenFor(Model => Model.YouthScholarshipID, new { @id = "YouthScholarshipID" })
@@ -477,7 +477,7 @@
                         formData.append("WorkingStart", $("#WorkingStart").val());
                         formData.append("WorkingEnd", $("#WorkingEnd").val());
                         formData.append("Duties", $("#Duties").val());
-                        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+                        
                         $.ajax({
                             type: "POST",
                             url: '@Url.Action("SaveExperience", "Registration")',
@@ -764,7 +764,7 @@
                         formData.append("EducationEnd", $("#EducationEnd").val());
                         formData.append("MainCourseStudy", $("#MainCourseStudy").val());
                         formData.append("TypeOfTraining", $("#TypeOfTraining").find(":selected").val());
-                        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+                        
                         $.ajax({
                             type: "POST",
                             url: '@Url.Action("SaveEducation", "Registration")',
@@ -1035,7 +1035,7 @@
                         formData.append("TrainingStart", $("#TrainingStart").val());
                         formData.append("TrainingEnd", $("#TrainingEnd").val());
                         formData.append("TypeOfTraining", $("#TypeOfTraining").find(":selected").val());
-                        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+                        
                         $.ajax({
                             type: "POST",
                             url: '@Url.Action("SaveTraining", "Registration")',
@@ -1204,7 +1204,7 @@
                         formData.append("FromDate", $("#FromDate").val());
                         formData.append("EndDate", $("#EndDate").val());
                         formData.append("Duties", $("#Duties").val());
-                        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+                        
                         $.ajax({
                             type: "POST",
                             url: '@Url.Action("SaveLeaderShip", "Registration")',
@@ -1373,7 +1373,7 @@
                         formData.append("Source", $("#Source").val());
                         formData.append("Year", $("#Year").val());
                         formData.append("URL", $("#URL").val());
-                        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+                        
                         $.ajax({
                             type: "POST",
                             url: '@Url.Action("SavePublication", "Registration")',

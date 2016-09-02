@@ -30,7 +30,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult Login(AdminModel admin)
         {
             AdminLoginResponse response = _adminService.Login(admin.UserName, admin.Password);
@@ -80,7 +80,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult SendPassword(string email)
         {
             FindItemReponse<AdminModel> user = null;

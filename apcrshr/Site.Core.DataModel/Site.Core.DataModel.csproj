@@ -52,6 +52,7 @@
     <Compile Include="Enum\RegistrationStatus.cs" />
     <Compile Include="Enum\RoleType.cs" />
     <Compile Include="Enum\ScholarshipStatus.cs" />
+    <Compile Include="Enum\SubmissionStatus.cs" />
     <Compile Include="Model\AdminModel.cs" />
     <Compile Include="Model\AlbumModel.cs" />
     <Compile Include="Model\ArticleModel.cs" />

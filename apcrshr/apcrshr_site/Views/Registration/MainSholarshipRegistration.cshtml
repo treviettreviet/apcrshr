@@ -26,7 +26,7 @@
                     OnBegin = "OnBeginSubmit"
                 }, new { @class = "form-horizontal form-validate", id = "frmMainRegistration" }))
             {
-                @Html.AntiForgeryToken()
+                
                 @Html.HiddenFor(Model => Model.RegistrationNumber)
                 <div class="form-group">
                     <label for="anotherelem" class="control-label col-sm-3">Registration number <span class="validation-span-required">(*)</span></label>

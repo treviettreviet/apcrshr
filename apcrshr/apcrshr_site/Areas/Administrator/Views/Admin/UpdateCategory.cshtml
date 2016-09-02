@@ -24,7 +24,7 @@
             <div class="box-content nopadding">
                 @using (Html.BeginForm("UpdateCategoryMenu", "Admin", FormMethod.Post, new { @class = "form-horizontal form-bordered form-validate", @id = "frmUpdateCategory" }))
                 {
-                    @Html.AntiForgeryToken()
+                    
                     @Html.HiddenFor(Model => Model.MenuID)
                     @Html.HiddenFor(Model => Model.ParentID)
                     @Html.HiddenFor(Model => Model.Language)

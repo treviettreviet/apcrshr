@@ -93,7 +93,7 @@
         formData.append("Contents", CKEDITOR.instances['editor'].getData());
         formData.append("Language", $("input[name=Language]:checked").val());
         formData.append("VideoURL", $("#VideoURL").val());
-        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+        
         $.ajax({
             type: "POST",
             url: '@Url.Action("SaveUpdateVideo", "AdminVideo")',

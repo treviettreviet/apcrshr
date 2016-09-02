@@ -54,7 +54,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [SessionFilter]
-        [ValidateAntiForgeryToken]
+        
         public JsonResult SaveArticle(ArticleModel article, string menuTitle, HttpPostedFileBase file)
         {
             var sessionId = this.Session["SessionID"].ToString();
@@ -149,7 +149,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [SessionFilter]
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public JsonResult SaveUpdateArticle(ArticleModel article)
         {
             var sessionId = this.Session["SessionID"].ToString();

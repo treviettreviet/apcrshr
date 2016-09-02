@@ -1,0 +1,97 @@
+﻿@model Site.Core.DataModel.Model.UserSubmissionModel
+@{
+    ViewBag.Title = "Cập Nhật Abstract Submission";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <!--Alert-->
+        @if (ViewBag.Message != null)
+        {
+            Site.Core.DataModel.Response.BaseResponse responseMsg = (Site.Core.DataModel.Response.BaseResponse)ViewBag.Message;
+            <br />
+            <div class="alert @(responseMsg.ErrorCode == (int)Site.Core.DataModel.Enum.ErrorCode.None ? " alert-info" : " alert-danger")"><a class="close" data-dismiss="alert" href="#">×</a><strong></strong> @responseMsg.Message</div>
+        }
+
+        <div class="box box-bordered box-color">
+            <div class="box-title">
+                <h3>
+                    <i class="fa fa-edit"></i>Cập Nhập Người Dùng
+                </h3>
+            </div>
+            <div class="box-content">
+                @using (Ajax.BeginForm("SaveUpdateAbstract", "AdminUser", new AjaxOptions
+                {
+                    InsertionMode = InsertionMode.Replace,
+                    HttpMethod = "POST",
+                    OnFailure = "OnAbstractFailure",
+                    OnSuccess = "OnAbstractSuccess",
+                    OnBegin = "OnBeginSubmit"
+                    }, new { @class = "form-horizontal form-validate", id = "frmAbstract" }))
+                {
+                    @Html.HiddenFor(m => m.SubmitID)
+                    @Html.HiddenFor(m => m.UserID)
+                    <div class="form-group">
+                        <label for="Title" class="control-label col-sm-2">Submission Number</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(Model => Model.SubmissionNumber, new Dictionary<string, object> {
+                                { "class", "form-control" },
+                                { "data-rule-required", "true" }
+                            })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="FullName" class="control-label col-sm-2">Trạng thái abstract</label>
+                        <div class="col-sm-10">
+                            @Html.DropDownList("Status", apcrshr_site.Helper.DataHelper.GetInstance().GetAbstractStatusForDropdown(), new Dictionary<string, object> {
+                                { "class", "form-control" },
+                                { "data-rule-required", "true" }
+                            })
+                        </div>
+                    </div>
+                    <div class="form-actions col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary">Lưu Thông Tin</button>
+                        <a href='@Url.Action("Index")' class="btn btn-info">Hủy Bỏ</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function () {
+        $("#frmAbstract").validate();
+    });
+
+    function OnBeginSubmit() {
+        if (!$("#frmAbstract").valid()) {
+            return false;
+        }
+        $.blockUI({ message: $('#spinner') });
+    }
+
+    function OnAbstractFailure() {
+        $.unblockUI();
+    }
+
+    function OnAbstractSuccess(response) {
+        //Timeout
+        if (response.ErrorCode == 2) {
+            window.location = '@Url.Action("Login", "User")';
+        }
+        if (response.ErrorCode == "1") {
+            $.unblockUI();
+            bootbox.alert(response.Message, function () {
+                bootbox.hideAll();
+            });
+        } else if (response.ErrorCode == "0") {
+            $.unblockUI();
+            bootbox.alert(response.Message, function () {
+                bootbox.hideAll();
+            });
+        }
+    }
+</script>

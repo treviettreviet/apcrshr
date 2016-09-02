@@ -24,7 +24,7 @@
             <div class="box-content nopadding">
                 @using (Html.BeginForm("SaveUpdateProfileAdmin", "Admin", FormMethod.Post, new { @id = "frmUpdateAdmin", @class = "form-horizontal form-bordered" }))
                 {
-                    @Html.AntiForgeryToken()
+                    
                     @Html.HiddenFor(Model => Model.AdminID)
                     @Html.HiddenFor(Model => Model.Locked)
                     <div class="form-group">

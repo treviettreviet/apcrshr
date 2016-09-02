@@ -45,7 +45,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [SessionFilter]
-        [ValidateAntiForgeryToken]
+        
         public JsonResult SaveImportantDeadline(ImportantDeadlineModel importantDeadline)
         {
             var sessionId = this.Session["SessionID"].ToString();
@@ -90,7 +90,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [SessionFilter]
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public JsonResult SaveUpdateImportantDeadline(ImportantDeadlineModel importantDeadline)
         {
             var sessionId = this.Session["SessionID"].ToString();

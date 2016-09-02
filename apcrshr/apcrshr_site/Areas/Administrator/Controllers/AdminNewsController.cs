@@ -44,7 +44,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [SessionFilter]
-        [ValidateAntiForgeryToken]
+        
         public JsonResult SaveNews(NewsModel news, HttpPostedFileBase imageFile)
         {
             var sessionId = this.Session["SessionID"].ToString();
@@ -124,7 +124,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [SessionFilter]
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public JsonResult SaveUpdateNews(NewsModel news, HttpPostedFileBase imageFile)
         {
             var sessionId = this.Session["SessionID"].ToString();

@@ -28,6 +28,7 @@ namespace Site.Core.Repository.Implementation
                 {
                     submit.SubmissionNumber = item.SubmissionNumber;
                     submit.UserID = item.UserID;
+                    submit.Status = item.Status;
 
                     context.SaveChanges();
                 }

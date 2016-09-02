@@ -24,7 +24,7 @@
             <div class="box-content nopadding">
                 @using (Html.BeginForm("SaveUpdateMainScholarship", "AdminUser", FormMethod.Post, new { @class = "form-horizontal form-bordered" }))
                 {
-                    @Html.AntiForgeryToken()
+                    
                     @Html.HiddenFor(m => m.UserID)
                     @Html.HiddenFor(m => m.RegistrationNumber)
                     @Html.HiddenFor(m => m.ScholarshipID)
@@ -142,7 +142,7 @@
         formData.append("HasSubmitted", $("input[name=HasSubmitted]:checked").val());
         formData.append("SubmissionTitles", $("#SubmissionTitles").val());
         formData.append("Status", $("#Status").find(":selected").val());
-        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+        
         $.ajax({
             type: "POST",
             url: '@Url.Action("SaveUpdateMainScholarship", "AdminUser")',

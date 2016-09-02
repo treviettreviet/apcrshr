@@ -43,7 +43,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [SessionFilter]
-        [ValidateAntiForgeryToken]
+        
         public JsonResult SaveVideo(VideoModel video)
         {
             var sessionId = this.Session["SessionID"].ToString();
@@ -85,7 +85,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [SessionFilter]
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public JsonResult SaveUpdateVideo(VideoModel video)
         {
             var sessionId = this.Session["SessionID"].ToString();

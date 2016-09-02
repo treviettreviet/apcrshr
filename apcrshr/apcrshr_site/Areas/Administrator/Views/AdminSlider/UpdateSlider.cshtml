@@ -89,7 +89,7 @@
         formData.append("Title", $("#Title").val());;
         formData.append("imageFile", $('#imageFile').get(0).files[0]);
         formData.append("Language", $("input[name=Language]:checked").val());
-        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+        
         $.ajax({
             type: "POST",
             url: '@Url.Action("SaveUpdateSlider", "AdminSlider")',

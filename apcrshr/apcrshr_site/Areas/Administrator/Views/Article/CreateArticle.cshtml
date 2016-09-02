@@ -24,7 +24,7 @@
             <div class="box-content nopadding">
                 @using (Html.BeginForm("SaveArticle", "Article", FormMethod.Post, new { @class = "form-horizontal form-bordered", @id = "frmSaveArticle", enctype = "multipart/form-data" }))
                 {
-                    @Html.AntiForgeryToken()
+                    
                     <div class="form-group">
                         <label for="textfield" class="control-label col-sm-2">Tiêu Đề <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-10">
@@ -163,7 +163,7 @@
         formData.append("HomeDisplay", $("input[name=HomeDisplay]:checked").val());
         formData.append("menuTitle", menuTitle);
         formData.append("file", file);
-        formData.append(@Html.AntiForgeryTokenForAjaxPost());
+        
         $.ajax({
             type: "POST",
             url: '@Url.Action("SaveArticle", "Article")',
