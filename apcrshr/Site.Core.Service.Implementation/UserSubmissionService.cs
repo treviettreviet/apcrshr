@@ -71,6 +71,15 @@ namespace Site.Core.Service.Implementation
             try
             {
                 IUserSubmissionRepository submissionRepository = RepositoryClassFactory.GetInstance().GetUserSubmissionRepository();
+                var item = submissionRepository.FindBySubmissionNumber(submission.SubmissionNumber);
+                if (item != null)
+                {
+                    return new InsertResponse
+                    {
+                        ErrorCode = (int)ErrorCode.Error,
+                        Message = string.Format(Resources.Resource.msg_insert_exists, "The submission number", submission.SubmissionNumber)
+                    };
+                }
                 var _submission = MapperUtil.CreateMapper().Mapper.Map<UserSubmissionModel, UserSubmission>(submission);
                 object id = submissionRepository.Insert(_submission);
                 return new InsertResponse

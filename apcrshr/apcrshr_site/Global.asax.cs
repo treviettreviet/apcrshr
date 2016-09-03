@@ -20,6 +20,13 @@ namespace apcrshr_site
         {
             AreaRegistration.RegisterAllAreas();
 
+            GlobalFilters.Filters.Add(new OutputCacheAttribute
+                    {
+                        VaryByParam = "*",
+                        Duration = 0,
+                        NoStore = true,
+                    });
+
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
