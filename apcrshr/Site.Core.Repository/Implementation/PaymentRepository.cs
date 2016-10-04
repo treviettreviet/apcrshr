@@ -75,5 +75,13 @@ namespace Site.Core.Repository.Implementation
                 return context.Payments.ToList();
             }
         }
+
+        public IList<Payment> FindByUserID(string userID)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.Payments.Where(p => p.UserID.Equals(userID)).ToList();
+            }
+        }
     }
 }

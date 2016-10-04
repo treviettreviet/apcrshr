@@ -43,5 +43,12 @@ namespace Site.Core.Service.Contract
         /// </summary>
         /// <returns></returns>
         FindAllItemReponse<PaymentModel> GetAlls();
+
+        /// <summary>
+        /// Find payments by userID
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        FindAllItemReponse<PaymentModel> FindByUserID(string userID);
     }
 }

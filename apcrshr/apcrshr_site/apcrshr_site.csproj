@@ -214,6 +214,7 @@
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\PresentationController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
+    <Compile Include="Controllers\RequestErrorController.cs" />
     <Compile Include="Controllers\ScholarshipController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\AuthorizationFilter.cs" />
@@ -228,7 +229,9 @@
     <Compile Include="Helper\CustomDateBinder.cs" />
     <Compile Include="Helper\CustomModelBindersConfig.cs" />
     <Compile Include="Helper\DataHelper.cs" />
+    <Compile Include="Helper\ExtensionHandler.cs" />
     <Compile Include="Helper\HtmlExtension.cs" />
+    <Compile Include="Helper\HttpRequestMessageExtensions.cs" />
     <Compile Include="Helper\NullableCustomDateBinder.cs" />
     <Compile Include="Helper\SessionUtil.cs" />
     <Compile Include="Helper\TokenHtmlExtension.cs" />
@@ -238,6 +241,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\ConfigurationModel.cs" />
     <Compile Include="Models\RegistrationModel.cs" />
+    <Compile Include="Models\VPCRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AdminResource.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1289,6 +1293,9 @@
     <Content Include="Views\Scholarship\MainScholarships.cshtml" />
     <Content Include="Views\Scholarship\UpdateMainScholarship.cshtml" />
     <Content Include="Views\Scholarship\YouthScholarships.cshtml" />
+    <Content Include="Views\User\PaymentReturn.cshtml" />
+    <Content Include="Views\User\RegistrationIncompleted.cshtml" />
+    <Content Include="Views\RequestError\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

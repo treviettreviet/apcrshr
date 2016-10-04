@@ -1632,6 +1632,10 @@ input[type="submit"] {
 	margin-right: -1px;
 }
 
+.pricing-tables.grid-1 .pricing-table {
+	width: 100%;
+}
+
 .pricing-tables.grid-2 .pricing-table {
 	width: 50%;
 }

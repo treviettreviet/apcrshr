@@ -13,6 +13,10 @@ using Site.Core.Common.Ultil.Security;
 using System.Text;
 using Site.Core.DataModel.Enum;
 using System.Web.Mvc;
+using System.Net;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 namespace apcrshr_site.Helper
 {
@@ -242,6 +246,39 @@ namespace apcrshr_site.Helper
                 default:
                     throw new InvalidCastException("Invalid status");
             }
+        }
+
+        public string CurrencyConvert(decimal amount, string fromCurrency, string toCurrency)
+        {
+            //Grab your values and build your Web Request to the API
+            string apiURL = String.Format("https://www.google.com/finance/converter?a={0}&from={1}&to={2}&meta={3}", amount, fromCurrency, toCurrency, Guid.NewGuid().ToString());
+
+            //Make your Web Request and grab the results
+            var request = WebRequest.Create(apiURL);
+
+            //Get the Response
+            var streamReader = new StreamReader(request.GetResponse().GetResponseStream(), System.Text.Encoding.ASCII);
+
+            //Grab your converted value (ie 2.45 USD)
+            var result = Regex.Matches(streamReader.ReadToEnd(), "<span class=\"?bld\"?>([^<]+)</span>")[0].Groups[1].Value;
+
+            //Get the Result
+            return result;
+        }
+
+        public decimal GetCurrencyRate(string currency, decimal defaultvalue)
+        {
+            XDocument xdoc = XDocument.Load("http://www.vietcombank.com.vn/ExchangeRates/ExrateXML.aspx");
+            XElement root = xdoc.Element("ExrateList");
+            if (root != null)
+            {
+                XElement rate = root.Elements("Exrate").Where(e => e.Attribute("CurrencyCode").Value.Equals(currency.ToUpper())).SingleOrDefault();
+                if (rate != null)
+                {
+                    return decimal.Parse(rate.Attribute("Transfer").Value);
+                }
+            }
+            return defaultvalue;
         }
     }
 }

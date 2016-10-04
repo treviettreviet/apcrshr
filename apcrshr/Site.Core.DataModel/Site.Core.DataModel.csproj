@@ -49,6 +49,7 @@
     <Compile Include="Enum\ErrorCode.cs" />
     <Compile Include="Enum\Language.cs" />
     <Compile Include="Enum\MenuType.cs" />
+    <Compile Include="Enum\PaymentStatus.cs" />
     <Compile Include="Enum\RegistrationStatus.cs" />
     <Compile Include="Enum\RoleType.cs" />
     <Compile Include="Enum\ScholarshipStatus.cs" />

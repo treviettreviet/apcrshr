@@ -141,5 +141,31 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindAllItemReponse<PaymentModel> FindByUserID(string userID)
+        {
+            try
+            {
+                IPaymentRepository paymentRepository = RepositoryClassFactory.GetInstance().GetPaymentRepository();
+                IList<Payment> payments = paymentRepository.FindByUserID(userID);
+                var _payments = payments.Select(n => MapperUtil.CreateMapper().Mapper.Map<Payment, PaymentModel>(n)).ToList();
+                return new FindAllItemReponse<PaymentModel>
+                {
+                    Items = _payments,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new FindAllItemReponse<PaymentModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }

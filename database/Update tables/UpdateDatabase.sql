@@ -14,3 +14,11 @@ ALTER TABLE [UserSubmission] ADD [Status] INT NOT NULL DEFAULT(0)
 
 GO
 
+ALTER TABLE [Payment] DROP DF_Payment_Status
+
+GO
+
+ALTER TABLE [Payment] ALTER COLUMN [Status] INT NOT NULL
+
+GO
+

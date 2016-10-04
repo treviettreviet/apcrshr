@@ -8,5 +8,6 @@ namespace Site.Core.Repository.Repository
 {
     public interface IPaymentRepository : IRepository<Payment>
     {
+        IList<Payment> FindByUserID(string userID);
     }
 }

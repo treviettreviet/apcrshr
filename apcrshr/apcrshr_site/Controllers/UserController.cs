@@ -16,15 +16,33 @@ using apcrshr_site.Helper;
 
 namespace apcrshr_site.Controllers
 {
+    [OutputCache(NoStore = true, Duration = 60, VaryByParam = "*")]
     public class UserController : BaseController
     {
+        //Third party payment information
+        private static readonly string SECURE_SECRET = "6D0870CDE5F24F34F3915FB0045120DB";
+        private static readonly string VIRTUAL_PAYMENT_CLIENT = "https://mtf.onepay.vn/vpcpay/vpcpay.op";
+        private static readonly string vpc_Version = "2";
+        private static readonly string vpc_Command = "pay";
+        //Test account
+        private static readonly string vpc_AccessCode = "6BEB2546";
+        private static readonly string vpc_Merchant = "TESTONEPAY";
+        private static readonly string vpc_Locale = "en";
+        //Return url
+        private static readonly string vpc_ReturnURL = "http://localhost:56742/User/PaymentReturn";
+        //Currency
+        private static readonly string FROM_CURRENCY = "USD";
+        private static readonly string TO_CURRENCY = "VND";
+
         private IUserService _userService;
         private IMailingAddressService _mailingService;
+        private IPaymentService _paymentService;
 
         public UserController()
         {
             this._userService = new UserService();
             this._mailingService = new MailingAddressService();
+            this._paymentService = new PaymentService();
         }
 
 
@@ -175,6 +193,62 @@ namespace apcrshr_site.Controllers
                         registration.PassportPhoto3 = mailing.PassportPhoto3;
                         registration.DetailOfEmbassy = mailing.DetailOfEmbassy;
                         registration.NeedVisaSupport = mailing.NeedVisaSupport;
+
+                        //Get fee
+                        int fee = -1;
+
+                        //Find payment
+                        FindAllItemReponse<PaymentModel> paymentResponse = _paymentService.FindByUserID(Session["User-UserID"].ToString());
+                        if (paymentResponse != null && paymentResponse.Items != null && paymentResponse.Items.Count > 0)
+                        {
+                            var paid = paymentResponse.Items.Where(p => p.PaymentType.Equals(registration.ParticipantType)).SingleOrDefault();
+                            if (paid != null && paid.Status == (int) PaymentStatus.Completed)
+                            {
+                                fee = 0;
+                            }
+                            else
+                            {
+                                ViewBag.PaymentStatus = "Your transaction has an <strong>error</strong> occurred, please contact administrator!";
+                            }
+                        }
+                        else
+                        {
+                            //Caculate payment
+                            DateTime earlyBird = new DateTime(2017, 7, 30);
+                            switch (registration.ParticipantType)
+                            {
+                                case "International delegates":
+                                    if (DateTime.UtcNow <= earlyBird)
+                                    {
+                                        fee = 500;
+                                    }
+                                    else
+                                    {
+                                        fee = 550;
+                                    }
+                                    break;
+                                case "Vietnamese delegate":
+                                    if (DateTime.UtcNow <= earlyBird)
+                                    {
+                                        fee = 150;
+                                    }
+                                    else
+                                    {
+                                        fee = 200;
+                                    }
+                                    break;
+                                case "International youth":
+                                    fee = 500;
+                                    break;
+                                case "Vietnamese youth":
+                                    fee = 100;
+                                    break;
+                                default:
+                                    fee = -1;
+                                    break;
+                            }
+                        }
+                        ViewBag.PaymentFee = fee;
                     }
                 }
                 return View(registration);
@@ -183,6 +257,139 @@ namespace apcrshr_site.Controllers
             {
                 return RedirectToAction("Login", "User");
             }
+        }
+
+        [HttpGet]
+        public ActionResult RegistrationIncompleted()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [UserSessionFilter]
+        public ActionResult MakePayment()
+        {
+            FindItemReponse<UserModel> response = _userService.FindUserByID(Session["User-UserID"].ToString());
+            if (response.Item != null)
+            {
+                FindAllItemReponse<MailingAddressModel> mailingResponse = _mailingService.FindMailingAddressByUser(Session["User-UserID"].ToString());
+                if (mailingResponse.Items != null)
+                {
+                    var mailing = mailingResponse.Items.SingleOrDefault();
+                    if (mailing != null)
+                    {
+                        //Caculate payment
+                        //Get fee
+                        int fee = -1;
+
+                        DateTime earlyBird = new DateTime(2017, 7, 30);
+                        switch (mailing.ParticipantType)
+                        {
+                            case "International delegates":
+                                if (DateTime.UtcNow <= earlyBird)
+                                {
+                                    fee = 500;
+                                }
+                                else
+                                {
+                                    fee = 550;
+                                }
+                                break;
+                            case "Vietnamese delegate":
+                                if (DateTime.UtcNow <= earlyBird)
+                                {
+                                    fee = 150;
+                                }
+                                else
+                                {
+                                    fee = 200;
+                                }
+                                break;
+                            case "International youth":
+                                fee = 500;
+                                break;
+                            case "Vietnamese youth":
+                                fee = 100;
+                                break;
+                            default:
+                                fee = -1;
+                                break;
+                        }
+                        if (fee == -1)
+                        {
+                            return RedirectToAction("RegistrationIncompleted");
+                        }
+
+                        //Parse currency
+                        decimal amount = 0;
+                        try
+                        {
+                            decimal usdrate = DataHelper.GetInstance().GetCurrencyRate(FROM_CURRENCY, 22265);
+
+                            amount = fee * usdrate;
+                            if (amount == 0)
+                            {
+                                return RedirectToAction("Index", "RequestError");
+                            }
+                            //amount X 100 before parse to OnePay
+                            amount = amount * 100;
+                        }
+                        catch (Exception)
+                        {
+                            return RedirectToAction("Index", "RequestError");
+                        }
+                        // Khoi tao lop thu vien va gan gia tri cac tham so gui sang cong thanh toan
+                        VPCRequest conn = new VPCRequest(VIRTUAL_PAYMENT_CLIENT);
+                        conn.SetSecureSecret(SECURE_SECRET);
+
+                        // Add the Digital Order Fields for the functionality you wish to use
+                        // Core Transaction Fields
+                        conn.AddDigitalOrderField("AgainLink", "http://onepay.vn");
+                        conn.AddDigitalOrderField("Title", "onepay paygate");
+
+                        //Chon ngon ngu hien thi tren cong thanh toan (vn/en)
+                        conn.AddDigitalOrderField("vpc_Locale", vpc_Locale);
+                        conn.AddDigitalOrderField("vpc_Version", vpc_Version);
+                        conn.AddDigitalOrderField("vpc_Command", vpc_Command);
+
+                        //Test account
+                        conn.AddDigitalOrderField("vpc_Merchant", vpc_Merchant);
+                        conn.AddDigitalOrderField("vpc_AccessCode", vpc_AccessCode);
+                        conn.AddDigitalOrderField("vpc_MerchTxnRef", response.Item.UserID);
+
+                        //Package order
+                        conn.AddDigitalOrderField("vpc_OrderInfo", mailing.ParticipantType);
+                        conn.AddDigitalOrderField("vpc_Amount", amount.ToString());
+
+                        //Return url
+                        conn.AddDigitalOrderField("vpc_ReturnURL", vpc_ReturnURL);
+
+                        // Thong tin them ve khach hang. De trong neu khong co thong tin
+                        //conn.AddDigitalOrderField("vpc_SHIP_Street01", "194 Tran Quang Khai");
+                        //conn.AddDigitalOrderField("vpc_SHIP_Provice", "Hanoi");
+                        //conn.AddDigitalOrderField("vpc_SHIP_City", "Hanoi");
+                        //conn.AddDigitalOrderField("vpc_SHIP_Country", "Vietnam");
+                        //conn.AddDigitalOrderField("vpc_Customer_Phone", "043966668");
+                        //conn.AddDigitalOrderField("vpc_Customer_Email", "support@onepay.vn");
+                        //conn.AddDigitalOrderField("vpc_Customer_Id", "onepay_paygate");
+
+                        // Dia chi IP cua khach hang
+                        conn.AddDigitalOrderField("vpc_TicketNo", Request.UserHostAddress);
+
+                        // Chuyen huong trinh duyet sang cong thanh toan
+                        String url = conn.Create3PartyQueryString();
+                        return Redirect(url);
+                    }
+                }
+            }
+            return RedirectToAction("RegistrationIncompleted");
+        }
+
+        [HttpGet]
+        [UserSessionFilter]
+        public ActionResult PaymentReturn()
+        {
+            return View();
         }
 
         public ActionResult ForgetPassword()

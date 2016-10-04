@@ -16,6 +16,6 @@ namespace Site.Core.DataModel.Model
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public string UpdatedBy { get; set; }
-        public bool Status { get; set; }
+        public int Status { get; set; }
     }
 }
