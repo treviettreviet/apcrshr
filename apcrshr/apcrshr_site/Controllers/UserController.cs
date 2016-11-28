@@ -20,16 +20,16 @@ namespace apcrshr_site.Controllers
     public class UserController : BaseController
     {
         //Third party payment information
-        private static readonly string SECURE_SECRET = "6D0870CDE5F24F34F3915FB0045120DB";
-        private static readonly string VIRTUAL_PAYMENT_CLIENT = "https://mtf.onepay.vn/vpcpay/vpcpay.op";
+        private static readonly string SECURE_SECRET = "CE73CA8FAE51D3D33D56F5D44812B409";
+        private static readonly string VIRTUAL_PAYMENT_CLIENT = "https://onepay.vn/vpcpay/vpcpay.op";
         private static readonly string vpc_Version = "2";
         private static readonly string vpc_Command = "pay";
         //Test account
-        private static readonly string vpc_AccessCode = "6BEB2546";
-        private static readonly string vpc_Merchant = "TESTONEPAY";
+        private static readonly string vpc_AccessCode = "BEB4FDDB";
+        private static readonly string vpc_Merchant = "APCRSHR9VN";
         private static readonly string vpc_Locale = "en";
         //Return url
-        private static readonly string vpc_ReturnURL = "http://localhost:56742/User/PaymentReturn";
+        private static readonly string vpc_ReturnURL = "http://apcrshr9vn.org/User/PaymentReturn";
         //Currency
         private static readonly string FROM_CURRENCY = "USD";
         private static readonly string TO_CURRENCY = "VND";
@@ -322,22 +322,38 @@ namespace apcrshr_site.Controllers
 
                         //Parse currency
                         decimal amount = 0;
+                        decimal usdrate = 0;
                         try
                         {
-                            decimal usdrate = DataHelper.GetInstance().GetCurrencyRate(FROM_CURRENCY, 22265);
-
-                            amount = fee * usdrate;
-                            if (amount == 0)
-                            {
-                                return RedirectToAction("Index", "RequestError");
-                            }
-                            //amount X 100 before parse to OnePay
-                            amount = amount * 100;
+                            usdrate = DataHelper.GetInstance().GetCurrencyRate(FROM_CURRENCY, 22265);
                         }
                         catch (Exception)
                         {
+                            //Try convert using google
+                            try
+                            {
+                                string _amount = DataHelper.GetInstance().CurrencyConvert(fee, FROM_CURRENCY, TO_CURRENCY);
+                                _amount = _amount.Substring(0, _amount.IndexOf(" "));
+                                amount = decimal.Parse(_amount);
+                            }
+                            catch (Exception)
+                            {
+                                return RedirectToAction("Index", "RequestError");
+                            }
+                        }
+
+                        //Calculate amount
+                        if (usdrate != 0)
+                        {
+                            amount = fee * usdrate;
+                        }
+                        if (amount == 0)
+                        {
                             return RedirectToAction("Index", "RequestError");
                         }
+                        //amount X 100 before parse to OnePay
+                        amount = amount * 100;
+
                         // Khoi tao lop thu vien va gan gia tri cac tham so gui sang cong thanh toan
                         VPCRequest conn = new VPCRequest(VIRTUAL_PAYMENT_CLIENT);
                         conn.SetSecureSecret(SECURE_SECRET);
@@ -355,7 +371,7 @@ namespace apcrshr_site.Controllers
                         //Test account
                         conn.AddDigitalOrderField("vpc_Merchant", vpc_Merchant);
                         conn.AddDigitalOrderField("vpc_AccessCode", vpc_AccessCode);
-                        conn.AddDigitalOrderField("vpc_MerchTxnRef", response.Item.UserID);
+                        conn.AddDigitalOrderField("vpc_MerchTxnRef", string.Format("{0}_{1}", response.Item.UserID, UrlSlugger.Get8Digits()));
 
                         //Package order
                         conn.AddDigitalOrderField("vpc_OrderInfo", mailing.ParticipantType);
@@ -389,7 +405,86 @@ namespace apcrshr_site.Controllers
         [UserSessionFilter]
         public ActionResult PaymentReturn()
         {
-            return View();
+            string hashvalidateResult = "";
+            // Khoi tao lop thu vien
+            VPCRequest conn = new VPCRequest("http://onepay.vn");
+            conn.SetSecureSecret(SECURE_SECRET);
+            // Xu ly tham so tra ve va kiem tra chuoi du lieu ma hoa
+            hashvalidateResult = conn.Process3PartyResponse(Request.QueryString);
+            // Lay gia tri tham so tra ve tu cong thanh toan
+            String vpc_TxnResponseCode = conn.GetResultField("vpc_TxnResponseCode", "Unknown");
+            string amount = conn.GetResultField("vpc_Amount", "Unknown");
+            string localed = conn.GetResultField("vpc_Locale", "Unknown");
+            string command = conn.GetResultField("vpc_Command", "Unknown");
+            string version = conn.GetResultField("vpc_Version", "Unknown");
+            string cardType = conn.GetResultField("vpc_Card", "Unknown");
+            string orderInfo = conn.GetResultField("vpc_OrderInfo", "Unknown");
+            string merchantID = conn.GetResultField("vpc_Merchant", "Unknown");
+            string authorizeID = conn.GetResultField("vpc_AuthorizeId", "Unknown");
+            string merchTxnRef = conn.GetResultField("vpc_MerchTxnRef", "Unknown");
+            string transactionNo = conn.GetResultField("vpc_TransactionNo", "Unknown");
+            string acqResponseCode = conn.GetResultField("vpc_AcqResponseCode", "Unknown");
+            string txnResponseCode = vpc_TxnResponseCode;
+            string message = conn.GetResultField("vpc_Message", "Unknown");
+
+            if (merchTxnRef != "Unknown" && merchTxnRef.Contains("_"))
+            {
+                merchTxnRef = merchTxnRef.Split('_')[0];
+            }
+
+            //Save payment
+            PaymentModel payment = new PaymentModel();
+            payment.PaymentID = Guid.NewGuid().ToString();
+            payment.UserID = Session["User-UserID"] != null ? Session["User-UserID"].ToString() : merchTxnRef;
+            payment.Amount = double.Parse(amount) / 100;
+            payment.CreatedBy = Session["User-UserID"] != null ? Session["User-UserID"].ToString() : merchTxnRef;
+            payment.CreatedDate = DateTime.Now;
+
+            FindItemReponse<UserModel> response = _userService.FindUserByID(Session["User-UserID"] != null ? Session["User-UserID"].ToString() : merchTxnRef);
+            if (response.Item != null)
+            {
+                FindAllItemReponse<MailingAddressModel> mailingResponse = _mailingService.FindMailingAddressByUser(response.Item.UserID);
+                if (mailingResponse.Items != null)
+                {
+                    var mailing = mailingResponse.Items.SingleOrDefault();
+                    if (mailing != null)
+                    {
+                        payment.PaymentType = mailing.ParticipantType;
+                    }
+                }
+            }
+
+            if (string.IsNullOrEmpty(payment.PaymentType))
+            {
+                payment.PaymentType = "Unknown";
+            }
+
+            string msg = string.Empty;
+
+            //Validate transaction
+            if (hashvalidateResult == "CORRECTED" && txnResponseCode.Trim() == "0")
+            {
+                //vpc_Result.Text = "Transaction was paid successful";
+                payment.Status = (int)PaymentStatus.Completed;
+                msg = "Your payment was paid successful!";
+            }
+            else if (hashvalidateResult == "INVALIDATED" && txnResponseCode.Trim() == "0")
+            {
+                //vpc_Result.Text = "Transaction is pending";
+                payment.Status = (int)PaymentStatus.Pending;
+                msg = "Your payment was in pending status, please contact our administrator!";
+            }
+            else
+            {
+                //vpc_Result.Text = "Transaction was not paid successful";
+                payment.Status = (int)PaymentStatus.Error;
+                msg = "The payment was not paid successful, please try again!";
+            }
+
+            InsertResponse _response = _paymentService.Create(payment);
+            _response.Message = msg;
+
+            return View(_response);
         }
 
         public ActionResult ForgetPassword()
