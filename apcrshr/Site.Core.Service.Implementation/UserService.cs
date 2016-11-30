@@ -421,5 +421,30 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindItemReponse<UserModel> FindStartWithID(string userID)
+        {
+            try
+            {
+                IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
+                User user = userRepository.FindStartWithID(userID);
+                var _user = MapperUtil.CreateMapper().Mapper.Map<User, UserModel>(user);
+                return new FindItemReponse<UserModel>
+                {
+                    Item = _user,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FindItemReponse<UserModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }

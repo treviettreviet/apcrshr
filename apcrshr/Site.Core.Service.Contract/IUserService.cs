@@ -108,5 +108,12 @@ namespace Site.Core.Service.Contract
         /// <param name="userID"></param>
         /// <returns></returns>
         LockResponse LockUser(string userID);
+
+        /// <summary>
+        /// Find user start with ID
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        FindItemReponse<UserModel> FindStartWithID(string userID);
     }
 }

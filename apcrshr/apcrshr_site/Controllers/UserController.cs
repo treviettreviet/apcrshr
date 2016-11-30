@@ -369,9 +369,10 @@ namespace apcrshr_site.Controllers
                         conn.AddDigitalOrderField("vpc_Command", vpc_Command);
 
                         //Test account
+                        string subId = string.Format("{0}_{1}", response.Item.UserID.Substring(0, response.Item.UserID.LastIndexOf("-")), UrlSlugger.Get8Digits());
                         conn.AddDigitalOrderField("vpc_Merchant", vpc_Merchant);
                         conn.AddDigitalOrderField("vpc_AccessCode", vpc_AccessCode);
-                        conn.AddDigitalOrderField("vpc_MerchTxnRef", string.Format("{0}_{1}", response.Item.UserID, UrlSlugger.Get8Digits()));
+                        conn.AddDigitalOrderField("vpc_MerchTxnRef", subId);
 
                         //Package order
                         conn.AddDigitalOrderField("vpc_OrderInfo", mailing.ParticipantType);
@@ -432,15 +433,26 @@ namespace apcrshr_site.Controllers
                 merchTxnRef = merchTxnRef.Split('_')[0];
             }
 
+            //Find user
+            string userID = merchTxnRef;
+            if (merchTxnRef != "Unknown")
+            {
+                FindItemReponse<UserModel> userResponse = _userService.FindStartWithID(merchTxnRef);
+                if (userResponse.Item != null)
+                {
+                    userID = userResponse.Item.UserID;
+                }
+            }
+
             //Save payment
             PaymentModel payment = new PaymentModel();
             payment.PaymentID = Guid.NewGuid().ToString();
-            payment.UserID = Session["User-UserID"] != null ? Session["User-UserID"].ToString() : merchTxnRef;
+            payment.UserID = Session["User-UserID"] != null ? Session["User-UserID"].ToString() : userID;
             payment.Amount = double.Parse(amount) / 100;
-            payment.CreatedBy = Session["User-UserID"] != null ? Session["User-UserID"].ToString() : merchTxnRef;
+            payment.CreatedBy = Session["User-UserID"] != null ? Session["User-UserID"].ToString() : userID;
             payment.CreatedDate = DateTime.Now;
 
-            FindItemReponse<UserModel> response = _userService.FindUserByID(Session["User-UserID"] != null ? Session["User-UserID"].ToString() : merchTxnRef);
+            FindItemReponse<UserModel> response = _userService.FindUserByID(Session["User-UserID"] != null ? Session["User-UserID"].ToString() : userID);
             if (response.Item != null)
             {
                 FindAllItemReponse<MailingAddressModel> mailingResponse = _mailingService.FindMailingAddressByUser(response.Item.UserID);

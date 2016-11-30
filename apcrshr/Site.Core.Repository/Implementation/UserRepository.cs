@@ -159,5 +159,12 @@ namespace Site.Core.Repository.Implementation
                 }
             }
         }
+
+
+        public User FindStartWithID(string userID)
+        {
+            APCRSHREntities context = new APCRSHREntities();
+            return context.Users.Where(a => a.UserID.StartsWith(userID)).SingleOrDefault();
+        }
     }
 }

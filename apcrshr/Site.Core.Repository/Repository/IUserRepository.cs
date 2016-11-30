@@ -18,5 +18,7 @@ namespace Site.Core.Repository.Repository
 
         void ChangePassword(string userID, string newPassword);
         bool LockUser(string userID);
+
+        User FindStartWithID(string userID);
     }
 }
