@@ -79,6 +79,7 @@ namespace apcrshr_site.Helper
                 //links.Add("Tham gia hội nghị", "/ConferenceDeclaration/Index");
                 //links.Add("Dữ liệu trình vày", "/Presentation/Index");
                 links.Add("Ảnh", "/Album/Index");
+                links.Add("Gửi Học Bổng", "/Abstract/SubmitAbstract");
             }
             else
             {
@@ -86,6 +87,7 @@ namespace apcrshr_site.Helper
                 //links.Add("Conference Declaration", "/ConferenceDeclaration/Index");
                 //links.Add("Presentation", "/Presentation/Index");
                 links.Add("Photo", "/Album/Index");
+                links.Add("Abstract Submission Form", "/Abstract/SubmitAbstract");
             }
         }
 

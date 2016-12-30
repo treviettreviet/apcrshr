@@ -567,12 +567,12 @@ namespace apcrshr_site.Controllers
                 return Json(new { ErrorCode = validateResponse.ErrorCode, Message = validateResponse.Message });
             }
 
-            //Check submission number
-            FindItemReponse<UserSubmissionModel> submissionReponse = _userSubmissionService.FindBySubmissionNumber(scholarship.SubmissionNumber);
-            if (submissionReponse.Item == null)
-            {
-                return Json(new { ErrorCode = (int)ErrorCode.Error, Message = Resources.Resource.msg_submissionNumberInvalid });
-            }
+            //TODO Check submission number
+            //FindItemReponse<UserSubmissionModel> submissionReponse = _userSubmissionService.FindBySubmissionNumber(scholarship.SubmissionNumber);
+            //if (submissionReponse.Item == null)
+            //{
+            //    return Json(new { ErrorCode = (int)ErrorCode.Error, Message = Resources.Resource.msg_submissionNumberInvalid });
+            //}
 
             //Check for existing registration
             FindItemReponse<MainScholarshipModel> scholarshipResponse = _mainScholarshipService.FindByUserIDAndSubmission(validateResponse.UserID, scholarship.SubmissionNumber);

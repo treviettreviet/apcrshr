@@ -931,6 +931,7 @@
     <Content Include="Content\images\c7.png" />
     <Content Include="Content\images\c8.png" />
     <Content Include="Content\images\default-avatar.png" />
+    <Content Include="Content\images\footer.png" />
     <Content Include="Content\images\gradient\g30.html" />
     <Content Include="Content\images\gradient\g40.html" />
     <Content Include="Content\images\icons\ajaxloader.gif" />

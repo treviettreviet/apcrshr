@@ -3937,7 +3937,7 @@ ul.post-meta li, ul.post-meta li a {
 /*------------------------------------------*/
 
 footer {
-	background: #003366 50% 0%;
+	background: #FFFFFF url("../images/footer.png") no-repeat top right;
     padding-top: 60px;
     border-top: 4px solid #555;
     color: #ccc;
