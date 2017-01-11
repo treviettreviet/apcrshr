@@ -282,31 +282,31 @@ namespace apcrshr_site.Controllers
                         //Get fee
                         int fee = -1;
 
-                        DateTime earlyBird = new DateTime(2017, 7, 30);
+                        DateTime earlyBird = new DateTime(2017, 4, 30);
                         switch (mailing.ParticipantType)
                         {
                             case "International delegates":
                                 if (DateTime.UtcNow <= earlyBird)
                                 {
-                                    fee = 500;
+                                    fee = 550;
                                 }
                                 else
                                 {
-                                    fee = 550;
+                                    fee = 600;
                                 }
                                 break;
                             case "Vietnamese delegate":
                                 if (DateTime.UtcNow <= earlyBird)
                                 {
-                                    fee = 150;
+                                    fee = 200;
                                 }
                                 else
                                 {
-                                    fee = 200;
+                                    fee = 250;
                                 }
                                 break;
                             case "International youth":
-                                fee = 500;
+                                fee = 150;
                                 break;
                             case "Vietnamese youth":
                                 fee = 100;

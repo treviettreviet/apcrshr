@@ -1,7 +1,37 @@
-﻿@{
+﻿@using apcrshr_site.Helper
+@model Site.Core.DataModel.Response.SearchResultResponse
+@{
     ViewBag.Title = apcrshr_site.Resources.Resource.title_searchResulf;
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 
-<div class="col-sm-9 page-content">
+<div class="col-md-9 page-content">
+    @if (Model.Result != null && Model.Result.Count > 0)
+    {
+        <!-- Start related Posts -->
+            <div class="latest-posts-classic">
+
+                <h2>@apcrshr_site.Resources.Resource.title_relatedNews</h2><br />
+
+                @for (int i = 0; i < Model.Result.Count; i++)
+                {
+                        <!-- Post 1 -->
+                    <div class="post-row animated fadeIn delay-01" data-animation="fadeIn" data-animation-delay="01">
+                        <h3 class="post-title"><a href='@Url.Action(Model.Result[i].Action, Model.Result[i].Controller, new { ActionURL = Model.Result[i].ActionURL })'>@Model.Result[i].Title</a></h3>
+                        <div class="post-content">
+                            <p>@Model.Result[i].ShortContent <a class="read-more" href='@Url.Action(Model.Result[i].Action, Model.Result[i].Controller, new { ActionURL = Model.Result[i].ActionURL })'>Read More</a></p>
+                        </div>
+                    </div>
+                }
+            </div>
+            <!-- End Latest Posts -->
+    }
+    <br />
+    <!-- Start Pagination -->
+    <div id="pagination">
+        @Html.PagingUtil("Search", "Home", Model.KeySearch, Model.Count, apcrshr_site.Constants.Constants.SEARCH_PAGE_SIZE,
+        Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("pageIndex")).SingleOrDefault())
+    </div>
+    <!-- End Pagination -->
+
 </div>

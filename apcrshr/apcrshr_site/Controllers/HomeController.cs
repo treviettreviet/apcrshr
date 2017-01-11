@@ -86,10 +86,10 @@ namespace apcrshr_site.Controllers
         }
 
         [HttpPost]
-        public ActionResult Search(string KeyWord, int pageIndex = 1)
+        public ActionResult Search(string KeySearch, int pageIndex = 1)
         {
-            SearchResultResponse response = _homeService.Search(string.Format("%{0}%", KeyWord), Constants.Constants.PAGE_SIZE, pageIndex);
-            response.KeySearch = KeyWord;
+            SearchResultResponse response = _homeService.Search(string.Format("%{0}%", KeySearch), Constants.Constants.SEARCH_PAGE_SIZE, pageIndex);
+            response.KeySearch = KeySearch;
             response.PageIndex = pageIndex;
             return View(response);
         }
