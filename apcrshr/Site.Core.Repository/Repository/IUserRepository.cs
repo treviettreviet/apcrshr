@@ -17,8 +17,13 @@ namespace Site.Core.Repository.Repository
         User FindByUserName(string username);
 
         void ChangePassword(string userID, string newPassword);
+
         bool LockUser(string userID);
 
         User FindStartWithID(string userID);
+
+        bool HasMainScholarship(string userID);
+
+        bool HasYouthScholarship(string userID);
     }
 }

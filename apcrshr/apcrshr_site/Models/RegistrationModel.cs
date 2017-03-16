@@ -33,8 +33,8 @@ namespace apcrshr_site.Models
         public string PassportNumber { get; set; }
         public string TypeOfPassport { get; set; }
         public string Occupation { get; set; }
-        public DateTime DateOfPassportIssue { get; set; }
-        public DateTime DateOfPassportExpiry { get; set; }
+        public Nullable<System.DateTime> DateOfPassportIssue { get; set; }
+        public Nullable<System.DateTime> DateOfPassportExpiry { get; set; }
         public string DetailOfEmbassy { get; set; }
         public int RegistrationStatus { get; set; }
         public bool Locked { get; set; }

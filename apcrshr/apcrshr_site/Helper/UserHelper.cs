@@ -15,5 +15,31 @@ namespace apcrshr_site.Helper
             Admin admin = adminRepository.FindByID(adminId);
             return admin != null ?  !string.IsNullOrEmpty(admin.LastName) ? admin.LastName : admin.FirstName : adminId;
         }
+
+        public static string HasMainScholarship(string userID)
+        {
+            try
+            {
+                IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
+                return userRepository.HasMainScholarship(userID) ? "Yes" : "No";
+            }
+            catch (Exception)
+            {
+                return "No";
+            }
+        }
+
+        public static string HasYouthScholarship(string userID)
+        {
+            try
+            {
+                IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
+                return userRepository.HasYouthScholarship(userID) ? "Yes" : "No";
+            }
+            catch (Exception)
+            {
+                return "No";
+            }
+        }
     }
 }

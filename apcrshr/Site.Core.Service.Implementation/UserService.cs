@@ -446,5 +446,32 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public bool UserHasYouthScholarship(string userID)
+        {
+            try
+            {
+                IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
+                return userRepository.HasYouthScholarship(userID);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool UserHasMainScholarship(string userID)
+        {
+            try
+            {
+                IUserRepository userRepository = RepositoryClassFactory.GetInstance().GetUserRepository();
+                return userRepository.HasMainScholarship(userID);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

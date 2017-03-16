@@ -166,5 +166,22 @@ namespace Site.Core.Repository.Implementation
             APCRSHREntities context = new APCRSHREntities();
             return context.Users.Where(a => a.UserID.StartsWith(userID)).SingleOrDefault();
         }
+
+
+        public bool HasMainScholarship(string userID)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.MainScholarships.Where(m => m.UserID.Equals(userID)).Any();
+            }
+        }
+
+        public bool HasYouthScholarship(string userID)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.YouthScholarships.Where(y => y.UserID.Equals(userID)).Any();
+            }
+        }
     }
 }

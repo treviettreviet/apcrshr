@@ -115,5 +115,19 @@ namespace Site.Core.Service.Contract
         /// <param name="userID"></param>
         /// <returns></returns>
         FindItemReponse<UserModel> FindStartWithID(string userID);
+
+        /// <summary>
+        /// Check the current user, if has youth scholarship
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        bool UserHasYouthScholarship(string userID);
+
+        /// <summary>
+        /// Check the current user if has main scholarship
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        bool UserHasMainScholarship(string userID);
     }
 }
