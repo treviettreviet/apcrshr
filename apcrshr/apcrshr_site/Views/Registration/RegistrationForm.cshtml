@@ -169,7 +169,7 @@
                 <div class="form-group">
                     <label for="text" class="control-label col-sm-3">Country <span class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
-                        <select name="Country" id="Country" data-rule-required="true">
+                        <select name="Country" id="Country" onchange="popupSelectInput(this, 'Country')" data-rule-required="true">
                             <option value="">-- Chose one --</option>
                             <option value="Afghanistan">Afghanistan</option>
                             <option value="Albania">Albania</option>
@@ -228,7 +228,7 @@
                             <option value="Lebanon">Lebanon</option>
                             <option value="Liberia">Liberia</option>
                             <option value="Libya">Libya</option>
-							<option value="Macao, China*">Macao, China*</option>
+                            <option value="Macao, China*">Macao, China*</option>
                             <option value="Macedonia">Macedonia</option>
                             <option value="Malaysia">Malaysia</option>
                             <option value="Maldives">Maldives</option>
@@ -265,7 +265,7 @@
                             <option value="Solomon Islands">Solomon Islands</option>
                             <option value="South Africa">South Africa</option>
                             <option value="South Korea">South Korea</option>
-							<option value="Sri Lanka">Sri Lanka</option>
+                            <option value="Sri Lanka">Sri Lanka</option>
                             <option value="Spain">Spain</option>
                             <option value="Sudan">Sudan</option>
                             <option value="Sweden">Sweden</option>
@@ -274,24 +274,25 @@
                             <option value="Taiwan">Taiwan</option>
                             <option value="Tajikistan">Tajikistan</option>
                             <option value="Thailand">Thailand</option>
-							<option value="Timor-Leste">Timor-Leste</option>
-							<option value="Tokelau*">Tokelau*</option>
-							<option value="Tonga">Tonga</option>
+                            <option value="Timor-Leste">Timor-Leste</option>
+                            <option value="Tokelau*">Tokelau*</option>
+                            <option value="Tonga">Tonga</option>
                             <option value="Tunisia">Tunisia</option>
                             <option value="Turkey">Turkey</option>
-							<option value="Turkmenistan">Turkmenistan</option>
-							<option value="Tuvalu">Tuvalu</option>
+                            <option value="Turkmenistan">Turkmenistan</option>
+                            <option value="Tuvalu">Tuvalu</option>
                             <option value="Ukraine">Ukraine</option>
-							<option value="Uzbekistan">Uzbekistan</option>
+                            <option value="Uzbekistan">Uzbekistan</option>
                             <option value="United Kingdom">United Kingdom</option>
                             <option value="United States">United States</option>
                             <option value="Uruguay">Uruguay</option>
-							<option value="Vanuatu">Vanuatu</option>
+                            <option value="Vanuatu">Vanuatu</option>
                             <option value="Venezuela">Venezuela</option>
                             <option value="Vietnam">Vietnam</option>
                             <option value="Yemen">Yemen</option>
                             <option value="Zambia">Zambia</option>
                             <option value="Zimbabwe">Zimbabwe</option>
+                            <option value="Others">Others</option>
                         </select>
                     </div>
                 </div>
@@ -416,13 +417,13 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="anotherelem" class="control-label col-sm-3">Passport number <span class="validation-span-required">(*)</span></label>
+                    <label for="anotherelem" class="control-label col-sm-3">Passport number <span id="spanPassportNumber" class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
                         <input type="text" name="PassportNumber" id="PassportNumber" class="form-control" data-rule-required="true">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="additionalfield" class="control-label col-sm-3">Type of passport <span class="validation-span-required">(*)</span></label>
+                    <label for="additionalfield" class="control-label col-sm-3">Type of passport <span id="spanTypeOfPassport" class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
                         <select name="TypeOfPassport" id="TypeOfPassport" data-rule-required="true">
                             <option value="">-- Chose one --</option>
@@ -439,21 +440,21 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="anotherelem" class="control-label col-sm-3">Date of Passport issue <span class="validation-span-required">(*)</span></label>
+                    <label for="anotherelem" class="control-label col-sm-3">Date of Passport issue <span id="spanDateOfPassportIssue" class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
                         <input type="text" name="DateOfPassportIssue" id="DateOfPassportIssue" class="form-control mask_date" data-rule-required="true" data-rule-date="true">
                         <i>(yyyy/mm/dd)</i>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="anotherelem" class="control-label col-sm-3">Date of Passport expiry <span class="validation-span-required">(*)</span></label>
+                    <label for="anotherelem" class="control-label col-sm-3">Date of Passport expiry <span id="spanDateOfPassportExpiry" class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
                         <input type="text" name="DateOfPassportExpiry" id="DateOfPassportExpiry" class="form-control mask_date" data-rule-required="true" data-rule-date="true">
                         <i>(yyyy/mm/dd)</i>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="file" class="control-label col-sm-3">Photocopies of the first 3 pages of the passport <span class="validation-span-required">(*)</span></label>
+                    <label for="file" class="control-label col-sm-3">Photocopies of the first 3 pages of the passport <span id="spanUpload" class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
                         <input type="file" id="upload" class="form-control" multiple data-rule-required="true"/>
                         <span class="help-block">Only JPEG, JPG, PNG (Max Size: 5MB)</span>
@@ -585,6 +586,41 @@
                 },
                 success: function (data) {
                     if (data) {
+                        if (data.Country != null) {
+                            if (data.Country == "Vietnam") {
+                                $("#PassportNumber").removeAttr("data-rule-required");
+                                $("#TypeOfPassport").removeAttr("data-rule-required");
+                                $("#DateOfPassportIssue").removeAttr("data-rule-required");
+                                $("#DateOfPassportExpiry").removeAttr("data-rule-required");
+                                $("#upload").removeAttr("data-rule-required");
+                                $("#spanPassportNumber").hide();
+                                $("#spanTypeOfPassport").hide();
+                                $("#spanDateOfPassportIssue").hide();
+                                $("#spanDateOfPassportExpiry").hide();
+                                $("#spanUpload").hide();
+                            } else {
+                                if (!$('#PassportNumber').data('rule-required')) {
+                                    $('#PassportNumber').data('rule-required', true);
+                                }
+                                if (!$('#TypeOfPassport').data('rule-required')) {
+                                    $('#TypeOfPassport').data('rule-required', true);
+                                }
+                                if (!$('#DateOfPassportIssue').data('rule-required')) {
+                                    $('#DateOfPassportIssue').data('rule-required', true);
+                                }
+                                if (!$('#DateOfPassportExpiry').data('rule-required')) {
+                                    $('#DateOfPassportExpiry').data('rule-required', true);
+                                }
+                                if (!$('#upload').data('rule-required')) {
+                                    $('#upload').data('rule-required', true);
+                                }
+                                $("#spanPassportNumber").show();
+                                $("#spanTypeOfPassport").show();
+                                $("#spanDateOfPassportIssue").show();
+                                $("#spanDateOfPassportExpiry").show();
+                                $("#spanUpload").show();
+                            }
+                        }
                         if (data.SessionID != null && data.SessionID != "") {
                             $(".hidSession").val(data.SessionID);
                             $.unblockUI();

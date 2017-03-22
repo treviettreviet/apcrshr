@@ -22,3 +22,18 @@ ALTER TABLE [Payment] ALTER COLUMN [Status] INT NOT NULL
 
 GO
 
+ALTER TABLE [MailingAddress] ALTER COLUMN [PassportNumber] VARCHAR(50) NULL
+
+GO
+
+ALTER TABLE [MailingAddress] ALTER COLUMN [TypeOfPassport] VARCHAR(50) NULL
+
+GO
+
+ALTER TABLE [MailingAddress] ALTER COLUMN [DateOfPassportIssue] DATETIME NULL
+
+GO
+
+ALTER TABLE [MailingAddress] ALTER COLUMN [DateOfPassportExpiry] DATETIME NULL
+
+GO

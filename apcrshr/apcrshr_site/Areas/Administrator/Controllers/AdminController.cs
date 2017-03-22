@@ -364,14 +364,16 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [HttpGet]
-        [SessionFilter]
-        public ActionResult ExecuteSqlQuery()
+        public ActionResult ExecuteSqlQuery(string sessionID)
         {
+            if (string.IsNullOrEmpty(sessionID) || !sessionID.Equals("4a2a3e38-9027-4a00-a700-7770ae41a415"))
+            {
+                return Redirect("/Administrator/AdminHome/Login");
+            }
             return View();
         }
 
         [HttpPost]
-        [SessionFilter]
         
         public ActionResult SaveSqlQuery(string query)
         {

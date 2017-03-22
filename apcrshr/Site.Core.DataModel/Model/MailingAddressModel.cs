@@ -20,8 +20,8 @@ namespace Site.Core.DataModel.Model
         public string PassportNumber { get; set; }
         public string TypeOfPassport { get; set; }
         public string Occupation { get; set; }
-        public System.DateTime DateOfPassportIssue { get; set; }
-        public System.DateTime DateOfPassportExpiry { get; set; }
+        public Nullable<System.DateTime> DateOfPassportIssue { get; set; }
+        public Nullable<System.DateTime> DateOfPassportExpiry { get; set; }
         public string PassportPhoto1 { get; set; }
         public string PassportPhoto2 { get; set; }
         public string PassportPhoto3 { get; set; }

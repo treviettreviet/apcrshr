@@ -237,7 +237,7 @@ namespace apcrshr_site.Controllers
                         _sessionService.Update(session);
 
                         sessionId = hidSession;
-                        return Json(new { SessionID = sessionId, MailingID = mailingId }, JsonRequestBehavior.AllowGet);
+                        return Json(new { SessionID = sessionId, MailingID = mailingId, Country = registration.Country }, JsonRequestBehavior.AllowGet);
                     case 3:
                         if (!string.IsNullOrEmpty(registration.ParticipantType))
                         {
