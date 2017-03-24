@@ -59,19 +59,19 @@
                 <div class="form-group">
                     <label for="anotherelem" class="control-label col-sm-3">Position <span class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
-                        <input type="text" name="Position" id="Position" class="form-control" data-rule-required="true">
+                        <input type="text" name="Position" id="Position" maxlength="99" class="form-control" data-rule-required="true" data-rule-maxlength="99">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="anotherelem" class="control-label col-sm-3">Duration of work (number of year) <span class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
-                        <input type="text" name="DurationOfWork" id="DurationOfWork" class="form-control" data-rule-required="true">
+                        <input type="text" name="DurationOfWork" id="DurationOfWork" maxlength="3" class="form-control" data-rule-required="true" data-rule-number="true">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="anotherelem" class="control-label col-sm-3">Responsibility relating to Reproductive and Sexual Health and Rights <span class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
-                        <textarea name="Responsibility" id="Responsibility" rows="3" maxlength="200" class="form-control" data-rule-required="true"></textarea>
+                        <textarea name="Responsibility" id="Responsibility" rows="3" maxlength="199" class="form-control" data-rule-required="true"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -101,7 +101,7 @@
                 <div class="form-group">
                     <label for="anotherelem" class="control-label col-sm-3">Title of abstract submitted</label>
                     <div class="col-sm-9">
-                        <input type="text" name="SubmissionTitles" id="SubmissionTitles" class="tagsinput form-control" value="">
+                        <input type="text" name="SubmissionTitles" id="SubmissionTitles" maxlength="999" class="tagsinput form-control" data-rule-maxlength="999" data-rule-required="true" value="">
                     </div>
                 </div>
                 <div class="form-actions col-sm-offset-3 col-sm-9">

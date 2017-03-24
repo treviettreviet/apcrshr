@@ -37,3 +37,7 @@ GO
 ALTER TABLE [MailingAddress] ALTER COLUMN [DateOfPassportExpiry] DATETIME NULL
 
 GO
+
+ALTER TABLE [MainScholarship] ADD [WorkingNow] BIT NULL DEFAULT (0)
+
+GO
