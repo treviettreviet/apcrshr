@@ -1,0 +1,1092 @@
+﻿@using apcrshr_site.Resources
+@using apcrshr_site.Helper
+@model apcrshr_site.Models.RegistrationModel
+@{
+    ViewBag.Title = "ViewProfile";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="~/Areas/Administrator/css/boostrap-editable.css">
+
+<div class="col-sm-9 page-content">
+    
+    <div class="row">
+
+        <h4 class="classic-title"><span>@string.Format(Resource.title_loginProfile, Model.UserName)</span></h4>
+
+        <!-- Accordion -->
+        <div class="panel-group" id="accordion">
+
+            <!-- Start Accordion 1 -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-4">
+                            <i class="icon-down-open-1 control-icon"></i>
+                            <i class="icon-user-4"></i> Personal Information
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse-4" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <!-- Start Contact Form -->
+                        @using (Ajax.BeginForm("SaveUserInfomation", "User", new AjaxOptions
+                                            {
+                                                InsertionMode = InsertionMode.Replace,
+                                                HttpMethod = "POST",
+                                                OnFailure = "userUpdateFailure",
+                                                OnSuccess = "userUpdateSuccess"
+                                            }, new { @class = "form-horizontal form-bordered form-validate", id = "frmSaveUser" }))
+                        {
+                            @Html.HiddenFor(model => model.UserID, new { @id = "UserID" })
+                            @Html.HiddenFor(model => model.MailingAddressID, new { @id = "MailingAddressID" })
+                            @Html.HiddenFor(model => model.FullName, new { @id = "FullName" })
+                            @Html.HiddenFor(model => model.Email, new { @id = "Email" })
+                            @Html.HiddenFor(model => model.Locked, new { @id = "Locked" })
+                            @Html.HiddenFor(model => model.UserName, new { @id = "UserName" })
+                            @Html.HiddenFor(model => model.DateOfBirth, new { @id = "DateOfBirth" })
+                            @Html.HiddenFor(model => model.DateOfPassportIssue, new { @id = "DateOfPassportIssue" })
+                            @Html.HiddenFor(model => model.DateOfPassportExpiry, new { @id = "DateOfPassportExpiry" })
+                            <table id="user" class="table table-bordered table-striped table-force-topborder" style="clear: both">
+                                <tbody>
+                                    <tr>
+                                        <td width="25%">Title <span class="validation-span-required">(*)</span></td>
+                                        <td width="75%">
+                                            <a href="#" id="Title" data-type="select" data-pk="1" data-value="@Model.Title" data-source="/title" data-original-title="Select Title">@Model.Title</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Full Name</td>
+                                        <td>
+                                            <label>@Model.FullName</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Password</td>
+                                        <td>
+                                            <a href="javascript:void(0)" id="lnkChangePassword" style="color: #b200ff; font-weight: bold;">Change Password</a>
+                                            &nbsp;&nbsp;<span style="font-style: italic; color: #3348ef" id="spanPasswordChanged"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sex <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="Sex" data-type="select" data-pk="2" data-value="@Model.Sex" data-source="/sex" data-original-title="Select Sex">@Model.Sex</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Meal preference <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="MealPreference" data-type="select" data-pk="3" data-value="@Model.MealPreference" data-source="/mealPreference" data-original-title="Select Meal Preference">@Model.MealPreference</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Disability or special treatment</td>
+                                        <td>
+                                            <a href="#" id="DisabilityOrTreatment" data-type="textarea" data-pk="4" data-placeholder="Your comments here..." data-original-title="Enter comments">@Model.DisabilityOrTreatment</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email address <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <label>@Model.Email</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Other email address</td>
+                                        <td>
+                                            <a href="#" id="OtherEmail" data-type="text" data-pk="6" data-placement="right" data-placeholder="Required" data-original-title="Enter your other Email">@Model.OtherEmail</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phone number <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="Phone" data-type="text" data-pk="7" data-placement="right" data-placeholder="Required" data-original-title="Enter your phone">@Model.Phone</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="Address" data-type="textarea" data-pk="8" data-placeholder="Your address..." data-original-title="Enter your address">@Model.Address</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>City <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="City" data-type="text" data-pk="9" data-placement="right" data-placeholder="Required" data-original-title="Enter your city">@Model.City</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Country <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="Country" data-type="select" data-pk="10" data-value="@Model.Country" data-source="/country" data-original-title="Select Country">@Model.Country</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Work Address</td>
+                                        <td>
+                                            <a href="#" id="WorkAddress" data-type="text" data-pk="11" data-placeholder="Your work address" data-original-title="Enter your work address">@Model.WorkAddress</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Organization <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="Organization" data-type="text" data-pk="12" data-placeholder="Your organization..." data-original-title="Enter your organization">@Model.Organization</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Participant type <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="ParticipantType" data-type="select" data-pk="13" data-value="@Model.ParticipantType" data-source="/participantType" data-original-title="Select Participant type">@Model.ParticipantType</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Participate in Youth conference <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <input type="radio" id="YouthConference" name="YouthConference" value="true" @(Model.YouthConference == "true" ? "checked" : "")>&nbsp;Yes
+                                            <input type="radio" id="YouthConference" name="YouthConference" value="false" @(Model.YouthConference == "false" ? "checked" : "")>&nbsp;No
+                                            <i>(Youth age 15-29/ Born in 1988 - 2002)</i>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Need visa support</td>
+                                        <td>
+                                            <input type="radio" id="NeedVisaSupport" name="NeedVisaSupport" value="true" @(Model.NeedVisaSupport == true ? "checked" : "")>&nbsp;Yes
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date of birth <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <label>@Model.DateOfBirth.Value.ToString("yyyy/MM/dd")</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Original nationality <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="OriginalNationality" data-type="text" data-pk="15" data-placeholder="Your original nationality..." data-original-title="Enter your original nationality">@Model.OriginalNationality</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Current nationality <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="CurrentNationality" data-type="text" data-pk="16" data-placeholder="Your current nationality..." data-original-title="Enter your current nationality">@Model.CurrentNationality</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Passport number <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <label>@Model.PassportNumber</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Type of passport <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <label>@Model.TypeOfPassport</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Occupation <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="Occupation" data-type="text" data-pk="19" data-placeholder="Your occupation..." data-original-title="Enter your occupation">@Model.Occupation</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date of Passport issue <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <label>@Model.DateOfPassportIssue</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date of Passport expiry <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <label>@Model.DateOfPassportExpiry</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Detail address of the Embassy of Viet Nam in your country which you will apply for your Visa to enter Viet Nam (for all delegates who need visa)</td>
+                                        <td>
+                                            <a href="#" id="DetailOfEmbassy" data-type="textarea" data-pk="22" data-placeholder="Your embassy..." data-original-title="Enter your embassy">@Model.DetailOfEmbassy</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <input type="button" class="btn plupload_add btn-primary" id="btnSave" value="Save Changes" disabled style="position: relative; z-index: 1;" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                        <!-- End Contact Form -->
+                    </div>
+                </div>
+            </div>
+            <!-- End Accordion 1 -->
+
+            <!-- Start Accordion 2 -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-5" class="collapsed">
+                            <i class="icon-down-open-1 control-icon"></i>
+                            <i class="icon-gift-1"></i> Abstract submission
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse-5" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        No records
+                    </div>
+                </div>
+            </div>
+            <!-- End Accordion 2 -->
+
+            <!-- Start Accordion 3 -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-6" class="collapsed">
+                            <i class="icon-down-open-1 control-icon"></i>
+                            <i class="icon-box-3"></i> Main conference scholarship application
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse-6" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p>The 9th Asia Pacific Conference on Reproductive and Sexual Health and Rights (APCRSHR) is pleased to invite those delegates who are interested in the field of reproductive and sexual health and rights to apply for scholarships to attend the 9th APCRSHR <a href="http://www.apcrshr9vn.com/" target="_blank">http://www.apcrshr9vn.com/</a>. This opportunity is open to individuals from all over the world whose careers focus on sexual and reproductive health and rights.</p>
+                        <p>The application package will be opened soon.</p>
+                        <div class="call-action call-action-boxed call-action-style1 no-descripton clearfix">
+                            <!-- Call Action Button -->
+                            <div class="button-side"><a href='@Url.Action("MainSholarshipRegistration", "Registration")' class="btn-system border-btn btn-medium">Apply scholarship now</a></div>
+                            <!-- Call Action Text -->
+                            <h2 class="primary"><strong>The application package</strong> should be completed and submitted online at:</h2>
+                        </div>
+                        <p>Awardees will be selected on the basis of applicant’s qualifications and abstract quality. For more information, please direct your inquiries to the 9th APCRSHR at <a href='mailto:scholarship@apcrshr9vn.com'><span>scholarship@apcrshr9vn.com</span></a>.</p>
+                        <!--Your main scholarship-->
+                        <div class="call-action call-action-boxed call-action-style2 clearfix">
+                            <!-- Call Action Button -->
+                            <div class="button-side" style="margin-top:8px;"><a href='@Url.Action("MainScholarships", "Scholarship")' target="_blank" class="btn-system btn-large"><i class="icon-gift-1"></i> Management</a></div>
+                            <!-- Call Action Text -->
+                            <h2 class="primary">Your <strong>submitted</strong> scholarship</h2>
+                            <p>You can update the scholarship before the submission deadline.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Accordion 3 -->
+
+            <!-- Start Accordion 4 -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-7" class="collapsed">
+                            <i class="icon-down-open-1 control-icon"></i>
+                            <i class="icon-home-1"></i> Youth scholarship application
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse-7" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p>The 9th Asia Pacific Conference on Reproductive and Sexual Health and Rights (APCRSHR) is pleased to invite youth delegates who are interested in the field of reproductive and sexual health and rights to apply for scholarships to attend the 9th APCRSHR <a href="http://www.apcrshr9vn.com/" target="_blank">http://www.apcrshr9vn.com/</a>. This opportunity is open to individuals from all over the world whose careers focus on sexual and reproductive health and rights. </p>
+                        <p>The application package will be opened soon.</p>
+                        <p>Awardees will be selected on the basis of applicant’s qualifications and abstract quality.</p>
+                        <p>For more information, please direct your inquiries to the 9th APCRSHR at <a href='mailto:scholarship@apcrshr9vn.com'><span>scholarship@apcrshr9vn.com</span></a>. <strong>Scholarship benefit</strong></p>
+                        <div class="call-action call-action-boxed call-action-style1 no-descripton clearfix">
+                            <!-- Call Action Button -->
+                            <div class="button-side"><a href='@Url.Action("YouthSholarshipRegistration", "Registration")' class="btn-system border-btn btn-medium">Apply scholarship now</a></div>
+                            <!-- Call Action Text -->
+                            <h2 class="primary"><strong>The application package</strong> should be completed and submitted online at:</h2>
+                        </div>
+                        <p>Awardees will be selected on the basis of applicant’s qualifications and abstract quality.</p>
+                        <p><strong>The deadline for abstract submission and scholarship application is April 30, 2017.  All applicants will be notified of acceptance status by June 10, 2017.</strong></p>
+                        <!--Your youth scholarship-->
+                        <div class="call-action call-action-boxed call-action-style2 clearfix">
+                            <!-- Call Action Button -->
+                            <div class="button-side" style="margin-top:8px;"><a href='@Url.Action("YouthScholarships", "Scholarship")' target="_blank" class="btn-system btn-large"><i class="icon-gift-1"></i> Management</a></div>
+                            <!-- Call Action Text -->
+                            <h2 class="primary">Your <strong>submitted</strong> scholarship</h2>
+                            <p>You can update the scholarship before the submission deadline.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Accordion 4 -->
+
+            <!-- Start Accordion 5 -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-8" class="collapsed">
+                            <i class="icon-down-open-1 control-icon"></i>
+                            <i class="icon-money-1"></i> To pay registration fee
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse-8" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="page-content">
+
+                            @if (ViewBag.PaymentFee != null)
+                            {
+                                int fee = (int)ViewBag.PaymentFee;
+                                if (fee == -1)
+                                {
+                                    if (ViewBag.PaymentStatus != null)
+                                    {
+                                        <!-- Start Big Heading -->
+                                        <div class="big-title text-center">
+                                            <h1>@Html.Raw(ViewBag.PaymentStatus)</h1>
+                                        </div>
+                                        <!-- End Big Heading -->
+                                    }
+                                    else
+                                    {
+                                        <!-- Start Big Heading -->
+                                        <div class="big-title text-center">
+                                            <h1>Please update your infomation <strong>correctly</strong> before make a payment!</h1>
+                                        </div>
+                                        <!-- End Big Heading -->   
+                                    }
+                                }
+                                else if (fee == 0)
+                                {
+                                    <!-- Start Big Heading -->
+                                    <div class="big-title text-center">
+                                        <h1>Your account has <strong>completed</strong> payment!</h1>
+                                    </div>
+                                    <!-- End Big Heading -->
+                                }
+                                else
+                                {
+                                    <!-- Start Big Heading -->
+                                    <div class="big-title text-center">
+                                        <h1>Please make a payment to <strong>complete</strong> your registration!</h1>
+                                    </div>
+                                    <!-- End Big Heading -->
+
+                                    <!-- Divider -->
+                                    <div class="hr1" style="margin-bottom:15px;"></div>
+
+                                    <!-- Start Pricing Tables -->
+                                    <div class="pricing-tables grid-1 clearfix">
+
+                                        <!-- Start Pricing Table 3 -->
+                                        <div class="pricing-table highlight-plan">
+                                            <div class="plan-name">
+                                                <h3>@Model.ParticipantType</h3>
+                                            </div>
+                                            <div class="plan-price">
+                                                <div class="price-value">$@fee</div>
+                                                <div class="interval">fee</div>
+                                            </div>
+                                            <div class="plan-signup">
+                                                <a href="@Url.Action("MakePayment", "User")" class="btn-system btn-small border-btn">Pay Now</a>
+                                            </div>
+                                        </div>
+                                        <!-- End Pricing Table 3 -->
+
+                                    </div>
+                                    <!-- End Pricing Tables -->
+                                }
+                            }
+                            <br />
+                            <div class="row" style="overflow: scroll;">
+                                <script type="text/javascript" src="http://202.9.84.88/documents/payment/logoscript.jsp?logos=v,m,a,j,u,at&lang=en"></script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Accordion 5 -->
+
+        </div>
+        <!-- End Accordion -->
+
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $(function () {
+
+        //defaults
+        $.fn.editable.defaults.url = '/post';
+
+        //editables
+        $('#Title').editable({
+            validate: function (value) {
+                if (value == '') return 'Title is required!';
+            },
+            url: changedValue
+        });
+        $('#Sex').editable({
+            validate: function (value) {
+                if (value == '') return 'Sex is required!';
+            },
+            url: changedValue
+        });
+        $('#MealPreference').editable({
+            validate: function (value) {
+                if (value == '') return 'Meal preference is required!';
+            },
+            url: changedValue
+        });
+        $('#DisabilityOrTreatment').editable({ showbuttons: true, url: changedValue });
+        $('#OtherEmail').editable({
+            validate: function (value) {
+                if (!validateEmail(value)) return 'The email is invalid';
+            },
+            url: changedValue
+        });
+        $('#Phone').editable({
+            validate: function (value) {
+                if (value == '') return 'Phone is required!';
+            },
+            url: changedValue
+        });
+        $('#Address').editable({
+            validate: function (value) {
+                if (value == '') return 'Address is required!';
+            },
+            showbuttons: true, url: changedValue
+        });
+        $('#City').editable({
+            validate: function (value) {
+                if (value == '') return 'City is required!';
+            },
+            showbuttons: true, url: changedValue
+        });
+        $('#Country').editable({ url: changedValue });
+        $('#WorkAddress').editable({ showbuttons: true, url: changedValue });
+        $('#Organization').editable({
+            validate: function (value) {
+                if (value == '') return 'Organization is required!';
+            },
+            showbuttons: true, url: changedValue
+        });
+        $('#ParticipantType').editable({ showbuttons: true, url: changedValue });
+        $('#OriginalNationality').editable({
+            validate: function (value) {
+                if (value == '') return 'Original nationality is required!';
+            },
+            url: changedValue
+        });
+        $('#CurrentNationality').editable({
+            validate: function (value) {
+                if (value == '') return 'Current nationality is required!';
+            },
+            url: changedValue
+        });
+        //$('#PassportNumber').editable({ url: changedValue });
+        //$('#TypeOfPassport').editable({ showbuttons: true, url: changedValue });
+        $('#Occupation').editable({
+            validate: function (value) {
+                if (value == '') return 'Occupation is required!';
+            },
+            url: changedValue
+        });
+        //$('#DateOfPassportIssue').editable({ url: changedValue });
+        //$('#DateOfPassportExpiry').editable({ url: changedValue });
+        $('#DetailOfEmbassy').editable({ url: changedValue });
+
+        function changedValue(params) {
+            //var control = $("#" + params.name);
+            //var old = $(control).text();
+            //if (old != params.value) {
+                $("#btnSave").removeAttr("disabled");
+            //}
+        }
+        
+        $('#address').editable({
+            url: '/post',
+            value: {
+                city: "Moscow",
+                street: "Lenina",
+                building: "12"
+            },
+            validate: function (value) {
+                if (value.city == '') return 'city is required!';
+            },
+            display: function (value) {
+                if (!value) {
+                    $(this).empty();
+                    return;
+                }
+                var html = '<b>' + $('<div>').text(value.city).html() + '</b>, ' + $('<div>').text(value.street).html() + ' st., bld. ' + $('<div>').text(value.building).html();
+                $(this).html(html);
+            }
+        });
+
+        $('#user .editable').on('hidden', function (e, reason) {
+            if (reason === 'save' || reason === 'nochange') {
+                var $next = $(this).closest('tr').next().find('.editable');
+                if ($('#autoopen').is(':checked')) {
+                    setTimeout(function () {
+                        $next.editable('show');
+                    }, 300);
+                } else {
+                    $next.focus();
+                }
+            }
+        });
+
+        //Loading Title
+        $.mockjax({
+            url: '/title',
+            response: function (settings) {
+                this.responseText = [{
+                    value: 'Dr',
+                    text: 'Dr'
+                }, {
+                    value: 'Mr',
+                    text: 'Mr'
+                }, {
+                    value: 'Mrs',
+                    text: 'Mrs'
+                }, {
+                    value: 'Ms',
+                    text: 'Ms'
+                }];
+            }
+        });
+        //Loading Sex
+        $.mockjax({
+            url: '/sex',
+            response: function (settings) {
+                this.responseText = [{
+                    value: 'Male',
+                    text: 'Male'
+                }, {
+                    value: 'Female',
+                    text: 'Female'
+                }];
+            }
+        });
+        //Loading Sex
+        $.mockjax({
+            url: '/mealPreference',
+            response: function (settings) {
+                this.responseText = [{
+                    value: 'Vegetarian',
+                    text: 'Vegetarian'
+                }, {
+                    value: 'Non - vegetarian',
+                    text: 'Non - vegetarian'
+                }];
+            }
+        });
+        //Loading Country
+        $.mockjax({
+            url: '/country',
+            response: function (settings) {
+                this.responseText = [{
+                    value: 'Afghanistan',
+                    text: 'Afghanistan'
+                }, {
+                    value: 'Albania',
+                    text: 'Albania'
+                }, {
+                    value: 'Algeria',
+                    text: 'Algeria'
+                }, {
+                    value: 'Angola',
+                    text: 'Angola'
+                }, {
+                    value: 'Argentina',
+                    text: 'Argentina'
+                }, {
+                    value: 'Armenia',
+                    text: 'Armenia'
+                }, {
+                    value: 'Australia',
+                    text: 'Australia'
+                }, {
+                    value: 'Azerbaijan',
+                    text: 'Azerbaijan'
+                }, {
+                    value: 'Bangladesh',
+                    text: 'Bangladesh'
+                }, {
+                    value: 'Bolivia',
+                    text: 'Bolivia'
+                }, {
+                    value: 'Brazil',
+                    text: 'Brazil'
+                }, {
+                    value: 'Brunei',
+                    text: 'Brunei'
+                }, {
+                    value: 'Bulgaria',
+                    text: 'Bulgaria'
+                }, {
+                    value: 'Cameroon',
+                    text: 'Cameroon'
+                }, {
+                    value: 'Canada',
+                    text: 'Canada'
+                }, {
+                    value: 'Chile',
+                    text: 'Chile'
+                }, {
+                    value: 'China',
+                    text: 'China'
+                }, {
+                    value: 'Colombia',
+                    text: 'Colombia'
+                }, {
+                    value: 'Congo',
+                    text: 'Congo'
+                }, {
+                    value: 'Costa Rica',
+                    text: 'Costa Rica'
+                }, {
+                    value: 'Croatia',
+                    text: 'Croatia'
+                }, {
+                    value: 'Cuba',
+                    text: 'Cuba'
+                }, {
+                    value: 'Czech',
+                    text: 'Czech'
+                }, {
+                    value: 'Dominica',
+                    text: 'Dominica'
+                }, {
+                    value: 'Ecuador',
+                    text: 'Ecuador'
+                }, {
+                    value: 'Egypt',
+                    text: 'Egypt'
+                }, {
+                    value: 'France',
+                    text: 'France'
+                }, {
+                    value: 'Georgia',
+                    text: 'Georgia'
+                }, {
+                    value: 'Germany',
+                    text: 'Germany'
+                }, {
+                    value: 'Ghana',
+                    text: 'Ghana'
+                }, {
+                    value: 'Greece',
+                    text: 'Greece'
+                }, {
+                    value: 'Haiti',
+                    text: 'Haiti'
+                }, {
+                    value: 'Hungary',
+                    text: 'Hungary'
+                }, {
+                    value: 'Iceland',
+                    text: 'Iceland'
+                }, {
+                    value: 'India',
+                    text: 'India'
+                }, {
+                    value: 'Indonesia',
+                    text: 'Indonesia'
+                }, {
+                    value: 'Iran',
+                    text: 'Iran'
+                }, {
+                    value: 'Ireland',
+                    text: 'Ireland'
+                }, {
+                    value: 'Israel',
+                    text: 'Israel'
+                }, {
+                    value: 'Italy',
+                    text: 'Italy'
+                }, {
+                    value: 'Jamaica',
+                    text: 'Jamaica'
+                }, {
+                    value: 'Japan',
+                    text: 'Japan'
+                }, {
+                    value: 'Jordan',
+                    text: 'Jordan'
+                }, {
+                    value: 'Kazakhstan',
+                    text: 'Kazakhstan'
+                }, {
+                    value: 'Kuwait',
+                    text: 'Kuwait'
+                }, {
+                    value: 'Kyrgyzstan',
+                    text: 'Kyrgyzstan'
+                }, {
+                    value: 'Laos',
+                    text: 'Laos'
+                }, {
+                    value: 'Latvia',
+                    text: 'Latvia'
+                }, {
+                    value: 'Lebanon',
+                    text: 'Lebanon'
+                }, {
+                    value: 'Liberia',
+                    text: 'Liberia'
+                }, {
+                    value: 'Libya',
+                    text: 'Libya'
+                }, {
+                    value: 'Macedonia',
+                    text: 'Macedonia'
+                }, {
+                    value: 'Malaysia',
+                    text: 'Malaysia'
+                }, {
+                    value: 'Mali',
+                    text: 'Mali'
+                }, {
+                    value: 'Mexico',
+                    text: 'Mexico'
+                }, {
+                    value: 'Myanmar',
+                    text: 'Myanmar'
+                }, {
+                    value: 'Nepal',
+                    text: 'Nepal'
+                }, {
+                    value: 'New Zealand',
+                    text: 'New Zealand'
+                }, {
+                    value: 'Nigeria',
+                    text: 'Nigeria'
+                }, {
+                    value: 'North Korea',
+                    text: 'North Korea'
+                }, {
+                    value: 'Pakistan',
+                    text: 'Pakistan'
+                }, {
+                    value: 'Palestine',
+                    text: 'Palestine'
+                }, {
+                    value: 'Paraguay',
+                    text: 'Paraguay'
+                }, {
+                    value: 'Peru',
+                    text: 'Peru'
+                }, {
+                    value: 'Philippines',
+                    text: 'Philippines'
+                }, {
+                    value: 'Poland',
+                    text: 'Poland'
+                }, {
+                    value: 'Portugal',
+                    text: 'Portugal'
+                }, {
+                    value: 'Romania',
+                    text: 'Romania'
+                }, {
+                    value: 'Russia',
+                    text: 'Russia'
+                }, {
+                    value: 'Saudi Arabia',
+                    text: 'Saudi Arabia'
+                }, {
+                    value: 'Senegal',
+                    text: 'Senegal'
+                }, {
+                    value: 'Serbia',
+                    text: 'Serbia'
+                }, {
+                    value: 'Singapore',
+                    text: 'Singapore'
+                }, {
+                    value: 'Slovenia',
+                    text: 'Slovenia'
+                }, {
+                    value: 'South Africa',
+                    text: 'South Africa'
+                }, {
+                    value: 'South Korea',
+                    text: 'South Korea'
+                }, {
+                    value: 'Spain',
+                    text: 'Spain'
+                }, {
+                    value: 'Sudan',
+                    text: 'Sudan'
+                }, {
+                    value: 'Sweden',
+                    text: 'Sweden'
+                }, {
+                    value: 'Switzerland',
+                    text: 'Switzerland'
+                }, {
+                    value: 'Syria',
+                    text: 'Syria'
+                }, {
+                    value: 'Taiwan',
+                    text: 'Taiwan'
+                }, {
+                    value: 'Tajikistan',
+                    text: 'Tajikistan'
+                }, {
+                    value: 'Thailand',
+                    text: 'Thailand'
+                }, {
+                    value: 'Tunisia',
+                    text: 'Tunisia'
+                }, {
+                    value: 'Turkey',
+                    text: 'Turkey'
+                }, {
+                    value: 'Ukraine',
+                    text: 'Ukraine'
+                }, {
+                    value: 'United Kingdom',
+                    text: 'United Kingdom'
+                }, {
+                    value: 'United States',
+                    text: 'United States'
+                }, {
+                    value: 'Uruguay',
+                    text: 'Uruguay'
+                }, {
+                    value: 'Venezuela',
+                    text: 'Venezuela'
+                }, {
+                    value: 'Vietnam',
+                    text: 'Vietnam'
+                }, {
+                    value: 'Yemen',
+                    text: 'Yemen'
+                }, {
+                    value: 'Zambia',
+                    text: 'Zambia'
+                }, {
+                    value: 'Zimbabwe',
+                    text: 'Zimbabwe'
+                }];
+            }
+        });
+        //Loading Participant Type
+        $.mockjax({
+            url: '/participantType',
+            response: function (settings) {
+                this.responseText = [{
+                    value: 'International delegates',
+                    text: 'International delegates'
+                }, {
+                    value: 'Vietnamese delegate',
+                    text: 'Vietnamese delegate'
+                }, {
+                    value: 'International youth',
+                    text: 'International youth'
+                }, {
+                    value: 'Vietnamese youth',
+                    text: 'Vietnamese youth'
+                }];
+            }
+        });
+        //Loading type of passport
+        $.mockjax({
+            url: '/typeOfPassport',
+            response: function (settings) {
+                this.responseText = [{
+                    value: 'Regular',
+                    text: 'Regular'
+                }, {
+                    value: 'Official',
+                    text: 'Official'
+                }, {
+                    value: 'Diplomatic',
+                    text: 'Diplomatic'
+                }];
+            }
+        });
+
+
+        //Validate
+        function validateEmail(email) {
+            var re = /^[_a-z0-9-A-Z-]+(\.[_a-z0-9-A-Z-]+)*@@[a-z0-9-A-Z-]+(\.[a-z0-9-A-Z-]+)*(\.[a-z]{2,4})$/;
+            return re.test(email);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    $("#btnSave").click(function () {
+        $.blockUI({ message: $('#spinner') });
+        var formData = new FormData();
+        formData.append("UserID", $("#UserID").val());
+        formData.append("MailingAddressID", $("#MailingAddressID").val());
+        formData.append("FullName", $("#FullName").val());
+        formData.append("Title", $("#Title").text());
+        formData.append("Email", $("#Email").val());
+        formData.append("Locked", $("#Locked").val());
+        formData.append("UserName", $("#UserName").val());
+        formData.append("Sex", $("#Sex").text());
+        formData.append("MealPreference", $("#MealPreference").text());
+        formData.append("DisabilityOrTreatment", $("#DisabilityOrTreatment").text());
+        formData.append("OtherEmail", $("#OtherEmail").text());
+        formData.append("Phone", $("#Phone").text());
+        formData.append("Address", $("#Address").text());
+        formData.append("City", $("#City").text());
+        formData.append("Country", $("#Country").text());
+        formData.append("WorkAddress", $("#WorkAddress").text());
+        formData.append("Organization", $("#Organization").text());
+        formData.append("ParticipantType", $("#ParticipantType").text());
+        formData.append("YouthConference", $("#frmSaveUser input[name='YouthConference']:checked").val());
+        formData.append("NeedVisaSupport", $("#frmSaveUser input[id='NeedVisaSupport']:checked").val());
+        //formData.append("DateOfBirth", $("#DateOfBirth").val());
+        formData.append("OriginalNationality", $("#OriginalNationality").text());
+        formData.append("CurrentNationality", $("#CurrentNationality").text());
+        //formData.append("PassportNumber", $("#PassportNumber").text());
+        //formData.append("TypeOfPassport", $("#TypeOfPassport").text());
+        formData.append("Occupation", $("#Occupation").text());
+        //formData.append("DateOfPassportIssue", $("#DateOfPassportIssue").val());
+        //formData.append("DateOfPassportExpiry", $("#DateOfPassportExpiry").val());
+        formData.append("DetailOfEmbassy", $("#DetailOfEmbassy").text());
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveUserInfomation", "User")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $.unblockUI();
+                bootbox.alert(response.Message, function () {
+                    bootbox.hideAll();
+                });
+                //Timeout
+                if (response.ErrorCode == 2) {
+                    window.location = '@Url.Action("Login", "User")';
+                }
+                if (response.ErrorCode == 0) {
+                    $("#btnSave").attr("disabled", "disabled");
+                }
+            },
+            error: function (error) {
+                $.unblockUI();
+                bootbox.alert(error, function () {
+                    bootbox.hideAll();
+                });
+            }
+        });
+    });
+
+    var changePasswordDialog = [
+            '<form method="POST" action="@Url.Action("ChangePassword", "User")" id="frmChangePassword" class="form-horizontal form-bordered">',
+                '<div class="box">',
+                    '<div class="box-content nopadding">',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Current password</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="password" name="CurrentPassword" id="CurrentPassword" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">New password</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="password" name="NewPassword" id="NewPassword" class="form-control" data-rule-required="true">',
+                            '</div>',
+                        '</div>',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-2">Confirm password</label>',
+                            '<div class="col-sm-10">',
+                                '<input type="password" name="ConfirmPassword" id="ConfirmPassword" class="form-control" data-rule-required="true" data-rule-equalto="#NewPassword">',
+                            '</div>',
+                        '</div>',
+                    '</div>',
+                '</div>',
+            '</form>'
+    ].join("\n");
+
+    $("#lnkChangePassword").click(function () {
+        bootbox.dialog({
+            message: changePasswordDialog,
+            title: "Change password",
+            buttons: {
+                success: {
+                    label: "Save Changes",
+                    className: "btn-primary",
+                    callback: function (e) {
+                        var currentPassword = $("#CurrentPassword").val();
+                        var newPassword = $("#NewPassword").val();
+                        var confirmPassword = $("#ConfirmPassword").val();
+
+                        if (currentPassword == null || currentPassword.length == 0) {
+                            bootbox.alert("Please input your current password!", function () {
+                                setTimeout(function () {
+                                    $("#CurrentPassword").focus();
+                                }, 1);
+                            });
+                            return false;
+                        }
+                        if (newPassword == null || newPassword.length < 6) {
+                            bootbox.alert("Your new password must be at least 6 characters!", function () {
+                                setTimeout(function () {
+                                    $("#NewPassword").focus();
+                                }, 1);
+                            });
+                            return false;
+                        }
+                        if (confirmPassword != newPassword) {
+                            bootbox.alert("Confirmation password doesn't match!", function () {
+                                setTimeout(function () {
+                                    $("#ConfirmPassword").focus();
+                                }, 1);
+                            });
+                            return false;
+                        }
+                        //Save changes
+                        $.blockUI({ message: $('#spinner') });
+                        var formData = new FormData();
+                        formData.append("UserID", $("#UserID").val());
+                        formData.append("CurrentPassword", $("#CurrentPassword").val());
+                        formData.append("NewPassword", $("#NewPassword").val());
+                        
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("ChangePassword", "User")',
+                            data: formData,
+                            dataType: 'json',
+                            contentType: false,
+                            processData: false,
+                            success: function (response) {
+                                //Timeout
+                                if (response.ErrorCode == 2) {
+                                    window.location = '@Url.Action("Login", "User")';
+                                }
+                                if (response.ErrorCode == 0) {
+                                    $.unblockUI();
+                                    $("#spanPasswordChanged").html("Your password has changed!");
+                                    bootbox.hideAll();
+                                    $("#spanPasswordChanged").fadeIn(200);
+                                    return true;
+                                }
+                                if (response.ErrorCode == 1) {
+                                    bootbox.alert(response.Message, function () {
+                                        $.unblockUI();
+                                    });
+                                }
+                            },
+                            error: function (error) {
+                                $.unblockUI();
+                                bootbox.alert(error, function () {
+                                });
+                            }
+                        });
+                        return false;
+                    }
+                },
+                danger: {
+                    label: "Cancel",
+                    className: "btn-danger",
+                    callback: function () {
+                        bootbox.hideAll();
+                    }
+                }
+            }
+        });
+    });
+</script>
