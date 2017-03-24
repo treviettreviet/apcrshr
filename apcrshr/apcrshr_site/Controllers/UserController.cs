@@ -37,12 +37,14 @@ namespace apcrshr_site.Controllers
         private IUserService _userService;
         private IMailingAddressService _mailingService;
         private IPaymentService _paymentService;
+        private IUserSubmissionService _userSubmissionService;
 
         public UserController()
         {
             this._userService = new UserService();
             this._mailingService = new MailingAddressService();
             this._paymentService = new PaymentService();
+            this._userSubmissionService = new UserSubmissionService();
         }
 
 
@@ -171,6 +173,10 @@ namespace apcrshr_site.Controllers
                     registration.Country = response.Item.Country;
                     registration.WorkAddress = response.Item.WorkAddress;
                     registration.Organization = response.Item.Organization;
+
+                    //Find abstract
+                    FindAllItemReponse<UserSubmissionModel> abstractResponse = _userSubmissionService.FindByUserID(response.Item.UserID);
+                    ViewBag.Abstracts = abstractResponse.Items;
                 }
                 FindAllItemReponse<MailingAddressModel> mailingResponse = _mailingService.FindMailingAddressByUser(Session["User-UserID"].ToString());
                 if (mailingResponse.Items != null)

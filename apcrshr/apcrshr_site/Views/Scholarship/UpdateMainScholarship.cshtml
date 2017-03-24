@@ -25,7 +25,7 @@
             </h3>
         </div>
         <div class="box-content">
-            @using (Html.BeginForm("SaveMainScholarship", "Scholarship", FormMethod.Post, new { @class = "form-horizontal form-bordered", @id = "frmMainScholarship", @onsubmit="onSubmitTrigger()" }))
+            @using (Html.BeginForm("SaveMainScholarship", "Scholarship", FormMethod.Post, new { @class = "form-horizontal form-validate", @id = "frmMainScholarship", @onsubmit = "onSubmitTrigger()" }))
             {
                 
                 @Html.HiddenFor(Model => Model.ScholarshipID)
@@ -81,7 +81,8 @@
                     <div class="col-sm-9">
                         @Html.TextBoxFor(Model => Model.DurationOfWork, new Dictionary<string, object> {
                                 { "class", "form-control" },
-                                { "data-rule-required", "true" }
+                                { "data-rule-required", "true" },
+                                { "data-rule-number", "true" }
                             })
                     </div>
                 </div>
@@ -159,6 +160,8 @@
     }
 
     function onSubmitTrigger() {
-        $.blockUI({ message: $('#spinner') });
+        if ($("#frmMainScholarship").valid()) {
+            $.blockUI({ message: $('#spinner') });
+        }
     }
 </script>

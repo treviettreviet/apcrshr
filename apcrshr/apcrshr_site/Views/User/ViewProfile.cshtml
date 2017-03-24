@@ -235,7 +235,19 @@
                 </div>
                 <div id="collapse-5" class="panel-collapse collapse">
                     <div class="panel-body">
-                        No records
+                        @if (ViewBag.Abstracts != null)
+                        {
+                            var abstracts = (IList<Site.Core.DataModel.Model.UserSubmissionModel>)ViewBag.Abstracts;
+                            if (abstracts != null && abstracts.Count > 0)
+                            {
+                                <ul>
+                                    @foreach (var item in abstracts)
+                                    {
+                                        <li>@item.SubmissionNumber</li>
+                                    }
+                                </ul>
+                            }
+                        }
                     </div>
                 </div>
             </div>
