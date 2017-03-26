@@ -31,5 +31,7 @@ namespace Site.Core.DataModel.Model
         public string Organization { get; set; }
         public int RegistrationStatus { get; set; }
         public string ParticipantType { get; set; }
+        public string MainScholarship { get; set; }
+        public string YouthScholarship { get; set; }
     }
 }
