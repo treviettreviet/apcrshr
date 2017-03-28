@@ -37,6 +37,7 @@ namespace Site.Core.Repository.Implementation
                     scholarship.SubmissionTitles = item.SubmissionTitles;
                     //scholarship.UserID = item.UserID;
                     scholarship.Status = item.Status;
+                    scholarship.ScholarshipPackage = item.ScholarshipPackage;
 
                     context.SaveChanges();
                 }

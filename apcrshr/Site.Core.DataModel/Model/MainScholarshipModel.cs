@@ -24,5 +24,6 @@ namespace Site.Core.DataModel.Model
         public string SubmissionTitles { get; set; }
         public string UserID { get; set; }
         public int Status { get; set; }
+        public string ScholarshipPackage { get; set; }
     }
 }

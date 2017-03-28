@@ -53,6 +53,26 @@
                 <div class="box-title" style="margin-left: -20px; margin-right: -20px;">
                     <h3>
                         <i class="fa fa-check"></i>
+                        SCHOLARSHIP PACKAGE
+                    </h3>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="anotherelem" class="control-label col-sm-3">Please select the scholarship package that you want to apply? <span class="validation-span-required">(*)</span></label>
+                    <div class="col-sm-9">
+                        <div class="checkbox">
+                            <label>
+                                <input type="radio" id="ScholarshipPackage" name="ScholarshipPackage" value="Full scholarship: Registration fee, travel, hotel, perdiem" data-rule-required="true" @("Full scholarship: Registration fee, travel, hotel, perdiem".Equals(this.Model.ScholarshipPackage) ? "checked" : "")>&nbsp;Full scholarship: Registration fee, travel, hotel, perdiem<br />
+                                <input type="radio" id="ScholarshipPackage" name="ScholarshipPackage" value="Partial scholarship 1: Registration fee, travel" data-rule-required="true" @("Partial scholarship 1: Registration fee, travel".Equals(this.Model.ScholarshipPackage) ? "checked" : "")>&nbsp;Partial scholarship 1: Registration fee, travel<br />
+                                <input type="radio" id="ScholarshipPackage" name="ScholarshipPackage" value="Partial scholarship 2: Registration fee, hotel" data-rule-required="true" @("Partial scholarship 2: Registration fee, hotel".Equals(this.Model.ScholarshipPackage) ? "checked" : "")>&nbsp;Partial scholarship 2: Registration fee, hotel<br />
+                                <input type="radio" id="ScholarshipPackage" name="ScholarshipPackage" value="Partial scholarship 3: Registration fee" data-rule-required="true" @("Partial scholarship 3: Registration fee".Equals(this.Model.ScholarshipPackage) ? "checked" : "")>&nbsp;Partial scholarship 3: Registration fee
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-title" style="margin-left: -20px; margin-right: -20px;">
+                    <h3>
+                        <i class="fa fa-check"></i>
                         WORKING EXPERIENCE
                     </h3>
                 </div>

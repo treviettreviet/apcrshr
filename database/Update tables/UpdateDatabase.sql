@@ -41,3 +41,7 @@ GO
 ALTER TABLE [MainScholarship] ADD [WorkingNow] BIT NULL DEFAULT (0)
 
 GO
+
+ALTER TABLE [MainScholarship] ADD [ScholarshipPackage] NVARCHAR(200) NULL
+
+GO
