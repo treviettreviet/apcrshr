@@ -11,7 +11,9 @@
         @foreach (var item in sliders)
         {
             <div class="item">
-                <img alt="" src="@item.ImageURL" style="width:100%; height:371px;">
+                <a href="@(!string.IsNullOrEmpty(item.URL) ? item.URL : "#")" target="_blank">
+                    <img alt="" src="@item.ImageURL" style="width:100%; height:371px;">
+                </a>
             </div>
         }
     </div>

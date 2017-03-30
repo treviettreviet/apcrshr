@@ -48,7 +48,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
 
         [SessionFilter]
         
-        public JsonResult SaveSlider(SliderModel slider,HttpPostedFileBase imageFile)
+        public JsonResult SaveSlider(SliderModel slider, HttpPostedFileBase imageFile)
         {
             var sessionId = this.Session["SessionID"].ToString();
             IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository();
@@ -62,7 +62,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             slider.Title = slider.Title.Length > 200 ? slider.Title.Substring(0, 100) + "..." : slider.Title;
 
             slider.SliderID = Guid.NewGuid().ToString();
-            slider.URL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(slider.Title), UrlSlugger.Get8Digits());
+            //slider.URL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(slider.Title), UrlSlugger.Get8Digits());
             slider.CreatedDate = DateTime.Now;
             slider.CreatedBy = userSession != null ? userSession.UserID : string.Empty;
             slider.ImageURL = "";
@@ -115,7 +115,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             {
                 return Json(new { errorCode = (int)ErrorCode.Redirect, message = Resources.AdminResource.msg_sessionInvalid }, JsonRequestBehavior.AllowGet);
             }
-            slider.URL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(slider.Title), UrlSlugger.Get8Digits());
+            //slider.URL = string.Format("{0}-{1}", UrlSlugger.ToUrlSlug(slider.Title), UrlSlugger.Get8Digits());
             slider.UpdatedBy = userSession.UserID;
             slider.UpdatedDate = DateTime.Now;
             BaseResponse response = _slider.UpdateSlider(slider);
