@@ -16,6 +16,8 @@ using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System.Drawing;
 using apcrshr_site.Helper;
+using System.IO.Packaging;
+using System.IO.Compression;
 
 
 namespace apcrshr_site.Areas.Administrator.Controllers
@@ -31,6 +33,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         private ILeaderShipService _leadershipService;
         private IPublicationService _publicationService;
         private IUserSubmissionService _userSubmissionService;
+        private IMailingAddressService _mailingAddressService;
 
         public static readonly string SCHOLARSHIP_NOT_AVAILABLE = "Scholarship not available";
         public static readonly string SCHOLARSHIP_MAIN_TITLE = "Main scholarship";
@@ -48,6 +51,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             this._leadershipService = new LeaderShipService();
             this._publicationService = new PublicationService();
             this._userSubmissionService = new UserSubmissionService();
+            this._mailingAddressService = new MailingAddressService();
         }
 
         [SessionFilter]
@@ -269,6 +273,87 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
+        private static void AddToZip(string zipFilePath, Stream contentStream, string nameInZip)
+        {
+            using (Package zip = Package.Open(zipFilePath, FileMode.OpenOrCreate))
+            {
+                string fileNameInZip = @".\" + nameInZip;
+                Uri fileUri = PackUriHelper.CreatePartUri(new Uri(fileNameInZip, UriKind.Relative));
+                if (zip.PartExists(fileUri))
+                {
+                    zip.DeletePart(fileUri);
+                }
+                PackagePart part = zip.CreatePart(fileUri, string.Empty, CompressionOption.Normal);
+                using (Stream dest = part.GetStream())
+                {
+                    contentStream.CopyTo(dest);
+                }
+            }
+        }
+        private static void AddToZip(string zipFilePath, FileInfo fileInfo)
+        {
+            if (fileInfo != null)
+            {
+                var openMode = System.IO.File.Exists(zipFilePath) ? ZipArchiveMode.Update : ZipArchiveMode.Create;
+                using (ZipArchive zipFile = ZipFile.Open(zipFilePath, openMode))
+                {
+                    zipFile.CreateEntryFromFile(fileInfo.FullName, fileInfo.Name);
+                }
+            }
+        }
+
+        [HttpGet]
+        [SessionFilter]
+        public FileStreamResult ExportImages()
+        {
+            string zipFilePath = string.Empty;
+            FindAllItemReponse<MailingAddressModel> response = _mailingAddressService.GetMailingAddresses();
+            if (response.Items != null)
+            {
+                //Create zip file path
+                zipFilePath = Path.Combine(Path.GetTempPath(), "images.zip");
+                if (System.IO.File.Exists(zipFilePath))
+                {
+                    System.IO.File.Delete(zipFilePath);
+                }
+
+                //Initial zip
+                using (Package zip = Package.Open(zipFilePath, FileMode.OpenOrCreate))
+                {
+                }
+
+                //Create zip
+                foreach (MailingAddressModel mailing in response.Items)
+                {
+                    var user = _userService.FindUserByID(mailing.UserID);
+                    if (user.Item != null)
+                    {
+                        //photo 1
+                        if (!string.IsNullOrEmpty(mailing.PassportPhoto1) && System.IO.File.Exists(Server.MapPath(mailing.PassportPhoto1)))
+                        {
+                            FileInfo fileInfo = new FileInfo(Server.MapPath(mailing.PassportPhoto1));
+                            using (FileStream fileStream = new FileStream(Server.MapPath(mailing.PassportPhoto1), FileMode.Open, FileAccess.Read))
+                            {
+                                AddToZip(zipFilePath, fileStream, user.Item.FullName.Replace(' ','-') + @"\" + fileInfo.Name);
+                            }
+                        }
+                    }
+                }
+            }
+            Stream stream = null;
+            if (!string.IsNullOrEmpty(zipFilePath))
+            {
+                stream = new FileStream(zipFilePath, FileMode.Open);
+            }
+            else
+            {
+                stream = new MemoryStream();
+            }
+            return new FileStreamResult(stream, "application/zip");
+        }
+
+        [HttpGet]
+        [SessionFilter]
         public FileStreamResult ExportUsers()
         {
             FindAllItemReponse<UserModel> response = _userService.GetUsers();
