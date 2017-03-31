@@ -22,7 +22,7 @@
                 <div class="pull-right">
                     <div class="btn-toolbar">
                         <div class="btn-group">
-                            <a href='@Url.Action("ExportImages", "AdminUser")' class="btn btn-blue" rel="tooltip" title="Export Images">
+                            <a href='@Url.Action("ExportImages", "AdminUser")' onclick="bootbox.alert('Xin vui lòng chờ trong khi server đang tạo file download!', function () {});" class="btn btn-blue" rel="tooltip" title="Export Images">
                                 <i class="fa fa-image"></i> &nbsp; Export Images
                             </a>
                             <a href='@Url.Action("ExportUsers", "AdminUser")' class="btn btn-blue" rel="tooltip" title="Export Excel">
