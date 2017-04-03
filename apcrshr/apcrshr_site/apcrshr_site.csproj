@@ -982,6 +982,8 @@
     <Content Include="Content\libraries\bootstrap\assets\javascripts\bootstrap\collapse.js" />
     <Content Include="Content\libraries\bootstrap\assets\javascripts\bootstrap\dropdown.js" />
     <Content Include="Content\libraries\bootstrap\assets\javascripts\bootstrap\transition.js" />
+    <Content Include="Content\libraries\jquery.countdown-2.2.0\jquery.countdown.js" />
+    <Content Include="Content\libraries\jquery.countdown-2.2.0\jquery.countdown.min.js" />
     <Content Include="Content\realsite.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />

@@ -94,6 +94,11 @@ namespace apcrshr_site.Controllers
             return View(response);
         }
 
-
+        [HttpGet]
+        public JsonResult GetImportantDeadlines()
+        {
+            FindAllItemReponse<ImportantDeadlineModel> importantDeadlineResponse = _importantDeadlineService.GetImportantDeadlines(10, DateTime.Now);
+            return Json(importantDeadlineResponse, JsonRequestBehavior.AllowGet);
+        }
     }
 }
