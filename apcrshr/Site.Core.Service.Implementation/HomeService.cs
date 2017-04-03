@@ -56,7 +56,7 @@ namespace Site.Core.Service.Implementation
                 {
                     list.Add(new SearchModel()
                     {
-                        Action = "NewsDetail",
+                        Action = "ViewNews",
                         ActionURL = item.ActionURL,
                         Controller = "News",
                         CreatedDate = item.CreatedDate,
@@ -73,7 +73,7 @@ namespace Site.Core.Service.Implementation
                 {
                     list.Add(new SearchModel()
                     {
-                        Action = "ArticleDetail",
+                        Action = "ArticleView",
                         ActionURL = item.ActionURL,
                         Controller = string.Empty,
                         CreatedDate = item.CreatedDate,

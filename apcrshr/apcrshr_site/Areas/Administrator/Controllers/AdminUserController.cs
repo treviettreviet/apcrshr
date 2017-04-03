@@ -87,6 +87,13 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             //Get user information
             FindItemReponse<UserModel> response = _userService.FindUserByID(userId);
 
+            //Find mailing
+            FindAllItemReponse<MailingAddressModel> mailingResponse = _mailingAddressService.FindMailingAddressByUser(userId);
+            if (mailingResponse.Items != null && mailingResponse.Items.Count > 0)
+            {
+                ViewBag.Mailing = mailingResponse.Items[0];
+            }
+
             //Find abstract
             FindAllItemReponse<UserSubmissionModel> abstractResponse = _userSubmissionService.FindByUserID(userId);
             ViewBag.Abstracts = abstractResponse.Items;
@@ -357,6 +364,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         public FileStreamResult ExportUsers()
         {
             FindAllItemReponse<UserModel> response = _userService.GetUsers();
+            FindAllItemReponse<MailingAddressModel> mailingResponse = _mailingAddressService.GetMailingAddresses();
             using (ExcelPackage pck = new ExcelPackage())
             {
                 if (response.Items != null)
@@ -365,9 +373,11 @@ namespace apcrshr_site.Areas.Administrator.Controllers
                 }
                 //Create the worksheet
                 ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Members");
+                ExcelWorksheet wsMailing = pck.Workbook.Worksheets.Add("Mailing Address");
 
                 //Load the datatable into the sheet, starting from cell A1. Print the column names on row 1
                 ws.Cells["A1"].LoadFromCollection(response.Items, true);
+                wsMailing.Cells["A1"].LoadFromCollection(mailingResponse.Items, true);
 
                 //Format the header for column 1-3
                 using (ExcelRange rng = ws.Cells["A1:X1"])
@@ -378,6 +388,14 @@ namespace apcrshr_site.Areas.Administrator.Controllers
                     rng.Style.Font.Color.SetColor(Color.White);
                 }
 
+                //Format the header for column 1-3
+                using (ExcelRange rng = wsMailing.Cells["A1:U1"])
+                {
+                    rng.Style.Font.Bold = true;
+                    rng.Style.Fill.PatternType = ExcelFillStyle.Solid;                      //Set Pattern for the background to Solid
+                    rng.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(79, 129, 189));  //Set color to dark blue
+                    rng.Style.Font.Color.SetColor(Color.White);
+                }
                 //Example how to Format Column 1 as numeric 
                 //using (ExcelRange col = ws.Cells[2, 1, 2 + tbl.Rows.Count, 1])
                 //{

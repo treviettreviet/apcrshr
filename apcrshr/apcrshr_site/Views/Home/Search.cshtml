@@ -17,9 +17,9 @@
                 {
                         <!-- Post 1 -->
                     <div class="post-row animated fadeIn delay-01" data-animation="fadeIn" data-animation-delay="01">
-                        <h3 class="post-title"><a href='@Url.Action(Model.Result[i].Action, Model.Result[i].Controller, new { ActionURL = Model.Result[i].ActionURL })'>@Model.Result[i].Title</a></h3>
+                        <h3 class="post-title"><a href='@Url.Action(Model.Result[i].Action, Model.Result[i].Controller, new { ActionURL = Model.Result[i].ActionURL })' target="_blank">@Model.Result[i].Title</a></h3>
                         <div class="post-content">
-                            <p>@Model.Result[i].ShortContent <a class="read-more" href='@Url.Action(Model.Result[i].Action, Model.Result[i].Controller, new { ActionURL = Model.Result[i].ActionURL })'>Read More</a></p>
+                            <p>@Model.Result[i].ShortContent <a class="read-more" href='@Url.Action(Model.Result[i].Action, Model.Result[i].Controller, new { ActionURL = Model.Result[i].ActionURL })' target="_blank">Read More</a></p>
                         </div>
                     </div>
                 }

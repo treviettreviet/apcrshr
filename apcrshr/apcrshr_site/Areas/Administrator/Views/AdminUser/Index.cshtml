@@ -67,7 +67,7 @@
                                 <td>@(Model[i].DateOfBirth.HasValue ? Model[i].DateOfBirth.Value.ToShortDateString() : string.Empty)</td>
                                 <td id="status_@Model[i].UserID">@(Model[i].Locked ? "Đã Khóa" : "Đã Kích Hoạt")</td>
                                 <td class='hidden-480'>
-                                    <a href='@Url.Action("ViewUser", "AdminUser", new { userId = Model[i].UserID })' class="btn" rel="tooltip" title="Sửa">
+                                    <a href='@Url.Action("ViewUser", "AdminUser", new { userId = Model[i].UserID })' target="_blank" class="btn" rel="tooltip" title="Sửa">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                     <a href='javascript:void(0)' onclick="assignAbstract('@Model[i].UserID', '@Model[i].Email')" class="btn" rel="tooltip" title="Thêm abstract submission">

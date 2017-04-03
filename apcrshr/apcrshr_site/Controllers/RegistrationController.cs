@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -499,19 +500,19 @@ namespace apcrshr_site.Controllers
                         catch (Exception) { }
 
                         string extension = fileContent.FileName.Substring(fileContent.FileName.LastIndexOf("."));
-                        string filename = fileContent.FileName.Substring(0, fileContent.FileName.LastIndexOf(".")).Replace(" ", "-");
-                        filename = string.Format("{0}-{1}", filename, UrlSlugger.Get8Digits());
+                        //string filename = fileContent.FileName.Substring(0, fileContent.FileName.LastIndexOf(".")).Replace(" ", "-");
+                        string filename = RemoveSpecialCharacters(temp.Email);
                         fileContent.SaveAs(Server.MapPath("~/Content/upload/images/passport/" + filename + extension));
                         switch (i)
                         {
                             case 0:
-                                temp.PassportPhoto1 = "/Content/upload/images/passport/" + filename + extension;
+                                temp.PassportPhoto1 = "/Content/upload/images/passport/" + filename + "-1" + extension;
                                 break;
                             case 1:
-                                temp.PassportPhoto2 = "/Content/upload/images/passport/" + filename + extension;
+                                temp.PassportPhoto2 = "/Content/upload/images/passport/" + filename + "-2" + extension;
                                 break;
                             case 2:
-                                temp.PassportPhoto3 = "/Content/upload/images/passport/" + filename + extension;
+                                temp.PassportPhoto3 = "/Content/upload/images/passport/" + filename + "-3" + extension;
                                 break;
                             default:
                                 return Json("File uploaded successfully");
@@ -530,7 +531,14 @@ namespace apcrshr_site.Controllers
                 return Json("Upload failed");
             }
             return Json("File uploaded successfully");
-        } 
+        }
+
+        public static string RemoveSpecialCharacters(string input)
+        {
+            Regex r = new Regex("(?:[^a-z0-9 ]|(?<=['\"])s)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+            return r.Replace(input, "-");
+        }
+
         #endregion
 
 
