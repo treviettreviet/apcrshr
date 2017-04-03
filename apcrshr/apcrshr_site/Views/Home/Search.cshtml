@@ -29,8 +29,8 @@
     <br />
     <!-- Start Pagination -->
     <div id="pagination">
-        @Html.PagingUtil("Search", "Home", Model.KeySearch, Model.Count, apcrshr_site.Constants.Constants.SEARCH_PAGE_SIZE,
-        Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("pageIndex")).SingleOrDefault())
+        @Html.PagingUtil("Search", "Home", Model.Count, apcrshr_site.Constants.Constants.SEARCH_PAGE_SIZE,
+                 Url.RequestContext.RouteData.Values.Where(v => v.Key.Equals("pageIndex") || v.Key.Equals("ActionURL")).SingleOrDefault())
     </div>
     <!-- End Pagination -->
 

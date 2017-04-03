@@ -91,6 +91,16 @@ namespace apcrshr_site.Controllers
             SearchResultResponse response = _homeService.Search(string.Format("%{0}%", KeySearch), Constants.Constants.SEARCH_PAGE_SIZE, pageIndex);
             response.KeySearch = KeySearch;
             response.PageIndex = pageIndex;
+            Session["KeySearch"] = KeySearch;
+            return View(response);
+        }
+
+        [HttpGet]
+        public ActionResult Search(int ActionURL = 1)
+        {
+            var KeySearch = Session["KeySearch"] != null ? Session["KeySearch"].ToString() : string.Empty;
+            SearchResultResponse response = _homeService.Search(string.Format("%{0}%", KeySearch), Constants.Constants.SEARCH_PAGE_SIZE, ActionURL);
+            response.PageIndex = ActionURL;
             return View(response);
         }
 
