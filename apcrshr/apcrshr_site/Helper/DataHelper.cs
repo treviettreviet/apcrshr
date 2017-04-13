@@ -282,5 +282,52 @@ namespace apcrshr_site.Helper
             }
             return defaultvalue;
         }
+
+        /// <summary>  
+        /// For calculating only age  
+        /// </summary>  
+        /// <param name="dateOfBirth">Date of birth</param>  
+        /// <returns> age e.g. 26</returns>  
+        public int CalculateAge(DateTime dateOfBirth)
+        {
+            int age = 0;
+            age = DateTime.Now.Year - dateOfBirth.Year;
+            if (DateTime.Now.DayOfYear < dateOfBirth.DayOfYear)
+                age = age - 1;
+
+            return age;
+        }
+
+        /// <summary>  
+        /// For calculating remaining date  
+        /// </summary>  
+        /// <param name="date">Enter date</param>  
+        /// <returns> years, months,days, hours...</returns>  
+        public string CalculateYourAge(DateTime date)
+        {
+            DateTime Now = DateTime.Now;
+            int Years = new DateTime(DateTime.Now.Subtract(date).Ticks).Year - 1;
+            DateTime PastYearDate = date.AddYears(Years);
+            int Months = 0;
+            for (int i = 1; i <= 12; i++)
+            {
+                if (PastYearDate.AddMonths(i) == Now)
+                {
+                    Months = i;
+                    break;
+                }
+                else if (PastYearDate.AddMonths(i) >= Now)
+                {
+                    Months = i - 1;
+                    break;
+                }
+            }
+            int Days = Now.Subtract(PastYearDate.AddMonths(Months)).Days;
+            int Hours = Now.Subtract(PastYearDate).Hours;
+            int Minutes = Now.Subtract(PastYearDate).Minutes;
+            int Seconds = Now.Subtract(PastYearDate).Seconds;
+            return String.Format("Age: {0} Year(s) {1} Month(s) {2} Day(s) {3} Hour(s) {4} Second(s)",
+            Years, Months, Days, Hours, Seconds);
+        }   
     }
 }

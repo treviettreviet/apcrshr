@@ -220,34 +220,46 @@ namespace apcrshr_site.Controllers
                         else
                         {
                             //Caculate payment
-                            DateTime earlyBird = new DateTime(2017, 4, 30);
-                            switch (registration.ParticipantType)
+                            DateTime earlyBird = new DateTime(2017, 5, 30);
+                            DateTime regular = new DateTime(2017, 11, 26);
+                            int age = DataHelper.GetInstance().CalculateAge(response.Item.DateOfBirth.Value);
+                            switch (mailing.ParticipantType)
                             {
                                 case "International delegates":
-                                    if (DateTime.UtcNow <= earlyBird)
+                                case "International youth":
+                                    if (age < 25)
                                     {
-                                        fee = 550;
+                                        fee = 150;
                                     }
                                     else
                                     {
-                                        fee = 600;
+                                        if (DateTime.UtcNow <= earlyBird)
+                                        {
+                                            fee = 550;
+                                        }
+                                        else
+                                        {
+                                            fee = 600;
+                                        }
                                     }
                                     break;
                                 case "Vietnamese delegate":
-                                    if (DateTime.UtcNow <= earlyBird)
+                                case "Vietnamese youth":
+                                    if (age < 25)
                                     {
-                                        fee = 200;
+                                        fee = 100;
                                     }
                                     else
                                     {
-                                        fee = 250;
+                                        if (DateTime.UtcNow <= earlyBird)
+                                        {
+                                            fee = 200;
+                                        }
+                                        else
+                                        {
+                                            fee = 250;
+                                        }
                                     }
-                                    break;
-                                case "International youth":
-                                    fee = 150;
-                                    break;
-                                case "Vietnamese youth":
-                                    fee = 100;
                                     break;
                                 default:
                                     fee = -1;
@@ -288,34 +300,46 @@ namespace apcrshr_site.Controllers
                         //Get fee
                         int fee = -1;
 
-                        DateTime earlyBird = new DateTime(2017, 4, 30);
+                        DateTime earlyBird = new DateTime(2017, 5, 30);
+                        DateTime regular = new DateTime(2017, 11, 26);
+                        int age = DataHelper.GetInstance().CalculateAge(response.Item.DateOfBirth.Value);
                         switch (mailing.ParticipantType)
                         {
                             case "International delegates":
-                                if (DateTime.UtcNow <= earlyBird)
+                            case "International youth":
+                                if (age < 25)
                                 {
-                                    fee = 550;
+                                    fee = 150;
                                 }
                                 else
                                 {
-                                    fee = 600;
+                                    if (DateTime.UtcNow <= earlyBird)
+                                    {
+                                        fee = 550;
+                                    }
+                                    else
+                                    {
+                                        fee = 600;
+                                    }
                                 }
                                 break;
                             case "Vietnamese delegate":
-                                if (DateTime.UtcNow <= earlyBird)
+                            case "Vietnamese youth":
+                                if (age < 25)
                                 {
-                                    fee = 200;
+                                    fee = 100;
                                 }
                                 else
                                 {
-                                    fee = 250;
+                                    if (DateTime.UtcNow <= earlyBird)
+                                    {
+                                        fee = 200;
+                                    }
+                                    else
+                                    {
+                                        fee = 250;
+                                    }
                                 }
-                                break;
-                            case "International youth":
-                                fee = 150;
-                                break;
-                            case "Vietnamese youth":
-                                fee = 100;
                                 break;
                             default:
                                 fee = -1;
