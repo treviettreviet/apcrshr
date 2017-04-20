@@ -404,28 +404,130 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             return new FileStreamResult(stream, "application/zip");
         }
 
+        private IList<UserExportModel> BuildExportList(IList<UserModel> users)
+        {
+            IList<UserExportModel> exports = new List<UserExportModel>();
+
+            UserExportModel ex;
+            MailingAddressModel mailing = null;
+            MainScholarshipModel scholarship = null;
+            PaymentModel payment = null;
+            foreach (UserModel user in users)
+            {
+                ex = new UserExportModel();
+                var _mailing = _mailingAddressService.FindMailingAddressByUser(user.UserID);
+                var _scholarship = _mainScholarshipService.FindByUserID(user.UserID);
+                var _payment = _paymentService.FindByUserID(user.UserID);
+
+                mailing = _mailing.Items != null ? _mailing.Items.FirstOrDefault() : null;
+                scholarship = _scholarship.Items != null ? _scholarship.Items.FirstOrDefault() : null;
+                payment = _payment.Items != null ? _payment.Items.FirstOrDefault() : null;
+
+                //Convert from user to userexport
+                ConvertFromUser(user, ex);
+
+                //Convert from mailing to userexport
+                ConvertFromMailing(mailing, ex);
+
+                //Convert from main scholarship
+                ConvertFromMainScholarship(scholarship, ex);
+
+                //Convert from payment
+                ConvertFromPayment(payment, ex);
+
+                exports.Add(ex);
+            }
+
+            return exports;
+        }
+
+        private void ConvertFromPayment(PaymentModel payment, UserExportModel ex)
+        {
+            if (payment == null) return;
+
+            ex.PaymentType = payment.PaymentType;
+            ex.Amount = payment.Amount;
+            ex.PaidDate = payment.CreatedDate.ToShortDateString();
+            ex.Status = Enum.GetName(typeof(PaymentStatus), payment.Status);
+        }
+
+        private void ConvertFromMainScholarship(MainScholarshipModel scholarship, UserExportModel ex)
+        {
+            if (scholarship == null) return;
+
+            ex.SubmissionNumber = scholarship.SubmissionNumber;
+            ex.Responsibility = scholarship.Responsibility;
+            ex.ReasonScholarship = scholarship.ReasonScholarship;
+            ex.AtLeastOneAbstract = scholarship.HasSubmitted;
+            ex.Position = scholarship.Position;
+            ex.DurationOfWork = scholarship.DurationOfWork;
+            ex.SubmissionTitles = scholarship.SubmissionTitles;
+            ex.ScholarshipPackage = scholarship.ScholarshipPackage;
+        }
+
+        private void ConvertFromMailing(MailingAddressModel mailing, UserExportModel ex)
+        {
+            if (mailing == null) return;
+
+            ex.ParticipateYouth = mailing.ParticipateYouth;
+            ex.OriginalNationality = mailing.OriginalNationality;
+            ex.CurrentNationality = mailing.CurrentNationality;
+            ex.PassportNumber = mailing.PassportNumber;
+            ex.TypeOfPassport = mailing.TypeOfPassport;
+            ex.Occupation = mailing.Occupation;
+            ex.DateOfPassportIssue = mailing.DateOfPassportIssue.HasValue ? mailing.DateOfPassportIssue.Value.ToShortDateString() : "";
+            ex.DateOfPassportExpiry = mailing.DateOfPassportExpiry.HasValue ? mailing.DateOfPassportExpiry.Value.ToShortDateString() : "";
+            ex.DetailOfEmbassy = mailing.DetailOfEmbassy;
+            ex.NeedVisaSupport = mailing.NeedVisaSupport;
+            ex.ActivationCode = mailing.ActivationCode;
+            ex.RegistrationNumber = mailing.RegistrationNumber;
+        }
+
+        private void ConvertFromUser(UserModel user, UserExportModel ex)
+        {
+            if (user == null) return;
+
+            ex.UserID = user.UserID;
+            ex.Title = user.Title;
+            ex.FullName = user.FullName;
+            ex.Sex = user.Sex;
+            ex.Email = user.Email;
+            ex.OtherEmail = user.OtherEmail;
+            ex.DateOfBirth = user.DateOfBirth.HasValue ? user.DateOfBirth.Value.ToShortDateString() : "";
+            ex.PhoneNumber = user.PhoneNumber;
+            ex.Locked = user.Locked;
+            ex.MealPreference = user.MealPreference;
+            ex.DisabilitySpecialTreatment = user.DisabilitySpecialTreatment;
+            ex.Address = user.Address;
+            ex.City = user.City;
+            ex.Country = user.Country;
+            ex.WorkAddress = user.WorkAddress;
+            ex.Organization = user.Organization;
+            ex.ParticipantType = user.ParticipantType;
+        }
+
         [HttpGet]
         [SessionFilter]
         public FileStreamResult ExportUsers()
         {
             FindAllItemReponse<UserModel> response = _userService.GetUsers();
-            FindAllItemReponse<MailingAddressModel> mailingResponse = _mailingAddressService.GetMailingAddresses();
             using (ExcelPackage pck = new ExcelPackage())
             {
-                if (response.Items != null)
-                {
-                    response.Items.Select(m => { m.MainScholarship = UserHelper.HasMainScholarship(m.UserID); m.YouthScholarship = UserHelper.HasYouthScholarship(m.UserID); return m; }).ToList();
-                }
+                IList<UserExportModel> export = BuildExportList(response.Items);
+                //if (response.Items != null)
+                //{
+                //    response.Items.Select(m => { m.MainScholarship = UserHelper.HasMainScholarship(m.UserID); m.YouthScholarship = UserHelper.HasYouthScholarship(m.UserID); return m; }).ToList();
+                //}
                 //Create the worksheet
                 ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Members");
-                ExcelWorksheet wsMailing = pck.Workbook.Worksheets.Add("Mailing Address");
+                //ExcelWorksheet wsMailing = pck.Workbook.Worksheets.Add("Mailing Address");
 
                 //Load the datatable into the sheet, starting from cell A1. Print the column names on row 1
-                ws.Cells["A1"].LoadFromCollection(response.Items, true);
-                wsMailing.Cells["A1"].LoadFromCollection(mailingResponse.Items, true);
+                ws.Cells["A1"].LoadFromCollection(export, true);
+                //wsMailing.Cells["A1"].LoadFromCollection(mailingResponse.Items, true);
 
                 //Format the header for column 1-3
-                using (ExcelRange rng = ws.Cells["A1:X1"])
+                using (ExcelRange rng = ws.Cells["A1:AO1"])
                 {
                     rng.Style.Font.Bold = true;
                     rng.Style.Fill.PatternType = ExcelFillStyle.Solid;                      //Set Pattern for the background to Solid
@@ -434,13 +536,13 @@ namespace apcrshr_site.Areas.Administrator.Controllers
                 }
 
                 //Format the header for column 1-3
-                using (ExcelRange rng = wsMailing.Cells["A1:U1"])
-                {
-                    rng.Style.Font.Bold = true;
-                    rng.Style.Fill.PatternType = ExcelFillStyle.Solid;                      //Set Pattern for the background to Solid
-                    rng.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(79, 129, 189));  //Set color to dark blue
-                    rng.Style.Font.Color.SetColor(Color.White);
-                }
+                //using (ExcelRange rng = wsMailing.Cells["A1:U1"])
+                //{
+                //    rng.Style.Font.Bold = true;
+                //    rng.Style.Fill.PatternType = ExcelFillStyle.Solid;                      //Set Pattern for the background to Solid
+                //    rng.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(79, 129, 189));  //Set color to dark blue
+                //    rng.Style.Font.Color.SetColor(Color.White);
+                //}
                 //Example how to Format Column 1 as numeric 
                 //using (ExcelRange col = ws.Cells[2, 1, 2 + tbl.Rows.Count, 1])
                 //{
