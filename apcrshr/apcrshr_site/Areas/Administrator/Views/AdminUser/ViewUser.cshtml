@@ -43,6 +43,9 @@
                         <a href="#t15" data-toggle="tab">Publication</a>
                     </li>
                     }
+                    <li>
+                        <a href="#t16" data-toggle="tab">Payments</a>
+                    </li>
                 </ul>
             </div>
             <div class="box-content">
@@ -594,6 +597,53 @@
                     </div>
                     <!--End publication-->
                         
+                    <!--Start payments-->
+                    <div class="tab-pane" id="t16">
+                        <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
+                               data-column_filter_types="null,text,text,text,select,null"
+                               data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
+                            <thead>
+                                <tr>
+                                    <th class='with-checkbox'>
+                                        <input type="checkbox" name="check_all" class="dataTable-checkall">
+                                    </th>
+                                    <th>Payment Type</th>
+                                    <th>Amount</th>
+                                    <th>Paid Date</th>
+                                    <th>Status</th>
+                                    <th class='hidden-480'>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (ViewBag.Payments != null)
+                                {
+                                    IList<Site.Core.DataModel.Model.PaymentModel> payments = (IList<Site.Core.DataModel.Model.PaymentModel>)ViewBag.Payments;
+                                    for (int i = 0; i < payments.Count; i++)
+                                    {
+                                        <tr id="@payments[i].PaymentID">
+                                            <td class="with-checkbox">
+                                                <input type="checkbox" name="check" value="@payments[i].PaymentID">
+                                            </td>
+                                            <td>@payments[i].PaymentType</td>
+                                            <td>@String.Format("{0:0,0.00}", payments[i].Amount) VND</td>
+                                            <td>@payments[i].CreatedDate.ToShortDateString()</td>
+                                            <td>@(Enum.GetName(typeof(Site.Core.DataModel.Enum.PaymentStatus), payments[i].Status))</td>
+                                            <td class='hidden-480'>
+                                                <a href='@Url.Action("UpdatePayment", "AdminUser", new { paymentID = payments[i].PaymentID })' class="btn" rel="tooltip" title="Sửa">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <a href="#" class="btn" rel="tooltip" title="Xóa" onclick="return deletePayment('@payments[i].PaymentID')" id="btn_@payments[i].PaymentID">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <!--End payments-->
                 </div>
             </div>
         </div>
@@ -1057,4 +1107,42 @@
             }
         });
     }
+</script>
+
+<!--Payments-->
+<script type="text/javascript">
+    function deletePayment(paymentID) {
+        bootbox.confirm("Bạn có chắc chắn muốn xóa bản ghi này?", function (result) {
+            if (result) {
+                $.ajax({
+                    type: 'GET',
+                    contentType: 'application/json',
+                    url: '@Url.Action("DeletePayment", "AdminUser")',
+                    data: { paymentID: paymentID },
+                    success: function (data) {
+                        if (data.ErrorCode == 0) {
+                            var $el = $("#btn_" + paymentID);
+                            var $parent = $el.parents("tr");
+                            $parent.fadeOut(400, function () {
+                                $parent.remove();
+                            });
+                            bootbox.hideAll();
+                        } else {
+                            bootbox.alert(data.Message, function () {
+                                bootbox.hideAll();
+                            });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        bootbox.hideAll();
+                    }
+                });
+                return true;
+            } else {
+                bootbox.hideAll();
+                return false;
+            }
+        });
+    }
+
 </script>

@@ -34,6 +34,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         private IPublicationService _publicationService;
         private IUserSubmissionService _userSubmissionService;
         private IMailingAddressService _mailingAddressService;
+        private IPaymentService _paymentService;
 
         public static readonly string SCHOLARSHIP_NOT_AVAILABLE = "Scholarship not available";
         public static readonly string SCHOLARSHIP_MAIN_TITLE = "Main scholarship";
@@ -52,6 +53,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             this._publicationService = new PublicationService();
             this._userSubmissionService = new UserSubmissionService();
             this._mailingAddressService = new MailingAddressService();
+            this._paymentService = new PaymentService();
         }
 
         [SessionFilter]
@@ -134,7 +136,50 @@ namespace apcrshr_site.Areas.Administrator.Controllers
                 ViewBag.Publications = publicationResponse.Items;
             }
 
+            //Find payment
+            FindAllItemReponse<PaymentModel> paymentResponse = _paymentService.FindByUserID(userId);
+            if (paymentResponse.Items != null)
+            {
+                ViewBag.Payments = paymentResponse.Items;
+            }
+
             return View(response.Item);
+        }
+
+        [HttpGet]
+        public JsonResult DeletePayment(string paymentID)
+        {
+            BaseResponse response = _paymentService.Delete(paymentID);
+            return Json(new { ErrorCode = response.ErrorCode, Message = response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
+        [SessionFilter]
+        [AuthorizationFilter]
+        [HttpGet]
+        public ActionResult UpdatePayment(string paymentID)
+        {
+            FindItemReponse<PaymentModel> response = _paymentService.FindByID(paymentID);
+            return View(response.Item);
+        }
+
+        [SessionFilter]
+        [HttpPost]
+
+        public JsonResult SaveUpdatePayment(PaymentModel payment)
+        {
+            var sessionId = this.Session["SessionID"].ToString();
+            IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository();
+            UserSession userSession = userSessionRepository.FindByID(sessionId);
+
+            if (userSession == null)
+            {
+                return Json(new { errorCode = (int)ErrorCode.Redirect, message = Resources.AdminResource.msg_sessionInvalid }, JsonRequestBehavior.AllowGet);
+            }
+
+            payment.UpdatedBy = userSession.UserID;
+            BaseResponse response = _paymentService.Update(payment);
+
+            return Json(new { errorCode = response.ErrorCode, message = response.Message }, JsonRequestBehavior.AllowGet);
         }
 
         [SessionFilter]
