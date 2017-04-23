@@ -204,6 +204,14 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [HttpGet]
+        public JsonResult ResetPassword(string userID)
+        {
+            string newPassword = System.Web.Security.Membership.GeneratePassword(10, 3);
+            BaseResponse response = _userService.ChangePassword(userID, newPassword);
+            return Json(new { ErrorCode = response.ErrorCode, Message = response.Message, Password = newPassword }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
         public JsonResult LockUser(string userID)
         {
             LockResponse response = _userService.LockUser(userID);

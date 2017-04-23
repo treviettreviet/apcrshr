@@ -73,6 +73,9 @@
                                     <a href='javascript:void(0)' onclick="assignAbstract('@Model[i].UserID', '@Model[i].Email')" class="btn" rel="tooltip" title="Thêm abstract submission">
                                         <i class="fa fa-plus"></i>
                                     </a>
+                                    <a href='javascript:void(0)' onclick="resetPassword('@Model[i].UserID')" class="btn" rel="tooltip" title="Khởi tạo lại mật khẩu">
+                                        <i class="fa fa-repeat"></i>
+                                    </a>
                                     <a href="javascript:void(0)" onclick="return lockUser('@Model[i].UserID', this)" class="btn" rel="tooltip" title="@(Model[i].Locked ? "Mở khóa" : "Khóa")">
                                         <i id="lock_@Model[i].UserID" class="fa @(Model[i].Locked ? "fa-unlock" : "fa-lock")"></i>
                                     </a>
@@ -284,5 +287,69 @@
             }
             return true;
         }
+    }
+
+    function resetPassword(userID) {
+        var resetPasswordDialog = [
+            '<form method="POST" action="#" id="frmPassword" class="form-horizontal form-bordered">',
+                '<div class="box">',
+                    '<div class="box-content nopadding">',
+                        '<div class="form-group">',
+                            '<label for="textfield" class="control-label col-sm-3">New Password</label>',
+                            '<div class="col-sm-9">',
+                                '<input type="text" value="{Password}" maxlength="100" class="form-control" readonly>',
+                            '</div>',
+                        '</div>',
+                    '</div>',
+                '</div>',
+            '</form>'
+        ].join("\n");
+
+        bootbox.confirm("Bạn có chắc chắn muốn khởi tạo lại mật khẩu?", function (result) {
+            if (result) {
+                $.blockUI({ message: $('#spinner') });
+                $.ajax({
+                    type: 'GET',
+                    contentType: 'application/json',
+                    url: '@Url.Action("ResetPassword", "AdminUser")',
+                    data: { userID: userID },
+                    success: function (data) {
+                        if (data.ErrorCode == 0) {
+                            //Replace values
+                            resetPasswordDialog = resetPasswordDialog
+                                .replace(/\{Password\}/ig, data.Password);
+
+                            //Show password
+                            bootbox.dialog({
+                                message: resetPasswordDialog,
+                                title: "Reset password result",
+                                buttons: {
+                                    danger: {
+                                        label: "Close",
+                                        className: "btn-danger",
+                                        callback: function () {
+                                            bootbox.hideAll();
+                                        }
+                                    }
+                                }
+                            });
+                        } else {
+                            bootbox.alert(data.Message, function () {
+                                bootbox.hideAll();
+                            });
+                        }
+                        $.unblockUI();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        bootbox.hideAll();
+                        $.unblockUI();
+                    }
+                });
+                return true;
+            } else {
+                bootbox.hideAll();
+                return false;
+            }
+        });
     }
 </script>
