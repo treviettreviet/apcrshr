@@ -419,13 +419,13 @@
                 <div class="form-group">
                     <label for="anotherelem" class="control-label col-sm-3">Passport number <span id="spanPassportNumber" class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
-                        <input type="text" name="PassportNumber" id="PassportNumber" class="form-control" data-rule-required="true">
+                        <input type="text" name="PassportNumber" id="PassportNumber" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="additionalfield" class="control-label col-sm-3">Type of passport <span id="spanTypeOfPassport" class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
-                        <select name="TypeOfPassport" id="TypeOfPassport" data-rule-required="true">
+                        <select name="TypeOfPassport" id="TypeOfPassport">
                             <option value="">-- Chose one --</option>
                             <option value="Regular">Regular</option>
                             <option value="Official">Official</option>
@@ -442,21 +442,21 @@
                 <div class="form-group">
                     <label for="anotherelem" class="control-label col-sm-3">Date of Passport issue <span id="spanDateOfPassportIssue" class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
-                        <input type="text" name="DateOfPassportIssue" id="DateOfPassportIssue" class="form-control mask_date" data-rule-required="true" data-rule-date="true">
+                        <input type="text" name="DateOfPassportIssue" id="DateOfPassportIssue" class="form-control mask_date" data-rule-date="true">
                         <i>(yyyy/mm/dd)</i>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="anotherelem" class="control-label col-sm-3">Date of Passport expiry <span id="spanDateOfPassportExpiry" class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
-                        <input type="text" name="DateOfPassportExpiry" id="DateOfPassportExpiry" class="form-control mask_date" data-rule-required="true" data-rule-date="true">
+                        <input type="text" name="DateOfPassportExpiry" id="DateOfPassportExpiry" class="form-control mask_date" data-rule-date="true">
                         <i>(yyyy/mm/dd)</i>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="file" class="control-label col-sm-3">Photocopies of the first 3 pages of the passport <span id="spanUpload" class="validation-span-required">(*)</span></label>
                     <div class="col-sm-9">
-                        <input type="file" id="upload" class="form-control" multiple data-rule-required="true"/>
+                        <input type="file" id="upload" class="form-control" multiple/>
                         <span class="help-block">Only JPEG, JPG, PNG (Max Size: 500KB)</span>
                     </div>
                 </div>
@@ -599,26 +599,26 @@
                                 $("#spanDateOfPassportExpiry").hide();
                                 $("#spanUpload").hide();
                             } else {
-                                if (!$('#PassportNumber').data('rule-required')) {
-                                    $('#PassportNumber').data('rule-required', true);
-                                }
-                                if (!$('#TypeOfPassport').data('rule-required')) {
-                                    $('#TypeOfPassport').data('rule-required', true);
-                                }
-                                if (!$('#DateOfPassportIssue').data('rule-required')) {
-                                    $('#DateOfPassportIssue').data('rule-required', true);
-                                }
-                                if (!$('#DateOfPassportExpiry').data('rule-required')) {
-                                    $('#DateOfPassportExpiry').data('rule-required', true);
-                                }
-                                if (!$('#upload').data('rule-required')) {
-                                    $('#upload').data('rule-required', true);
-                                }
-                                $("#spanPassportNumber").show();
-                                $("#spanTypeOfPassport").show();
-                                $("#spanDateOfPassportIssue").show();
-                                $("#spanDateOfPassportExpiry").show();
-                                $("#spanUpload").show();
+                                //if (!$('#PassportNumber').data('rule-required')) {
+                                //    $('#PassportNumber').data('rule-required', true);
+                                //}
+                                //if (!$('#TypeOfPassport').data('rule-required')) {
+                                //    $('#TypeOfPassport').data('rule-required', true);
+                                //}
+                                //if (!$('#DateOfPassportIssue').data('rule-required')) {
+                                //    $('#DateOfPassportIssue').data('rule-required', true);
+                                //}
+                                //if (!$('#DateOfPassportExpiry').data('rule-required')) {
+                                //    $('#DateOfPassportExpiry').data('rule-required', true);
+                                //}
+                                //if (!$('#upload').data('rule-required')) {
+                                //    $('#upload').data('rule-required', true);
+                                //}
+                                $("#spanPassportNumber").hide();
+                                $("#spanTypeOfPassport").hide();
+                                $("#spanDateOfPassportIssue").hide();
+                                $("#spanDateOfPassportExpiry").hide();
+                                $("#spanUpload").hide();
                             }
                         }
                         if (data.SessionID != null && data.SessionID != "") {
