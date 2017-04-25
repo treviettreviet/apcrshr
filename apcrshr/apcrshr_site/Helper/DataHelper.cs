@@ -291,8 +291,9 @@ namespace apcrshr_site.Helper
         public int CalculateAge(DateTime dateOfBirth)
         {
             int age = 0;
-            age = DateTime.Now.Year - dateOfBirth.Year;
-            if (DateTime.Now.DayOfYear < dateOfBirth.DayOfYear)
+            DateTime target = new DateTime(2017, 12, 1, 11, 59, 00);
+            age = target.Year - dateOfBirth.Year;
+            if (target.DayOfYear < dateOfBirth.DayOfYear)
                 age = age - 1;
 
             return age;
