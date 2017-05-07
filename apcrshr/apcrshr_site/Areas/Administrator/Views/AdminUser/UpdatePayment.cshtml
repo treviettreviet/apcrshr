@@ -26,6 +26,13 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Merch Reference</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.MerchRef, new { @class = "form-control", @id = "MerchRef", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.MerchRef)
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="textfield" class="control-label col-sm-2">Số tiền <span class="validation-span-required">(*)</span></label>
                         <div class="col-sm-10">
                             @Html.TextBoxFor(model => model.Amount, new { @class = "form-control", @id = "Amount" })

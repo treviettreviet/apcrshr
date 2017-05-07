@@ -17,5 +17,6 @@ namespace Site.Core.DataModel.Model
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public string UpdatedBy { get; set; }
         public int Status { get; set; }
+        public string MerchRef { get; set; }
     }
 }

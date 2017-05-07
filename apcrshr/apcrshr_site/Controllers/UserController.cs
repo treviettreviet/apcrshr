@@ -458,6 +458,8 @@ namespace apcrshr_site.Controllers
             string txnResponseCode = vpc_TxnResponseCode;
             string message = conn.GetResultField("vpc_Message", "Unknown");
 
+            string refId = merchTxnRef;
+
             if (merchTxnRef != "Unknown" && merchTxnRef.Contains("_"))
             {
                 merchTxnRef = merchTxnRef.Split('_')[0];
@@ -481,6 +483,7 @@ namespace apcrshr_site.Controllers
             payment.Amount = double.Parse(amount) / 100;
             payment.CreatedBy = Session["User-UserID"] != null ? Session["User-UserID"].ToString() : userID;
             payment.CreatedDate = DateTime.Now;
+            payment.MerchRef = refId;
 
             FindItemReponse<UserModel> response = _userService.FindUserByID(Session["User-UserID"] != null ? Session["User-UserID"].ToString() : userID);
             if (response.Item != null)

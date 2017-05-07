@@ -45,3 +45,7 @@ GO
 ALTER TABLE [MainScholarship] ADD [ScholarshipPackage] NVARCHAR(200) NULL
 
 GO
+
+ALTER TABLE [Payment] ADD [MerchRef] NVARCHAR(200) NULL
+
+GO

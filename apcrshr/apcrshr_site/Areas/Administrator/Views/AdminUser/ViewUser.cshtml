@@ -600,7 +600,7 @@
                     <!--Start payments-->
                     <div class="tab-pane" id="t16">
                         <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
-                               data-column_filter_types="null,text,text,text,select,null"
+                               data-column_filter_types="null,text,text,text,text,select,null" 
                                data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
                             <thead>
                                 <tr>
@@ -608,6 +608,7 @@
                                         <input type="checkbox" name="check_all" class="dataTable-checkall">
                                     </th>
                                     <th>Payment Type</th>
+                                    <th>Merch Reference</th>
                                     <th>Amount</th>
                                     <th>Paid Date</th>
                                     <th>Status</th>
@@ -625,6 +626,7 @@
                                                 <input type="checkbox" name="check" value="@payments[i].PaymentID">
                                             </td>
                                             <td>@payments[i].PaymentType</td>
+                                            <td>@payments[i].MerchRef</td>
                                             <td>@String.Format("{0:0,0.00}", payments[i].Amount) VND</td>
                                             <td>@payments[i].CreatedDate.ToShortDateString()</td>
                                             <td>@(Enum.GetName(typeof(Site.Core.DataModel.Enum.PaymentStatus), payments[i].Status))</td>
