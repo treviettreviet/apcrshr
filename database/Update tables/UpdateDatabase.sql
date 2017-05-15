@@ -49,3 +49,11 @@ GO
 ALTER TABLE [Payment] ADD [MerchRef] NVARCHAR(200) NULL
 
 GO
+
+ALTER TABLE [MainScholarship] ALTER COLUMN [Responsibility] NVARCHAR(1000) NOT NULL
+
+GO
+
+ALTER TABLE [MainScholarship] ALTER COLUMN [ReasonScholarship] NVARCHAR(1000) NOT NULL
+
+GO
