@@ -3897,7 +3897,9 @@ ul.post-meta li, ul.post-meta li a {
 
 .sidebar .widget-popular-posts .widget-content span {
 	color: #bbb;
-	font-size: 12px;
+	font-size: 14px;
+    display: block;
+    text-align: center;
 }
 
 .sidebar .tagcloud{
