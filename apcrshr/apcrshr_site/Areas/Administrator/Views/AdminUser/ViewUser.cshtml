@@ -599,6 +599,20 @@
                         
                     <!--Start payments-->
                     <div class="tab-pane" id="t16">
+                        <div class="highlight-toolbar">
+                            <div class="pull-left">
+
+                            </div>
+                            <div class="pull-right">
+                                <div class="btn-toolbar">
+                                    <div class="btn-group">
+                                        <a href='@Url.Action("CreatePayment", "AdminUser", new { @UserId = Model.UserID})' class="btn btn-blue" rel="tooltip" title="Thêm mới payment">
+                                            <i class="fa fa-cloud-upload"></i>Thêm mới
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
                                data-column_filter_types="null,text,text,text,text,select,null" 
                                data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">

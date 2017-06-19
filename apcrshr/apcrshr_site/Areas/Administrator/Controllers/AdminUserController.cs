@@ -147,6 +147,32 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         }
 
         [HttpGet]
+        [SessionFilter]
+        public ActionResult CreatePayment(string UserId)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult SavePayment(PaymentModel payment)
+        {
+            var sessionId = this.Session["SessionID"].ToString();
+            IUserSessionRepository userSessionRepository = RepositoryClassFactory.GetInstance().GetUserSessionRepository();
+            UserSession userSession = userSessionRepository.FindByID(sessionId);
+
+            if (userSession == null)
+            {
+                return Json(new { errorCode = (int)ErrorCode.Redirect, message = Resources.AdminResource.msg_sessionInvalid }, JsonRequestBehavior.AllowGet);
+            }
+
+            payment.PaymentID = Guid.NewGuid().ToString();
+            payment.CreatedBy = userSession.UserID;
+            payment.CreatedDate = DateTime.Now;
+            InsertResponse response = _paymentService.Create(payment);
+            return Json(new { ErrorCode = response.ErrorCode, Message = response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
         public JsonResult DeletePayment(string paymentID)
         {
             BaseResponse response = _paymentService.Delete(paymentID);

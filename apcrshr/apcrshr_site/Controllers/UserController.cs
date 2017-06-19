@@ -13,12 +13,14 @@ using System.Web.Mvc;
 using apcrshr_site.Models;
 using Site.Core.Repository;
 using apcrshr_site.Helper;
+using System.Globalization;
 
 namespace apcrshr_site.Controllers
 {
     [OutputCache(NoStore = true, Duration = 60, VaryByParam = "*")]
     public class UserController : BaseController
     {
+        private static readonly string PAYMENT_TITLE = "Acknowledgement of Payment - Registration for APCRSHR9 - Transaction ID {0}";
         //Third party payment information
         private static readonly string SECURE_SECRET = "CE73CA8FAE51D3D33D56F5D44812B409";
         private static readonly string VIRTUAL_PAYMENT_CLIENT = "https://onepay.vn/vpcpay/vpcpay.op";
@@ -220,7 +222,7 @@ namespace apcrshr_site.Controllers
                         else
                         {
                             //Caculate payment
-                            DateTime earlyBird = new DateTime(2017, 5, 30);
+                            DateTime earlyBird = new DateTime(2017, 6, 30);
                             DateTime regular = new DateTime(2017, 11, 26);
                             int age = DataHelper.GetInstance().CalculateAge(response.Item.DateOfBirth.Value);
                             switch (mailing.ParticipantType)
@@ -300,7 +302,7 @@ namespace apcrshr_site.Controllers
                         //Get fee
                         int fee = -1;
 
-                        DateTime earlyBird = new DateTime(2017, 5, 30);
+                        DateTime earlyBird = new DateTime(2017, 6, 30);
                         DateTime regular = new DateTime(2017, 11, 26);
                         int age = DataHelper.GetInstance().CalculateAge(response.Item.DateOfBirth.Value);
                         switch (mailing.ParticipantType)
@@ -512,6 +514,21 @@ namespace apcrshr_site.Controllers
                 //vpc_Result.Text = "Transaction was paid successful";
                 payment.Status = (int)PaymentStatus.Completed;
                 msg = "Your payment was paid successful!";
+
+                //Sending email
+                //USD
+                decimal usd = 0;
+                decimal usdrate = 0;
+                try
+                {
+                    usdrate = DataHelper.GetInstance().GetCurrencyRate(FROM_CURRENCY, 22265);
+                    usd = decimal.Parse(amount) / usdrate;
+                }
+                catch (Exception){}
+
+                string messageBody = DataHelper.GetInstance().BuildInvoicePdfTemplate(payment.PaymentType, refId, transactionNo, usd.ToString(), amount, DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fff", CultureInfo.InvariantCulture));
+                string title = string.Format(PAYMENT_TITLE, transactionNo);
+                DataHelper.GetInstance().SendEmail(response.Item.Email, title, messageBody);
             }
             else if (hashvalidateResult == "INVALIDATED" && txnResponseCode.Trim() == "0")
             {

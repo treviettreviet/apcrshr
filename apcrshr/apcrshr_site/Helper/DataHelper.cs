@@ -23,6 +23,7 @@ namespace apcrshr_site.Helper
     public class DataHelper
     {
         private static readonly string EMAIL = "abstract.apcrshr9vn@gmail.com";
+        private static readonly string EMAIL_FORM = "secretariat@apcrshr9vn.org";
         private static readonly string PASSWORD = "kjKJSDIFU8sf7*U*&FJDkfskdfjdjfhyT%$%^sgfdjsnflksflkM%%$#VBskmf;ls,fpl_-sfKKLFN)(F*s9f8s98fosnflkJFisf89sufdflkdmflkdmfkdfjUY*UFdjfnKJHyts76%&D*y8768y78FdkjfF98sufj==";
         private static readonly string CIPHER = "z3HMcf1v7/r+g4FqNPL0CqwoKQbdvwofhpcbDL6vyFK1ZPZ/ZM9n/rbiigd+r037d2VtcgRRh/HQ53Hx1dsuUUOf/nAgL8RX5YYaER/HbyQJc1+2LbsfcP8ygoWkvdM/";
         private static readonly string HOST = "smtp.gmail.com";
@@ -115,11 +116,64 @@ namespace apcrshr_site.Helper
             return builder.ToString();
         }
 
+        public string BuildInvoiceMessage(string fullname, string invoiceUrl)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append(string.Format("<p>Dear: <b>{0}</b></p></br></br>", fullname));
+            builder.Append("<p>We would like to confirm that your payment for registration to APCHRSHR9 is successful.</p></br>");
+            builder.Append(string.Format("<p>Please visit this <a href='{0}'>Link</a> to download your receipt.</p></br>", invoiceUrl));
+            builder.Append("<p>For further information or support, please contact us at: <a href='mailto:Secretariate@apcrshr9vn.org'><span>Secretariate@apcrshr9vn.org</span></a> or visit website: <a href='http://www.apcrshr9vn.org'>http://www.apcrshr9vn.org</a></p></br></br>");
+            builder.Append("<p>Thank you</p></br>");
+            builder.Append("<p>APCRSHR9 Secretariat</p>");
+            return builder.ToString();
+        }
+
+        public string BuildInvoicePdfTemplate(string product, string transaction, string invoice, string usd, string vnd, string date)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("<!DOCTYPE html>");
+            builder.Append("<html lang='en'>");
+            builder.Append("<head>");
+            builder.Append("<title>Invoice</title>");
+            builder.Append("</head>");
+            builder.Append("<body style='padding: 20px;'>");
+            builder.Append("<header>");
+            builder.Append("<img src='http://apcrshr9vn.org:80/Content/upload/files/header-09169669.png' alt='' width='100%' />");
+            builder.Append("</header>");
+            builder.Append("<br/><br/>");
+            builder.Append("<div style='text-align: center; font-weight: bold;font-size:30px;'>RECEIPT</div>");
+            builder.Append("<br/><br/>");
+            builder.Append("<hr>");
+            builder.Append("<br/>");
+            builder.Append("<div><strong>You are paying to:</strong> Vietnam Public Health Association: </div>");
+            builder.Append(string.Format("<div><strong>Product detail:</strong> APCRSHR9VN - Registration fee - {0}</div>", product));
+            builder.Append(string.Format("<div><strong>Transaction Reference:</strong>.. {0}</div>", transaction));
+            builder.Append(string.Format("<div><strong>Invoice Number:</strong>......... {0}</div>", invoice));
+            builder.Append(string.Format("<div><strong>Amount (in VND):</strong>........ {0}</div>", vnd));
+            builder.Append(string.Format("<div><strong>Equal to (in USD):</strong>...... {0}</div>", usd));
+            builder.Append(string.Format("<div><strong>Transaction Date:</strong>....... {0}</div>", date));
+            builder.Append("<br/>");
+            builder.Append("<hr>");
+            builder.Append("<br/>");
+            builder.Append("<div style='border: solid 1px #000000; padding: 5px 10px 10px 10px;'>");
+            builder.Append("<div style='text-align: center; font-weight: bold;'>Your payment is successful</div>");
+            builder.Append("<br/>");
+            builder.Append("<div>For further information or support, please contact us at <span style='color: #7156fa; text-decoration: underline;'>secretariat@apcrshr9vn.org</span> or visit website: <span style='color: #7156fa; text-decoration: underline;'>http://www.apcrshr9vn.org</span></div>");
+            builder.Append("</div>");
+            builder.Append("<footer>");
+            builder.Append("<img src='http://apcrshr9vn.org:80/Content/upload/files/footer-10132628.png' alt='' width='100%;' />");
+            builder.Append("</footer>");
+            builder.Append("</body>");
+            builder.Append("</html>");
+
+            return builder.ToString();
+        }
+
         public void SendEmail(string destinationEmail, string subject, string body)
         {
             var mail = new System.Net.Mail.MailMessage();
             mail.To.Add(new MailAddress(destinationEmail));
-            mail.From = new MailAddress(EMAIL);
+            mail.From = new MailAddress(EMAIL_FORM);
             mail.Subject = subject;
             mail.Body = body;
             mail.IsBodyHtml = true;

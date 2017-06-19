@@ -1,0 +1,119 @@
+﻿@using apcrshr_site.Helper
+@model Site.Core.DataModel.Model.PaymentModel
+@{
+    ViewBag.Title = "Thêm Payment";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box box-bordered box-color">
+            <div class="box-title">
+                <h3>
+                    <i class="fa fa-edit"></i>Thêm Payment
+                </h3>
+            </div>
+            <div class="box-content nopadding">
+                @using (Html.BeginForm("SavePayment", "AdminUser", FormMethod.Post, new { @class = "form-horizontal form-bordered", id = "frmSavePayment" }))
+                {
+                    <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Loại thanh toán</label>
+                        <div class="col-sm-10">
+                            <select name="PaymentType" id="PaymentType" data-rule-required="true">
+                                <option value="International delegates">International delegates</option>
+                                <option value="Vietnamese delegate">Vietnamese delegate</option>
+                                <option value="International youth">International youth</option>
+                                <option value="Vietnamese youth">Vietnamese youth</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.PaymentType)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Merch Reference</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.MerchRef, new { @class = "form-control", @id = "MerchRef" })
+                            @Html.ValidationMessageFor(model => model.MerchRef)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Số tiền <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.Amount, new { @class = "form-control", @id = "Amount" })
+                            @Html.ValidationMessageFor(model => model.Amount)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="textfield" class="control-label col-sm-2">Trạng thái <span class="validation-span-required">(*)</span></label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="Status" name="Status">
+                                <option value="0">Completed</option>
+                                <option value="1">Pending</option>
+                                <option value="2">Error</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-actions col-sm-offset-2 col-sm-10">
+                        <button type="button" onclick="submitForm()" class="btn btn-primary">Lưu Thông Tin</button>
+                        <a href='@Url.Action("Index")' class="btn btn-info">Hủy Bỏ</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function submitForm() {
+        if (!validateForm()) {
+            bootbox.alert("Cần phải nhập dữ liệu những trường bắt buộc.", function () {
+                bootbox.hideAll();
+            });
+            return false;
+        }
+
+        $.blockUI({ message: $('#spinner') });
+        var formData = new FormData();
+        formData.append("UserID", appUtil.utility.getURLParameter("UserId"));
+        formData.append("PaymentType", $("#PaymentType").val());
+        formData.append("MerchRef", $("#MerchRef").val());
+        formData.append("Amount", $("#Amount").val());
+        formData.append("Status", $("#Status").find(":selected").val());
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SavePayment", "AdminUser")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $.unblockUI();
+                bootbox.alert(response.Message, function () {
+                    bootbox.hideAll();
+                });
+                //Timeout
+                if (response.ErrorCode == 2) {
+                    window.location = "/Administrator/AdminHome/Login";
+                }
+            },
+            error: function (error) {
+                $.unblockUI();
+                bootbox.alert(error, function () {
+                    bootbox.hideAll();
+                });
+            }
+        });
+    }
+
+    function validateForm() {
+        if ($("#MerchRef").val() == null || $("#MerchRef").val() == "") {
+            $("#MerchRef").focus();
+            return false;
+        }
+        if ($("#Amount").val() == null || $("#Amount").val() == "") {
+            $("#Amount").focus();
+            return false;
+        }
+        return true;
+    }
+</script>
