@@ -432,6 +432,7 @@ namespace apcrshr_site.Controllers
             mailing.PassportPhoto2 = registration.PassportPhoto2;
             mailing.PassportPhoto3 = registration.PassportPhoto3;
             mailing.TypeOfPassport = registration.TypeOfPassport;
+            mailing.NeedVisaSupport = registration.NeedVisaSupport;
 
             return mailing;
         }

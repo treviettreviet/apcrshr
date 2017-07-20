@@ -512,6 +512,10 @@ ul.social-list li a.twitter:hover {
 	background-color: #63CDF1;
 }
 
+ul.social-list li a.instagramm:hover {
+	background-color: #63CDF1;
+}
+
 ul.social-list li a.google:hover {
 	background-color: #F16261;
 }
@@ -2763,6 +2767,10 @@ ul.icons-list li i {
 	background-color: #63CDF1;
 }
 
+.team-member .member-socail a.instagramm:hover i {
+	background-color: #63CDF1;
+}
+
 .team-member .member-socail a.gplus:hover i {
 	background-color: #F16261;
 }
@@ -3572,6 +3580,10 @@ ul.post-meta li, ul.post-meta li a {
 	background-color: #36BFED;
 }
 
+.post-share a.instagramm:hover {
+	background-color: #36BFED;
+}
+
 .post-share a.gplus {
 	background-color: #F16261;
 }
@@ -4012,6 +4024,10 @@ footer a:hover {
 }
 
 .social-widget ul.social-icons li a.twitter:hover i {
+	background-color: #63CDF1;
+}
+
+.social-widget ul.social-icons li a.instagramm:hover i {
 	background-color: #63CDF1;
 }
 
@@ -5390,6 +5406,10 @@ a.elemadded:hover {
 }
 
 .post-share-contet a.twitter:hover {
+	background-color: #36BFED;
+}
+
+.post-share-contet a.instagramm:hover {
 	background-color: #36BFED;
 }
 

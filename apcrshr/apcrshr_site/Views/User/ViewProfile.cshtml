@@ -152,7 +152,7 @@
                                     <tr>
                                         <td>Need visa support</td>
                                         <td>
-                                            <input type="radio" id="NeedVisaSupport" name="NeedVisaSupport" value="true" @(Model.NeedVisaSupport == true ? "checked" : "")>&nbsp;Yes
+                                            <input type="radio" id="NeedVisaSupport" name="NeedVisaSupport" onchange="changedEnabledControl();" value="true" @(Model.NeedVisaSupport == true ? "checked" : "")>&nbsp;Yes
                                         </td>
                                     </tr>
                                     <tr>
@@ -403,6 +403,11 @@
 </div>
 
 <script type="text/javascript">
+
+    function changedEnabledControl() {
+        $("#btnSave").removeAttr("disabled");
+    }
+
     $(function () {
 
         //defaults
