@@ -46,8 +46,6 @@
                             @Html.HiddenFor(model => model.Locked, new { @id = "Locked" })
                             @Html.HiddenFor(model => model.UserName, new { @id = "UserName" })
                             @Html.HiddenFor(model => model.DateOfBirth, new { @id = "DateOfBirth" })
-                            @Html.HiddenFor(model => model.DateOfPassportIssue, new { @id = "DateOfPassportIssue" })
-                            @Html.HiddenFor(model => model.DateOfPassportExpiry, new { @id = "DateOfPassportExpiry" })
                             <table id="user" class="table table-bordered table-striped table-force-topborder" style="clear: both">
                                 <tbody>
                                     <tr>
@@ -176,13 +174,13 @@
                                     <tr>
                                         <td>Passport number <span class="validation-span-required">(*)</span></td>
                                         <td>
-                                            <label>@Model.PassportNumber</label>
+                                            <a href="#" id="PassportNumber" data-type="text" data-pk="17" data-placeholder="Your passport number..." data-original-title="Enter your passport number">@Model.PassportNumber</a>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Type of passport <span class="validation-span-required">(*)</span></td>
                                         <td>
-                                            <label>@Model.TypeOfPassport</label>
+                                            <a href="#" id="TypeOfPassport" data-type="select" data-pk="18" data-value="@Model.TypeOfPassport" data-source="/typeOfPassport" data-original-title="Select type of passport">@Model.TypeOfPassport</a>
                                         </td>
                                     </tr>
                                     <tr>
@@ -194,13 +192,13 @@
                                     <tr>
                                         <td>Date of Passport issue <span class="validation-span-required">(*)</span></td>
                                         <td>
-                                            <label>@Model.DateOfPassportIssue</label>
+                                            <a href="#" id="DateOfPassportIssue" data-type="combodate" data-value="@Model.DateOfPassportIssue" data-format="YYYY/MM/DD" data-viewformat="YYYY/MM/DD" data-template="MMM / D / YYYY" data-pk="20" data-original-title="Select Date of Passport issue"></a>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Date of Passport expiry <span class="validation-span-required">(*)</span></td>
                                         <td>
-                                            <label>@Model.DateOfPassportExpiry</label>
+                                            <a href="#" id="DateOfPassportExpiry" data-type="combodate" data-value="@Model.DateOfPassportExpiry" data-format="YYYY/MM/DD" data-viewformat="YYYY/MM/DD" data-template="MMM / D / YYYY" data-pk="30" data-original-title="Date of Passport expiry"></a>
                                         </td>
                                     </tr>
                                     <tr>
@@ -478,16 +476,16 @@
             },
             url: changedValue
         });
-        //$('#PassportNumber').editable({ url: changedValue });
-        //$('#TypeOfPassport').editable({ showbuttons: true, url: changedValue });
+        $('#PassportNumber').editable({ url: changedValue });
+        $('#TypeOfPassport').editable({ showbuttons: true, url: changedValue });
         $('#Occupation').editable({
             validate: function (value) {
                 if (value == '') return 'Occupation is required!';
             },
             url: changedValue
         });
-        //$('#DateOfPassportIssue').editable({ url: changedValue });
-        //$('#DateOfPassportExpiry').editable({ url: changedValue });
+        $('#DateOfPassportIssue').editable({ url: changedValue });
+        $('#DateOfPassportExpiry').editable({ url: changedValue });
         $('#DetailOfEmbassy').editable({ url: changedValue });
 
         function changedValue(params) {
@@ -940,11 +938,11 @@
         //formData.append("DateOfBirth", $("#DateOfBirth").val());
         formData.append("OriginalNationality", $("#OriginalNationality").text());
         formData.append("CurrentNationality", $("#CurrentNationality").text());
-        //formData.append("PassportNumber", $("#PassportNumber").text());
-        //formData.append("TypeOfPassport", $("#TypeOfPassport").text());
+        formData.append("PassportNumber", $("#PassportNumber").text());
+        formData.append("TypeOfPassport", $("#TypeOfPassport").text());
         formData.append("Occupation", $("#Occupation").text());
-        //formData.append("DateOfPassportIssue", $("#DateOfPassportIssue").val());
-        //formData.append("DateOfPassportExpiry", $("#DateOfPassportExpiry").val());
+        formData.append("DateOfPassportIssue", $("#DateOfPassportIssue").text());
+        formData.append("DateOfPassportExpiry", $("#DateOfPassportExpiry").text());
         formData.append("DetailOfEmbassy", $("#DetailOfEmbassy").text());
         $.ajax({
             type: "POST",
