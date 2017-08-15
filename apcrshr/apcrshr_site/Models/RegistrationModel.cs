@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
+using Site.Core.DataModel.Model;
 
 namespace apcrshr_site.Models
 {
@@ -45,5 +46,6 @@ namespace apcrshr_site.Models
         public string PassportPhoto1 { get; set; }
         public string PassportPhoto2 { get; set; }
         public string PassportPhoto3 { get; set; }
+        public LogisticScheduleModel Logistic { get; set; }
     }
 }

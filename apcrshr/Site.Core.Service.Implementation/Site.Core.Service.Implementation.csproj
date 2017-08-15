@@ -56,6 +56,7 @@
     <Compile Include="HomeService.cs" />
     <Compile Include="ImportantDeadlineService.cs" />
     <Compile Include="LeaderShipService.cs" />
+    <Compile Include="LogisticSheduleService.cs" />
     <Compile Include="MailingAddressService.cs" />
     <Compile Include="MainScholarshipService.cs" />
     <Compile Include="MenuCategoryService.cs" />

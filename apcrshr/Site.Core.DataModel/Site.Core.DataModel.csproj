@@ -63,6 +63,7 @@
     <Compile Include="Model\ExperienceModel.cs" />
     <Compile Include="Model\ImportantDeadlineModel.cs" />
     <Compile Include="Model\LeaderShipModel.cs" />
+    <Compile Include="Model\LogisticScheduleModel.cs" />
     <Compile Include="Model\MailingAddressModel.cs" />
     <Compile Include="Model\MainScholarshipModel.cs" />
     <Compile Include="Model\MenuModel.cs" />

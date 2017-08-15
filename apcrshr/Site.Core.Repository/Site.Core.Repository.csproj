@@ -96,6 +96,7 @@
     <Compile Include="Implementation\ExperienceRepository.cs" />
     <Compile Include="Implementation\ImportantDeadlineRepository.cs" />
     <Compile Include="Implementation\LeaderShipRepository.cs" />
+    <Compile Include="Implementation\LogisticSheduleRepository.cs" />
     <Compile Include="Implementation\MailingAddressRepository.cs" />
     <Compile Include="Implementation\MainScholarshipRepository.cs" />
     <Compile Include="Implementation\MenuRepository.cs" />
@@ -122,6 +123,9 @@
       <DependentUpon>APCRSHRModel.tt</DependentUpon>
     </Compile>
     <Compile Include="LeaderShip.cs">
+      <DependentUpon>APCRSHRModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LogisticSchedule.cs">
       <DependentUpon>APCRSHRModel.tt</DependentUpon>
     </Compile>
     <Compile Include="MailingAddress.cs">
@@ -159,6 +163,7 @@
     <Compile Include="Repository\IExperienceRepository.cs" />
     <Compile Include="Repository\IImportantDeadlineRepository.cs" />
     <Compile Include="Repository\ILeaderShipRepository.cs" />
+    <Compile Include="Repository\ILogisticSheduleRepository.cs" />
     <Compile Include="Repository\IMailingAddressRepository.cs" />
     <Compile Include="Repository\IMainScholarshipRepository.cs" />
     <Compile Include="Repository\IMenuRepository.cs" />

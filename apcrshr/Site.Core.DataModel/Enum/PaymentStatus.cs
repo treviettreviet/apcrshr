@@ -10,6 +10,8 @@ namespace Site.Core.DataModel.Enum
     {
         Completed = 0,
         Pending = 1,
-        Error = 2
+        Error = 2,
+        Cash = 3,
+        FreeRegistration = 4
     }
 }

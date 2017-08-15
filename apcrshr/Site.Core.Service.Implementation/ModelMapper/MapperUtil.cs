@@ -68,6 +68,7 @@ namespace Site.Core.Service.Implementation.ModelMapper
                 cfg.CreateMap<YouthScholarshipModel, YouthScholarship>();
                 cfg.CreateMap<UserSubmissionModel, UserSubmission>();
                 cfg.CreateMap<PaymentModel, Payment>();
+                cfg.CreateMap<LogisticScheduleModel, LogisticSchedule>();
 
                 //Entity model mapper
                 cfg.CreateMap<Admin, AdminModel>();
@@ -101,6 +102,7 @@ namespace Site.Core.Service.Implementation.ModelMapper
                 cfg.CreateMap<YouthScholarship, YouthScholarshipModel>();
                 cfg.CreateMap<UserSubmission, UserSubmissionModel>();
                 cfg.CreateMap<Payment, PaymentModel>();
+                cfg.CreateMap<LogisticSchedule, LogisticScheduleModel>();
             });
 
             mapper = config.CreateMapper();

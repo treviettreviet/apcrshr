@@ -44,6 +44,8 @@
                         <div class="col-sm-10">
                             <select class="form-control" id="Status" name="Status">
                                 <option value="0" @(Model.Status == 0 ? "selected" : "")>Completed</option>
+                                <option value="3" @(Model.Status == 3 ? "selected" : "")>Cash</option>
+                                <option value="2" @(Model.Status == 4 ? "selected" : "")>Free Registration</option>
                                 <option value="1" @(Model.Status == 1 ? "selected" : "")>Pending</option>
                                 <option value="2" @(Model.Status == 2 ? "selected" : "")>Error</option>
                             </select>

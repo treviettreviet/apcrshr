@@ -49,6 +49,7 @@
     <Compile Include="IHomeService.cs" />
     <Compile Include="IImportantDeadlineService.cs" />
     <Compile Include="ILeaderShipService.cs" />
+    <Compile Include="ILogisticSheduleService.cs" />
     <Compile Include="IMainScholarshipService.cs" />
     <Compile Include="IMenuCategoryService.cs" />
     <Compile Include="INewsService.cs" />

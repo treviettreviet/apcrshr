@@ -393,12 +393,199 @@
             </div>
             <!-- End Accordion 5 -->
 
+            <!-- Start Accordion 6 -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-9" class="collapsed">
+                            <i class="icon-down-open-1 control-icon"></i>
+                            <i class="icon-mail"></i> Logistic Arrangement
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse-9" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        
+                        <!-- Start Flight Form -->
+                        @using (Ajax.BeginForm("SaveLogisticInfo", "User", new AjaxOptions
+                                            {
+                                                InsertionMode = InsertionMode.Replace,
+                                                HttpMethod = "POST",
+                                                OnFailure = "userUpdateFailure",
+                                                OnSuccess = "userUpdateSuccess"
+                                            }, new { @class = "form-horizontal form-bordered form-validate", id = "frmSaveLogistic" }))
+                        {
+                            @Html.HiddenFor(model => model.UserID, new { @id = "UserID" })
+                            @Html.HiddenFor(model => model.Logistic.LogisticID, new { @id = "LogisticID" })
+                            <table id="user" class="table table-bordered table-striped table-force-topborder" style="clear: both">
+                                <tbody>
+                                    <tr>
+                                        <td width="25%">Arrival date time <span class="validation-span-required">(*)</span></td>
+                                        <td width="75%">
+                                            <a href="#" id="ArrivalDate" name="ArrivalDate" data-type="combodate" data-value="@Model.Logistic.ArrivalDate" data-template="YYYY/MM/DD  HH:mm" data-format="YYYY/MM/DD HH:mm" data-viewformat="MMM / D / YYYY, HH:mm" data-pk="50" data-original-title="Select arrival date time"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Flight number <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="ArrivalFlightNumber" name="ArrivalFlightNumber" data-type="text" data-pk="51" data-placement="right" data-placeholder="Required" data-original-title="Enter your flight number">@Model.Logistic.ArrivalFlightNumber</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Arrival Gate <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <input type="radio" id="ArrivalGate" name="ArrivalGate" value="Domestic" @(Model.Logistic.ArrivalGate == "Domestic" ? "checked" : "")>&nbsp;Domestic
+                                            <input type="radio" id="ArrivalGate" name="ArrivalGate" value="International" @(Model.Logistic.ArrivalGate == "International" ? "checked" : "")>&nbsp;International
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Departure date time <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="DepartureDate" name="DepartureDate" data-type="combodate" data-value="@Model.Logistic.DepartureDate" data-template="YYYY/MM/DD  HH:mm" data-format="YYYY/MM/DD HH:mm" data-viewformat="MMM / D / YYYY, HH:mm" data-pk="52" data-original-title="Select departureDate date time"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Flight number <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <a href="#" id="DepartureFlightNumber" name="DepartureFlightNumber" data-type="text" data-pk="53" data-placement="right" data-placeholder="Required" data-original-title="Enter your flight number">@Model.Logistic.DepartureFlightNumber</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Departure Gate <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <input type="radio" id="DepartureGate" name="DepartureGate" value="Domestic" @(Model.Logistic.DepartureGate == "Domestic" ? "checked" : "")>&nbsp;Domestic
+                                            <input type="radio" id="DepartureGate" name="DepartureGate" value="International" @(Model.Logistic.DepartureGate == "International" ? "checked" : "")>&nbsp;International
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <b>Airport pick-up/drop-off service</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <span style="text-decoration: underline;">Note:</span> 4 seat-taxi costs from Noi Bai Airport to Halong are generally around 100 USD/one way. To support delegates, APCRSHR9 will arrange airport pick up and drop off for those who wish to use this service (from 25th November  to 1st December) with a very modest fee: 15$/trip. Delegate will pay by cash when arrive. If you don’t need this service, please skip this part
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <b>When do you need airport pick up/drop off service?</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <input type="checkbox" id="ArrivalDay" name="WhenNeedPick" value="Arrival day" @(!string.IsNullOrEmpty(Model.Logistic.WhenNeedPick) && Model.Logistic.WhenNeedPick.Contains("Arrival day") ? "checked" : "")>&nbsp;Arrival day
+                                            <input type="checkbox" id="DepartureDay" name="WhenNeedPick" value="Departure day" @(!string.IsNullOrEmpty(Model.Logistic.WhenNeedPick) && Model.Logistic.WhenNeedPick.Contains("Departure day") ? "checked" : "")>&nbsp;Departure day
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Special requirement</td>
+                                        <td>
+                                            <a href="#" id="SpecialRequirement" name="SpecialRequirement" data-type="textarea" data-pk="55" data-placeholder="Your Special requirement" data-original-title="Enter your Special requirement">@Model.Logistic.SpecialRequirement</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <b>Accommodation</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <input type="button" class="btn plupload_add btn-primary" id="btnSaveFlightSchedule" value="Save Changes" disabled style="position: relative; z-index: 1;" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                        <!-- End Flight Form -->
+
+                    </div>
+                </div>
+            </div>
+            <!-- End Accordion 6 -->
+
         </div>
         <!-- End Accordion -->
 
     </div>
 
 </div>
+
+<script type="text/javascript">
+    //editables
+    $('#ArrivalDate').editable({ url: scheduleValueChanged });
+
+    $('#ArrivalFlightNumber').editable({
+        validate: function (value) {
+            if (value == '') return 'Flight number is required!';
+        },
+        url: scheduleValueChanged
+    });
+
+    $('#DepartureDate').editable({ url: scheduleValueChanged });
+
+    $('#DepartureFlightNumber').editable({
+        validate: function (value) {
+            if (value == '') return 'Flight number is required!';
+        },
+        url: scheduleValueChanged
+    });
+
+    $('#SpecialRequirement').editable({
+        showbuttons: true, url: scheduleValueChanged
+    });
+
+    function scheduleValueChanged(params) {
+        $("#btnSaveFlightSchedule").removeAttr("disabled");
+    }
+    
+    $("#btnSaveFlightSchedule").click(function () {
+        $.blockUI({ message: $('#spinner') });
+        var formData = new FormData();
+        formData.append("UserID", $("#UserID").val());
+        formData.append("LogisticID", $("#LogisticID").val());
+        formData.append("ArrivalDate", $("#ArrivalDate").text());
+        formData.append("ArrivalFlightNumber", $("#ArrivalFlightNumber").text());
+        formData.append("ArrivalGate", $("#frmSaveLogistic input[name='ArrivalGate']:checked").val());
+        formData.append("DepartureDate", $("#DepartureDate").text());
+        formData.append("DepartureFlightNumber", $("#DepartureFlightNumber").text());
+        formData.append("DepartureGate", $("#frmSaveLogistic input[id='DepartureGate']:checked").val());
+        var str = $("#frmSaveLogistic input[id='ArrivalDay']:checked").val() + ',' + $("#frmSaveLogistic input[id='DepartureDay']:checked").val();
+        formData.append("WhenNeedPick", str);
+        formData.append("SpecialRequirement", $("#SpecialRequirement").text());
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveLogisticInfo", "User")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $.unblockUI();
+                bootbox.alert(response.Message, function () {
+                    bootbox.hideAll();
+                });
+                //Timeout
+                if (response.ErrorCode == 2) {
+                    window.location = '@Url.Action("Login", "User")';
+                }
+                if (response.ErrorCode == 0) {
+                    $("#btnSave").attr("disabled", "disabled");
+                }
+            },
+            error: function (error) {
+                $.unblockUI();
+                bootbox.alert(error, function () {
+                    bootbox.hideAll();
+                });
+            }
+        });
+    });
+</script>
 
 <script type="text/javascript">
 

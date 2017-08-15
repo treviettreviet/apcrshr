@@ -160,5 +160,10 @@ namespace Site.Core.Repository
         {
             return new PaymentRepository();
         }
+
+        public ILogisticSheduleRepository GetLogisticRepository()
+        {
+            return new LogisticSheduleRepository();
+        }
     }
 }

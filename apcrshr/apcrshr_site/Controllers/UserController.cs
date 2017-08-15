@@ -40,6 +40,7 @@ namespace apcrshr_site.Controllers
         private IMailingAddressService _mailingService;
         private IPaymentService _paymentService;
         private IUserSubmissionService _userSubmissionService;
+        private ILogisticSheduleService _logisticService;
 
         public UserController()
         {
@@ -47,6 +48,7 @@ namespace apcrshr_site.Controllers
             this._mailingService = new MailingAddressService();
             this._paymentService = new PaymentService();
             this._userSubmissionService = new UserSubmissionService();
+            this._logisticService = new LogisticSheduleService();
         }
 
 
@@ -180,6 +182,8 @@ namespace apcrshr_site.Controllers
                     FindAllItemReponse<UserSubmissionModel> abstractResponse = _userSubmissionService.FindByUserID(response.Item.UserID);
                     ViewBag.Abstracts = abstractResponse.Items;
                 }
+                FindItemReponse<LogisticScheduleModel> logisticResponse = _logisticService.FindByUserID(Session["User-UserID"].ToString());
+                registration.Logistic = logisticResponse.Item != null ? logisticResponse.Item : new LogisticScheduleModel();
                 FindAllItemReponse<MailingAddressModel> mailingResponse = _mailingService.FindMailingAddressByUser(Session["User-UserID"].ToString());
                 if (mailingResponse.Items != null)
                 {
@@ -210,7 +214,7 @@ namespace apcrshr_site.Controllers
                         if (paymentResponse != null && paymentResponse.Items != null && paymentResponse.Items.Count > 0)
                         {
                             var paid = paymentResponse.Items.Where(p => p.PaymentType.Equals(registration.ParticipantType)).SingleOrDefault();
-                            if (paid != null && paid.Status == (int) PaymentStatus.Completed)
+                            if (paid != null && (paid.Status == (int) PaymentStatus.Completed || paid.Status == (int) PaymentStatus.Cash))
                             {
                                 fee = 0;
                             }
@@ -670,6 +674,23 @@ namespace apcrshr_site.Controllers
                 response.Message = Resources.Resource.msg_commonError;
             }
             return Json(response, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult SaveLogisticInfo(LogisticScheduleModel logistic)
+        {
+            if (!string.IsNullOrEmpty(logistic.LogisticID))
+            {
+                var response = _logisticService.Update(logistic);
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                logistic.LogisticID = Guid.NewGuid().ToString();
+                logistic.CreatedDate = DateTime.Now;
+                var response = _logisticService.Create(logistic);
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }
         }
 
         [HttpPost]
