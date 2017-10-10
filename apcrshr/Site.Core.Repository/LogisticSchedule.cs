@@ -25,7 +25,9 @@ namespace Site.Core.Repository
         public string SpecialRequirement { get; set; }
         public string UserID { get; set; }
         public System.DateTime CreatedDate { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public string HotelName { get; set; }
+        public Nullable<System.DateTime> CheckinDate { get; set; }
+        public Nullable<System.DateTime> CheckoutDate { get; set; }
     
         public virtual User User { get; set; }
     }

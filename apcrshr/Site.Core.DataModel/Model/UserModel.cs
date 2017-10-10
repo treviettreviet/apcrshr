@@ -33,5 +33,6 @@ namespace Site.Core.DataModel.Model
         public string ParticipantType { get; set; }
         public string MainScholarship { get; set; }
         public string YouthScholarship { get; set; }
+        public LogisticScheduleModel Logistic { get; set; }
     }
 }

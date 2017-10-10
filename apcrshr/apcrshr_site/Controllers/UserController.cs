@@ -642,6 +642,7 @@ namespace apcrshr_site.Controllers
                 user.Country = registration.Country != "Empty" ? registration.Country : user.Country;
                 user.WorkAddress = registration.WorkAddress != "Empty" ? registration.WorkAddress : user.WorkAddress;
                 user.Organization = registration.Organization != "Empty" ? registration.Organization : user.Organization;
+                user.DateOfBirth = registration.DateOfBirth.HasValue ? registration.DateOfBirth : user.DateOfBirth;
                 //Don't update password
                 user.Password = null;
 
@@ -664,6 +665,9 @@ namespace apcrshr_site.Controllers
                 mailing.CurrentNationality = registration.CurrentNationality != "Empty" ? registration.CurrentNationality : mailing.CurrentNationality;
                 mailing.Occupation = registration.Occupation != "Empty" ? registration.Occupation : mailing.Occupation;
                 mailing.DetailOfEmbassy = registration.DetailOfEmbassy != "Empty" ? registration.DetailOfEmbassy : mailing.DetailOfEmbassy;
+                mailing.PassportNumber = registration.PassportNumber != "Empty" ? registration.PassportNumber : mailing.PassportNumber;
+                mailing.DateOfPassportIssue = registration.DateOfPassportIssue.HasValue ? registration.DateOfPassportIssue.Value : mailing.DateOfPassportIssue;
+                mailing.DateOfPassportExpiry = registration.DateOfPassportExpiry.HasValue ? registration.DateOfPassportExpiry.Value : mailing.DateOfPassportExpiry;
 
                 //Update mailing
                 response = _mailingService.UpdateMailingAddress(mailing);

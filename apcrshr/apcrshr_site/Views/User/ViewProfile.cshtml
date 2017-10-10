@@ -8,6 +8,8 @@
 
 <!-- Bootstrap -->
 <link rel="stylesheet" href="~/Areas/Administrator/css/boostrap-editable.css">
+<link href="~/Scripts/jquery.datetimepicker.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.datetimepicker.full.js"></script>
 
 <div class="col-sm-9 page-content">
     
@@ -45,7 +47,6 @@
                             @Html.HiddenFor(model => model.Email, new { @id = "Email" })
                             @Html.HiddenFor(model => model.Locked, new { @id = "Locked" })
                             @Html.HiddenFor(model => model.UserName, new { @id = "UserName" })
-                            @Html.HiddenFor(model => model.DateOfBirth, new { @id = "DateOfBirth" })
                             <table id="user" class="table table-bordered table-striped table-force-topborder" style="clear: both">
                                 <tbody>
                                     <tr>
@@ -144,7 +145,7 @@
                                         <td>
                                             <input type="radio" id="YouthConference" name="YouthConference" value="true" @(Model.YouthConference == "true" ? "checked" : "")>&nbsp;Yes
                                             <input type="radio" id="YouthConference" name="YouthConference" value="false" @(Model.YouthConference == "false" ? "checked" : "")>&nbsp;No
-                                            <i>(Youth age 15-29/ Born in 1988 - 2002)</i>
+                                            <i>(Youth age 15-24/ Born in 1993 - 2002)</i>
                                         </td>
                                     </tr>
                                     <tr>
@@ -156,7 +157,7 @@
                                     <tr>
                                         <td>Date of birth <span class="validation-span-required">(*)</span></td>
                                         <td>
-                                            <label>@Model.DateOfBirth.Value.ToString("yyyy/MM/dd")</label>
+                                            <input type="text" id="DateOfBirth" class="form-control" name="DateOfBirth" value="@(Model.DateOfBirth != null ? Model.DateOfBirth.Value.ToString("yyyy/MM/dd HH:mm") : "")" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -192,13 +193,13 @@
                                     <tr>
                                         <td>Date of Passport issue <span class="validation-span-required">(*)</span></td>
                                         <td>
-                                            <a href="#" id="DateOfPassportIssue" data-type="combodate" data-value="@Model.DateOfPassportIssue" data-format="YYYY/MM/DD" data-viewformat="YYYY/MM/DD" data-template="MMM / D / YYYY" data-pk="20" data-original-title="Select Date of Passport issue"></a>
+                                            <input type="text" id="DateOfPassportIssue" class="form-control" name="DateOfPassportIssue" value="@(Model.DateOfPassportIssue != null ? Model.DateOfPassportIssue.Value.ToString("yyyy/MM/dd HH:mm") : "")" />
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Date of Passport expiry <span class="validation-span-required">(*)</span></td>
                                         <td>
-                                            <a href="#" id="DateOfPassportExpiry" data-type="combodate" data-value="@Model.DateOfPassportExpiry" data-format="YYYY/MM/DD" data-viewformat="YYYY/MM/DD" data-template="MMM / D / YYYY" data-pk="30" data-original-title="Date of Passport expiry"></a>
+                                            <input type="text" id="DateOfPassportExpiry" class="form-control" name="DateOfPassportExpiry" value="@(Model.DateOfPassportExpiry != null ? Model.DateOfPassportExpiry.Value.ToString("yyyy/MM/dd HH:mm") : "")" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -422,7 +423,7 @@
                                     <tr>
                                         <td width="25%">Arrival date time <span class="validation-span-required">(*)</span></td>
                                         <td width="75%">
-                                            <a href="#" id="ArrivalDate" name="ArrivalDate" data-type="combodate" data-value="@Model.Logistic.ArrivalDate" data-template="YYYY/MM/DD  HH:mm" data-format="YYYY/MM/DD HH:mm" data-viewformat="MMM / D / YYYY, HH:mm" data-pk="50" data-original-title="Select arrival date time"></a>
+                                            <input type="text" id="ArrivalDate" class="form-control" name="ArrivalDate" value="@(Model.Logistic.ArrivalDate != null ? Model.Logistic.ArrivalDate.Value.ToString("yyyy/MM/dd HH:mm") : DateTime.Now.ToString("yyyy/MM/dd HH:mm"))" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -445,7 +446,7 @@
                                     <tr>
                                         <td>Departure date time <span class="validation-span-required">(*)</span></td>
                                         <td>
-                                            <a href="#" id="DepartureDate" name="DepartureDate" data-type="combodate" data-value="@Model.Logistic.DepartureDate" data-template="YYYY/MM/DD  HH:mm" data-format="YYYY/MM/DD HH:mm" data-viewformat="MMM / D / YYYY, HH:mm" data-pk="52" data-original-title="Select departureDate date time"></a>
+                                            <input type="text" id="DepartureDate" class="form-control" name="DepartureDate" value="@(Model.Logistic.DepartureDate != null ? Model.Logistic.DepartureDate.Value.ToString("yyyy/MM/dd HH:mm") : DateTime.Now.ToString("yyyy/MM/dd HH:mm"))" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -495,6 +496,34 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2">
+                                            <p>
+                                                There are actually many hotels that you can find to choose on the internet. From our side, we have negotiated special discounted rates for APCRSHR9 delegates in a range of accommodation options close to the conference venue. As the allotment of hotel rooms is limited, please make your reservation as early as possible. All rooms are available on a first-come, first-served basis. If you need assistance with room booking, please contact  <a href="mailto:Secretariat@apcrshr9vn.org">Secretariat@apcrshr9vn.org</a>
+                                            </p>
+                                            <p>Hotel list and information is available here: <a href="http://www.apcrshr9vn.org/Home/ArticleView/accommodation-08086932" target="_blank">Accommodation</a></p>
+                                            <p>----</p>
+                                            <p>Please let us know which hotel you have booked</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hotel name</td>
+                                        <td>
+                                            <a href="#" id="HotelName" data-type="select" data-pk="56" data-value="@Model.Logistic.HotelName" data-source="/accommodation" data-original-title="Select hotel name">@Model.Logistic.HotelName</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Checkin date <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <input type="text" id="CheckinDate" class="form-control" name="CheckinDate" value="@(Model.Logistic.CheckinDate != null ? Model.Logistic.CheckinDate.Value.ToString("yyyy/MM/dd HH:mm") : DateTime.Now.ToString("yyyy/MM/dd HH:mm"))" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Checkout date <span class="validation-span-required">(*)</span></td>
+                                        <td>
+                                            <input type="text" id="CheckoutDate" class="form-control" name="CheckoutDate" value="@(Model.Logistic.CheckoutDate != null ? Model.Logistic.CheckoutDate.Value.ToString("yyyy/MM/dd HH:mm") : DateTime.Now.ToString("yyyy/MM/dd HH:mm"))" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
                                             <input type="button" class="btn plupload_add btn-primary" id="btnSaveFlightSchedule" value="Save Changes" disabled style="position: relative; z-index: 1;" />
                                         </td>
                                     </tr>
@@ -516,8 +545,21 @@
 </div>
 
 <script type="text/javascript">
+    $.datetimepicker.setLocale('en');
+    $('#ArrivalDate').datetimepicker({ value: $('#ArrivalDate').val(), format: $("#datetimepicker_format_value").val() });
+    $('#DepartureDate').datetimepicker({ value: $('#DepartureDate').val(), format: $("#datetimepicker_format_value").val() });
+    $('#CheckinDate').datetimepicker({ value: $('#CheckinDate').val(), format: $("#datetimepicker_format_value").val() });
+    $('#CheckoutDate').datetimepicker({ value: $('#CheckoutDate').val(), format: $("#datetimepicker_format_value").val() });
+
     //editables
-    $('#ArrivalDate').editable({ url: scheduleValueChanged });
+    //$('#ArrivalDate').editable({ url: scheduleValueChanged });
+
+    $('#HotelName').editable({
+        validate: function (value) {
+            if (value == '') return 'Hotel name is required!';
+        },
+        url: scheduleValueChanged
+    });
 
     $('#ArrivalFlightNumber').editable({
         validate: function (value) {
@@ -526,7 +568,7 @@
         url: scheduleValueChanged
     });
 
-    $('#DepartureDate').editable({ url: scheduleValueChanged });
+    //$('#DepartureDate').editable({ url: scheduleValueChanged });
 
     $('#DepartureFlightNumber').editable({
         validate: function (value) {
@@ -543,20 +585,45 @@
         $("#btnSaveFlightSchedule").removeAttr("disabled");
     }
     
+    $("#frmSaveLogistic input[name='ArrivalGate']").click(scheduleValueChanged);
+    $("#frmSaveLogistic input[name='DepartureGate']").click(scheduleValueChanged);
+    $("#frmSaveLogistic input[id='DepartureDay']").click(scheduleValueChanged);
+    $("#frmSaveLogistic input[id='ArrivalDay']").click(scheduleValueChanged);
+    $('#ArrivalDate').click(scheduleValueChanged);
+    $('#DepartureDate').click(scheduleValueChanged);
+    $('#CheckinDate').click(scheduleValueChanged);
+    $('#CheckoutDate').click(scheduleValueChanged);
+
     $("#btnSaveFlightSchedule").click(function () {
+        var arrivalDate = $('#ArrivalDate').val();
+        var departureDate = $('#DepartureDate').val();
+
+        if (arrivalDate == '' || departureDate == '') {
+            bootbox.alert('Please select the date', function () {
+                bootbox.hideAll();
+            });
+            return;
+        }
+
+        var checkinDate = $('#CheckinDate').val();
+        var checkoutDate = $('#CheckoutDate').val();
+
         $.blockUI({ message: $('#spinner') });
         var formData = new FormData();
         formData.append("UserID", $("#UserID").val());
         formData.append("LogisticID", $("#LogisticID").val());
-        formData.append("ArrivalDate", $("#ArrivalDate").text());
+        formData.append("ArrivalDate", arrivalDate);
         formData.append("ArrivalFlightNumber", $("#ArrivalFlightNumber").text());
         formData.append("ArrivalGate", $("#frmSaveLogistic input[name='ArrivalGate']:checked").val());
-        formData.append("DepartureDate", $("#DepartureDate").text());
+        formData.append("DepartureDate", departureDate);
         formData.append("DepartureFlightNumber", $("#DepartureFlightNumber").text());
         formData.append("DepartureGate", $("#frmSaveLogistic input[id='DepartureGate']:checked").val());
         var str = $("#frmSaveLogistic input[id='ArrivalDay']:checked").val() + ',' + $("#frmSaveLogistic input[id='DepartureDay']:checked").val();
         formData.append("WhenNeedPick", str);
         formData.append("SpecialRequirement", $("#SpecialRequirement").text());
+        formData.append("HotelName", $("#HotelName").text());
+        formData.append("CheckinDate", checkinDate);
+        formData.append("CheckoutDate", checkoutDate);
         $.ajax({
             type: "POST",
             url: '@Url.Action("SaveLogisticInfo", "User")',
@@ -671,8 +738,15 @@
             },
             url: changedValue
         });
-        $('#DateOfPassportIssue').editable({ url: changedValue });
-        $('#DateOfPassportExpiry').editable({ url: changedValue });
+
+        $.datetimepicker.setLocale('en');
+        $('#DateOfPassportIssue').datetimepicker({ value: $('#DateOfPassportIssue').val(), format: $("#datetimepicker_format_value").val() });
+        $('#DateOfPassportExpiry').datetimepicker({ value: $('#DateOfPassportExpiry').val(), format: $("#datetimepicker_format_value").val() });
+        $('#DateOfBirth').datetimepicker({ value: $('#DateOfBirth').val(), format: $("#datetimepicker_format_value").val() });
+        $('#DateOfPassportIssue').click(changedEnabledControl);
+        $('#DateOfPassportIssue').click(changedEnabledControl);
+        $('#DateOfBirth').click(changedEnabledControl);
+
         $('#DetailOfEmbassy').editable({ url: changedValue });
 
         function changedValue(params) {
@@ -735,6 +809,28 @@
                 }];
             }
         });
+        //Loading accommodation
+        $.mockjax({
+            url: '/accommodation',
+            response: function (settings) {
+                this.responseText = [{
+                    value: 'Novotel Ha Long (4 stars)',
+                    text: 'Novotel Ha Long (4 stars)'
+                }, {
+                    value: 'Sai Gon Ha Long (4 stars)',
+                    text: 'Sai Gon Ha Long (4 stars)'
+                }, {
+                    value: 'Asean Ha Long (3 stars)',
+                    text: 'Asean Ha Long (3 stars)'
+                }, {
+                    value: 'Golden Lotus (3 stars)',
+                    text: 'Golden Lotus (3 stars)'
+                }, {
+                    value: 'Bach Dang (3 stars)',
+                    text: 'Bach Dang (3 stars)'
+                }];
+            }
+        });
         //Loading Sex
         $.mockjax({
             url: '/sex',
@@ -748,7 +844,7 @@
                 }];
             }
         });
-        //Loading Sex
+        //Loading meal
         $.mockjax({
             url: '/mealPreference',
             response: function (settings) {
@@ -1122,14 +1218,14 @@
         formData.append("ParticipantType", $("#ParticipantType").text());
         formData.append("YouthConference", $("#frmSaveUser input[name='YouthConference']:checked").val());
         formData.append("NeedVisaSupport", $("#frmSaveUser input[id='NeedVisaSupport']:checked").val());
-        //formData.append("DateOfBirth", $("#DateOfBirth").val());
+        formData.append("DateOfBirth", $("#DateOfBirth").val());
         formData.append("OriginalNationality", $("#OriginalNationality").text());
         formData.append("CurrentNationality", $("#CurrentNationality").text());
         formData.append("PassportNumber", $("#PassportNumber").text());
         formData.append("TypeOfPassport", $("#TypeOfPassport").text());
         formData.append("Occupation", $("#Occupation").text());
-        formData.append("DateOfPassportIssue", $("#DateOfPassportIssue").text());
-        formData.append("DateOfPassportExpiry", $("#DateOfPassportExpiry").text());
+        formData.append("DateOfPassportIssue", $("#DateOfPassportIssue").val());
+        formData.append("DateOfPassportExpiry", $("#DateOfPassportExpiry").val());
         formData.append("DetailOfEmbassy", $("#DetailOfEmbassy").text());
         $.ajax({
             type: "POST",

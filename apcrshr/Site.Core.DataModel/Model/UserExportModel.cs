@@ -56,5 +56,20 @@ namespace Site.Core.DataModel.Model
         public double Amount { get; set; }
         public string PaidDate { get; set; }
         public string Status { get; set; }
+
+        //Logistic
+        public string ArrivalDate { get; set; }
+        public string ArrivalTime { get; set; }
+        public string ArrivalFlightNumber { get; set; }
+        public string ArrivalGate { get; set; }
+        public string DepartureDate { get; set; }
+        public string DepartureTime { get; set; }
+        public string DepartureFlightNumber { get; set; }
+        public string DepartureGate { get; set; }
+        public string WhenNeedPick { get; set; }
+        public string SpecialRequirement { get; set; }
+        public string HotelName { get; set; }
+        public Nullable<DateTime> CheckinDate { get; set; }
+        public Nullable<DateTime> CheckoutDate { get; set; }
     }
 }

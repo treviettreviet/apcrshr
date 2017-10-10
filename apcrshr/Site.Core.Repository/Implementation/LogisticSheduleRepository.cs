@@ -34,7 +34,9 @@ namespace Site.Core.Repository.Implementation
                     logistic.DepartureGate = item.DepartureGate;
                     logistic.SpecialRequirement = item.SpecialRequirement;
                     logistic.WhenNeedPick = item.WhenNeedPick;
-                    logistic.UpdatedDate = DateTime.Now;
+                    logistic.HotelName = item.HotelName;
+                    logistic.CheckinDate = item.CheckinDate;
+                    logistic.CheckoutDate = item.CheckoutDate;
 
                     context.SaveChanges();
                 }

@@ -35,6 +35,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         private IUserSubmissionService _userSubmissionService;
         private IMailingAddressService _mailingAddressService;
         private IPaymentService _paymentService;
+        private ILogisticSheduleService _logisticService;
 
         public static readonly string SCHOLARSHIP_NOT_AVAILABLE = "Scholarship not available";
         public static readonly string SCHOLARSHIP_MAIN_TITLE = "Main scholarship";
@@ -54,6 +55,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             this._userSubmissionService = new UserSubmissionService();
             this._mailingAddressService = new MailingAddressService();
             this._paymentService = new PaymentService();
+            this._logisticService = new LogisticSheduleService();
         }
 
         [SessionFilter]
@@ -88,6 +90,13 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         {
             //Get user information
             FindItemReponse<UserModel> response = _userService.FindUserByID(userId);
+
+            //Find logistic
+            FindItemReponse<LogisticScheduleModel> logisticResponse = _logisticService.FindByUserID(userId);
+            if (logisticResponse.Item != null)
+            {
+                ViewBag.Logistic = logisticResponse.Item;
+            }
 
             //Find mailing
             FindAllItemReponse<MailingAddressModel> mailingResponse = _mailingAddressService.FindMailingAddressByUser(userId);
@@ -144,6 +153,23 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             }
 
             return View(response.Item);
+        }
+
+        [HttpPost]
+        public JsonResult SaveLogisticInfo(LogisticScheduleModel logistic)
+        {
+            if (!string.IsNullOrEmpty(logistic.LogisticID))
+            {
+                var response = _logisticService.Update(logistic);
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                logistic.LogisticID = Guid.NewGuid().ToString();
+                logistic.CreatedDate = DateTime.Now;
+                var response = _logisticService.Create(logistic);
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }
         }
 
         [HttpGet]
@@ -446,6 +472,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             MailingAddressModel mailing = null;
             MainScholarshipModel scholarship = null;
             PaymentModel payment = null;
+            LogisticScheduleModel logistic = null;
             foreach (UserModel user in users)
             {
                 ex = new UserExportModel();
@@ -456,6 +483,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
                 mailing = _mailing.Items != null ? _mailing.Items.FirstOrDefault() : null;
                 scholarship = _scholarship.Items != null ? _scholarship.Items.FirstOrDefault() : null;
                 payment = _payment.Items != null ? _payment.Items.FirstOrDefault() : null;
+                logistic = _logisticService.FindByUserID(user.UserID).Item;
 
                 //Convert from user to userexport
                 ConvertFromUser(user, ex);
@@ -469,10 +497,32 @@ namespace apcrshr_site.Areas.Administrator.Controllers
                 //Convert from payment
                 ConvertFromPayment(payment, ex);
 
+                //Convert logistic
+                ConvertFromLogistic(logistic, ex);
+
                 exports.Add(ex);
             }
 
             return exports;
+        }
+
+        private void ConvertFromLogistic(LogisticScheduleModel logistic, UserExportModel ex)
+        {
+            if (logistic == null) return;
+
+            ex.ArrivalDate = logistic.ArrivalDate.HasValue ? logistic.ArrivalDate.Value.ToString("yyyy/MM/dd") : string.Empty;
+            ex.ArrivalTime = logistic.ArrivalDate.HasValue ? logistic.ArrivalDate.Value.ToString("HH:mm") : string.Empty;
+            ex.ArrivalFlightNumber = logistic.ArrivalFlightNumber;
+            ex.ArrivalGate = logistic.ArrivalGate;
+            ex.DepartureDate = logistic.DepartureDate.HasValue ? logistic.DepartureDate.Value.ToString("yyyy/MM/dd") : string.Empty;
+            ex.DepartureTime = logistic.DepartureDate.HasValue ? logistic.DepartureDate.Value.ToString("HH:mm") : string.Empty;
+            ex.DepartureFlightNumber = logistic.DepartureFlightNumber;
+            ex.DepartureGate = logistic.DepartureGate;
+            ex.WhenNeedPick = logistic.WhenNeedPick;
+            ex.SpecialRequirement = logistic.SpecialRequirement;
+            ex.HotelName = logistic.HotelName;
+            ex.CheckinDate = logistic.CheckinDate;
+            ex.CheckoutDate = logistic.CheckoutDate;
         }
 
         private void ConvertFromPayment(PaymentModel payment, UserExportModel ex)
