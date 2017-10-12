@@ -632,6 +632,8 @@ namespace apcrshr_site.Controllers
             {
                 var user = userResponse.Item;
                 user.Title = registration.Title != "Empty" ? registration.Title : user.Title;
+                user.Email = registration.Email != "Empty" ? registration.Email : user.Email;
+                user.FullName = registration.FullName != "Empty" ? registration.FullName : user.FullName;
                 user.Sex = registration.Sex != "Empty" ? registration.Sex : user.Sex;
                 user.MealPreference = registration.MealPreference != "Empty" ? registration.MealPreference : user.MealPreference;
                 user.DisabilitySpecialTreatment = registration.DisabilityOrTreatment != "Empty" ? registration.DisabilityOrTreatment : user.DisabilitySpecialTreatment;

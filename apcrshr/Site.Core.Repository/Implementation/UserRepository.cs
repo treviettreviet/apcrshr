@@ -29,7 +29,7 @@ namespace Site.Core.Repository.Implementation
                 var user = context.Users.Where(u => u.UserID.Equals(item.UserID)).SingleOrDefault();
                 if (user != null)
                 {
-                    //user.Email = item.Email;
+                    user.Email = item.Email;
                     user.DateOfBirth = item.DateOfBirth;
                     user.FullName = item.FullName;
                     user.Locked = item.Locked;

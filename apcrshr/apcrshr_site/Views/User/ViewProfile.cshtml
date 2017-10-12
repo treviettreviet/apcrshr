@@ -43,8 +43,6 @@
                         {
                             @Html.HiddenFor(model => model.UserID, new { @id = "UserID" })
                             @Html.HiddenFor(model => model.MailingAddressID, new { @id = "MailingAddressID" })
-                            @Html.HiddenFor(model => model.FullName, new { @id = "FullName" })
-                            @Html.HiddenFor(model => model.Email, new { @id = "Email" })
                             @Html.HiddenFor(model => model.Locked, new { @id = "Locked" })
                             @Html.HiddenFor(model => model.UserName, new { @id = "UserName" })
                             <table id="user" class="table table-bordered table-striped table-force-topborder" style="clear: both">
@@ -58,7 +56,7 @@
                                     <tr>
                                         <td>Full Name</td>
                                         <td>
-                                            <label>@Model.FullName</label>
+                                            <a href="#" id="FullName" data-type="text" data-pk="69" data-placement="right" data-placeholder="Required" data-original-title="Enter your fullName">@Model.FullName</a>
                                         </td>
                                     </tr>
                                     <tr>
@@ -89,7 +87,7 @@
                                     <tr>
                                         <td>Email address <span class="validation-span-required">(*)</span></td>
                                         <td>
-                                            <label>@Model.Email</label>
+                                            <a href="#" id="Email" data-type="text" data-pk="76" data-placement="right" data-placeholder="Required" data-original-title="Enter your Email">@Model.Email</a>
                                         </td>
                                     </tr>
                                     <tr>
@@ -223,7 +221,7 @@
             <!-- End Accordion 1 -->
 
             <!-- Start Accordion 2 -->
-            <div class="panel panel-default">
+            @*<div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse-5" class="collapsed">
@@ -249,7 +247,7 @@
                         }
                     </div>
                 </div>
-            </div>
+            </div>*@
             <!-- End Accordion 2 -->
 
             <!-- Start Accordion 3 -->
@@ -508,6 +506,7 @@
                                         <td>Hotel name</td>
                                         <td>
                                             <a href="#" id="HotelName" data-type="select" data-pk="56" data-value="@Model.Logistic.HotelName" data-source="/accommodation" data-original-title="Select hotel name">@Model.Logistic.HotelName</a>
+                                            <br /><input type="text" id="OtherHotelName" value="" name="OtherHotelName" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -557,6 +556,9 @@
     $('#HotelName').editable({
         validate: function (value) {
             if (value == '') return 'Hotel name is required!';
+            if (value == 'Other') {
+                $("#OtherHotelName").show();
+            }
         },
         url: scheduleValueChanged
     });
@@ -608,6 +610,11 @@
         var checkinDate = $('#CheckinDate').val();
         var checkoutDate = $('#CheckoutDate').val();
 
+        var hotelName = $("#HotelName").text();
+        if (hotelName == 'Other') {
+            hotelName = $("#OtherHotelName").val();
+        }
+
         $.blockUI({ message: $('#spinner') });
         var formData = new FormData();
         formData.append("UserID", $("#UserID").val());
@@ -621,7 +628,7 @@
         var str = $("#frmSaveLogistic input[id='ArrivalDay']:checked").val() + ',' + $("#frmSaveLogistic input[id='DepartureDay']:checked").val();
         formData.append("WhenNeedPick", str);
         formData.append("SpecialRequirement", $("#SpecialRequirement").text());
-        formData.append("HotelName", $("#HotelName").text());
+        formData.append("HotelName", hotelName);
         formData.append("CheckinDate", checkinDate);
         formData.append("CheckoutDate", checkoutDate);
         $.ajax({
@@ -664,6 +671,7 @@
 
         //defaults
         $.fn.editable.defaults.url = '/post';
+        $("#OtherHotelName").hide();
 
         //editables
         $('#Title').editable({
@@ -691,9 +699,21 @@
             },
             url: changedValue
         });
+        $('#Email').editable({
+            validate: function (value) {
+                if (value == '') return 'Email is required!';
+            },
+            url: changedValue
+        });
         $('#Phone').editable({
             validate: function (value) {
                 if (value == '') return 'Phone is required!';
+            },
+            url: changedValue
+        });
+        $('#FullName').editable({
+            validate: function (value) {
+                if (value == '') return 'FullName is required!';
             },
             url: changedValue
         });
@@ -820,14 +840,17 @@
                     value: 'Sai Gon Ha Long (4 stars)',
                     text: 'Sai Gon Ha Long (4 stars)'
                 }, {
-                    value: 'Asean Ha Long (3 stars)',
-                    text: 'Asean Ha Long (3 stars)'
+                    value: 'Halong Pearl Hotel (3 stars)',
+                    text: 'Halong Pearl Hotel (3 stars)'
                 }, {
                     value: 'Golden Lotus (3 stars)',
                     text: 'Golden Lotus (3 stars)'
                 }, {
                     value: 'Bach Dang (3 stars)',
                     text: 'Bach Dang (3 stars)'
+                }, {
+                    value: 'Other',
+                    text: 'Other'
                 }];
             }
         });
