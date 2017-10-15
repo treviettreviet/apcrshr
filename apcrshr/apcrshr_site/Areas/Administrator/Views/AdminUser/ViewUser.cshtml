@@ -763,9 +763,17 @@
                                         <select class="form-control" id="HotelName" name="HotelName">
                                             <option value="Novotel Ha Long (4 stars)" @(Model.Logistic.HotelName == "Novotel Ha Long (4 stars)" ? "selected" : "")>Novotel Ha Long (4 stars)</option>
                                             <option value="Sai Gon Ha Long (4 stars)" @(Model.Logistic.HotelName == "Sai Gon Ha Long (4 stars)" ? "selected" : "")>Sai Gon Ha Long (4 stars)</option>
-                                            <option value="Asean Ha Long (3 stars)" @(Model.Logistic.HotelName == "Asean Ha Long (3 stars)" ? "selected" : "")>Asean Ha Long (3 stars)</option>
+                                            <option value="Asean Ha Long (3 stars)" @(Model.Logistic.HotelName == "Halong Pearl Hotel (3 stars)" ? "selected" : "")>Asean Ha Long (3 stars)</option>
                                             <option value="Golden Lotus (3 stars)" @(Model.Logistic.HotelName == "Golden Lotus (3 stars)" ? "selected" : "")>Golden Lotus (3 stars)</option>
                                             <option value="Bach Dang (3 stars)" @(Model.Logistic.HotelName == "Bach Dang (3 stars)" ? "selected" : "")>Bach Dang (3 stars)</option>
+                                            @if (Model.Logistic.HotelName != "Novotel Ha Long (4 stars)"
+                                                && Model.Logistic.HotelName != "Sai Gon Ha Long (4 stars)"
+                                                && Model.Logistic.HotelName != "Halong Pearl Hotel (3 stars)"
+                                                && Model.Logistic.HotelName != "Golden Lotus (3 stars)"
+                                                && Model.Logistic.HotelName != "Bach Dang (3 stars)")
+                                            {
+                                                <option value="@Model.Logistic.HotelName" selected>@Model.Logistic.HotelName</option>   
+                                            }
                                         </select>
                                     </div>
                                 </div>

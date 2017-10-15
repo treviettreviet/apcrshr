@@ -205,6 +205,10 @@ namespace apcrshr_site.Controllers
                         {
                             temp.OtherEmail = registration.OtherEmail;
                         }
+                        if (!string.IsNullOrEmpty(registration.Password))
+                        {
+                            temp.Password = registration.Password;
+                        }
                         if (!string.IsNullOrEmpty(registration.Phone))
                         {
                             temp.Phone = registration.Phone;
@@ -332,11 +336,12 @@ namespace apcrshr_site.Controllers
                 if (userresponse.Item != null)
                 {
                     UserModel user = userresponse.Item;
-                    user.Password = System.Web.Security.Membership.GeneratePassword(10, 3);
+                    user.Password = null;
+                    //user.Password = System.Web.Security.Membership.GeneratePassword(10, 3);
                     _userService.UpdateUser(user);
                     string url = string.Format("{0}://{1}:{2}/Registration/ActiveAccount?activationCode={3}", Request.Url.Scheme, Request.Url.Host, Request.Url.Port, activationcode);
                     string body = DataHelper.GetInstance().BuildMessage(userresponse.Item.UserName, user.Password, url, registrationNumber);
-                    DataHelper.GetInstance().SendEmail(userresponse.Item.Email, REGISTRATION_SUBJECT, body);
+                    //DataHelper.GetInstance().SendEmail(userresponse.Item.Email, REGISTRATION_SUBJECT, body);
                 }
             }
 
@@ -347,9 +352,9 @@ namespace apcrshr_site.Controllers
         {
             UserModel user = Convert(registration);
             user.UserID = Guid.NewGuid().ToString();
-            user.Locked = true;
+            user.Locked = false;
             user.CreatedDate = DateTime.Now;
-            user.Password = System.Web.Security.Membership.GeneratePassword(10, 3);
+            //user.Password = System.Web.Security.Membership.GeneratePassword(10, 3);
             user.UserName = user.Email;
             user.RegistrationStatus = (int)RegistrationStatus.Created;
 

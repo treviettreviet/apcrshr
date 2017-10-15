@@ -25,7 +25,7 @@
             </h3>
         </div>
         <div class="box-content">
-            @using (Html.BeginForm("SaveMainScholarship", "Scholarship", FormMethod.Post, new { @class = "form-horizontal form-validate", @id = "frmMainScholarship", @onsubmit = "onSubmitTrigger()" }))
+            @using (Html.BeginForm("#", "Scholarship", FormMethod.Post, new { @class = "form-horizontal form-validate", @id = "frmMainScholarship", @onsubmit = "onSubmitTrigger()" }))
             {
                 
                 @Html.HiddenFor(Model => Model.ScholarshipID)
@@ -62,10 +62,10 @@
                     <div class="col-sm-9">
                         <div class="checkbox">
                             <label>
-                                <input type="radio" id="ScholarshipPackage" name="ScholarshipPackage" value="Full scholarship: Registration fee, travel, hotel, perdiem" data-rule-required="true" @("Full scholarship: Registration fee, travel, hotel, perdiem".Equals(this.Model.ScholarshipPackage) ? "checked" : "")>&nbsp;Full scholarship: Registration fee, travel, hotel, perdiem<br />
-                                <input type="radio" id="ScholarshipPackage" name="ScholarshipPackage" value="Partial scholarship 1: Registration fee, travel" data-rule-required="true" @("Partial scholarship 1: Registration fee, travel".Equals(this.Model.ScholarshipPackage) ? "checked" : "")>&nbsp;Partial scholarship 1: Registration fee, travel<br />
-                                <input type="radio" id="ScholarshipPackage" name="ScholarshipPackage" value="Partial scholarship 2: Registration fee, hotel" data-rule-required="true" @("Partial scholarship 2: Registration fee, hotel".Equals(this.Model.ScholarshipPackage) ? "checked" : "")>&nbsp;Partial scholarship 2: Registration fee, hotel<br />
-                                <input type="radio" id="ScholarshipPackage" name="ScholarshipPackage" value="Partial scholarship 3: Registration fee" data-rule-required="true" @("Partial scholarship 3: Registration fee".Equals(this.Model.ScholarshipPackage) ? "checked" : "")>&nbsp;Partial scholarship 3: Registration fee
+                                <input type="radio" disabled id="ScholarshipPackage" name="ScholarshipPackage" value="Full scholarship: Registration fee, travel, hotel, perdiem" data-rule-required="true" @("Full scholarship: Registration fee, travel, hotel, perdiem".Equals(this.Model.ScholarshipPackage) ? "checked" : "")>&nbsp;Full scholarship: Registration fee, travel, hotel, perdiem<br />
+                                <input type="radio" disabled id="ScholarshipPackage" name="ScholarshipPackage" value="Partial scholarship 1: Registration fee, travel" data-rule-required="true" @("Partial scholarship 1: Registration fee, travel".Equals(this.Model.ScholarshipPackage) ? "checked" : "")>&nbsp;Partial scholarship 1: Registration fee, travel<br />
+                                <input type="radio" disabled id="ScholarshipPackage" name="ScholarshipPackage" value="Partial scholarship 2: Registration fee, hotel" data-rule-required="true" @("Partial scholarship 2: Registration fee, hotel".Equals(this.Model.ScholarshipPackage) ? "checked" : "")>&nbsp;Partial scholarship 2: Registration fee, hotel<br />
+                                <input type="radio" disabled id="ScholarshipPackage" name="ScholarshipPackage" value="Partial scholarship 3: Registration fee" data-rule-required="true" @("Partial scholarship 3: Registration fee".Equals(this.Model.ScholarshipPackage) ? "checked" : "")>&nbsp;Partial scholarship 3: Registration fee
                             </label>
                         </div>
                     </div>
@@ -83,7 +83,8 @@
                         @Html.TextBoxFor(Model => Model.Organization, new Dictionary<string, object> {
                                 { "class", "form-control" },
                                 { "data-rule-required", "true" },
-                                { "maxlength", "50" }
+                                { "maxlength", "50" },
+                                { "readonly", "readonly" }
                             })
                     </div>
                 </div>
@@ -92,7 +93,8 @@
                     <div class="col-sm-9">
                         @Html.TextBoxFor(Model => Model.Position, new Dictionary<string, object> {
                                 { "class", "form-control" },
-                                { "data-rule-required", "true" }
+                                { "data-rule-required", "true" },
+                                { "readonly", "readonly" }
                             })
                     </div>
                 </div>
@@ -102,7 +104,8 @@
                         @Html.TextBoxFor(Model => Model.DurationOfWork, new Dictionary<string, object> {
                                 { "class", "form-control" },
                                 { "data-rule-required", "true" },
-                                { "data-rule-number", "true" }
+                                { "data-rule-number", "true" },
+                                { "readonly", "readonly" }
                             })
                     </div>
                 </div>
@@ -113,7 +116,8 @@
                                 { "class", "form-control" },
                                 { "data-rule-required", "true" },
                                 { "rows", "3" },
-                                { "maxlength", "1000" }
+                                { "maxlength", "1000" },
+                                { "readonly", "readonly" }
                             })
                     </div>
                 </div>
@@ -124,7 +128,8 @@
                                 { "class", "form-control" },
                                 { "data-rule-required", "true" },
                                 { "rows", "7" },
-                                { "maxlength", "1000" }
+                                { "maxlength", "1000" },
+                                { "readonly", "readonly" }
                             })
                     </div>
                 </div>
@@ -140,11 +145,11 @@
                         <div class="col-sm-10">
                             <div class="check-demo-col">
                                 <div class="check-line">
-                                    <input type="radio" name="HasSubmitted" id="HasSubmitted" class='icheck-me' data-skin="square" data-color="blue" value="true" @(this.Model.HasSubmitted ? "checked" : "")>
+                                    <input type="radio" disabled name="HasSubmitted" id="HasSubmitted" class='icheck-me' data-skin="square" data-color="blue" value="true" @(this.Model.HasSubmitted ? "checked" : "")>
                                     <label class='inline' for="HasSubmitted">Yes</label>
                                 </div>
                                 <div class="check-line">
-                                    <input type="radio" name="HasSubmitted" id="HasSubmitted" class='icheck-me' data-skin="square" data-color="blue" value="false" @(this.Model.HasSubmitted ? "" : "checked")>
+                                    <input type="radio" disabled name="HasSubmitted" id="HasSubmitted" class='icheck-me' data-skin="square" data-color="blue" value="false" @(this.Model.HasSubmitted ? "" : "checked")>
                                     <label class='inline' for="HasSubmitted">No</label>
                                 </div>
                             </div>
@@ -155,12 +160,13 @@
                     <div class="col-sm-9">
                         @Html.TextBoxFor(Model => Model.SubmissionTitles, new Dictionary<string, object> {
                                 { "class", "tagsinput form-control" },
-                                { "SubmissionTitles", "SubmissionTitles" }
+                                { "SubmissionTitles", "SubmissionTitles" },
+                                { "readonly", "readonly" }
                             })
                     </div>
                 </div>
                 <div class="form-actions col-sm-offset-3 col-sm-9">
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button disabled type="submit" class="btn btn-primary">Save Changes</button>
                     <a href='@Url.Action("ViewProfile", "User")' class="btn btn-info">Cancel</a>
                 </div>
             }
