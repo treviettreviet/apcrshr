@@ -508,16 +508,18 @@ namespace apcrshr_site.Controllers
                         string extension = fileContent.FileName.Substring(fileContent.FileName.LastIndexOf("."));
                         //string filename = fileContent.FileName.Substring(0, fileContent.FileName.LastIndexOf(".")).Replace(" ", "-");
                         string filename = RemoveSpecialCharacters(temp.Email);
-                        fileContent.SaveAs(Server.MapPath("~/Content/upload/images/passport/" + filename + extension));
                         switch (i)
                         {
                             case 0:
+                                fileContent.SaveAs(Server.MapPath("~/Content/upload/images/passport/" + filename + "-1" + extension));
                                 temp.PassportPhoto1 = "/Content/upload/images/passport/" + filename + "-1" + extension;
                                 break;
                             case 1:
+                                fileContent.SaveAs(Server.MapPath("~/Content/upload/images/passport/" + filename + "-2" + extension));
                                 temp.PassportPhoto2 = "/Content/upload/images/passport/" + filename + "-2" + extension;
                                 break;
                             case 2:
+                                fileContent.SaveAs(Server.MapPath("~/Content/upload/images/passport/" + filename + "-3" + extension));
                                 temp.PassportPhoto3 = "/Content/upload/images/passport/" + filename + "-3" + extension;
                                 break;
                             default:

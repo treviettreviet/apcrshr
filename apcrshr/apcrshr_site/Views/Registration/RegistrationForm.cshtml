@@ -656,6 +656,7 @@
         $("#frmRegistration").formwizard("option", "remoteAjax", remoteAjax);
 
         $('#upload').on('change', function (e) {
+            $.blockUI({ message: $('#spinner') });
             var files = e.target.files;
             if (files.length > 0) {
                 if (window.FormData !== undefined) {
@@ -677,16 +678,19 @@
                         data: data,
                         success: function (result) {
                             console.log(result);
+                            $.unblockUI();
                         },
                         error: function (xhr, status, p3, p4) {
                             var err = "Error " + " " + status + " " + p3 + " " + p4;
                             if (xhr.responseText && xhr.responseText[0] == "{")
                                 err = JSON.parse(xhr.responseText).Message;
                             console.log(err);
+                            $.unblockUI();
                         }
                     });
                 } else {
                     alert("This browser doesn't support HTML5 file uploads!");
+                    $.unblockUI();
                 }
             }
         });
