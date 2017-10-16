@@ -14,6 +14,9 @@ using apcrshr_site.Models;
 using Site.Core.Repository;
 using apcrshr_site.Helper;
 using System.Globalization;
+using System.IO;
+using System.Net;
+using System.Text.RegularExpressions;
 
 namespace apcrshr_site.Controllers
 {
@@ -727,6 +730,85 @@ namespace apcrshr_site.Controllers
             BaseResponse response = _userService.ChangePassword(UserID, NewPassword);
 
             return Json(response);
+        }
+
+        [HttpPost]
+        public JsonResult Upload()
+        {
+            try
+            {
+                var userId = this.Session["User-UserID"].ToString();
+                FindItemReponse<UserModel> userReponse = _userService.FindUserByID(userId);
+                if (userReponse.Item == null)
+                {
+                    return Json(new { ErrorCode = (int)ErrorCode.Error, Message = Resources.Resource.msg_invalidUser });
+                }
+
+                var mailingResponse = _mailingService.FindMailingAddressByUser(userId);
+
+                if (mailingResponse.Items != null)
+                {
+                    var mailing = mailingResponse.Items.FirstOrDefault();
+                    if (mailing != null)
+                    {
+                        int i = 0;
+                        foreach (string file in Request.Files)
+                        {
+                            var fileContent = Request.Files[file];
+                            if (fileContent != null && fileContent.ContentLength > 0)
+                            {
+                                //Create Folder
+                                try
+                                {
+                                    if (!System.IO.File.Exists(Server.MapPath("~/Content/upload/images/passport/")))
+                                    {
+                                        Directory.CreateDirectory(Server.MapPath("~/Content/upload/images/passport/"));
+                                    }
+                                }
+                                catch (Exception) { }
+
+                                string extension = fileContent.FileName.Substring(fileContent.FileName.LastIndexOf("."));
+                                //string filename = fileContent.FileName.Substring(0, fileContent.FileName.LastIndexOf(".")).Replace(" ", "-");
+                                string filename = RemoveSpecialCharacters(userReponse.Item.Email);
+                                switch (i)
+                                {
+                                    case 0:
+                                        fileContent.SaveAs(Server.MapPath("~/Content/upload/images/passport/" + filename + "-1" + extension));
+                                        mailing.PassportPhoto1 = "/Content/upload/images/passport/" + filename + "-1" + extension;
+                                        break;
+                                    case 1:
+                                        fileContent.SaveAs(Server.MapPath("~/Content/upload/images/passport/" + filename + "-2" + extension));
+                                        mailing.PassportPhoto2 = "/Content/upload/images/passport/" + filename + "-2" + extension;
+                                        break;
+                                    case 2:
+                                        fileContent.SaveAs(Server.MapPath("~/Content/upload/images/passport/" + filename + "-3" + extension));
+                                        mailing.PassportPhoto3 = "/Content/upload/images/passport/" + filename + "-3" + extension;
+                                        break;
+                                    default:
+                                        return Json("File uploaded successfully");
+                                }
+                                i++;
+                                mailing.UpdatedDate = DateTime.Now;
+                                _mailingService.UpdateMailingAddress(mailing);
+                            }
+                        }
+                        return Json(new { ErrorCode = ErrorCode.None, Mailing = mailing });
+
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("Upload failed");
+            }
+            return Json(new { ErrorCode = ErrorCode.None });
+        }
+
+        public static string RemoveSpecialCharacters(string input)
+        {
+            Regex r = new Regex("(?:[^a-z0-9 ]|(?<=['\"])s)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+            return r.Replace(input, "-");
         }
     }
 }

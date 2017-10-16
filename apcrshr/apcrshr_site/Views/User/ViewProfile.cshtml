@@ -183,6 +183,20 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td colspan="2">
+                                            <img id="PassportPhoto1" class="fileinput-preview thumbnail" src="@(Model != null ? Model.PassportPhoto1 : "")" style="width: 200px; height: 150px; display: inline-block;" />
+                                            <img id="PassportPhoto2" class="fileinput-preview thumbnail" src="@(Model != null ? Model.PassportPhoto2 : "")" style="width: 200px; height: 150px; display: inline-block;" />
+                                            <img id="PassportPhoto3" class="fileinput-preview thumbnail" src="@(Model != null ? Model.PassportPhoto3 : "")" style="width: 200px; height: 150px; display: inline-block;" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Photocopies of the first 3 pages of the passport</td>
+                                        <td>
+                                            <input type="file" id="upload" class="form-control" multiple />
+                                            <span class="help-block">Only JPEG, JPG, PNG (Max Size: 500KB)</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td>Occupation <span class="validation-span-required">(*)</span></td>
                                         <td>
                                             <a href="#" id="Occupation" data-type="text" data-pk="19" data-placeholder="Your occupation..." data-original-title="Enter your occupation">@Model.Occupation</a>
@@ -542,6 +556,63 @@
     </div>
 
 </div>
+
+<script type="text/javascript">
+    $('#upload').on('change', function (e) {
+        $.blockUI({ message: $('#spinner') });
+        var files = e.target.files;
+        if (files.length > 0) {
+            if (window.FormData !== undefined) {
+                var data = new FormData();
+                for (var x = 0; x < files.length; x++) {
+                    if (files[x].size / 1024 > 500) {
+                        bootbox.alert('The image is too large, the size should be less than 500KB per image.', function () {
+                            bootbox.hideAll();
+                        });
+                        $(this).clearFiles();
+                        return;
+                    }
+                    data.append("file" + x, files[x]);
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Upload", "User")',
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: function (result) {
+                        if (result.ErrorCode == 0) {
+                            var mailing = result.Mailing;
+                            if (mailing) {
+                                $('#PassportPhoto1').attr('src', mailing.PassportPhoto1);
+                                $('#PassportPhoto2').attr('src', mailing.PassportPhoto2);
+                                $('#PassportPhoto3').attr('src', mailing.PassportPhoto3);
+                            }
+                        } else {
+                            bootbox.alert('File upload failed.', function () {
+                                bootbox.hideAll();
+                            });
+                        }
+                        $.unblockUI();
+                    },
+                    error: function (xhr, status, p3, p4) {
+                        var err = "Error " + " " + status + " " + p3 + " " + p4;
+                        if (xhr.responseText && xhr.responseText[0] == "{")
+                            err = JSON.parse(xhr.responseText).Message;
+                        console.log(err);
+                        $.unblockUI();
+                    }
+                });
+            } else {
+                bootbox.alert("This browser doesn't support HTML5 file uploads!", function () {
+                    bootbox.hideAll();
+                });
+                $.unblockUI();
+            }
+        }
+    });
+</script>
 
 <script type="text/javascript">
     $.datetimepicker.setLocale('en');

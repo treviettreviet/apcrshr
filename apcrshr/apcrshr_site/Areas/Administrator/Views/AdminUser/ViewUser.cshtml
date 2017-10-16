@@ -763,18 +763,21 @@
                                         <select class="form-control" id="HotelName" name="HotelName">
                                             <option value="Novotel Ha Long (4 stars)" @(Model.Logistic.HotelName == "Novotel Ha Long (4 stars)" ? "selected" : "")>Novotel Ha Long (4 stars)</option>
                                             <option value="Sai Gon Ha Long (4 stars)" @(Model.Logistic.HotelName == "Sai Gon Ha Long (4 stars)" ? "selected" : "")>Sai Gon Ha Long (4 stars)</option>
-                                            <option value="Asean Ha Long (3 stars)" @(Model.Logistic.HotelName == "Halong Pearl Hotel (3 stars)" ? "selected" : "")>Asean Ha Long (3 stars)</option>
+                                            <option value="Halong Pearl Hotel (3 stars)" @(Model.Logistic.HotelName == "Halong Pearl Hotel (3 stars)" ? "selected" : "")>Halong Pearl Hotel (3 stars)</option>
                                             <option value="Golden Lotus (3 stars)" @(Model.Logistic.HotelName == "Golden Lotus (3 stars)" ? "selected" : "")>Golden Lotus (3 stars)</option>
                                             <option value="Bach Dang (3 stars)" @(Model.Logistic.HotelName == "Bach Dang (3 stars)" ? "selected" : "")>Bach Dang (3 stars)</option>
                                             @if (Model.Logistic.HotelName != "Novotel Ha Long (4 stars)"
                                                 && Model.Logistic.HotelName != "Sai Gon Ha Long (4 stars)"
                                                 && Model.Logistic.HotelName != "Halong Pearl Hotel (3 stars)"
                                                 && Model.Logistic.HotelName != "Golden Lotus (3 stars)"
-                                                && Model.Logistic.HotelName != "Bach Dang (3 stars)")
+                                                && Model.Logistic.HotelName != "Bach Dang (3 stars)"
+                                                && !string.IsNullOrEmpty(Model.Logistic.HotelName))
                                             {
                                                 <option value="@Model.Logistic.HotelName" selected>@Model.Logistic.HotelName</option>   
                                             }
+                                            <option value="Other">Other</option>
                                         </select>
+                                        <input type="text" class="form-control" id="OtherHotelName" value="" name="OtherHotelName" />
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -813,6 +816,16 @@
     $('#CheckinDate').datetimepicker({ value: $('#CheckinDate').val(), format: $("#datetimepicker_format_value").val() });
     $('#CheckoutDate').datetimepicker({ value: $('#CheckoutDate').val(), format: $("#datetimepicker_format_value").val() });
 
+    $('#OtherHotelName').hide();
+    $('#HotelName').change(function () {
+        var selected = $(this).val()
+        if (selected == 'Other') {
+            $('#OtherHotelName').show();
+        } else {
+            $('#OtherHotelName').hide();
+        }
+    });
+
     $("#btnSaveFlightSchedule").click(function () {
         var arrivalDate = $('#ArrivalDate').val();
         var departureDate = $('#DepartureDate').val();
@@ -826,6 +839,11 @@
 
         var checkinDate = $('#CheckinDate').val();
         var checkoutDate = $('#CheckoutDate').val();
+        
+        var hotelName = $("#HotelName").find(":selected").val();
+        if (hotelName == 'Other') {
+            hotelName = $("#OtherHotelName").val();
+        }
 
         $.blockUI({ message: $('#spinner') });
         var formData = new FormData();
@@ -840,7 +858,7 @@
         var str = $("#frmSaveLogistic input[id='ArrivalDay']:checked").val() + ',' + $("#frmSaveLogistic input[id='DepartureDay']:checked").val();
         formData.append("WhenNeedPick", str);
         formData.append("SpecialRequirement", $("#SpecialRequirement").val());
-        formData.append("HotelName", $("#HotelName").find(":selected").val());
+        formData.append("HotelName", hotelName);
         formData.append("CheckinDate", checkinDate);
         formData.append("CheckoutDate", checkoutDate);
         $.ajax({
