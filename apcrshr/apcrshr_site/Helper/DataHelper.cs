@@ -17,12 +17,21 @@ using System.Net;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using Mailjet.Client;
+using Newtonsoft.Json.Linq;
+using Mailjet.Client.Resources;
 
 namespace apcrshr_site.Helper
 {
     public class DataHelper
     {
-        private static readonly string EMAIL = "abstract.apcrshr9vn@gmail.com";
+        private static readonly string NAME = "[no-reply] apcrshr9vn.org";
+        private static readonly string EMAIL = "no-reply@apcrshr9vn.org";
+        private static readonly string USERNAME = "c48002f4d325b6e9c63da59cc6af4c77";
+        private static readonly string SECRET = "85d75c51447ae61949fa9817f4f8f825";
+        private static readonly string SMTP_SERVER = "in-v3.mailjet.com";
+        private static readonly int SMTP_PORT = 587;
+
         private static readonly string EMAIL_FORM = "secretariat@apcrshr9vn.org";
         private static readonly string PASSWORD = "kjKJSDIFU8sf7*U*&FJDkfskdfjdjfhyT%$%^sgfdjsnflksflkM%%$#VBskmf;ls,fpl_-sfKKLFN)(F*s9f8s98fosnflkJFisf89sufdflkdmflkdmfkdfjUY*UFdjfnKJHyts76%&D*y8768y78FdkjfF98sufj==";
         private static readonly string CIPHER = "z3HMcf1v7/r+g4FqNPL0CqwoKQbdvwofhpcbDL6vyFK1ZPZ/ZM9n/rbiigd+r037d2VtcgRRh/HQ53Hx1dsuUUOf/nAgL8RX5YYaER/HbyQJc1+2LbsfcP8ygoWkvdM/";
@@ -169,48 +178,38 @@ namespace apcrshr_site.Helper
             return builder.ToString();
         }
 
-        public void SendEmail(string destinationEmail, string subject, string body)
+        public async void SendEmail(string destinationEmail, string subject, string body)
         {
-            var mail = new System.Net.Mail.MailMessage();
-            mail.To.Add(new MailAddress(destinationEmail));
-            mail.From = new MailAddress(EMAIL_FORM);
-            mail.Subject = subject;
-            mail.Body = body;
-            mail.IsBodyHtml = true;
-            SmtpClient smtp = new SmtpClient();
-            smtp.Host = HOST;
-            smtp.Port = PORT;
-            smtp.UseDefaultCredentials = false;
-            smtp.Credentials = new System.Net.NetworkCredential
-            (EMAIL, StringCipher.Decrypt(CIPHER, PASSWORD));
-            smtp.EnableSsl = true;
-            try
+            MailjetClient client = new MailjetClient(USERNAME, SECRET);
+            MailjetRequest request = new MailjetRequest
             {
-                smtp.Send(mail);
+                Resource = Send.Resource,
             }
-            catch (SmtpFailedRecipientsException ex)
+            .Property(Send.FromEmail, EMAIL)
+            .Property(Send.FromName, NAME)
+            .Property(Send.Subject, subject)
+            .Property(Send.TextPart, "")
+            .Property(Send.HtmlPart, body)
+            .Property(Send.Recipients, new JArray 
             {
-                for (int i = 0; i < ex.InnerExceptions.Length; i++)
+                new JObject 
                 {
-                    SmtpStatusCode status = ex.InnerExceptions[i].StatusCode;
-                    if (status == SmtpStatusCode.MailboxBusy ||
-                        status == SmtpStatusCode.MailboxUnavailable)
-                    {
-                        Console.WriteLine("Delivery failed - retrying in 5 seconds.");
-                        System.Threading.Thread.Sleep(5000);
-                        smtp.Send(mail);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Failed to deliver message to {0}",
-                            ex.InnerExceptions[i].FailedRecipient);
-                    }
+                    {"Email", destinationEmail}
                 }
-            }
-            catch (Exception ex)
+            });
+
+            MailjetResponse response = await client.PostAsync(request);
+            if (response.IsSuccessStatusCode)
             {
-                Console.WriteLine("Exception caught in RetryIfBusy(): {0}",
-                        ex.ToString());
+                Console.WriteLine(string.Format("Total: {0}, Count: {1}\n", response.GetTotal(), response.GetCount()));
+                Console.WriteLine(response.GetData());
+            }
+            else
+            {
+                Console.WriteLine(string.Format("StatusCode: {0}\n", response.StatusCode));
+                Console.WriteLine(string.Format("ErrorInfo: {0}\n", response.GetErrorInfo()));
+                Console.WriteLine(response.GetData());
+                Console.WriteLine(string.Format("ErrorMessage: {0}\n", response.GetErrorMessage()));
             }
         }
 

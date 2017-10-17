@@ -17,6 +17,8 @@ using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace apcrshr_site.Controllers
 {
@@ -584,7 +586,7 @@ namespace apcrshr_site.Controllers
                         response.Message = Resources.Resource.msg_forgotPassword_emailSend;
 
                         string body = string.Format("Your password: <b>{0}</b>", _user.Password);
-                        DataHelper.GetInstance().SendEmail(user.Item.Email, "Password recovery", body);
+                        Task.Run(() => DataHelper.GetInstance().SendEmail(user.Item.Email, "Password recovery", body));
                     }
                 }
                 else
