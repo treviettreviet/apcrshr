@@ -19,6 +19,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Text;
 
 namespace apcrshr_site.Controllers
 {
@@ -46,6 +47,7 @@ namespace apcrshr_site.Controllers
         private IPaymentService _paymentService;
         private IUserSubmissionService _userSubmissionService;
         private ILogisticSheduleService _logisticService;
+        private ITransactionHistoryService _transaction;
 
         public UserController()
         {
@@ -54,6 +56,7 @@ namespace apcrshr_site.Controllers
             this._paymentService = new PaymentService();
             this._userSubmissionService = new UserSubmissionService();
             this._logisticService = new LogisticSheduleService();
+            this._transaction = new TransactionHistoryService();
         }
 
 
@@ -422,6 +425,23 @@ namespace apcrshr_site.Controllers
                         //Return url
                         conn.AddDigitalOrderField("vpc_ReturnURL", vpc_ReturnURL);
 
+                        StringBuilder builder = new StringBuilder();
+                        builder.Append(string.Format("Transaction vpc_MerchTxnRef {0}, ", subId));
+                        builder.Append(string.Format("Transaction vpc_Merchant {0}, ", vpc_Merchant));
+                        builder.Append(string.Format("Transaction vpc_Amount {0}, ", amount));
+                        builder.Append(string.Format("Transaction vpc_OrderInfo {0}, ", mailing.ParticipantType));
+                        builder.Append(string.Format("Transaction email {0}", response.Item.Email));
+
+                        TransactionHistoryModel trans = new TransactionHistoryModel
+                        {
+                            Action = "Create payment",
+                            CreatedDate = DateTime.Now,
+                            Log = builder.ToString(),
+                            Status = (int)TransactionStatus.Created,
+                            UserId = response.Item.UserID
+                        };
+                        _transaction.Create(trans);
+
                         // Thong tin them ve khach hang. De trong neu khong co thong tin
                         //conn.AddDigitalOrderField("vpc_SHIP_Street01", "194 Tran Quang Khai");
                         //conn.AddDigitalOrderField("vpc_SHIP_Provice", "Hanoi");
@@ -448,26 +468,71 @@ namespace apcrshr_site.Controllers
         public ActionResult PaymentReturn()
         {
             string hashvalidateResult = "";
-            // Khoi tao lop thu vien
-            VPCRequest conn = new VPCRequest("http://onepay.vn");
-            conn.SetSecureSecret(SECURE_SECRET);
-            // Xu ly tham so tra ve va kiem tra chuoi du lieu ma hoa
-            hashvalidateResult = conn.Process3PartyResponse(Request.QueryString);
-            // Lay gia tri tham so tra ve tu cong thanh toan
-            String vpc_TxnResponseCode = conn.GetResultField("vpc_TxnResponseCode", "Unknown");
-            string amount = conn.GetResultField("vpc_Amount", "Unknown");
-            string localed = conn.GetResultField("vpc_Locale", "Unknown");
-            string command = conn.GetResultField("vpc_Command", "Unknown");
-            string version = conn.GetResultField("vpc_Version", "Unknown");
-            string cardType = conn.GetResultField("vpc_Card", "Unknown");
-            string orderInfo = conn.GetResultField("vpc_OrderInfo", "Unknown");
-            string merchantID = conn.GetResultField("vpc_Merchant", "Unknown");
-            string authorizeID = conn.GetResultField("vpc_AuthorizeId", "Unknown");
-            string merchTxnRef = conn.GetResultField("vpc_MerchTxnRef", "Unknown");
-            string transactionNo = conn.GetResultField("vpc_TransactionNo", "Unknown");
-            string acqResponseCode = conn.GetResultField("vpc_AcqResponseCode", "Unknown");
-            string txnResponseCode = vpc_TxnResponseCode;
-            string message = conn.GetResultField("vpc_Message", "Unknown");
+            string vpc_TxnResponseCode = "Unknown";
+            string amount = "Unknown";
+            string localed = "Unknown";
+            string command = "Unknown";
+            string version = "Unknown";
+            string cardType = "Unknown";
+            string orderInfo = "Unknown";
+            string merchantID = "Unknown";
+            string authorizeID = "Unknown";
+            string merchTxnRef = "Unknown";
+            string transactionNo = "Unknown";
+            string acqResponseCode = "Unknown";
+            string txnResponseCode = "Unknown";
+            string message = "Unknown";
+
+            try
+            {
+                // Khoi tao lop thu vien
+                VPCRequest conn = new VPCRequest("http://onepay.vn");
+                conn.SetSecureSecret(SECURE_SECRET);
+                // Xu ly tham so tra ve va kiem tra chuoi du lieu ma hoa
+                hashvalidateResult = conn.Process3PartyResponse(Request.QueryString);
+                // Lay gia tri tham so tra ve tu cong thanh toan
+                vpc_TxnResponseCode = conn.GetResultField("vpc_TxnResponseCode", "Unknown");
+                amount = conn.GetResultField("vpc_Amount", "Unknown");
+                localed = conn.GetResultField("vpc_Locale", "Unknown");
+                command = conn.GetResultField("vpc_Command", "Unknown");
+                version = conn.GetResultField("vpc_Version", "Unknown");
+                cardType = conn.GetResultField("vpc_Card", "Unknown");
+                orderInfo = conn.GetResultField("vpc_OrderInfo", "Unknown");
+                merchantID = conn.GetResultField("vpc_Merchant", "Unknown");
+                authorizeID = conn.GetResultField("vpc_AuthorizeId", "Unknown");
+                merchTxnRef = conn.GetResultField("vpc_MerchTxnRef", "Unknown");
+                transactionNo = conn.GetResultField("vpc_TransactionNo", "Unknown");
+                acqResponseCode = conn.GetResultField("vpc_AcqResponseCode", "Unknown");
+                txnResponseCode = vpc_TxnResponseCode;
+                message = conn.GetResultField("vpc_Message", "Unknown");
+            }
+            catch (Exception ex)
+            {
+                // Log info
+                StringBuilder builder = new StringBuilder();
+                builder.Append(string.Format("Transaction vpc_MerchTxnRef {0}, ", merchTxnRef));
+                builder.Append(string.Format("Transaction vpc_Merchant {0}, ", merchantID));
+                builder.Append(string.Format("Transaction vpc_Amount {0}, ", amount));
+                builder.Append(string.Format("Transaction vpc_OrderInfo {0}, ", orderInfo));
+                builder.Append(string.Format("Transaction hashvalidateResult {0}, ", hashvalidateResult));
+                builder.Append(string.Format("Transaction error messate {0}, ", ex.StackTrace));
+
+                var id = merchTxnRef;
+                if (merchTxnRef != "Unknown" && merchTxnRef.Contains("_"))
+                {
+                    id = merchTxnRef.Split('_')[0];
+                }
+
+                TransactionHistoryModel trans = new TransactionHistoryModel
+                {
+                    Action = "Payment return",
+                    CreatedDate = DateTime.Now,
+                    Log = builder.ToString(),
+                    Status = (int)TransactionStatus.Error,
+                    UserId = id
+                };
+                _transaction.Create(trans);
+            }
 
             string refId = merchTxnRef;
 
@@ -554,6 +619,24 @@ namespace apcrshr_site.Controllers
 
             InsertResponse _response = _paymentService.Create(payment);
             _response.Message = msg;
+
+            // Log info
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.Append(string.Format("Transaction vpc_MerchTxnRef {0}, ", merchTxnRef));
+            strBuilder.Append(string.Format("Transaction vpc_Merchant {0}, ", merchantID));
+            strBuilder.Append(string.Format("Transaction vpc_Amount {0}, ", amount));
+            strBuilder.Append(string.Format("Transaction vpc_OrderInfo {0}, ", orderInfo));
+            strBuilder.Append(string.Format("Transaction hashvalidateResult {0}, ", hashvalidateResult));
+
+            TransactionHistoryModel transaction = new TransactionHistoryModel
+            {
+                Action = "Payment completed",
+                CreatedDate = DateTime.Now,
+                Log = strBuilder.ToString(),
+                Status = (int)TransactionStatus.Completed,
+                UserId = merchTxnRef
+            };
+            _transaction.Create(transaction);
 
             return View(_response);
         }
