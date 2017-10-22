@@ -396,6 +396,14 @@
                                     <!-- End Pricing Tables -->
                                 }
                             }
+                            else
+                            {
+                                <!-- Start Big Heading -->
+                                    <div class="big-title text-center">
+                                        <h1>Please <strong>complete</strong> your information before make a payment!</h1>
+                                    </div>
+                                    <!-- End Big Heading -->
+                            }
                             <br />
                             <div class="row" style="overflow: scroll;">
                                 <script type="text/javascript" src="http://202.9.84.88/documents/payment/logoscript.jsp?logos=v,m,a,j,u,at&lang=en"></script>
@@ -1296,9 +1304,9 @@
         var formData = new FormData();
         formData.append("UserID", $("#UserID").val());
         formData.append("MailingAddressID", $("#MailingAddressID").val());
-        formData.append("FullName", $("#FullName").val());
+        formData.append("FullName", $("#FullName").text());
         formData.append("Title", $("#Title").text());
-        formData.append("Email", $("#Email").val());
+        formData.append("Email", $("#Email").text());
         formData.append("Locked", $("#Locked").val());
         formData.append("UserName", $("#UserName").val());
         formData.append("Sex", $("#Sex").text());

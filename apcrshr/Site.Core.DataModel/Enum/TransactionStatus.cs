@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace Site.Core.DataModel.Enum
 {
-    public enum PaymentStatus
+    public enum TransactionStatus
     {
-        Initialized = 5,
-        Completed = 0,
-        Pending = 1,
-        Error = 2,
-        Cash = 3,
-        FreeRegistration = 4
+        Created = 1,
+        Pending = 2,
+        Completed = 3,
+        Error = 4
     }
 }

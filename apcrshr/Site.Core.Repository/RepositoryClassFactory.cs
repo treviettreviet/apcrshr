@@ -165,5 +165,10 @@ namespace Site.Core.Repository
         {
             return new LogisticSheduleRepository();
         }
+
+        public ITransactionHistoryRepository GetTransactionHistoryRepository()
+        {
+            return new TransactionHistoryRepository();
+        }
     }
 }

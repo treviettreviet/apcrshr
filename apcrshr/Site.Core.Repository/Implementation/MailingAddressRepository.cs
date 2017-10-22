@@ -30,7 +30,6 @@ namespace Site.Core.Repository.Implementation
                     mailing.UpdatedDate = DateTime.Now;
                     mailing.ParticipantType = item.ParticipantType;
                     mailing.ParticipateYouth = item.ParticipateYouth;
-                    mailing.DateOfBirth = item.DateOfBirth;
                     mailing.OriginalNationality = item.OriginalNationality;
                     mailing.CurrentNationality = item.CurrentNationality;
                     mailing.PassportNumber = item.PassportNumber;

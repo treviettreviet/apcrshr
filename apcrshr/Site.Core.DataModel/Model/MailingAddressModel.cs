@@ -14,7 +14,6 @@ namespace Site.Core.DataModel.Model
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public string ParticipantType { get; set; }
         public string ParticipateYouth { get; set; }
-        public Nullable<System.DateTime> DateOfBirth { get; set; }
         public string OriginalNationality { get; set; }
         public string CurrentNationality { get; set; }
         public string PassportNumber { get; set; }

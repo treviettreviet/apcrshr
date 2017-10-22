@@ -681,8 +681,31 @@ namespace apcrshr_site.Controllers
             }
             else
             {
-                response.ErrorCode = (int)ErrorCode.Error;
-                response.Message = Resources.Resource.msg_commonError;
+                var mailing = new MailingAddressModel
+                {
+                    MailingAddressID = Guid.NewGuid().ToString(),
+                    ActivationCode = UrlSlugger.Get8Digits(),
+                    CreatedDate = DateTime.Now,
+                    ParticipantType = registration.ParticipantType,
+                    ParticipateYouth = registration.YouthConference,
+                    NeedVisaSupport = registration.NeedVisaSupport,
+                    OriginalNationality = registration.OriginalNationality,
+                    CurrentNationality = registration.CurrentNationality,
+                    Occupation = registration.Occupation,
+                    DetailOfEmbassy = registration.DetailOfEmbassy,
+                    PassportNumber = registration.PassportNumber,
+                    DateOfPassportIssue = registration.DateOfPassportIssue,
+                    DateOfPassportExpiry = registration.DateOfPassportExpiry,
+                    PassportPhoto1 = registration.PassportPhoto1,
+                    PassportPhoto2 = registration.PassportPhoto2,
+                    PassportPhoto3 = registration.PassportPhoto3,
+                    RegistrationNumber = UrlSlugger.Get8Digits(),
+                    TypeOfPassport = registration.TypeOfPassport,
+                    UserID = userResponse.Item.UserID
+                };
+                var insertResponse = _mailingService.CreateMailingAddress(mailing);
+                response.ErrorCode = insertResponse.ErrorCode;
+                response.Message = insertResponse.ErrorCode != (int) ErrorCode.None ? "Please input required fields" : "Update succeeded";
             }
             return Json(response, JsonRequestBehavior.AllowGet);
         }

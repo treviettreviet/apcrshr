@@ -61,6 +61,7 @@
     <Compile Include="ISliderService.cs" />
     <Compile Include="ISubscriberService.cs" />
     <Compile Include="ITrainingService.cs" />
+    <Compile Include="ITransactionHistoryService.cs" />
     <Compile Include="IUploadService.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="IUserSubmissionService.cs" />

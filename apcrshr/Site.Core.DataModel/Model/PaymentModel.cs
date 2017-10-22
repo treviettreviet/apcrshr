@@ -18,5 +18,6 @@ namespace Site.Core.DataModel.Model
         public string UpdatedBy { get; set; }
         public int Status { get; set; }
         public string MerchRef { get; set; }
+        public string Log { get; set; }
     }
 }

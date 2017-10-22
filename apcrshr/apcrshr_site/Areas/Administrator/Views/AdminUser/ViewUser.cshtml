@@ -620,7 +620,7 @@
                             </div>
                         </div>
                         <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
-                               data-column_filter_types="null,text,text,text,text,select,null" 
+                               data-column_filter_types="null,text,text,text,text,select,text,null" 
                                data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
                             <thead>
                                 <tr>
@@ -632,6 +632,7 @@
                                     <th>Amount</th>
                                     <th>Paid Date</th>
                                     <th>Status</th>
+                                    <th>Log</th>
                                     <th class='hidden-480'>Actions</th>
                                 </tr>
                             </thead>
@@ -650,6 +651,7 @@
                                             <td>@String.Format("{0:0,0.00}", payments[i].Amount) VND</td>
                                             <td>@payments[i].CreatedDate.ToShortDateString()</td>
                                             <td>@(Enum.GetName(typeof(Site.Core.DataModel.Enum.PaymentStatus), payments[i].Status))</td>
+                                            <td>@payments[i].Log</td>
                                             <td class='hidden-480'>
                                                 <a href='@Url.Action("UpdatePayment", "AdminUser", new { paymentID = payments[i].PaymentID })' class="btn" rel="tooltip" title="Sửa">
                                                     <i class="fa fa-edit"></i>

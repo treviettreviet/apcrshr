@@ -55,6 +55,7 @@
     <Compile Include="Enum\RoleType.cs" />
     <Compile Include="Enum\ScholarshipStatus.cs" />
     <Compile Include="Enum\SubmissionStatus.cs" />
+    <Compile Include="Enum\TransactionStatus.cs" />
     <Compile Include="Model\AdminModel.cs" />
     <Compile Include="Model\AlbumModel.cs" />
     <Compile Include="Model\ArticleModel.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Model\SliderModel.cs" />
     <Compile Include="Model\SubscriberModel.cs" />
     <Compile Include="Model\TrainingModel.cs" />
+    <Compile Include="Model\TransactionHistoryModel.cs" />
     <Compile Include="Model\UploadModel.cs" />
     <Compile Include="Model\UserExportModel.cs" />
     <Compile Include="Model\UserModel.cs" />

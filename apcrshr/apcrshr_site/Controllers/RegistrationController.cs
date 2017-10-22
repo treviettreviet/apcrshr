@@ -424,7 +424,6 @@ namespace apcrshr_site.Controllers
             MailingAddressModel mailing = new MailingAddressModel();
             mailing.UserID = registration.UserID;
             mailing.CurrentNationality = registration.CurrentNationality;
-            mailing.DateOfBirth = registration.DateOfBirth;
             mailing.DateOfPassportExpiry = registration.DateOfPassportExpiry;
             mailing.DateOfPassportIssue = registration.DateOfPassportIssue;
             mailing.DetailOfEmbassy = registration.DetailOfEmbassy;
@@ -447,7 +446,6 @@ namespace apcrshr_site.Controllers
             RegistrationModel registration = new RegistrationModel();
             registration.UserID = mailing.UserID;
             registration.CurrentNationality = mailing.CurrentNationality;
-            registration.DateOfBirth = mailing.DateOfBirth;
             registration.DateOfPassportExpiry = mailing.DateOfPassportExpiry;
             registration.DateOfPassportIssue = mailing.DateOfPassportIssue;
             registration.DetailOfEmbassy = mailing.DetailOfEmbassy;
