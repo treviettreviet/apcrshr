@@ -219,17 +219,20 @@ namespace apcrshr_site.Controllers
 
                         //Find payment
                         FindAllItemReponse<PaymentModel> paymentResponse = _paymentService.FindByUserID(Session["User-UserID"].ToString());
-                        if (paymentResponse != null && paymentResponse.Items != null && paymentResponse.Items.Count > 0)
+                        var paymentCompleted = paymentResponse.Items.Where(p => p.PaymentType.Equals(registration.ParticipantType)
+                            && (p.Status == (int)PaymentStatus.Completed || p.Status == (int)PaymentStatus.Cash)).ToList();
+                        if (paymentCompleted != null && paymentCompleted.Count > 0)
                         {
-                            var paid = paymentResponse.Items.Where(p => p.PaymentType.Equals(registration.ParticipantType)).SingleOrDefault();
-                            if (paid != null && (paid.Status == (int) PaymentStatus.Completed || paid.Status == (int) PaymentStatus.Cash))
-                            {
-                                fee = 0;
-                            }
-                            else
-                            {
-                                ViewBag.PaymentStatus = "Your transaction has an <strong>error</strong> occurred, please contact administrator!";
-                            }
+                            fee = 0;
+                            //var paid = paymentResponse.Items.Where(p => p.PaymentType.Equals(registration.ParticipantType)).SingleOrDefault();
+                            //if (paid != null && (paid.Status == (int) PaymentStatus.Completed || paid.Status == (int) PaymentStatus.Cash))
+                            //{
+                            //    fee = 0;
+                            //}
+                            //else
+                            //{
+                            //    ViewBag.PaymentStatus = "Your transaction has an <strong>error</strong> occurred, please contact administrator!";
+                            //}
                         }
                         else
                         {
@@ -464,7 +467,6 @@ namespace apcrshr_site.Controllers
         }
 
         [HttpGet]
-        [UserSessionFilter]
         public ActionResult PaymentReturn()
         {
             string hashvalidateResult = "";
