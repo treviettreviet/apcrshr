@@ -13,6 +13,7 @@ namespace Site.Core.DataModel.Enum
         Pending = 1,
         Error = 2,
         Cash = 3,
-        FreeRegistration = 4
+        FreeRegistration = 4,
+        BankTransfer = 5
     }
 }

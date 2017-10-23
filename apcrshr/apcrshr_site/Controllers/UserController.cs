@@ -220,7 +220,9 @@ namespace apcrshr_site.Controllers
                         //Find payment
                         FindAllItemReponse<PaymentModel> paymentResponse = _paymentService.FindByUserID(Session["User-UserID"].ToString());
                         var paymentCompleted = paymentResponse.Items.Where(p => p.PaymentType.Equals(registration.ParticipantType)
-                            && (p.Status == (int)PaymentStatus.Completed || p.Status == (int)PaymentStatus.Cash)).ToList();
+                            && (p.Status == (int)PaymentStatus.Completed 
+                            || p.Status == (int)PaymentStatus.Cash
+                            || p.Status == (int)PaymentStatus.BankTransfer)).ToList();
                         if (paymentCompleted != null && paymentCompleted.Count > 0)
                         {
                             fee = 0;
@@ -441,7 +443,8 @@ namespace apcrshr_site.Controllers
                             CreatedDate = DateTime.Now,
                             Log = builder.ToString(),
                             Status = (int)TransactionStatus.Created,
-                            UserId = response.Item.UserID
+                            UserId = response.Item.UserID,
+                            Email = response.Item.Email
                         };
                         _transaction.Create(trans);
 
@@ -519,21 +522,33 @@ namespace apcrshr_site.Controllers
 
             //Find user
             string userID = "";
+            string email = "";
             if (merchTxnRef != "Unknown")
             {
                 FindItemReponse<UserModel> userResponse = _userService.FindStartWithID(merchTxnRef);
                 if (userResponse.Item != null)
                 {
                     userID = userResponse.Item.UserID;
+                    email = userResponse.Item.Email;
                 }
                 else
                 {
                     userID = orderInfo;
+                    userResponse = _userService.FindStartWithID(orderInfo);
+                    if (userResponse.Item != null)
+                    {
+                        email = userResponse.Item.Email;
+                    }
                 }
             }
             else
             {
                 userID = orderInfo;
+                var userResponse = _userService.FindStartWithID(orderInfo);
+                if (userResponse.Item != null)
+                {
+                    email = userResponse.Item.Email;
+                }
             }
 
             //Save payment
@@ -624,7 +639,8 @@ namespace apcrshr_site.Controllers
                 CreatedDate = DateTime.Now,
                 Log = strBuilder.ToString(),
                 Status = (int)TransactionStatus.Completed,
-                UserId = merchTxnRef
+                UserId = merchTxnRef,
+                Email = email
             };
             _transaction.Create(transaction);
 
@@ -683,7 +699,8 @@ namespace apcrshr_site.Controllers
                 CreatedDate = DateTime.Now,
                 Log = builder.ToString(),
                 Status = (int)TransactionStatus.Error,
-                UserId = userId
+                UserId = userId,
+                Email = email
             };
             _transaction.Create(trans);
         }

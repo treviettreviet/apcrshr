@@ -216,6 +216,7 @@
     <Compile Include="Areas\Administrator\Controllers\AdminVideoController.cs" />
     <Compile Include="Areas\Administrator\Controllers\ArticleController.cs" />
     <Compile Include="Areas\Administrator\Controllers\ErrorController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\TransactionController.cs" />
     <Compile Include="Constants\Constants.cs" />
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
@@ -1202,6 +1203,7 @@
     <Content Include="Areas\Administrator\Views\AdminUser\UpdateAbstract.cshtml" />
     <Content Include="Areas\Administrator\Views\AdminUser\UpdatePayment.cshtml" />
     <Content Include="Areas\Administrator\Views\AdminUser\CreatePayment.cshtml" />
+    <Content Include="Areas\Administrator\Views\Transaction\Index.cshtml" />
     <None Include="Properties\PublishProfiles\apcrshr.hvtec.vn - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />

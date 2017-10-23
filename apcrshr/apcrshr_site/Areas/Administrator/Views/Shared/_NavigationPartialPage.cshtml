@@ -26,6 +26,12 @@
 
                 </a>
             </li>
+            <li class='@(ViewBag.CurrentNode == "Transaction" ? "active" : "")'>
+                <a href="@Url.Action("Index", "Transaction")">
+                    <span>Lịch sử giao dịch</span>
+
+                </a>
+            </li>
             <li class='@(ViewBag.CurrentNode == "AdminImportantDeadline" ? "active" : "")'>
                 <a href="@Url.Action("Index","AdminImportantDeadline")">
                     <span>Mở kỳ hạn</span>

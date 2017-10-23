@@ -20,5 +20,6 @@ namespace Site.Core.Repository
         public int Status { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string Log { get; set; }
+        public string Email { get; set; }
     }
 }
