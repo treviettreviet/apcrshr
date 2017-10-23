@@ -180,17 +180,19 @@ namespace apcrshr_site.Helper
 
         public async void SendEmail(string destinationEmail, string subject, string body)
         {
-            MailjetClient client = new MailjetClient(USERNAME, SECRET);
-            MailjetRequest request = new MailjetRequest
+            try
             {
-                Resource = Send.Resource,
-            }
-            .Property(Send.FromEmail, EMAIL)
-            .Property(Send.FromName, NAME)
-            .Property(Send.Subject, subject)
-            .Property(Send.TextPart, "")
-            .Property(Send.HtmlPart, body)
-            .Property(Send.Recipients, new JArray 
+                MailjetClient client = new MailjetClient(USERNAME, SECRET);
+                MailjetRequest request = new MailjetRequest
+                {
+                    Resource = Send.Resource,
+                }
+                .Property(Send.FromEmail, EMAIL)
+                .Property(Send.FromName, NAME)
+                .Property(Send.Subject, subject)
+                .Property(Send.TextPart, "")
+                .Property(Send.HtmlPart, body)
+                .Property(Send.Recipients, new JArray 
             {
                 new JObject 
                 {
@@ -198,19 +200,21 @@ namespace apcrshr_site.Helper
                 }
             });
 
-            MailjetResponse response = await client.PostAsync(request);
-            if (response.IsSuccessStatusCode)
-            {
-                Console.WriteLine(string.Format("Total: {0}, Count: {1}\n", response.GetTotal(), response.GetCount()));
-                Console.WriteLine(response.GetData());
+                MailjetResponse response = await client.PostAsync(request);
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine(string.Format("Total: {0}, Count: {1}\n", response.GetTotal(), response.GetCount()));
+                    Console.WriteLine(response.GetData());
+                }
+                else
+                {
+                    Console.WriteLine(string.Format("StatusCode: {0}\n", response.StatusCode));
+                    Console.WriteLine(string.Format("ErrorInfo: {0}\n", response.GetErrorInfo()));
+                    Console.WriteLine(response.GetData());
+                    Console.WriteLine(string.Format("ErrorMessage: {0}\n", response.GetErrorMessage()));
+                }
             }
-            else
-            {
-                Console.WriteLine(string.Format("StatusCode: {0}\n", response.StatusCode));
-                Console.WriteLine(string.Format("ErrorInfo: {0}\n", response.GetErrorInfo()));
-                Console.WriteLine(response.GetData());
-                Console.WriteLine(string.Format("ErrorMessage: {0}\n", response.GetErrorMessage()));
-            }
+            catch (Exception) { }
         }
 
         public string GetUniqueNumbers()

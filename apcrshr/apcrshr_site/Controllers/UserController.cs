@@ -74,7 +74,7 @@ namespace apcrshr_site.Controllers
         }
 
         [HttpPost]
-        
+
         public ActionResult UserLogin(UserModel user)
         {
             if (ModelState.IsValid)
@@ -98,7 +98,7 @@ namespace apcrshr_site.Controllers
         }
 
         [HttpPost]
-        
+
         public ActionResult RegisterUser(UserModel user)
         {
             if (ModelState.IsValid)
@@ -416,13 +416,13 @@ namespace apcrshr_site.Controllers
                         conn.AddDigitalOrderField("vpc_Command", vpc_Command);
 
                         //Test account
-                        string subId = string.Format("{0}_{1}", response.Item.UserID.Substring(0, response.Item.UserID.LastIndexOf("-")), UrlSlugger.Get8Digits());
+                        string subId = string.Format("{0}_{1}", response.Item.UserID.Substring(0, response.Item.UserID.LastIndexOf("-")), DateTime.Now.Ticks);
                         conn.AddDigitalOrderField("vpc_Merchant", vpc_Merchant);
                         conn.AddDigitalOrderField("vpc_AccessCode", vpc_AccessCode);
                         conn.AddDigitalOrderField("vpc_MerchTxnRef", subId);
 
                         //Package order
-                        conn.AddDigitalOrderField("vpc_OrderInfo", mailing.ParticipantType);
+                        conn.AddDigitalOrderField("vpc_OrderInfo", response.Item.UserID);
                         conn.AddDigitalOrderField("vpc_Amount", amount.ToString());
 
                         //Return url
@@ -432,7 +432,7 @@ namespace apcrshr_site.Controllers
                         builder.Append(string.Format("Transaction vpc_MerchTxnRef {0}, ", subId));
                         builder.Append(string.Format("Transaction vpc_Merchant {0}, ", vpc_Merchant));
                         builder.Append(string.Format("Transaction vpc_Amount {0}, ", amount));
-                        builder.Append(string.Format("Transaction vpc_OrderInfo {0}, ", mailing.ParticipantType));
+                        builder.Append(string.Format("Transaction vpc_OrderInfo {0}, {1}, ", response.Item.UserID, mailing.ParticipantType));
                         builder.Append(string.Format("Transaction email {0}", response.Item.Email));
 
                         TransactionHistoryModel trans = new TransactionHistoryModel
@@ -484,6 +484,7 @@ namespace apcrshr_site.Controllers
             string acqResponseCode = "Unknown";
             string txnResponseCode = "Unknown";
             string message = "Unknown";
+            string msg = string.Empty;
 
             try
             {
@@ -510,41 +511,14 @@ namespace apcrshr_site.Controllers
             }
             catch (Exception ex)
             {
-                // Log info
-                StringBuilder builder = new StringBuilder();
-                builder.Append(string.Format("Transaction vpc_MerchTxnRef {0}, ", merchTxnRef));
-                builder.Append(string.Format("Transaction vpc_Merchant {0}, ", merchantID));
-                builder.Append(string.Format("Transaction vpc_Amount {0}, ", amount));
-                builder.Append(string.Format("Transaction vpc_OrderInfo {0}, ", orderInfo));
-                builder.Append(string.Format("Transaction hashvalidateResult {0}, ", hashvalidateResult));
-                builder.Append(string.Format("Transaction error messate {0}, ", ex.StackTrace));
+                msg = "The payment is in-progress, please ask administrator for looking at this!";
+                Log(merchTxnRef, merchantID, amount, orderInfo, hashvalidateResult, ex.StackTrace);
 
-                var id = merchTxnRef;
-                if (merchTxnRef != "Unknown" && merchTxnRef.Contains("_"))
-                {
-                    id = merchTxnRef.Split('_')[0];
-                }
-
-                TransactionHistoryModel trans = new TransactionHistoryModel
-                {
-                    Action = "Payment return",
-                    CreatedDate = DateTime.Now,
-                    Log = builder.ToString(),
-                    Status = (int)TransactionStatus.Error,
-                    UserId = id
-                };
-                _transaction.Create(trans);
-            }
-
-            string refId = merchTxnRef;
-
-            if (merchTxnRef != "Unknown" && merchTxnRef.Contains("_"))
-            {
-                merchTxnRef = merchTxnRef.Split('_')[0];
+                return View(new InsertResponse { Message = "An error occurs at payment service, please contact administrator!", ErrorCode = (int)ErrorCode.Error });
             }
 
             //Find user
-            string userID = merchTxnRef;
+            string userID = "";
             if (merchTxnRef != "Unknown")
             {
                 FindItemReponse<UserModel> userResponse = _userService.FindStartWithID(merchTxnRef);
@@ -552,18 +526,26 @@ namespace apcrshr_site.Controllers
                 {
                     userID = userResponse.Item.UserID;
                 }
+                else
+                {
+                    userID = orderInfo;
+                }
+            }
+            else
+            {
+                userID = orderInfo;
             }
 
             //Save payment
             PaymentModel payment = new PaymentModel();
             payment.PaymentID = Guid.NewGuid().ToString();
-            payment.UserID = Session["User-UserID"] != null ? Session["User-UserID"].ToString() : userID;
+            payment.UserID = userID;
             payment.Amount = double.Parse(amount) / 100;
-            payment.CreatedBy = Session["User-UserID"] != null ? Session["User-UserID"].ToString() : userID;
+            payment.CreatedBy = userID;
             payment.CreatedDate = DateTime.Now;
-            payment.MerchRef = refId;
+            payment.MerchRef = merchTxnRef;
 
-            FindItemReponse<UserModel> response = _userService.FindUserByID(Session["User-UserID"] != null ? Session["User-UserID"].ToString() : userID);
+            FindItemReponse<UserModel> response = _userService.FindUserByID(userID);
             if (response.Item != null)
             {
                 FindAllItemReponse<MailingAddressModel> mailingResponse = _mailingService.FindMailingAddressByUser(response.Item.UserID);
@@ -582,41 +564,47 @@ namespace apcrshr_site.Controllers
                 payment.PaymentType = "Unknown";
             }
 
-            string msg = string.Empty;
-
-            //Validate transaction
-            if (hashvalidateResult == "CORRECTED" && txnResponseCode.Trim() == "0")
+            try
             {
-                //vpc_Result.Text = "Transaction was paid successful";
-                payment.Status = (int)PaymentStatus.Completed;
-                msg = "Your payment was paid successful!";
-
-                //Sending email
-                //USD
-                decimal usd = 0;
-                decimal usdrate = 0;
-                try
+                //Validate transaction
+                if (hashvalidateResult == "CORRECTED" && txnResponseCode.Trim() == "0")
                 {
-                    usdrate = DataHelper.GetInstance().GetCurrencyRate(FROM_CURRENCY, 22265);
-                    usd = decimal.Parse(amount) / usdrate;
-                }
-                catch (Exception){}
+                    //vpc_Result.Text = "Transaction was paid successful";
+                    payment.Status = (int)PaymentStatus.Completed;
+                    msg = "Your payment was paid successful!";
 
-                string messageBody = DataHelper.GetInstance().BuildInvoicePdfTemplate(payment.PaymentType, refId, transactionNo, usd.ToString(), amount, DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fff", CultureInfo.InvariantCulture));
-                string title = string.Format(PAYMENT_TITLE, transactionNo);
-                DataHelper.GetInstance().SendEmail(response.Item.Email, title, messageBody);
+                    //Sending email
+                    //USD
+                    decimal usd = 0;
+                    decimal usdrate = 0;
+                    try
+                    {
+                        usdrate = DataHelper.GetInstance().GetCurrencyRate(FROM_CURRENCY, 22265);
+                        usd = decimal.Parse(amount) / usdrate;
+                    }
+                    catch (Exception) { }
+
+                    string messageBody = DataHelper.GetInstance().BuildInvoicePdfTemplate(payment.PaymentType, merchTxnRef, transactionNo, usd.ToString(), amount, DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fff", CultureInfo.InvariantCulture));
+                    string title = string.Format(PAYMENT_TITLE, transactionNo);
+                    Task.Run(() => DataHelper.GetInstance().SendEmail(response.Item.Email, title, messageBody));
+                }
+                else if (hashvalidateResult == "INVALIDATED" && txnResponseCode.Trim() == "0")
+                {
+                    //vpc_Result.Text = "Transaction is pending";
+                    payment.Status = (int)PaymentStatus.Pending;
+                    msg = "Your payment was in pending status, please contact our administrator!";
+                }
+                else
+                {
+                    //vpc_Result.Text = "Transaction was not paid successful";
+                    payment.Status = (int)PaymentStatus.Error;
+                    msg = "The payment was not paid successful, please try again!";
+                }
             }
-            else if (hashvalidateResult == "INVALIDATED" && txnResponseCode.Trim() == "0")
+            catch (Exception ex)
             {
-                //vpc_Result.Text = "Transaction is pending";
-                payment.Status = (int)PaymentStatus.Pending;
-                msg = "Your payment was in pending status, please contact our administrator!";
-            }
-            else
-            {
-                //vpc_Result.Text = "Transaction was not paid successful";
-                payment.Status = (int)PaymentStatus.Error;
-                msg = "The payment was not paid successful, please try again!";
+                msg = "The payment is in-progress, please ask administrator for looking at this!";
+                Log(merchTxnRef, merchantID, amount, orderInfo, hashvalidateResult, ex.StackTrace);
             }
 
             InsertResponse _response = _paymentService.Create(payment);
@@ -643,13 +631,70 @@ namespace apcrshr_site.Controllers
             return View(_response);
         }
 
+        private void Log(string merchTxnRef, string merchantID, string amount, string orderInfo, string hashvalidateResult, string exception)
+        {
+            //Find user
+            string email = "";
+            string userId = "";
+            if (merchTxnRef != "Unknown")
+            {
+                FindItemReponse<UserModel> userResponse = _userService.FindStartWithID(merchTxnRef);
+                if (userResponse.Item != null)
+                {
+                    email = userResponse.Item.Email;
+                    userId = userResponse.Item.UserID;
+                }
+                else
+                {
+                    userResponse = _userService.FindStartWithID(orderInfo);
+                    if (userResponse.Item != null)
+                    {
+                        email = userResponse.Item.Email;
+                        userId = userResponse.Item.UserID;
+                    }
+                }
+            }
+            else
+            {
+                var userResponse = _userService.FindStartWithID(orderInfo);
+                if (userResponse.Item != null)
+                {
+                    email = userResponse.Item.Email;
+                    userId = userResponse.Item.UserID;
+                }
+            }
+
+            // Log info
+            StringBuilder builder = new StringBuilder();
+            builder.Append(string.Format("Transaction email {0}, ", email));
+            builder.Append(string.Format("Transaction vpc_MerchTxnRef {0}, ", merchTxnRef));
+            builder.Append(string.Format("Transaction vpc_Merchant {0}, ", merchantID));
+            builder.Append(string.Format("Transaction vpc_Amount {0}, ", amount));
+            builder.Append(string.Format("Transaction vpc_OrderInfo {0}, ", orderInfo));
+            builder.Append(string.Format("Transaction hashvalidateResult {0}, ", hashvalidateResult));
+            builder.Append(string.Format("Transaction error messate {0}, ", exception));
+
+            string body = string.Format("The transaction error info: <b>{0}</b></br> Please contact administrator.", builder.ToString());
+            Task.Run(() => DataHelper.GetInstance().SendEmail(email, "The transaction error", body));
+
+            TransactionHistoryModel trans = new TransactionHistoryModel
+            {
+                Action = "Payment return",
+                CreatedDate = DateTime.Now,
+                Log = builder.ToString(),
+                Status = (int)TransactionStatus.Error,
+                UserId = userId
+            };
+            _transaction.Create(trans);
+        }
+
         public ActionResult ForgetPassword()
         {
             return View();
         }
 
         [HttpPost]
-        
+
         public ActionResult SendPassword(string email)
         {
             FindItemReponse<UserModel> user = null;
@@ -661,7 +706,7 @@ namespace apcrshr_site.Controllers
                 {
                     string password = Guid.NewGuid().ToString("D").Substring(1, 6);
 
-                    
+
                     UserModel _user = user.Item;
                     _user.UpdatedDate = DateTime.Now;
                     _user.Password = System.Web.Security.Membership.GeneratePassword(10, 3);
@@ -699,7 +744,7 @@ namespace apcrshr_site.Controllers
 
         [UserSessionFilter]
         [HttpPost]
-        
+
         public ActionResult SaveUpdateUser(UserModel user)
         {
             user.UpdatedDate = DateTime.Now;
@@ -714,7 +759,7 @@ namespace apcrshr_site.Controllers
         {
             if (this.Session["User-SessionID"] == null)
             {
-                return Json(new { ErrorCode = (int) ErrorCode.Redirect}, JsonRequestBehavior.AllowGet);
+                return Json(new { ErrorCode = (int)ErrorCode.Redirect }, JsonRequestBehavior.AllowGet);
             }
             BaseResponse response = new BaseResponse();
             FindItemReponse<UserModel> userResponse = _userService.FindUserByID(registration.UserID);
@@ -790,7 +835,7 @@ namespace apcrshr_site.Controllers
                 };
                 var insertResponse = _mailingService.CreateMailingAddress(mailing);
                 response.ErrorCode = insertResponse.ErrorCode;
-                response.Message = insertResponse.ErrorCode != (int) ErrorCode.None ? "Please input required fields" : "Update succeeded";
+                response.Message = insertResponse.ErrorCode != (int)ErrorCode.None ? "Please input required fields" : "Update succeeded";
             }
             return Json(response, JsonRequestBehavior.AllowGet);
         }
@@ -813,7 +858,7 @@ namespace apcrshr_site.Controllers
         }
 
         [HttpPost]
-        
+
         public ActionResult ChangePassword(string UserID, string CurrentPassword, string NewPassword)
         {
             string sessionId = Session["User-SessionID"].ToString();
