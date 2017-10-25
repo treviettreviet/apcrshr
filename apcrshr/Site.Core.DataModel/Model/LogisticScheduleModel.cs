@@ -22,5 +22,7 @@ namespace Site.Core.DataModel.Model
         public string HotelName { get; set; }
         public Nullable<DateTime> CheckinDate { get; set; }
         public Nullable<DateTime> CheckoutDate { get; set; }
+        public string ConferenceRoles { get; set; }
+        public string AirportService { get; set; }
     }
 }

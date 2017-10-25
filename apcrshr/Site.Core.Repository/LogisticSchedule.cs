@@ -28,6 +28,8 @@ namespace Site.Core.Repository
         public string HotelName { get; set; }
         public Nullable<System.DateTime> CheckinDate { get; set; }
         public Nullable<System.DateTime> CheckoutDate { get; set; }
+        public string ConferenceRoles { get; set; }
+        public string AirportService { get; set; }
     
         public virtual User User { get; set; }
     }

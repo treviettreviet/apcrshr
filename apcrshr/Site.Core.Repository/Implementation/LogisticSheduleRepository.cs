@@ -37,6 +37,8 @@ namespace Site.Core.Repository.Implementation
                     logistic.HotelName = item.HotelName;
                     logistic.CheckinDate = item.CheckinDate;
                     logistic.CheckoutDate = item.CheckoutDate;
+                    logistic.ConferenceRoles = item.ConferenceRoles;
+                    logistic.AirportService = item.AirportService;
 
                     context.SaveChanges();
                 }
