@@ -418,23 +418,19 @@ namespace apcrshr_site.Controllers
                         conn.AddDigitalOrderField("vpc_Command", vpc_Command);
 
                         //Test account
-                        string subId = string.Format("{0}_{1}", response.Item.UserID.Substring(0, response.Item.UserID.LastIndexOf("-")), DateTime.Now.Ticks);
+                        string subId = string.Format("{0}", DateTime.Now.Ticks);
                         conn.AddDigitalOrderField("vpc_Merchant", vpc_Merchant);
                         conn.AddDigitalOrderField("vpc_AccessCode", vpc_AccessCode);
                         conn.AddDigitalOrderField("vpc_MerchTxnRef", subId);
 
                         //Package order
-                        conn.AddDigitalOrderField("vpc_OrderInfo", response.Item.UserID);
                         conn.AddDigitalOrderField("vpc_Amount", amount.ToString());
-
-                        //Return url
-                        conn.AddDigitalOrderField("vpc_ReturnURL", vpc_ReturnURL);
 
                         StringBuilder builder = new StringBuilder();
                         builder.Append(string.Format("Transaction vpc_MerchTxnRef {0}, ", subId));
                         builder.Append(string.Format("Transaction vpc_Merchant {0}, ", vpc_Merchant));
                         builder.Append(string.Format("Transaction vpc_Amount {0}, ", amount));
-                        builder.Append(string.Format("Transaction vpc_OrderInfo {0}, {1}, ", response.Item.UserID, mailing.ParticipantType));
+                        builder.Append(string.Format("Transaction fullname {0}, ", response.Item.FullName));
                         builder.Append(string.Format("Transaction email {0}", response.Item.Email));
 
                         TransactionHistoryModel trans = new TransactionHistoryModel
@@ -446,16 +442,14 @@ namespace apcrshr_site.Controllers
                             UserId = response.Item.UserID,
                             Email = response.Item.Email
                         };
-                        _transaction.Create(trans);
 
-                        // Thong tin them ve khach hang. De trong neu khong co thong tin
-                        //conn.AddDigitalOrderField("vpc_SHIP_Street01", "194 Tran Quang Khai");
-                        //conn.AddDigitalOrderField("vpc_SHIP_Provice", "Hanoi");
-                        //conn.AddDigitalOrderField("vpc_SHIP_City", "Hanoi");
-                        //conn.AddDigitalOrderField("vpc_SHIP_Country", "Vietnam");
-                        //conn.AddDigitalOrderField("vpc_Customer_Phone", "043966668");
-                        //conn.AddDigitalOrderField("vpc_Customer_Email", "support@onepay.vn");
-                        //conn.AddDigitalOrderField("vpc_Customer_Id", "onepay_paygate");
+                        var insertResponse = _transaction.Create(trans);
+
+                        //Order info
+                        conn.AddDigitalOrderField("vpc_OrderInfo", insertResponse.InsertID);
+
+                        //Return url
+                        conn.AddDigitalOrderField("vpc_ReturnURL", vpc_ReturnURL);
 
                         // Dia chi IP cua khach hang
                         conn.AddDigitalOrderField("vpc_TicketNo", Request.UserHostAddress);
@@ -521,32 +515,16 @@ namespace apcrshr_site.Controllers
             }
 
             //Find user
+            var transactionResponse = _transaction.FindByID(orderInfo);
+
             string userID = "";
             string email = "";
-            if (merchTxnRef != "Unknown")
+            if (transactionResponse.Item != null)
             {
-                FindItemReponse<UserModel> userResponse = _userService.FindStartWithID(merchTxnRef);
+                FindItemReponse<UserModel> userResponse = _userService.FindUserByID(transactionResponse.Item.UserId);
                 if (userResponse.Item != null)
                 {
                     userID = userResponse.Item.UserID;
-                    email = userResponse.Item.Email;
-                }
-                else
-                {
-                    userID = orderInfo;
-                    userResponse = _userService.FindStartWithID(orderInfo);
-                    if (userResponse.Item != null)
-                    {
-                        email = userResponse.Item.Email;
-                    }
-                }
-            }
-            else
-            {
-                userID = orderInfo;
-                var userResponse = _userService.FindStartWithID(orderInfo);
-                if (userResponse.Item != null)
-                {
                     email = userResponse.Item.Email;
                 }
             }
@@ -652,27 +630,10 @@ namespace apcrshr_site.Controllers
             //Find user
             string email = "";
             string userId = "";
-            if (merchTxnRef != "Unknown")
+            var transactionResponse = _transaction.FindByID(orderInfo);
+            if (transactionResponse.Item != null)
             {
-                FindItemReponse<UserModel> userResponse = _userService.FindStartWithID(merchTxnRef);
-                if (userResponse.Item != null)
-                {
-                    email = userResponse.Item.Email;
-                    userId = userResponse.Item.UserID;
-                }
-                else
-                {
-                    userResponse = _userService.FindStartWithID(orderInfo);
-                    if (userResponse.Item != null)
-                    {
-                        email = userResponse.Item.Email;
-                        userId = userResponse.Item.UserID;
-                    }
-                }
-            }
-            else
-            {
-                var userResponse = _userService.FindStartWithID(orderInfo);
+                FindItemReponse<UserModel> userResponse = _userService.FindUserByID(transactionResponse.Item.UserId);
                 if (userResponse.Item != null)
                 {
                     email = userResponse.Item.Email;
