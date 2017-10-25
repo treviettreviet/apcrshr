@@ -140,5 +140,31 @@ namespace Site.Core.Service.Implementation
                 };
             }
         }
+
+
+        public FindAllItemReponse<TransactionHistoryModel> FindByTransactionReference(long referenceId)
+        {
+            try
+            {
+                ITransactionHistoryRepository transactionRepository = RepositoryClassFactory.GetInstance().GetTransactionHistoryRepository();
+                IList<TransactionHistory> transactions = transactionRepository.FindByTransactionReference(referenceId);
+                var _transactions = transactions.Select(n => MapperUtil.CreateMapper().Mapper.Map<TransactionHistory, TransactionHistoryModel>(n)).ToList();
+                return new FindAllItemReponse<TransactionHistoryModel>
+                {
+                    Items = _transactions,
+                    ErrorCode = (int)ErrorCode.None,
+                    Message = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new FindAllItemReponse<TransactionHistoryModel>
+                {
+                    ErrorCode = (int)ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }

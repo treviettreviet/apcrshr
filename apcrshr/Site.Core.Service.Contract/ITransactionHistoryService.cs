@@ -18,6 +18,13 @@ namespace Site.Core.Service.Contract
         FindItemReponse<TransactionHistoryModel> FindByID(string id);
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="referenceId"></param>
+        /// <returns></returns>
+        FindAllItemReponse<TransactionHistoryModel> FindByTransactionReference(long referenceId);
+
+        /// <summary>
         /// Delete TransactionHistory by ID
         /// </summary>
         /// <param name="id"></param>

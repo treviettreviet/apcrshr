@@ -9,5 +9,6 @@ namespace Site.Core.Repository.Repository
     public interface ITransactionHistoryRepository : IRepository<TransactionHistory>
     {
         IList<TransactionHistory> FindByUserID(string userID);
+        IList<TransactionHistory> FindByTransactionReference(long referenceId);
     }
 }

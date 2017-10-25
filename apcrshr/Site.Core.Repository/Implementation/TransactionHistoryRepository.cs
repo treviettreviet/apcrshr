@@ -31,7 +31,7 @@ namespace Site.Core.Repository.Implementation
         {
             using (APCRSHREntities context = new APCRSHREntities())
             {
-                var transaction = context.TransactionHistories.Where(u => u.Id.Equals(item.Id)).SingleOrDefault();
+                var transaction = context.TransactionHistories.Where(u => u.Id == item.Id).SingleOrDefault();
                 if (transaction != null)
                 {
                     transaction.Action = item.Action;
@@ -51,8 +51,8 @@ namespace Site.Core.Repository.Implementation
         {
             using (APCRSHREntities context = new APCRSHREntities())
             {
-                var _id = id.ToString();
-                var transaction = context.TransactionHistories.Where(a => a.Id.Equals(_id)).SingleOrDefault();
+                var _id = int.Parse(id.ToString());
+                var transaction = context.TransactionHistories.Where(a => a.Id == _id).SingleOrDefault();
                 if (transaction != null)
                 {
                     context.TransactionHistories.Remove(transaction);
@@ -69,8 +69,8 @@ namespace Site.Core.Repository.Implementation
         {
             using (APCRSHREntities context = new APCRSHREntities())
             {
-                var _id = id.ToString();
-                return context.TransactionHistories.Where(a => a.Id.Equals(_id)).SingleOrDefault();
+                var _id = int.Parse(id.ToString());
+                return context.TransactionHistories.Where(a => a.Id == _id).SingleOrDefault();
             }
         }
 
@@ -78,7 +78,16 @@ namespace Site.Core.Repository.Implementation
         {
             using (APCRSHREntities context = new APCRSHREntities())
             {
-                return context.TransactionHistories.OrderByDescending(u => u.CreatedDate).ToList();
+                return context.TransactionHistories.OrderByDescending(u => u.TransactionReference).ToList();
+            }
+        }
+
+
+        public IList<TransactionHistory> FindByTransactionReference(long referenceId)
+        {
+            using (APCRSHREntities context = new APCRSHREntities())
+            {
+                return context.TransactionHistories.Where(t => t.TransactionReference == referenceId).ToList();
             }
         }
     }

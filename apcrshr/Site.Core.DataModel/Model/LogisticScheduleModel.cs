@@ -24,5 +24,6 @@ namespace Site.Core.DataModel.Model
         public Nullable<DateTime> CheckoutDate { get; set; }
         public string ConferenceRoles { get; set; }
         public string AirportService { get; set; }
+        public string VisaProcess { get; set; }
     }
 }

@@ -464,7 +464,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             return new FileStreamResult(stream, "application/zip");
         }
 
-        private IList<UserExportModel> BuildExportList(IList<UserModel> users)
+        private IList<UserExportModel> BuildExportList(IList<UserModel> users, IList<MailingAddressModel> mailings)
         {
             IList<UserExportModel> exports = new List<UserExportModel>();
 
@@ -476,11 +476,11 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             foreach (UserModel user in users)
             {
                 ex = new UserExportModel();
-                var _mailing = _mailingAddressService.FindMailingAddressByUser(user.UserID);
+                mailing = mailings.Where(m => m.UserID == user.UserID).FirstOrDefault();
                 var _scholarship = _mainScholarshipService.FindByUserID(user.UserID);
                 var _payment = _paymentService.FindByUserID(user.UserID);
 
-                mailing = _mailing.Items != null ? _mailing.Items.FirstOrDefault() : null;
+                //mailing = _mailing.Items != null ? _mailing.Items.FirstOrDefault() : null;
                 scholarship = _scholarship.Items != null ? _scholarship.Items.FirstOrDefault() : null;
                 payment = _payment.Items != null ? _payment.Items.FirstOrDefault() : null;
                 logistic = _logisticService.FindByUserID(user.UserID).Item;
@@ -523,6 +523,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             ex.HotelName = logistic.HotelName;
             ex.CheckinDate = logistic.CheckinDate;
             ex.CheckoutDate = logistic.CheckoutDate;
+            ex.VisaProcess = logistic.VisaProcess;
         }
 
         private void ConvertFromPayment(PaymentModel payment, UserExportModel ex)
@@ -594,10 +595,11 @@ namespace apcrshr_site.Areas.Administrator.Controllers
         [SessionFilter]
         public FileStreamResult ExportUsers()
         {
+            FindAllItemReponse<MailingAddressModel> mailing = _mailingAddressService.GetMailingAddresses();
             FindAllItemReponse<UserModel> response = _userService.GetUsers();
             using (ExcelPackage pck = new ExcelPackage())
             {
-                IList<UserExportModel> export = BuildExportList(response.Items);
+                IList<UserExportModel> export = BuildExportList(response.Items, mailing.Items);
                 //if (response.Items != null)
                 //{
                 //    response.Items.Select(m => { m.MainScholarship = UserHelper.HasMainScholarship(m.UserID); m.YouthScholarship = UserHelper.HasYouthScholarship(m.UserID); return m; }).ToList();

@@ -21,5 +21,6 @@ namespace Site.Core.Repository
         public System.DateTime CreatedDate { get; set; }
         public string Log { get; set; }
         public string Email { get; set; }
+        public Nullable<long> TransactionReference { get; set; }
     }
 }

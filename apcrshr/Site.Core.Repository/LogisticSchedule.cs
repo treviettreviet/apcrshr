@@ -30,6 +30,7 @@ namespace Site.Core.Repository
         public Nullable<System.DateTime> CheckoutDate { get; set; }
         public string ConferenceRoles { get; set; }
         public string AirportService { get; set; }
+        public string VisaProcess { get; set; }
     
         public virtual User User { get; set; }
     }

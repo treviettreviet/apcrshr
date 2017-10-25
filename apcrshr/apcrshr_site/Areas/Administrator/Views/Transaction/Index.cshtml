@@ -26,7 +26,7 @@
                        data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
                     <thead>
                         <tr>
-                            <th>User ID</th>
+                            <th>Order Info</th>
                             <th>Action</th>
                             <th>Status</th>
                             <th>Date</th>
@@ -38,7 +38,7 @@
                         @for (int i = 0; i < Model.Count; i++)
                         {
                             <tr>
-                                <td>@Model[i].UserId</td>
+                                <td>@Model[i].TransactionReference</td>
                                 <td>@Model[i].Action</td>
                                 <td>@Enum.GetName(typeof(Site.Core.DataModel.Enum.TransactionStatus), Model[i].Status)</td>
                                 <td>@Model[i].CreatedDate.ToString("dd/MMM/yyyy HH:mm:ss")</td>

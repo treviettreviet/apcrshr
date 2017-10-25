@@ -37,7 +37,7 @@ namespace apcrshr_site.Controllers
         private static readonly string vpc_Merchant = "APCRSHR9VN";
         private static readonly string vpc_Locale = "en";
         //Return url
-        private static readonly string vpc_ReturnURL = "http://apcrshr9vn.org/User/PaymentReturn";
+        private static readonly string vpc_ReturnURL = "http://localhost:56742/User/PaymentReturn";
         //Currency
         private static readonly string FROM_CURRENCY = "USD";
         private static readonly string TO_CURRENCY = "VND";
@@ -426,12 +426,15 @@ namespace apcrshr_site.Controllers
                         //Package order
                         conn.AddDigitalOrderField("vpc_Amount", amount.ToString());
 
+                        var transactionReference = DateTime.Now.Ticks;
+
                         StringBuilder builder = new StringBuilder();
                         builder.Append(string.Format("Transaction vpc_MerchTxnRef {0}, ", subId));
                         builder.Append(string.Format("Transaction vpc_Merchant {0}, ", vpc_Merchant));
                         builder.Append(string.Format("Transaction vpc_Amount {0}, ", amount));
                         builder.Append(string.Format("Transaction fullname {0}, ", response.Item.FullName));
                         builder.Append(string.Format("Transaction email {0}", response.Item.Email));
+                        builder.Append(string.Format("Transaction reference {0}", transactionReference));
 
                         TransactionHistoryModel trans = new TransactionHistoryModel
                         {
@@ -440,13 +443,14 @@ namespace apcrshr_site.Controllers
                             Log = builder.ToString(),
                             Status = (int)TransactionStatus.Created,
                             UserId = response.Item.UserID,
-                            Email = response.Item.Email
+                            Email = response.Item.Email,
+                            TransactionReference = transactionReference
                         };
 
                         var insertResponse = _transaction.Create(trans);
 
                         //Order info
-                        conn.AddDigitalOrderField("vpc_OrderInfo", insertResponse.InsertID);
+                        conn.AddDigitalOrderField("vpc_OrderInfo", transactionReference.ToString());
 
                         //Return url
                         conn.AddDigitalOrderField("vpc_ReturnURL", vpc_ReturnURL);
@@ -515,17 +519,29 @@ namespace apcrshr_site.Controllers
             }
 
             //Find user
-            var transactionResponse = _transaction.FindByID(orderInfo);
+            var participantType = "";
+            long reference = 0;
+            long.TryParse(orderInfo, out reference);
+            var transactionResponse = _transaction.FindByTransactionReference(reference);
 
             string userID = "";
             string email = "";
-            if (transactionResponse.Item != null)
+            if (transactionResponse.Items != null && transactionResponse.Items.Count > 0)
             {
-                FindItemReponse<UserModel> userResponse = _userService.FindUserByID(transactionResponse.Item.UserId);
+                FindItemReponse<UserModel> userResponse = _userService.FindUserByID(transactionResponse.Items.First().UserId);
                 if (userResponse.Item != null)
                 {
                     userID = userResponse.Item.UserID;
                     email = userResponse.Item.Email;
+                    FindAllItemReponse<MailingAddressModel> mailingResponse = _mailingService.FindMailingAddressByUser(userResponse.Item.UserID);
+                    if (mailingResponse.Items != null)
+                    {
+                        var mailing = mailingResponse.Items.SingleOrDefault();
+                        if (mailing != null)
+                        {
+                            participantType = mailing.ParticipantType;
+                        }
+                    }
                 }
             }
 
@@ -537,20 +553,7 @@ namespace apcrshr_site.Controllers
             payment.CreatedBy = userID;
             payment.CreatedDate = DateTime.Now;
             payment.MerchRef = merchTxnRef;
-
-            FindItemReponse<UserModel> response = _userService.FindUserByID(userID);
-            if (response.Item != null)
-            {
-                FindAllItemReponse<MailingAddressModel> mailingResponse = _mailingService.FindMailingAddressByUser(response.Item.UserID);
-                if (mailingResponse.Items != null)
-                {
-                    var mailing = mailingResponse.Items.SingleOrDefault();
-                    if (mailing != null)
-                    {
-                        payment.PaymentType = mailing.ParticipantType;
-                    }
-                }
-            }
+            payment.PaymentType = participantType;
 
             if (string.IsNullOrEmpty(payment.PaymentType))
             {
@@ -579,7 +582,7 @@ namespace apcrshr_site.Controllers
 
                     string messageBody = DataHelper.GetInstance().BuildInvoicePdfTemplate(payment.PaymentType, merchTxnRef, transactionNo, usd.ToString(), amount, DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fff", CultureInfo.InvariantCulture));
                     string title = string.Format(PAYMENT_TITLE, transactionNo);
-                    Task.Run(() => DataHelper.GetInstance().SendEmail(response.Item.Email, title, messageBody));
+                    Task.Run(() => DataHelper.GetInstance().SendEmail(email, title, messageBody));
                 }
                 else if (hashvalidateResult == "INVALIDATED" && txnResponseCode.Trim() == "0")
                 {
@@ -610,6 +613,8 @@ namespace apcrshr_site.Controllers
             strBuilder.Append(string.Format("Transaction vpc_Amount {0}, ", amount));
             strBuilder.Append(string.Format("Transaction vpc_OrderInfo {0}, ", orderInfo));
             strBuilder.Append(string.Format("Transaction hashvalidateResult {0}, ", hashvalidateResult));
+            strBuilder.Append(string.Format("Transaction userId {0}, ", userID));
+            strBuilder.Append(string.Format("Transaction email {0}, ", email));
 
             TransactionHistoryModel transaction = new TransactionHistoryModel
             {
@@ -618,7 +623,8 @@ namespace apcrshr_site.Controllers
                 Log = strBuilder.ToString(),
                 Status = (int)TransactionStatus.Completed,
                 UserId = merchTxnRef,
-                Email = email
+                Email = email,
+                TransactionReference = reference
             };
             _transaction.Create(transaction);
 
@@ -630,10 +636,12 @@ namespace apcrshr_site.Controllers
             //Find user
             string email = "";
             string userId = "";
-            var transactionResponse = _transaction.FindByID(orderInfo);
-            if (transactionResponse.Item != null)
+            long reference = 0;
+            long.TryParse(orderInfo, out reference);
+            var transactionResponse = _transaction.FindByTransactionReference(reference);
+            if (transactionResponse.Items != null && transactionResponse.Items.Count > 0)
             {
-                FindItemReponse<UserModel> userResponse = _userService.FindUserByID(transactionResponse.Item.UserId);
+                FindItemReponse<UserModel> userResponse = _userService.FindUserByID(transactionResponse.Items.First().UserId);
                 if (userResponse.Item != null)
                 {
                     email = userResponse.Item.Email;
@@ -661,7 +669,8 @@ namespace apcrshr_site.Controllers
                 Log = builder.ToString(),
                 Status = (int)TransactionStatus.Error,
                 UserId = userId,
-                Email = email
+                Email = email,
+                TransactionReference = reference
             };
             _transaction.Create(trans);
         }

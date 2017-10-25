@@ -15,5 +15,6 @@ namespace Site.Core.DataModel.Model
         public int Status { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string Log { get; set; }
+        public long TransactionReference { get; set; }
     }
 }

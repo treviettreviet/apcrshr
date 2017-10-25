@@ -39,6 +39,7 @@ namespace Site.Core.Repository.Implementation
                     logistic.CheckoutDate = item.CheckoutDate;
                     logistic.ConferenceRoles = item.ConferenceRoles;
                     logistic.AirportService = item.AirportService;
+                    logistic.VisaProcess = item.VisaProcess;
 
                     context.SaveChanges();
                 }
