@@ -37,7 +37,7 @@ namespace apcrshr_site.Controllers
         private static readonly string vpc_Merchant = "APCRSHR9VN";
         private static readonly string vpc_Locale = "en";
         //Return url
-        private static readonly string vpc_ReturnURL = "http://localhost:56742/User/PaymentReturn";
+		private static readonly string vpc_ReturnURL = "http://apcrshr9vn.org/User/PaymentReturn";
         //Currency
         private static readonly string FROM_CURRENCY = "USD";
         private static readonly string TO_CURRENCY = "VND";
