@@ -828,6 +828,34 @@
                                                 <input type="checkbox" name="ConferenceRoles" id="YouthFull" class='icheck-me' data-skin="square" data-color="blue" value="Youth Full" @(!string.IsNullOrEmpty(Model.Logistic.ConferenceRoles) && Model.Logistic.ConferenceRoles.Contains("Youth Full") ? "checked" : "")>
                                                 <label class='inline' for="YouthFull">Youth Full</label>
                                             </div>
+                                            <div class="check-line">
+                                                <input type="checkbox" name="ConferenceRoles" id="RegularDelegate" class='icheck-me' data-skin="square" data-color="blue" value="Regular Delegate" @(!string.IsNullOrEmpty(Model.Logistic.ConferenceRoles) && Model.Logistic.ConferenceRoles.Contains("Regular Delegate") ? "checked" : "")>
+                                                <label class='inline' for="RegularDelegate">Regular Delegate</label>
+                                            </div>
+                                            <div class="check-line">
+                                                <input type="checkbox" name="ConferenceRoles" id="Satellite" class='icheck-me' data-skin="square" data-color="blue" value="Satellite" @(!string.IsNullOrEmpty(Model.Logistic.ConferenceRoles) && Model.Logistic.ConferenceRoles.Contains("Satellite") ? "checked" : "")>
+                                                <label class='inline' for="Satellite">Satellite</label>
+                                            </div>
+                                            <div class="check-line">
+                                                <input type="checkbox" name="ConferenceRoles" id="Exhibition" class='icheck-me' data-skin="square" data-color="blue" value="Exhibition" @(!string.IsNullOrEmpty(Model.Logistic.ConferenceRoles) && Model.Logistic.ConferenceRoles.Contains("Exhibition") ? "checked" : "")>
+                                                <label class='inline' for="Exhibition">Exhibition</label>
+                                            </div>
+                                            <div class="check-line">
+                                                <input type="checkbox" name="ConferenceRoles" id="Media" class='icheck-me' data-skin="square" data-color="blue" value="Media" @(!string.IsNullOrEmpty(Model.Logistic.ConferenceRoles) && Model.Logistic.ConferenceRoles.Contains("Media") ? "checked" : "")>
+                                                <label class='inline' for="Media">Media</label>
+                                            </div>
+                                            <div class="check-line">
+                                                <input type="checkbox" name="ConferenceRoles" id="Volunteer" class='icheck-me' data-skin="square" data-color="blue" value="Volunteer" @(!string.IsNullOrEmpty(Model.Logistic.ConferenceRoles) && Model.Logistic.ConferenceRoles.Contains("Volunteer") ? "checked" : "")>
+                                                <label class='inline' for="Volunteer">Volunteer</label>
+                                            </div>
+                                            <div class="check-line">
+                                                <input type="checkbox" name="ConferenceRoles" id="Organizer" class='icheck-me' data-skin="square" data-color="blue" value="Organizer" @(!string.IsNullOrEmpty(Model.Logistic.ConferenceRoles) && Model.Logistic.ConferenceRoles.Contains("Organizer") ? "checked" : "")>
+                                                <label class='inline' for="Organizer">Organizer</label>
+                                            </div>
+                                            <div class="check-line">
+                                                <input type="checkbox" name="ConferenceRoles" id="Other" class='icheck-me' data-skin="square" data-color="blue" value="Other" @(!string.IsNullOrEmpty(Model.Logistic.ConferenceRoles) && Model.Logistic.ConferenceRoles.Contains("Other") ? "checked" : "")>
+                                                <label class='inline' for="Other">Other</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -938,7 +966,14 @@
             + ',' + $("#frmSaveLogistic input[id='OralPartial']:checked").val()
             + ',' + $("#frmSaveLogistic input[id='OralNone']:checked").val()
             + ',' + $("#frmSaveLogistic input[id='Poster']:checked").val()
-            + ',' + $("#frmSaveLogistic input[id='YouthFull']:checked").val();
+            + ',' + $("#frmSaveLogistic input[id='YouthFull']:checked").val()
+            + ',' + $("#frmSaveLogistic input[id='RegularDelegate']:checked").val()
+            + ',' + $("#frmSaveLogistic input[id='Satellite']:checked").val()
+            + ',' + $("#frmSaveLogistic input[id='Exhibition']:checked").val()
+            + ',' + $("#frmSaveLogistic input[id='Media']:checked").val()
+            + ',' + $("#frmSaveLogistic input[id='Volunteer']:checked").val()
+            + ',' + $("#frmSaveLogistic input[id='Organizer']:checked").val()
+            + ',' + $("#frmSaveLogistic input[id='Other']:checked").val();
         formData.append("ConferenceRoles", roles);
         formData.append("AirportService", $("#frmSaveLogistic input[id='AirportService']:checked").val());
         formData.append("VisaProcess", $("#frmSaveLogistic input[id='VisaProcess']:checked").val());

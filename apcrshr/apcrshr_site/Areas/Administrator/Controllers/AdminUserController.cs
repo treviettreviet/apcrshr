@@ -492,7 +492,7 @@ namespace apcrshr_site.Areas.Administrator.Controllers
                 ConvertFromMailing(mailing, ex);
 
                 //Convert from main scholarship
-                ConvertFromMainScholarship(scholarship, ex);
+                //ConvertFromMainScholarship(scholarship, ex);
 
                 //Convert from payment
                 ConvertFromPayment(payment, ex);
@@ -513,17 +513,19 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             ex.ArrivalDate = logistic.ArrivalDate.HasValue ? logistic.ArrivalDate.Value.ToString("yyyy/MM/dd") : string.Empty;
             ex.ArrivalTime = logistic.ArrivalDate.HasValue ? logistic.ArrivalDate.Value.ToString("HH:mm") : string.Empty;
             ex.ArrivalFlightNumber = logistic.ArrivalFlightNumber;
-            ex.ArrivalGate = logistic.ArrivalGate;
+            ex.ArrivalGate = !string.IsNullOrEmpty(logistic.ArrivalGate) ? logistic.ArrivalGate.Replace("undefined", "") : "";
             ex.DepartureDate = logistic.DepartureDate.HasValue ? logistic.DepartureDate.Value.ToString("yyyy/MM/dd") : string.Empty;
             ex.DepartureTime = logistic.DepartureDate.HasValue ? logistic.DepartureDate.Value.ToString("HH:mm") : string.Empty;
             ex.DepartureFlightNumber = logistic.DepartureFlightNumber;
-            ex.DepartureGate = logistic.DepartureGate;
-            ex.WhenNeedPick = logistic.WhenNeedPick;
+            ex.DepartureGate = !string.IsNullOrEmpty(logistic.DepartureGate) ? logistic.DepartureGate.Replace("undefined", "") : "";
+            ex.WhenNeedPick = !string.IsNullOrEmpty(logistic.WhenNeedPick) ? logistic.WhenNeedPick.Replace("undefined", "") : "";
             ex.SpecialRequirement = logistic.SpecialRequirement;
-            ex.HotelName = logistic.HotelName;
-            ex.CheckinDate = logistic.CheckinDate;
-            ex.CheckoutDate = logistic.CheckoutDate;
-            ex.VisaProcess = logistic.VisaProcess;
+            ex.HotelName = logistic.HotelName != "Empty" ? logistic.HotelName : "";
+            ex.CheckinDate = logistic.CheckinDate.HasValue ? logistic.CheckinDate.Value.ToString("MMM/dd/yyyy HH:mm:ss") : "";
+            ex.CheckoutDate = logistic.CheckoutDate.HasValue ? logistic.CheckoutDate.Value.ToString("MMM/dd/yyyy HH:mm:ss") : "";
+            ex.VisaProcess = !string.IsNullOrEmpty(logistic.VisaProcess) ? logistic.VisaProcess.Replace("undefined", "") : "";
+            ex.AirportService = logistic.AirportService;
+            ex.ConferenceRoles = !string.IsNullOrEmpty(logistic.ConferenceRoles) ? logistic.ConferenceRoles.Replace("undefined", "") : "";
         }
 
         private void ConvertFromPayment(PaymentModel payment, UserExportModel ex)
@@ -534,20 +536,21 @@ namespace apcrshr_site.Areas.Administrator.Controllers
             ex.Amount = payment.Amount;
             ex.PaidDate = payment.CreatedDate.ToShortDateString();
             ex.Status = Enum.GetName(typeof(PaymentStatus), payment.Status);
+            ex.MerchReference = payment.MerchRef;
         }
 
         private void ConvertFromMainScholarship(MainScholarshipModel scholarship, UserExportModel ex)
         {
-            if (scholarship == null) return;
+            //if (scholarship == null) return;
 
-            ex.SubmissionNumber = scholarship.SubmissionNumber;
-            ex.Responsibility = scholarship.Responsibility;
-            ex.ReasonScholarship = scholarship.ReasonScholarship;
-            ex.AtLeastOneAbstract = scholarship.HasSubmitted;
-            ex.Position = scholarship.Position;
-            ex.DurationOfWork = scholarship.DurationOfWork;
-            ex.SubmissionTitles = scholarship.SubmissionTitles;
-            ex.ScholarshipPackage = scholarship.ScholarshipPackage;
+            //ex.SubmissionNumber = scholarship.SubmissionNumber;
+            //ex.Responsibility = scholarship.Responsibility;
+            //ex.ReasonScholarship = scholarship.ReasonScholarship;
+            //ex.AtLeastOneAbstract = scholarship.HasSubmitted;
+            //ex.Position = scholarship.Position;
+            //ex.DurationOfWork = scholarship.DurationOfWork;
+            //ex.SubmissionTitles = scholarship.SubmissionTitles;
+            //ex.ScholarshipPackage = scholarship.ScholarshipPackage;
         }
 
         private void ConvertFromMailing(MailingAddressModel mailing, UserExportModel ex)

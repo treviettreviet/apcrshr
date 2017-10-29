@@ -42,20 +42,21 @@ namespace Site.Core.DataModel.Model
         public string RegistrationNumber { get; set; }
 
         //Main scholarship
-        public string SubmissionNumber { get; set; }
-        public string Responsibility { get; set; }
-        public string ReasonScholarship { get; set; }
-        public bool AtLeastOneAbstract { get; set; }
-        public string Position { get; set; }
-        public int DurationOfWork { get; set; }
-        public string SubmissionTitles { get; set; }
-        public string ScholarshipPackage { get; set; }
+        //public string SubmissionNumber { get; set; }
+        //public string Responsibility { get; set; }
+        //public string ReasonScholarship { get; set; }
+        //public bool AtLeastOneAbstract { get; set; }
+        //public string Position { get; set; }
+        //public int DurationOfWork { get; set; }
+        //public string SubmissionTitles { get; set; }
+        //public string ScholarshipPackage { get; set; }
 
         //Payment
         public string PaymentType { get; set; }
         public double Amount { get; set; }
         public string PaidDate { get; set; }
         public string Status { get; set; }
+        public string MerchReference { get; set; }
 
         //Logistic
         public string ArrivalDate { get; set; }
@@ -69,8 +70,10 @@ namespace Site.Core.DataModel.Model
         public string WhenNeedPick { get; set; }
         public string SpecialRequirement { get; set; }
         public string HotelName { get; set; }
-        public Nullable<DateTime> CheckinDate { get; set; }
-        public Nullable<DateTime> CheckoutDate { get; set; }
+        public string CheckinDate { get; set; }
+        public string CheckoutDate { get; set; }
         public string VisaProcess { get; set; }
+        public string ConferenceRoles { get; set; }
+        public string AirportService { get; set; }
     }
 }
