@@ -8,7 +8,7 @@ namespace Site.Core.DataModel.Enum
 {
     public enum PaymentStatus
     {
-        Initialized = 5,
+        OnsitePayment = 6,
         Completed = 0,
         Pending = 1,
         Error = 2,

@@ -39,18 +39,15 @@
             </div>
             <div class="box-content nopadding">
                 <table class="table table-hover table-nomargin table-bordered dataTable dataTable-column_filter"
-                       data-column_filter_types="select,select,select,text,text,text,text,text,null"
+                       data-column_filter_types="select,text,text,text,text,null"
                        data-column_filter_dateformat="dd-mm-yy" data-nosort="0" data-checkall="all">
                     <thead>
                         <tr>
                             <th>Loại tham dự</th>
-                            <th>Main Scholarship</th>
-                            <th>Youth Scholarship</th>
                             <th>Tên đầy đủ</th>
                             <th>Giới tính</th>
                             <th>Email</th>
                             <th>Ngày sinh</th>
-                            <th>Trạng Thái</th>
                             <th class='hidden-480'>Tùy Chọn</th>
                         </tr>
                     </thead>
@@ -59,13 +56,10 @@
                         {
                             <tr id="@Model[i].UserID">
                                 <td>@Model[i].ParticipantType</td>
-                                <td>@apcrshr_site.Helper.UserHelper.HasMainScholarship(Model[i].UserID)</td>
-                                <td>@apcrshr_site.Helper.UserHelper.HasYouthScholarship(Model[i].UserID)</td>
                                 <td>@Model[i].FullName</td>
                                 <td>@Model[i].Sex</td>
                                 <td>@Model[i].Email</td>
                                 <td>@(Model[i].DateOfBirth.HasValue ? Model[i].DateOfBirth.Value.ToShortDateString() : string.Empty)</td>
-                                <td id="status_@Model[i].UserID">@(Model[i].Locked ? "Đã Khóa" : "Đã Kích Hoạt")</td>
                                 <td class='hidden-480'>
                                     <a href='@Url.Action("ViewUser", "AdminUser", new { userId = Model[i].UserID })' target="_blank" class="btn" rel="tooltip" title="Sửa">
                                         <i class="fa fa-edit"></i>

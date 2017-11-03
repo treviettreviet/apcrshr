@@ -763,6 +763,7 @@
                                     <label for="HotelName" class="control-label col-sm-2">Hotel name</label>
                                     <div class="col-sm-10">
                                         <select class="form-control" id="HotelName" name="HotelName">
+                                            <option value="">Select hotel</option>
                                             <option value="Novotel Ha Long (4 stars)" @(Model.Logistic.HotelName == "Novotel Ha Long (4 stars)" ? "selected" : "")>Novotel Ha Long (4 stars)</option>
                                             <option value="Sai Gon Ha Long (4 stars)" @(Model.Logistic.HotelName == "Sai Gon Ha Long (4 stars)" ? "selected" : "")>Sai Gon Ha Long (4 stars)</option>
                                             <option value="Halong Pearl Hotel (3 stars)" @(Model.Logistic.HotelName == "Halong Pearl Hotel (3 stars)" ? "selected" : "")>Halong Pearl Hotel (3 stars)</option>
@@ -853,6 +854,10 @@
                                                 <label class='inline' for="Organizer">Organizer</label>
                                             </div>
                                             <div class="check-line">
+                                                <input type="checkbox" name="ConferenceRoles" id="DonorVip" class='icheck-me' data-skin="square" data-color="blue" value="Donor/VIP" @(!string.IsNullOrEmpty(Model.Logistic.ConferenceRoles) && Model.Logistic.ConferenceRoles.Contains("Donor/VIP") ? "checked" : "")>
+                                                <label class='inline' for="DonorVip">Donor/VIP</label>
+                                            </div>
+                                            <div class="check-line">
                                                 <input type="checkbox" name="ConferenceRoles" id="Other" class='icheck-me' data-skin="square" data-color="blue" value="Other" @(!string.IsNullOrEmpty(Model.Logistic.ConferenceRoles) && Model.Logistic.ConferenceRoles.Contains("Other") ? "checked" : "")>
                                                 <label class='inline' for="Other">Other</label>
                                             </div>
@@ -870,6 +875,10 @@
                                             <div class="check-line">
                                                 <input type="radio" name="AirportService" id="AirportService" class='icheck-me' data-skin="square" data-color="blue" value="Pay onsite" @(Model.Logistic.AirportService == "Pay onsite" ? "checked" : "")>
                                                 <label class='inline' for="AirportService">Pay onsite</label>
+                                            </div>
+                                            <div class="check-line">
+                                                <input type="radio" name="AirportService" id="AirportService" class='icheck-me' data-skin="square" data-color="blue" value="Self-arrange" @(Model.Logistic.AirportService == "Self-arrange" ? "checked" : "")>
+                                                <label class='inline' for="AirportService">Self-arrange</label>
                                             </div>
                                         </div>
                                     </div>
@@ -973,6 +982,7 @@
             + ',' + $("#frmSaveLogistic input[id='Media']:checked").val()
             + ',' + $("#frmSaveLogistic input[id='Volunteer']:checked").val()
             + ',' + $("#frmSaveLogistic input[id='Organizer']:checked").val()
+            + ',' + $("#frmSaveLogistic input[id='DonorVip']:checked").val()
             + ',' + $("#frmSaveLogistic input[id='Other']:checked").val();
         formData.append("ConferenceRoles", roles);
         formData.append("AirportService", $("#frmSaveLogistic input[id='AirportService']:checked").val());
